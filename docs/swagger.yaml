@@ -1,0 +1,521 @@
+definitions:
+  dto.ArticleDTO:
+    properties:
+      articleContent:
+        description: 内容
+        type: string
+      articleCover:
+        description: 文章缩略图
+        type: string
+      articleTitle:
+        description: 标题
+        type: string
+      categoryId:
+        description: 文章分类id
+        type: integer
+      categoryName:
+        description: 文章分类名
+        type: string
+      createTime:
+        description: 发表时间
+        type: integer
+      id:
+        description: id
+        type: integer
+      lastArticle:
+        allOf:
+        - $ref: '#/definitions/dto.ArticlePaginationDTO'
+        description: 上一篇文章
+      likeCount:
+        description: 点赞量
+        type: integer
+      newestArticleList:
+        description: 最新文章列表
+        items:
+          $ref: '#/definitions/dto.ArticleRecommendDTO'
+        type: array
+      nextArticle:
+        allOf:
+        - $ref: '#/definitions/dto.ArticlePaginationDTO'
+        description: 下一篇文章
+      originalUrl:
+        description: 原文链接
+        type: string
+      recommendArticleList:
+        description: 推荐文章列表
+        items:
+          $ref: '#/definitions/dto.ArticleRecommendDTO'
+        type: array
+      tagDTOList:
+        description: 文章标签
+        items:
+          $ref: '#/definitions/dto.TagDTO'
+        type: array
+      type:
+        description: 文章类型
+        type: integer
+      updateTime:
+        description: 更新时间
+        type: integer
+      viewsCount:
+        description: 浏览量
+        type: integer
+    type: object
+  dto.ArticlePaginationDTO:
+    properties:
+      articleCover:
+        description: 文章缩略图
+        type: string
+      articleTitle:
+        description: 标题
+        type: string
+      id:
+        description: id
+        type: integer
+    type: object
+  dto.ArticleRecommendDTO:
+    properties:
+      articleCover:
+        description: 文章缩略图
+        type: string
+      articleTitle:
+        description: 标题
+        type: string
+      createTime:
+        description: 创建时间
+        type: integer
+      id:
+        description: id
+        type: integer
+    type: object
+  dto.BlogHomeInfoDTO:
+    properties:
+      articleCount:
+        description: 文章数量
+        type: integer
+      categoryCount:
+        description: 分类数量
+        type: integer
+      pageList:
+        description: 页面列表
+        items:
+          $ref: '#/definitions/vo.PageVO'
+        type: array
+      tagCount:
+        description: 标签数量
+        type: integer
+      viewsCount:
+        description: 访问量
+        type: string
+      websiteConfig:
+        allOf:
+        - $ref: '#/definitions/vo.WebsiteConfigVO'
+        description: 网站配置
+    type: object
+  dto.RoleDTO:
+    properties:
+      createTime:
+        description: 创建时间
+        type: integer
+      id:
+        description: 角色id
+        type: integer
+      isDisable:
+        description: 是否禁用
+        type: integer
+      menuIdList:
+        description: 菜单id列表
+        items:
+          type: integer
+        type: array
+      resourceIdList:
+        description: 资源id列表
+        items:
+          type: integer
+        type: array
+      roleLabel:
+        description: 角色标签
+        type: string
+      roleName:
+        description: 角色名
+        type: string
+    type: object
+  dto.TagDTO:
+    properties:
+      id:
+        description: id
+        type: integer
+      tagName:
+        description: 标签名
+        type: string
+    type: object
+  dto.UserDetailDTO:
+    properties:
+      articleLikeSet:
+        description: 点赞文章集合
+        items: {}
+        type: array
+      avatar:
+        description: 用户头像
+        type: string
+      browser:
+        description: 浏览器
+        type: string
+      commentLikeSet:
+        description: 点赞评论集合
+        items: {}
+        type: array
+      email:
+        description: 邮箱号
+        type: string
+      id:
+        description: |-
+          UserDetailDTO implements UserDetails.go
+          UserDetails
+        type: integer
+      intro:
+        description: 用户简介
+        type: string
+      ipAddress:
+        description: 用户登录ip
+        type: string
+      ipSource:
+        description: ip来源
+        type: string
+      isDisable:
+        description: 是否禁用
+        type: integer
+      lastLoginTime:
+        description: 最近登录时间
+        type: integer
+      loginType:
+        description: 登录方式
+        type: integer
+      nickname:
+        description: 用户昵称
+        type: string
+      os:
+        description: 操作系统
+        type: string
+      password:
+        description: 密码
+        type: string
+      roleList:
+        description: 用户角色
+        items:
+          type: string
+        type: array
+      talkLikeSet:
+        description: 点赞说说集合
+        items: {}
+        type: array
+      userInfoId:
+        description: 用户信息id
+        type: integer
+      username:
+        description: 用户名
+        type: string
+      webSite:
+        description: 个人网站
+        type: string
+    type: object
+  dto.UserRoleDTO:
+    properties:
+      id:
+        description: 角色id
+        type: integer
+      roleName:
+        description: 角色名
+        type: string
+    type: object
+  middleware.Response:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/middleware.StatusCodeEnum'
+        description: 返回码
+      data:
+        description: 返回数据
+      flag:
+        description: 返回状态
+        type: boolean
+      message:
+        description: 返回信息
+        type: string
+    type: object
+  middleware.StatusCodeEnum:
+    enum:
+    - 20000
+    - 51000
+    type: integer
+    x-enum-varnames:
+    - SUCCESS
+    - FAIL
+  vo.AdminLoginVO:
+    properties:
+      password:
+        description: 密码
+        type: string
+      username:
+        description: 用户名
+        type: string
+    type: object
+  vo.PageResult:
+    properties:
+      count:
+        description: 总数
+        type: integer
+      recordList:
+        description: 分页列表(集合)
+    type: object
+  vo.PageVO:
+    properties:
+      id:
+        description: 页面id
+        type: integer
+      pageCover:
+        description: 页面封面
+        type: string
+      pageLabel:
+        description: 页面标签
+        type: string
+      pageName:
+        description: 页面名
+        type: string
+    type: object
+  vo.RoleVO:
+    properties:
+      id:
+        description: id
+        type: integer
+      menuIdList:
+        description: 菜单列表
+        items:
+          type: integer
+        type: array
+      resourceIdList:
+        description: 资源列表
+        items:
+          type: integer
+        type: array
+      roleLabel:
+        description: 标签名
+        type: string
+      roleName:
+        description: 标签名
+        type: string
+    type: object
+  vo.WebsiteConfigVO:
+    properties:
+      alipayQRCode:
+        description: 支付宝二维码
+        type: string
+      gitee:
+        description: gitee
+        type: string
+      github:
+        description: github
+        type: string
+      isChatRoom:
+        description: 是否开启聊天室
+        type: integer
+      isCommentReview:
+        description: 是否评论审核
+        type: integer
+      isEmailNotice:
+        description: 是否邮箱通知
+        type: integer
+      isMessageReview:
+        description: 是否留言审核
+        type: integer
+      isMusicPlayer:
+        description: 是否开启音乐
+        type: integer
+      isReward:
+        description: 是否打赏
+        type: integer
+      qq:
+        description: qq
+        type: string
+      socialLoginList:
+        description: 社交登录列表
+        items:
+          type: string
+        type: array
+      socialUrlList:
+        description: 社交url列表
+        items:
+          type: string
+        type: array
+      touristAvatar:
+        description: 游客头像
+        type: string
+      userAvatar:
+        description: 用户头像
+        type: string
+      websiteAuthor:
+        description: 网站作者
+        type: string
+      websiteAvatar:
+        description: 网站头像
+        type: string
+      websiteCreateTime:
+        description: 网站创建时间
+        type: string
+      websiteIntro:
+        description: 网站介绍
+        type: string
+      websiteName:
+        description: 网站名称
+        type: string
+      websiteNotice:
+        description: 网站公告
+        type: string
+      websiteRecordNo:
+        description: 网站备案号
+        type: string
+      websocketUrl:
+        description: websocket地址
+        type: string
+      weiXinQRCode:
+        description: 微信二维码
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: 用户名密码登陆
+      parameters:
+      - description: 添加角色
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/vo.AdminLoginVO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/middleware.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.UserDetailDTO'
+              type: object
+      summary: 用户名密码登陆
+      tags:
+      - 用户模块
+  /admin/role:
+    post:
+      consumes:
+      - application/json
+      description: 保存或更新角色
+      parameters:
+      - description: 添加角色
+        in: body
+        name: condition
+        required: true
+        schema:
+          $ref: '#/definitions/vo.RoleVO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/middleware.Response'
+      summary: 保存或更新角色
+      tags:
+      - 角色模块
+  /admin/roles:
+    delete:
+      consumes:
+      - application/json
+      description: 删除角色
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/middleware.Response'
+      summary: 删除角色
+      tags:
+      - 角色模块
+    get:
+      consumes:
+      - application/json
+      description: 查询角色列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/middleware.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/vo.PageResult'
+                  - properties:
+                      recordList:
+                        $ref: '#/definitions/dto.RoleDTO'
+                    type: object
+              type: object
+      summary: 查询角色列表
+      tags:
+      - 角色模块
+  /admin/users/role:
+    get:
+      consumes:
+      - application/json
+      description: 返回所有的角色
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/middleware.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.UserRoleDTO'
+              type: object
+      summary: 查询用户角色选项
+      tags:
+      - 角色模块
+  /articles/{articleId}:
+    get:
+      consumes:
+      - application/json
+      description: 根据id查看文章
+      parameters:
+      - description: 文章ID
+        in: path
+        name: articleId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/middleware.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ArticleDTO'
+              type: object
+      summary: 根据id查看文章
+      tags:
+      - 文章模块
+swagger: "2.0"
