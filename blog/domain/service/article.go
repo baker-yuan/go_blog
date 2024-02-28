@@ -3,15 +3,14 @@ package service
 import (
 	"github.com/baker-yuan/go-blog/blog/application/cqe"
 	"github.com/baker-yuan/go-blog/blog/application/dto"
-	"github.com/baker-yuan/go-blog/blog/domain/repo"
 )
 
 // ArticleService 文章服务
 type ArticleService struct {
-	repo repo.ArticleRepo
+	repo port.ArticleRepo
 }
 
-func NewArticleService(repo repo.ArticleRepo) ArticleService {
+func NewArticleService(repo port.ArticleRepo) ArticleService {
 	return ArticleService{
 		repo: repo,
 	}

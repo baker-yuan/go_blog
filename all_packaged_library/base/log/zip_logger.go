@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"gitee.com/baker-yuan/go-blog/all_packaged_library/base/config"
+	"github.com/baker-yuan/go-blog/all_packaged_library/base/config"
 	"go.uber.org/zap"
 )
 
@@ -55,7 +55,7 @@ func (z zapLog) Info(ctx context.Context, format string, args ...interface{}) {
 	var (
 		msg string
 	)
-	msg = fmt.Sprintf(format, args)
+	msg = fmt.Sprintf(format, args...)
 	z.log.Info(msg)
 }
 
@@ -63,7 +63,7 @@ func (z zapLog) Warn(ctx context.Context, format string, args ...interface{}) {
 	var (
 		msg string
 	)
-	msg = fmt.Sprintf(format, args)
+	msg = fmt.Sprintf(format, args...)
 	z.log.Warn(msg)
 }
 
@@ -71,6 +71,6 @@ func (z zapLog) Error(ctx context.Context, format string, args ...interface{}) {
 	var (
 		msg string
 	)
-	msg = fmt.Sprintf(format, args)
+	msg = fmt.Sprintf(format, args...)
 	z.log.Error(msg)
 }

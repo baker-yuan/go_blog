@@ -1,0 +1,29 @@
+base:
+  app_name: "go_blog"
+  debug_mode: "debug"
+  time_location: "Asia/Chongqing"
+
+http:
+  addr: 8850 # 监听地址
+  read_timeout: 10 # 读取超时时长
+  max_header_bytes: 20 # 最大的header大小，二进制位长度
+
+log:
+  level: "debug"
+  path: '../logs/go_blog_praise.log'
+
+mysql:
+  default:
+    data_source_name: "root:123456@(127.0.0.1:3306)/go_blog?charset=utf8&parseTime=true&loc=Asia%2FChongqing"
+    max_open_conn: 20
+    max_idle_conn: 10
+    max_conn_life_time: 100
+
+redis:
+  default:
+    proxy_list: ["127.0.0.1:6379"]
+    password: ""
+    db: 0
+    conn_timeout: 50
+    read_timeout: 100
+    write_timeout: 100

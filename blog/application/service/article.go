@@ -3,28 +3,28 @@ package service
 import (
 	"github.com/baker-yuan/go-blog/blog/application/cqe"
 	"github.com/baker-yuan/go-blog/blog/domain/entity"
+	"github.com/baker-yuan/go-blog/blog/domain/port"
 
 	// "github.com/baker-yuan/go-blog/all_packaged_library/util"
 	"github.com/baker-yuan/go-blog/blog/application/dto"
-	"github.com/baker-yuan/go-blog/blog/domain/repo"
 )
 
 // ArticleApp 文章服务
 type ArticleApp struct {
-	articleRepo repo.ArticleRepo
+	ArticlePort port.ArticlePort
 }
 
-func NewArticleApp(repo repo.ArticleRepo) ArticleApp {
-	return ArticleApp{
-		articleRepo: repo,
-	}
-}
+// func NewArticleApp(repo port.ArticleRepo) ArticleApp {
+// 	return ArticleApp{
+// 		articleRepo: repo,
+// 	}
+// }
 
 // ListArchives 分页查询文章归档
 //
 //	@return	文章归档
 func (a *ArticleApp) ListArchives(currentPage uint32, pageSize uint32) (archives []*dto.ArchiveDTO, total uint32, err error) {
-	return a.articleRepo.ListArchives(currentPage, pageSize)
+	return a.ArticlePort.ListArchives(currentPage, pageSize)
 }
 
 // // ListArticles 查询首页文章
@@ -122,11 +122,11 @@ func (a *ArticleApp) UpdateArticleTop(articleTopVO cqe.ArticleTopVO) error {
 		article *entity.Article
 		err     error
 	)
-	if article, err = a.articleRepo.FindById(articleTopVO.ID); err != nil {
+	if article, err = a.ArticlePort.FindById(articleTopVO.ID); err != nil {
 		return err
 	}
-	article.ArticleTop()
-	if err = a.articleRepo.Save(article); err != nil {
+	article.Top()
+	if err = a.ArticlePort.Save(article); err != nil {
 		return err
 	}
 	return nil

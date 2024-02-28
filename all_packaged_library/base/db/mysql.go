@@ -1,7 +1,7 @@
 package db
 
 import (
-	"gitee.com/baker-yuan/go-blog/all_packaged_library/base/config"
+	"github.com/baker-yuan/go-blog/all_packaged_library/base/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -18,7 +18,7 @@ func initMySQL() {
 		}
 		mysqlEngineMap[k] = dbSession
 		if k == "default" {
-			mysqlEngine = dbSession
+			DB = dbSession
 		}
 	}
 }

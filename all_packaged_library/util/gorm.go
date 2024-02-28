@@ -53,9 +53,6 @@ func IsNil(v interface{}) bool {
 	if rv.Kind() == reflect.Ptr {
 		return rv.IsNil()
 	}
-	// if rv.Kind() == reflect.Slice {
-	//
-	// }
 	return v == nil
 }
 

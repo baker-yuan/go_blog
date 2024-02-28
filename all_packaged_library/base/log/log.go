@@ -3,21 +3,24 @@ package log
 import (
 	"context"
 
-	"gitee.com/baker-yuan/go-blog/all_packaged_library/base/config"
+	"github.com/baker-yuan/go-blog/all_packaged_library/base/config"
 )
 
 var (
 	logger Logger
 )
 
-func InitLog() error {
+func InitLog() {
 	logConf := config.GetLogConf()
 	baseConf := config.GetBaseConf()
 	var (
 		err error
 	)
-	logger, err = NewZapLog(baseConf.AppName, logConf)
-	return err
+	log, err := NewZapLog(baseConf.AppName, logConf)
+	if err != nil {
+		panic(err)
+	}
+	logger = log
 }
 
 func Debug(ctx context.Context, format string, args ...interface{}) {

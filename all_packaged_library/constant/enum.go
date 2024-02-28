@@ -13,12 +13,13 @@ const (
 	DEFAULT_SIZE = 10
 )
 
+// LogicDelete 逻辑删除枚举
+type LogicDelete uint32
+
 // 逻辑删除相关
 const (
-	// 否
-	FALSE = 0
-	// 是
-	TRUE = 1
+	LogicDeleteFalse = 0 // 否
+	LogicDeleteTrue  = 1 // 是
 )
 
 // 其他

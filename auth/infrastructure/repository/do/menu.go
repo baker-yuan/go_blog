@@ -1,10 +1,10 @@
 package do
 
-import "github.com/baker-yuan/go-blog/all_packaged_library/common"
+import "github.com/baker-yuan/go-blog/all_packaged_library/do"
 
 // MenuDO 菜单
 type MenuDO struct {
-	common.Model
+	do.Model
 	Name      string `json:"name"`      // 菜单名
 	Path      string `json:"path"`      // 路径
 	Component string `json:"component"` // 组件

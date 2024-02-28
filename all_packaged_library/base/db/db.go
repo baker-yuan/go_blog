@@ -3,8 +3,8 @@ package db
 import "gorm.io/gorm"
 
 var (
-	mysqlEngine    *gorm.DB
-	mysqlEngineMap map[string]*gorm.DB
+	DB             *gorm.DB
+	mysqlEngineMap = make(map[string]*gorm.DB, 0)
 )
 
 func Init() {
@@ -13,7 +13,7 @@ func Init() {
 
 func GetMysqlDb(name ...string) *gorm.DB {
 	if len(name) == 0 {
-		return mysqlEngine
+		return DB
 	}
 	return mysqlEngineMap[name[0]]
 }

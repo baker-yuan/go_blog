@@ -1,7 +1,7 @@
 package util
 
 import (
-	"gitee.com/baker-yuan/go-blog/all_packaged_library/constant"
+	"github.com/baker-yuan/go-blog/all_packaged_library/constant"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,0 +1,40 @@
+2023-03-18T23:05:21.385+0800	INFO	log/zip_logger.go:59	server start success port: 8848
+2023-03-18T23:07:36.193+0800	INFO	log/zip_logger.go:59	server exit
+2023-03-18T23:07:41.908+0800	INFO	log/zip_logger.go:59	server start success port: 8848, pid: 99210
+2023-03-18T23:32:06.596+0800	INFO	log/zip_logger.go:59	server exit
+2023-03-19T09:25:22.190+0800	INFO	log/zip_logger.go:59	server start success port: 8848, pid: 60531
+2023-03-19T09:25:26.243+0800	DEBUG	log/zip_logger.go:51	application - service - AddFollow cmd: &{UID:1 FollowUID:2}
+2023-03-19T09:46:46.455+0800	INFO	log/zip_logger.go:59	server exit
+2023-03-19T12:23:41.025+0800	INFO	log/zip_logger.go:59	server start success port: 8848, pid: 98429
+2023-03-19T12:23:49.625+0800	INFO	log/zip_logger.go:59	server exit
+2023-03-19T12:23:50.970+0800	INFO	log/zip_logger.go:59	server start success port: 8849, pid: 98470
+2023-03-19T12:24:22.902+0800	ERROR	log/zip_logger.go:75	ui - bind addPraise req fail err: json: cannot unmarshal number into Go struct field AddPraiseReq.uid of type string
+github.com/baker-yuan/go-blog/all_packaged_library/base/log.zapLog.Error
+	/Users/yuanyu/code/go-study/go-blog/go_blog/all_packaged_library/base/log/zip_logger.go:75
+github.com/baker-yuan/go-blog/all_packaged_library/base/log.Error
+	/Users/yuanyu/code/go-study/go-blog/go_blog/all_packaged_library/base/log/log.go:54
+github.com/baker-yuan/go-blog/interaction/ui/http/praise_handles.(*PraiseServiceImpl).AddPraise
+	/Users/yuanyu/code/go-study/go-blog/go_blog/praise/ui/http/praise_handles/praise_handles.go:34
+github.com/gin-gonic/gin.(*Context).Next
+	/Users/yuanyu/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/context.go:174
+github.com/baker-yuan/go-blog/all_packaged_library/middleware/gin.SetRecovery.func1
+	/Users/yuanyu/code/go-study/go-blog/go_blog/all_packaged_library/middleware/gin/recovery.go:28
+github.com/gin-gonic/gin.(*Context).Next
+	/Users/yuanyu/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/context.go:174
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	/Users/yuanyu/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	/Users/yuanyu/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/context.go:174
+github.com/gin-gonic/gin.LoggerWithConfig.func1
+	/Users/yuanyu/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/logger.go:240
+github.com/gin-gonic/gin.(*Context).Next
+	/Users/yuanyu/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/context.go:174
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	/Users/yuanyu/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/gin.go:620
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	/Users/yuanyu/go/pkg/mod/github.com/gin-gonic/gin@v1.9.0/gin.go:576
+net/http.serverHandler.ServeHTTP
+	/Users/yuanyu/goroots/gosource/go-darwin-arm64-bootstrap/src/net/http/server.go:2976
+net/http.(*conn).serve
+	/Users/yuanyu/goroots/gosource/go-darwin-arm64-bootstrap/src/net/http/server.go:1998
+2023-03-19T12:25:16.578+0800	INFO	log/zip_logger.go:59	server exit

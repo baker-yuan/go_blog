@@ -1,8 +1,8 @@
 package repository
 
 import (
+	"github.com/baker-yuan/go-blog/all_packaged_library/base/db"
 	"github.com/baker-yuan/go-blog/all_packaged_library/constant"
-	"github.com/baker-yuan/go-blog/all_packaged_library/lib"
 	"github.com/baker-yuan/go-blog/all_packaged_library/util"
 	"github.com/baker-yuan/go-blog/auth/application/dto"
 	"github.com/baker-yuan/go-blog/auth/infrastructure/repository/do"
@@ -28,19 +28,20 @@ func (m *MenuRepoImpl) searchMenu(search dto.MenuSearch) ([]*do.MenuDO, error) {
 
 func (m *MenuRepoImpl) listMenusByRoleId(roleId uint32) ([]*do.MenuDO, error) {
 	var (
+		DB        = db.GetMysqlDb()
 		roleMenus = make([]*do.RoleMenu, 0)
 		tx        *gorm.DB
 		menuIds   = make([]uint32, 0)
 		menus     = make([]*do.MenuDO, 0)
 	)
-	tx = lib.DB.Raw("select * from tb_role_menu where role_id = ? ", roleId).Scan(&roleMenus)
+	tx = DB.Raw("select * from tb_role_menu where role_id = ? ", roleId).Scan(&roleMenus)
 	if tx.Error != nil {
 		return nil, tx.Error
 	}
 	for _, v := range roleMenus {
 		menuIds = append(menuIds, v.MenuId)
 	}
-	tx = lib.DB.Raw("select * from tb_menu where id in ?", menuIds).Scan(&menus)
+	tx = DB.Raw("select * from tb_menu where id in ?", menuIds).Scan(&menus)
 	if tx.Error != nil {
 		return nil, tx.Error
 	}
@@ -94,7 +95,7 @@ func convertUserMenuList(catalogs []*do.MenuDO, childrenMap map[uint32][]*do.Men
 					childUserMenuDTO dto.UserMenuDTO
 				)
 				util.DeepCopyByJson(c, &childUserMenuDTO)
-				childUserMenuDTO.Hidden = c.IsHidden == constant.TRUE
+				childUserMenuDTO.Hidden = c.IsHidden == constant.LogicDeleteTrue
 				list = append(list, childUserMenuDTO)
 			}
 		} else {
@@ -108,7 +109,7 @@ func convertUserMenuList(catalogs []*do.MenuDO, childrenMap map[uint32][]*do.Men
 				Component: item.Component,
 			})
 		}
-		userMenuDTO.Hidden = item.IsHidden == constant.TRUE
+		userMenuDTO.Hidden = item.IsHidden == constant.LogicDeleteTrue
 		userMenuDTO.Children = list
 		userMenu = append(userMenu, &userMenuDTO)
 	}
