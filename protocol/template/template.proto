@@ -1,0 +1,76 @@
+syntax = "proto2";
+
+package blog.template;
+
+option  go_package ="github.com/baker-yuan/go-blog/protocol/template";
+
+import "validate/validate.proto";
+
+
+// 资源类型
+enum ResourceType {
+  RT_UNKNOWN = 0; // 未知
+}
+
+// 空响应
+message EmptyRsp {
+
+}
+
+// 添加修改资源返回值
+message AddOrUpdateRsp {
+  optional uint32 id = 1; // 资源id
+}
+
+// 友链
+message FriendLink {
+  optional uint32 id = 1;              // 唯一标识
+  optional string link_name = 2;       // 链接名
+  optional string link_avatar = 3;     // 链接头像
+  optional string link_address = 4;    // 链接地址
+  optional string link_intro = 5;      // 链接介绍
+  optional int32 sort = 6;             // 友链排序
+  optional int32 status = 7;           // 友链状态（0-未发布，1-已发布，2-已下线）
+  optional bool is_deleted = 8;        // 是否删除
+  optional uint32 create_time = 9;     // 创建时间
+  optional uint32 update_time = 10;    // 修改时间
+}
+
+// 友链搜索
+message SearchFriendLinkReq {
+
+  optional uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  optional uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+}
+
+message SearchFriendLinkRsp {
+  optional uint32 total = 1; // 分页查询
+  repeated FriendLink data = 2; // 友链集合
+}
+
+// 友链详情
+message FriendLinkDetailReq {
+  optional uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 添加修改友链
+message AddOrUpdateFriendLinkReq {
+
+}
+
+// 删除友链
+message DeleteFriendLinkReq {
+  optional uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+service TemplateApi {
+  // 友链搜索
+  rpc SearchFriendLink (SearchFriendLinkReq) returns (SearchFriendLinkRsp) {}
+  // 添加修改友链
+  rpc AddOrUpdateFriendLink (AddOrUpdateFriendLinkReq) returns (AddOrUpdateRsp) {}
+  // 删除友链
+  rpc DeleteFriendLink (DeleteFriendLinkReq) returns (EmptyRsp) {}
+  // 友链详情
+  rpc FriendLinkDetail (FriendLinkDetailReq) returns (FriendLink) {}
+
+}

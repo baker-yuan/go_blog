@@ -1,0 +1,30 @@
+package util
+
+import (
+	"common/util/conversion"
+	"common/util/page"
+	"common/util/slice"
+	"common/util/stack"
+	"common/util/str"
+)
+
+var (
+	TypeConversionUtils conversion.ConversionUtils // 类型转换，用于string，int，int64，float等数据转换，免去err的接收，和设置默认值
+	StackUtils          stack.StackUtils           // 堆栈处理
+	StrUtils            str.StrUtils               // 字符串处理
+)
+
+// NewSliceUtils 是 SliceUtils 的构造函数，返回一个 SliceUtils 的实例。
+func NewSliceUtils[T comparable]() slice.SliceUtils[T] {
+	return slice.SliceUtils[T]{}
+}
+
+// NewFieldExtractor 创建并返回一个新的 FieldExtractor 实例。
+func NewFieldExtractor[T any, K comparable]() slice.FieldExtractor[T, K] {
+	return slice.FieldExtractor[T, K]{}
+}
+
+// NewPageUtils 内存分页
+func NewPageUtils[T any]() page.PageUtils[T] {
+	return page.PageUtils[T]{}
+}

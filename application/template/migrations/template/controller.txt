@@ -1,0 +1,44 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/codegen", "controller.go")
+
+
+
+// Search$!{tableInfo.comment} 查询$!{tableInfo.name}
+func (m *AppidManagerServiceImpl) Search$!{tableInfo.name}(ctx context.Context, req *pb.Search$!{tableInfo.name}Req) (*pb.Search$!{tableInfo.name}Rsp, error) {
+	rsp := &pb.Search$!{tableInfo.name}Rsp{}
+	$!tool.firstLowerCase($!{tableInfo.name})s, pageTotal, err := m.$!tool.firstLowerCase($!{tableInfo.name})UseCase. Search$!{tableInfo.name}(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Data = $!tool.firstLowerCase($!{tableInfo.name})s
+	rsp.Total = proto.Uint32(pageTotal)
+	return rsp, nil
+}
+
+// $!{tableInfo.name}Detail $!{tableInfo.comment}详情
+func (m *AppidManagerServiceImpl) $!{tableInfo.name}Detail(ctx context.Context, req *pb.$!{tableInfo.name}DetailReq) (*pb.$!{tableInfo.name}, error) {
+	return m.$!tool.firstLowerCase($!{tableInfo.name})UseCase.$!{tableInfo.name}Detail(ctx, req)
+}
+
+// AddOrUpdate$!{tableInfo.name} 添加修改$!{tableInfo.comment}
+func (m *AppidManagerServiceImpl) AddOrUpdate$!{tableInfo.name}(ctx context.Context, req *pb. AddOrUpdate$!{tableInfo.name}Req) (*pb.AddOrUpdateRsp, error) {
+	rsp := &pb.AddOrUpdateRsp{}
+	id, err := m.$!tool.firstLowerCase($!{tableInfo.name})UseCase. AddOrUpdate$!{tableInfo.name}(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Id = proto.Uint32(id)
+	return rsp, nil
+}
+
+// Delete$!{tableInfo.name} 删除$!{tableInfo.comment}
+func (m *AppidManagerServiceImpl) Delete$!{tableInfo.name}(ctx context.Context, req *pb. Delete$!{tableInfo.name}Req) (*pb.EmptyRsp, error) {
+	rsp := &pb.EmptyRsp{}
+	if err := m.$!tool.firstLowerCase($!{tableInfo.name})UseCase. Delete$!{tableInfo.name}(ctx, req); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}

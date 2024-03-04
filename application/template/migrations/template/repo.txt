@@ -1,0 +1,126 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/codegen", "repo.go")
+
+package repo
+
+import (
+	"context"
+	"fmt"
+	"strconv"
+)
+
+// $!{tableInfo.name}Repo $!{tableInfo.comment}Repo
+type $!{tableInfo.name}Repo struct {
+	client orm.Client
+}
+
+// New$!{tableInfo.name}Repo 创建$!{tableInfo.comment}Repo
+func New$!{tableInfo.name}Repo(client orm.Client) *$!{tableInfo.name}Repo {
+	return &$!{tableInfo.name}Repo{
+		client: client,
+	}
+}
+
+func (r *$!{tableInfo.name}Repo) getStatement() *orm.Statement {
+	return orm.NewDbStatement().SetTableName(entity.$!{tableInfo.name}TbName)
+}
+
+
+
+
+// Get$!{tableInfo.name}ByID 根据$!{tableInfo.comment}id查询$!{tableInfo.comment}
+func (r *$!{tableInfo.name}Repo) Get$!{tableInfo.name}ByID(ctx context.Context, id int) (*entity.$!{tableInfo.name}, error) {
+	dest := &entity.$!{tableInfo.name}{}
+	statement := r.getStatement().AndEqual(entity.$!{tableInfo.name}FieldID, id)
+	if err := r.client.FindOne(ctx, statement, dest); err != nil {
+		return nil, err
+	}
+	if dest.ID == 0 {
+		return nil, retcode.BuildErrorFmtMsg(retcode.RetResourceNotExist)
+	}
+	return dest, nil
+}
+
+// Get$!{tableInfo.name}ByIDs 根据$!{tableInfo.comment}id集合查询$!{tableInfo.comment}
+func (r *$!{tableInfo.name}Repo) Get$!{tableInfo.name}ByIDs(ctx context.Context, ids []int) (entity.$!{tableInfo.name}s, error) {
+    dest := make([]*entity.$!{tableInfo.name}, 0)
+	if len(ids) == 0 {
+		return dest, nil
+	}
+	var where = orm.WhereCond{entity.$!{tableInfo.name}FieldID: ids}
+	var statement = r.getStatement().Where(where)
+	if err := r.client.FindAll(ctx, statement, &dest); err != nil {
+		return nil, err
+	}
+	return dest, nil
+}
+
+// Search$!{tableInfo.name} $!{tableInfo.comment}搜索
+func (r *$!{tableInfo.name}Repo) Search$!{tableInfo.name}(ctx context.Context, req *pb.Search$!{tableInfo.name}Req) (entity.$!{tableInfo.name}s, uint32, error) {
+	var where = orm.WhereCond{}
+
+#foreach($column in $tableInfo.fullColumn)
+    if len(req.$!tool.firstUpperCase($!{column.name})) != nil {
+      where[util.StrUtils.OrmLike(entity.$!tool.firstUpperCase($!{tableInfo.name})Field$!tool.firstUpperCase($!{column.name}))] = "%" + req.Get$!tool.firstUpperCase($!{column.name})() + "%"
+    }
+#end
+
+
+	commonStatement := func() *orm.Statement {
+		return r.getStatement().
+			Where(where).
+			Order(entity.$!{tableInfo.name}FieldID, true)
+	}
+
+	// 查询
+	res := make([]*entity.$!{tableInfo.name}, 0)
+	searchStatement := commonStatement().LimitOffset(orm.QuickPaginate(req.GetPageSize(), req.GetPageNum()))
+	if err := r.client.FindAll(ctx, searchStatement, &res); err != nil {
+		return nil, 0, err
+	}
+	// 分页
+	pageStatement := commonStatement()
+	total, err := r.client.Count(ctx, pageStatement)
+	if err != nil {
+		return nil, 0, err
+	}
+	return res, uint32(total), nil
+}
+
+// Save 保存$!{tableInfo.comment}
+func (r *$!{tableInfo.name}Repo) Save(ctx context.Context, $!tool.firstLowerCase($!{tableInfo.name}) *entity.$!{tableInfo.name}) (uint32, error) {
+	statement := r.getStatement().InsertStruct($!tool.firstLowerCase($!{tableInfo.name}))
+	lastInsertId, err := r.client.Insert(ctx, statement)
+	if err != nil {
+		return 0, err
+	}
+	return uint32(lastInsertId), nil
+}
+
+// UpdateByID 根据ID修改$!{tableInfo.comment}
+func (r *$!{tableInfo.name}Repo) UpdateByID(ctx context.Context, $!tool.firstLowerCase($!{tableInfo.name}) *entity.$!{tableInfo.name}) error {
+	if $!tool.firstLowerCase($!{tableInfo.name}) .ID == 0 {
+		return retcode.BuildErrorFmtMsg(retcode.IllegalArgument)
+	}
+	statement := r.getStatement().
+		AndEqual(entity.$!{tableInfo.name}FieldID, $!tool.firstLowerCase($!{tableInfo.name}) .ID).
+		UpdateStruct($!tool.firstLowerCase($!{tableInfo.name}))
+	_, err := r.client.Update(ctx, statement)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// DeleteByID 根据ID删除$!{tableInfo.comment}
+func (r *$!{tableInfo.name}Repo) DeleteByID(ctx context.Context, id int) error {
+	statement := r.getStatement().AndEqual(entity.$!{tableInfo.name}FieldID, id)
+	_, err := r.client.Delete(ctx, statement)
+	if err != nil {
+		return err
+	}
+	return nil
+}
