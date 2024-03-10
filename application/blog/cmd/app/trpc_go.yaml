@@ -138,4 +138,4 @@ client:
   service:
     # mysql
     - name: trpc.mysql.blog.template
-      target: dsn://root:123456@tcp(127.0.0.1:3306)/baker_blog_blog?charset=utf8mb4&parseTime=True
+      target: dsn://root:123456@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True

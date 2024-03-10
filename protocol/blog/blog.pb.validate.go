@@ -1085,3 +1085,786 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeleteArticleReqValidationError{}
+
+// Validate checks the field values on Tag with the rules defined in the proto
+// definition for this message. If any rules are violated, the first error
+// encountered is returned, or nil if there are no violations.
+func (m *Tag) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Tag with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in TagMultiError, or nil if none found.
+func (m *Tag) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Tag) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for Name
+
+	// no validation rules for Description
+
+	// no validation rules for Color
+
+	// no validation rules for CreateTime
+
+	// no validation rules for UpdateTime
+
+	if len(errors) > 0 {
+		return TagMultiError(errors)
+	}
+
+	return nil
+}
+
+// TagMultiError is an error wrapping multiple validation errors returned by
+// Tag.ValidateAll() if the designated constraints aren't met.
+type TagMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TagMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TagMultiError) AllErrors() []error { return m }
+
+// TagValidationError is the validation error returned by Tag.Validate if the
+// designated constraints aren't met.
+type TagValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TagValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TagValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TagValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TagValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TagValidationError) ErrorName() string { return "TagValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TagValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTag.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TagValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TagValidationError{}
+
+// Validate checks the field values on Page with the rules defined in the proto
+// definition for this message. If any rules are violated, the first error
+// encountered is returned, or nil if there are no violations.
+func (m *Page) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Page with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in PageMultiError, or nil if none found.
+func (m *Page) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Page) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for PageName
+
+	// no validation rules for PageLabel
+
+	// no validation rules for PageCover
+
+	// no validation rules for CreateTime
+
+	// no validation rules for UpdateTime
+
+	if len(errors) > 0 {
+		return PageMultiError(errors)
+	}
+
+	return nil
+}
+
+// PageMultiError is an error wrapping multiple validation errors returned by
+// Page.ValidateAll() if the designated constraints aren't met.
+type PageMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PageMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PageMultiError) AllErrors() []error { return m }
+
+// PageValidationError is the validation error returned by Page.Validate if the
+// designated constraints aren't met.
+type PageValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PageValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PageValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PageValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PageValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PageValidationError) ErrorName() string { return "PageValidationError" }
+
+// Error satisfies the builtin error interface
+func (e PageValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPage.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PageValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PageValidationError{}
+
+// Validate checks the field values on Moment with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Moment) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Moment with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in MomentMultiError, or nil if none found.
+func (m *Moment) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Moment) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for Content
+
+	// no validation rules for Likes
+
+	// no validation rules for IsPublished
+
+	// no validation rules for IsDeleted
+
+	// no validation rules for CreateTime
+
+	// no validation rules for UpdateTime
+
+	if len(errors) > 0 {
+		return MomentMultiError(errors)
+	}
+
+	return nil
+}
+
+// MomentMultiError is an error wrapping multiple validation errors returned by
+// Moment.ValidateAll() if the designated constraints aren't met.
+type MomentMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MomentMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MomentMultiError) AllErrors() []error { return m }
+
+// MomentValidationError is the validation error returned by Moment.Validate if
+// the designated constraints aren't met.
+type MomentValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MomentValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MomentValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MomentValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MomentValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MomentValidationError) ErrorName() string { return "MomentValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MomentValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMoment.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MomentValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MomentValidationError{}
+
+// Validate checks the field values on FriendLink with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *FriendLink) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on FriendLink with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in FriendLinkMultiError, or
+// nil if none found.
+func (m *FriendLink) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *FriendLink) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for LinkName
+
+	// no validation rules for LinkAvatar
+
+	// no validation rules for LinkAddress
+
+	// no validation rules for LinkIntro
+
+	// no validation rules for Status
+
+	// no validation rules for Sort
+
+	// no validation rules for IsDeleted
+
+	// no validation rules for CreateTime
+
+	// no validation rules for UpdateTime
+
+	if len(errors) > 0 {
+		return FriendLinkMultiError(errors)
+	}
+
+	return nil
+}
+
+// FriendLinkMultiError is an error wrapping multiple validation errors
+// returned by FriendLink.ValidateAll() if the designated constraints aren't met.
+type FriendLinkMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m FriendLinkMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m FriendLinkMultiError) AllErrors() []error { return m }
+
+// FriendLinkValidationError is the validation error returned by
+// FriendLink.Validate if the designated constraints aren't met.
+type FriendLinkValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e FriendLinkValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e FriendLinkValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e FriendLinkValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e FriendLinkValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e FriendLinkValidationError) ErrorName() string { return "FriendLinkValidationError" }
+
+// Error satisfies the builtin error interface
+func (e FriendLinkValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sFriendLink.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = FriendLinkValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = FriendLinkValidationError{}
+
+// Validate checks the field values on Config with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Config) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Config with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in ConfigMultiError, or nil if none found.
+func (m *Config) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Config) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for Code
+
+	// no validation rules for Desc
+
+	// no validation rules for Config
+
+	// no validation rules for CreateTime
+
+	// no validation rules for UpdateTime
+
+	if len(errors) > 0 {
+		return ConfigMultiError(errors)
+	}
+
+	return nil
+}
+
+// ConfigMultiError is an error wrapping multiple validation errors returned by
+// Config.ValidateAll() if the designated constraints aren't met.
+type ConfigMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ConfigMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ConfigMultiError) AllErrors() []error { return m }
+
+// ConfigValidationError is the validation error returned by Config.Validate if
+// the designated constraints aren't met.
+type ConfigValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ConfigValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ConfigValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ConfigValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ConfigValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ConfigValidationError) ErrorName() string { return "ConfigValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ConfigValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sConfig.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ConfigValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ConfigValidationError{}
+
+// Validate checks the field values on Category with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Category) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Category with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in CategoryMultiError, or nil
+// if none found.
+func (m *Category) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Category) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for Name
+
+	// no validation rules for Description
+
+	// no validation rules for Sort
+
+	// no validation rules for Available
+
+	// no validation rules for CreateTime
+
+	// no validation rules for UpdateTime
+
+	if len(errors) > 0 {
+		return CategoryMultiError(errors)
+	}
+
+	return nil
+}
+
+// CategoryMultiError is an error wrapping multiple validation errors returned
+// by Category.ValidateAll() if the designated constraints aren't met.
+type CategoryMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CategoryMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CategoryMultiError) AllErrors() []error { return m }
+
+// CategoryValidationError is the validation error returned by
+// Category.Validate if the designated constraints aren't met.
+type CategoryValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CategoryValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CategoryValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CategoryValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CategoryValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CategoryValidationError) ErrorName() string { return "CategoryValidationError" }
+
+// Error satisfies the builtin error interface
+func (e CategoryValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCategory.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CategoryValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CategoryValidationError{}
+
+// Validate checks the field values on ArticleTag with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *ArticleTag) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ArticleTag with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in ArticleTagMultiError, or
+// nil if none found.
+func (m *ArticleTag) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ArticleTag) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for TagId
+
+	// no validation rules for ArticleId
+
+	// no validation rules for CreateTime
+
+	// no validation rules for UpdateTime
+
+	if len(errors) > 0 {
+		return ArticleTagMultiError(errors)
+	}
+
+	return nil
+}
+
+// ArticleTagMultiError is an error wrapping multiple validation errors
+// returned by ArticleTag.ValidateAll() if the designated constraints aren't met.
+type ArticleTagMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ArticleTagMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ArticleTagMultiError) AllErrors() []error { return m }
+
+// ArticleTagValidationError is the validation error returned by
+// ArticleTag.Validate if the designated constraints aren't met.
+type ArticleTagValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ArticleTagValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ArticleTagValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ArticleTagValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ArticleTagValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ArticleTagValidationError) ErrorName() string { return "ArticleTagValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ArticleTagValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sArticleTag.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ArticleTagValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ArticleTagValidationError{}

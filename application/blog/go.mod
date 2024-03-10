@@ -5,9 +5,7 @@ go 1.19
 require (
 	github.com/baker-yuan/go-blog/common v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/protocol/blog v0.0.0-incompatible
-	google.golang.org/protobuf v1.33.0
 	gorm.io/gorm v1.25.7
-	gorm.io/plugin/soft_delete v1.2.1
 	trpc.group/trpc-go/trpc-database/gorm v1.0.0
 	trpc.group/trpc-go/trpc-filter/debuglog v1.0.0
 	trpc.group/trpc-go/trpc-filter/recovery v1.0.0
@@ -90,6 +88,7 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/genproto v0.0.0-20221014213838-99cd37c6964a // indirect
 	google.golang.org/grpc v1.51.0 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/mysql v1.3.4 // indirect

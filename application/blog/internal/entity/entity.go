@@ -3,10 +3,7 @@ package entity
 import (
 	"database/sql/driver"
 	"errors"
-	"fmt"
 	"time"
-
-	"gorm.io/gorm"
 )
 
 // Timestamp 用于处理数据库中 timestamp 类型和 Go 中 uint32 类型之间的转换
@@ -60,28 +57,4 @@ func (bb BoolBit) Value() (driver.Value, error) {
 		return []byte{1}, nil
 	}
 	return []byte{0}, nil
-}
-
-// Init 初始化
-func Init(db *gorm.DB) error {
-	schemas := []tableSchema{}
-
-	return autoMigrate(db, schemas)
-}
-
-// tableSchema 自动建表描述信息
-type tableSchema struct {
-	TableName string      // 表名
-	StructPtr interface{} // 结构体指针
-}
-
-func autoMigrate(db *gorm.DB, schemas []tableSchema) error {
-	for _, schema := range schemas {
-		if err := db.
-			Set("gorm:table_options", fmt.Sprintf("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='%s'", schema.TableName)).
-			AutoMigrate(schema.StructPtr); err != nil {
-			return err
-		}
-	}
-	return nil
 }

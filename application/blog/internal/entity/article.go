@@ -33,6 +33,7 @@ type Article struct {
 	UpdateTime Timestamp `gorm:"index:idx_update_time;column:update_time;type:timestamp;not null;default:CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;comment:修改时间"`
 }
 
+// TableName 设置 Article 结构体对应的数据库表名
 func (Article) TableName() string {
 	return "blog_article"
 }

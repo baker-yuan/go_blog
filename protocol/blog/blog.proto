@@ -147,6 +147,100 @@ message DeleteArticleReq {
   uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
 }
 
+
+
+// Tag 文章标签
+message Tag {
+  uint32 id = 1;           // 主键
+  string name = 2;         // 标签名
+  string description = 3;  // 标签描述
+  string color = 4;        // 标签颜色
+  uint32 create_time = 5;  // 创建时间
+  uint32 update_time = 6;  // 修改时间
+}
+
+
+// 页面信息定义
+message Page {
+  uint32 id = 1;          // 页面id
+  string page_name = 2;   // 页面名
+  string page_label = 3;  // 页面标签
+  string page_cover = 4;  // 页面封面
+  uint32 create_time = 5; // 创建时间
+  uint32 update_time = 6; // 更新时间
+}
+
+
+
+// 动态信息定义
+message Moment {
+  uint32 id = 1;          // 主键
+  string content = 2;     // 动态内容
+  uint32 likes = 3;       // 点赞数量
+  bool is_published = 4;  // 是否公开
+  bool is_deleted = 5;    // 是否删除
+  uint32 create_time = 6; // 创建时间
+  uint32 update_time = 7; // 更新时间
+}
+
+// 友链状态枚举
+enum FriendLinkStatus {
+  FL_STATUS_UNKNOWN = 0; // 未知状态
+  FL_STATUS_PUBLISHED = 1; // 已发布
+  FL_STATUS_OFFLINE = 2; // 以下线
+}
+
+// FriendLink 友链信息定义
+message FriendLink {
+  uint32 id = 1;                  // 主键
+  string link_name = 2;           // 链接名
+  string link_avatar = 3;         // 链接头像
+  string link_address = 4;        // 链接地址
+  string link_intro = 5;          // 链接介绍
+  FriendLinkStatus status = 6;    // 友链状态 1-已发布 2-以下线
+  uint32 sort = 7;                // 友链排序
+  bool is_deleted = 8;            // 是否删除
+  uint32 create_time = 9;         // 创建时间
+  uint32 update_time = 10;        // 更新时间
+}
+
+// Config 网站配置信息定义
+message Config {
+  uint32 id = 1;          // 主键
+  string code = 2;        // 唯一编码
+  string desc = 3;        // 描述信息
+  string config = 4;      // 配置信息
+  uint32 create_time = 5; // 创建时间
+  uint32 update_time = 6; // 更新时间
+}
+
+
+// CategoryStatus 文章分类可用状态枚举
+enum CategoryStatus {
+  CATEGORY_STATUS_UNAVAILABLE = 0; // 不可用
+  CATEGORY_STATUS_AVAILABLE = 1;   // 可用
+}
+
+// Category 文章分类信息定义
+message Category {
+  uint32 id = 1;          // 主键
+  string name = 2;        // 文章类型名
+  string description = 3; // 类型介绍
+  int32 sort = 4;         // 排序
+  CategoryStatus available = 5; // 是否可用
+  uint32 create_time = 6; // 创建时间
+  uint32 update_time = 7; // 更新时间
+}
+
+// ArticleTag 文章标签关联信息定义
+message ArticleTag {
+  uint32 id = 1;          // 主键
+  uint32 tag_id = 2;      // 标签表ID
+  uint32 article_id = 3;  // 文章ID
+  uint32 create_time = 4; // 创建时间
+  uint32 update_time = 5; // 更新时间
+}
+
 // 博客api
 service BlogApi {
   // 文章搜索

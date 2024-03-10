@@ -1,0 +1,35 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/gencode", "font-api.ts")
+
+import { ResPage, $!{tableInfo.name} } from "@/api/interface/index";
+import http from "@/api";
+
+// 添加$!{tableInfo.comment}
+export const create$!{tableInfo.name}Api = (params: $!{tableInfo.name}.$!{tableInfo.name}Model) => {
+  return http.post(`/$!tool.firstLowerCase($!tableInfo.name)s`, params);
+};
+
+// 修改$!{tableInfo.comment}
+export const update$!{tableInfo.name}Api = ($!tool.firstLowerCase($!{tableInfo.name}): $!{tableInfo.name}.$!{tableInfo.name}Model) => {
+  // TODO
+  let id = $!tool.firstLowerCase($!{tableInfo.name}) .id
+  return http.put(`/$!tool.firstLowerCase($!tableInfo.name)s/${id}`, $!tool.firstLowerCase($!{tableInfo.name}));
+};
+
+// 分页查询$!{tableInfo.comment}
+export const get$!{tableInfo.name}sApi = (params: $!{tableInfo.name}.Req$!{tableInfo.name}ListParams) => {
+  return http.get<ResPage<$!{tableInfo.name}.$!{tableInfo.name}Model>>(`/$!tool.firstLowerCase($!tableInfo.name)s`, params);
+};
+
+// 根据id获取$!{tableInfo.comment}
+export const get$!{tableInfo.name}Api = (id: number) => {
+  return http.get<$!{tableInfo.name}.$!{tableInfo.name}Model>(`/$!tool.firstLowerCase($!tableInfo.name)s/${id}`);
+};
+
+// 根据id删除$!{tableInfo.comment}
+export const delete$!{tableInfo.name}Api = (id: number) => {
+  return http.delete(`/$!tool.firstLowerCase($!tableInfo.name)s/${id}`);
+};

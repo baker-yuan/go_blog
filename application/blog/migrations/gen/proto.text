@@ -1,0 +1,105 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/gencode", "router.proto")
+
+syntax = "proto3";
+
+package admin;
+
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/wrappers.proto";
+
+// 通用返回
+message CommonRsp {
+  uint32 code = 1;      // 状态码
+  string message = 2;   // 提示信息
+}
+
+
+
+// 添加或更新$!{tableInfo.comment}参数
+message AddOrUpdate$!{tableInfo.name}Param {
+}
+
+// 分页查询$!{tableInfo.comment}
+message Get$!{tableInfo.name}sParam {
+
+  uint32 page_num = 10 [(validate.rules).uint32.gte = 0];   // 页面大小
+  uint32 page_size = 11 [(validate.rules).uint32.gte = 0];  // 页码
+}
+
+// 分页查询$!{tableInfo.comment}
+message $!{tableInfo.name}sData {
+  repeated model.$!{tableInfo.name} data = 1;    // $!{tableInfo.comment}
+  uint32 page_total = 2;                         // 数据总数
+  uint32 page_size = 3;                          // 页码
+  uint32 page_num = 4;                           // 页面大小
+}
+message Get$!{tableInfo.name}sRsp {
+  uint32 code = 1;          // 状态码
+  string message = 2;       // 提示信息
+
+  $!{tableInfo.name}sData data = 3; //
+}
+
+// 根据id获取$!{tableInfo.comment}
+message Get$!{tableInfo.name}Req {
+  uint64 id = 1;
+}
+
+// 根据id获取$!{tableInfo.comment}
+message Get$!{tableInfo.name}Rsp {
+  uint32 code = 1;          // 状态码
+  string message = 2;       // 提示信息
+
+  model.$!{tableInfo.name} data = 3;    // 数据
+}
+
+// 删除$!{tableInfo.comment}
+message Delete$!{tableInfo.name}Req {
+  uint64 id = 1;
+}
+
+service Api {
+  // 添加$!{tableInfo.comment}
+  rpc Create$!{tableInfo.name} (AddOrUpdate$!{tableInfo.name}Param) returns (CommonRsp) {
+    option (google.api.http) = {
+      post: "/$!tool.firstLowerCase($!tableInfo.name)s"
+      body: "*"
+    };
+  }
+  
+  // 修改$!{tableInfo.comment}
+  rpc Update$!{tableInfo.name} (AddOrUpdate$!{tableInfo.name}Param) returns (CommonRsp) {
+    option (google.api.http) = {
+      put: "/$!tool.firstLowerCase($!tableInfo.name)s/{id}"
+      body: "*"
+    };
+  }
+  
+  // 分页查询$!{tableInfo.comment}
+  rpc Get$!{tableInfo.name}s (Get$!{tableInfo.name}sParam) returns (Get$!{tableInfo.name}sRsp) {
+    option (google.api.http) = {
+      get: "/$!tool.firstLowerCase($!tableInfo.name)s"
+    };
+  }
+  
+  // 根据id获取$!{tableInfo.comment}
+  rpc Get$!{tableInfo.name} (Get$!{tableInfo.name}Req) returns (Get$!{tableInfo.name}Rsp) {
+    option (google.api.http) = {
+      get: "/$!tool.firstLowerCase($!tableInfo.name)s/{id}"
+    };
+  }
+  
+  // 删除$!{tableInfo.comment}
+  rpc Delete$!{tableInfo.name} (Delete$!{tableInfo.name}Req) returns (CommonRsp) {
+    option (google.api.http) = {
+      delete: "/$!tool.firstLowerCase($!tableInfo.name)s/{id}"
+    };
+  }
+
+  
+}

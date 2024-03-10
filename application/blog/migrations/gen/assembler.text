@@ -1,0 +1,26 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/gencode", "assembler.go")
+
+
+package assembler
+
+import (
+	"github.com/baker-yuan/go-mall/common/entity"
+	pb "github.com/baker-yuan/go-mall/proto/mall"
+)
+
+// $!{tableInfo.name}EntityToModel entity转pb
+func $!{tableInfo.name}EntityToModel($!tool.firstLowerCase($!{tableInfo.name}) *entity.$!{tableInfo.name}) *pb.$!{tableInfo.name} {
+	return &pb.$!{tableInfo.name}{
+
+	}
+}
+
+// AddOrUpdate$!{tableInfo.name}ParamToEntity pb转entity
+func AddOrUpdate$!{tableInfo.name}ParamToEntity(param *pb.AddOrUpdate$!{tableInfo.name}Param) *entity.$!{tableInfo.name} {
+	return &entity.$!{tableInfo.name}{
+	}
+}
