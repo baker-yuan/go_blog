@@ -1,0 +1,37 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/codegen", "assembler.go")
+
+
+package assembler
+
+import (
+	"database/sql"
+	"time"
+
+	"github.com/gogo/protobuf/proto"
+
+
+)
+
+// $!{tableInfo.name}EntityToModel entity转pb
+func $!{tableInfo.name}EntityToModel($!tool.firstLowerCase($!{tableInfo.name}) *entity.$!{tableInfo.name}) *pb.$!{tableInfo.name} {
+	modelRes := &pb.$!{tableInfo.name}{
+
+#foreach($column in $tableInfo.fullColumn)
+      $!tool.firstUpperCase($!{column.name}) : proto.String($!tool.firstLowerCase($!{tableInfo.name}) . $!tool.firstUpperCase($!{column.name})),
+#end
+
+	}
+	return modelRes
+}
+
+// AddOrUpdate$!{tableInfo.name}ReqToEntity pb转entity
+func AddOrUpdate$!{tableInfo.name}ReqToEntity(pb$!{tableInfo.name} *pb.AddOrUpdate$!{tableInfo.name}Req) *entity.$!{tableInfo.name} {
+	entityRes := &entity.$!{tableInfo.name}{
+
+	}
+	return entityRes
+}

@@ -1,0 +1,22 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/codegen", "entity.txt")
+
+import (
+	"database/sql"
+	"strings"
+)
+
+// $!{tableInfo.name} $!{tableInfo.comment}表
+type $!{tableInfo.name} struct {
+
+}
+
+var (
+	$!{tableInfo.name}TbName             = "blog_$!tool.firstLowerCase($!{tableInfo.name})"
+#foreach($column in $tableInfo.fullColumn)
+    $!{tableInfo.name}Field$!tool.firstUpperCase($!{column.name})  = "$!tool.hump2Underline($!{column.name})"
+#end
+)

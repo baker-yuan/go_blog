@@ -1,0 +1,708 @@
+{
+ "swagger": "2.0",
+ "info": {
+  "title": "blog",
+  "description": "The api document of blog.proto",
+  "version": "2.0"
+ },
+ "consumes": [
+  "application/json"
+ ],
+ "produces": [
+  "application/json"
+ ],
+ "paths": {
+  "/blog/admin/articleDetail": {
+   "post": {
+    "summary": "文章详情",
+    "operationId": "ArticleDetail",
+    "responses": {
+     "200": {
+      "description": "文章信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.Article"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/blog/admin/deleteArticle": {
+   "post": {
+    "summary": "删除文章",
+    "operationId": "DeleteArticle",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/blog/admin/searchArticle": {
+   "post": {
+    "summary": "文章搜索",
+    "operationId": "SearchArticle",
+    "responses": {
+     "200": {
+      "description": "SearchArticleRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.SearchArticleRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/blog/admin/updateArticle": {
+   "post": {
+    "summary": "添加修改文章",
+    "operationId": "AddOrUpdateArticle",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "category_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "文章分类表ID"
+     },
+     {
+      "name": "content",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "文章内容"
+     },
+     {
+      "name": "cover_image",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "文章封面图片"
+     },
+     {
+      "name": "description",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "文章简介"
+     },
+     {
+      "name": "format",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "文章格式 * 0 - ARTICLE_FORMAT_UNKNOWN - 未知格式\n * 1 - ARTICLE_FORMAT_MARKDOWN - Markdown格式\n * 2 - ARTICLE_FORMAT_RICH_TEXT - 富文本格式\n",
+      "enum": [
+       0,
+       1,
+       2
+      ]
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "基本数据\n主键"
+     },
+     {
+      "name": "is_appreciation",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "是否开启赞赏"
+     },
+     {
+      "name": "is_comment_enabled",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "是否开启评论"
+     },
+     {
+      "name": "is_recommend",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "是否推荐"
+     },
+     {
+      "name": "is_top",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "标志位\n是否置顶"
+     },
+     {
+      "name": "original_url",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "原文链接"
+     },
+     {
+      "name": "password",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "辅助信息\n密码保护"
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "文章状态 * 0 - ARTICLE_STATUS_DRAFT - 草稿\n * 1 - ARTICLE_STATUS_PUBLISHED - 已发布\n",
+      "enum": [
+       0,
+       1
+      ]
+     },
+     {
+      "name": "title",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "文章标题"
+     },
+     {
+      "name": "type",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "类型描述\n文章类型 * 0 - ARTICLE_TYPE_UNKNOWN - 未知类型\n * 1 - ARTICLE_TYPE_ORIGINAL - 原创\n * 2 - ARTICLE_TYPE_REPOST - 转载\n * 3 - ARTICLE_TYPE_TRANSLATION - 翻译\n",
+      "enum": [
+       0,
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "name": "visibility",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "文章可见性 * 0 - ARTICLE_VISIBILITY_UNKNOWN - 未知可见性\n * 1 - ARTICLE_VISIBILITY_PUBLIC - 公开\n * 2 - ARTICLE_VISIBILITY_PRIVATE - 私密\n * 3 - ARTICLE_VISIBILITY_PASSWORD_PROTECTED - 密码保护\n",
+      "enum": [
+       0,
+       1,
+       2,
+       3
+      ]
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/AddOrUpdateArticle": {
+   "post": {
+    "summary": "添加修改文章",
+    "operationId": "AddOrUpdateArticle2",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "category_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "文章分类表ID"
+     },
+     {
+      "name": "content",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "文章内容"
+     },
+     {
+      "name": "cover_image",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "文章封面图片"
+     },
+     {
+      "name": "description",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "文章简介"
+     },
+     {
+      "name": "format",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "文章格式 * 0 - ARTICLE_FORMAT_UNKNOWN - 未知格式\n * 1 - ARTICLE_FORMAT_MARKDOWN - Markdown格式\n * 2 - ARTICLE_FORMAT_RICH_TEXT - 富文本格式\n",
+      "enum": [
+       0,
+       1,
+       2
+      ]
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "基本数据\n主键"
+     },
+     {
+      "name": "is_appreciation",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "是否开启赞赏"
+     },
+     {
+      "name": "is_comment_enabled",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "是否开启评论"
+     },
+     {
+      "name": "is_recommend",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "是否推荐"
+     },
+     {
+      "name": "is_top",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "标志位\n是否置顶"
+     },
+     {
+      "name": "original_url",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "原文链接"
+     },
+     {
+      "name": "password",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "辅助信息\n密码保护"
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "文章状态 * 0 - ARTICLE_STATUS_DRAFT - 草稿\n * 1 - ARTICLE_STATUS_PUBLISHED - 已发布\n",
+      "enum": [
+       0,
+       1
+      ]
+     },
+     {
+      "name": "title",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "文章标题"
+     },
+     {
+      "name": "type",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "类型描述\n文章类型 * 0 - ARTICLE_TYPE_UNKNOWN - 未知类型\n * 1 - ARTICLE_TYPE_ORIGINAL - 原创\n * 2 - ARTICLE_TYPE_REPOST - 转载\n * 3 - ARTICLE_TYPE_TRANSLATION - 翻译\n",
+      "enum": [
+       0,
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "name": "visibility",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "文章可见性 * 0 - ARTICLE_VISIBILITY_UNKNOWN - 未知可见性\n * 1 - ARTICLE_VISIBILITY_PUBLIC - 公开\n * 2 - ARTICLE_VISIBILITY_PRIVATE - 私密\n * 3 - ARTICLE_VISIBILITY_PASSWORD_PROTECTED - 密码保护\n",
+      "enum": [
+       0,
+       1,
+       2,
+       3
+      ]
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/ArticleDetail": {
+   "post": {
+    "summary": "文章详情",
+    "operationId": "ArticleDetail2",
+    "responses": {
+     "200": {
+      "description": "文章信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.Article"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/DeleteArticle": {
+   "post": {
+    "summary": "删除文章",
+    "operationId": "DeleteArticle2",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/SearchArticle": {
+   "post": {
+    "summary": "文章搜索",
+    "operationId": "SearchArticle2",
+    "responses": {
+     "200": {
+      "description": "SearchArticleRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.SearchArticleRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  }
+ },
+ "definitions": {
+  "go_blog.blog.AddOrUpdateRsp": {
+   "type": "object",
+   "properties": {
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "资源id"
+    }
+   },
+   "title": "go_blog.blog.AddOrUpdateRsp",
+   "description": "添加修改资源返回值"
+  },
+  "go_blog.blog.Article": {
+   "type": "object",
+   "properties": {
+    "category_id": {
+     "title": "category_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "文章分类表ID"
+    },
+    "content": {
+     "title": "content",
+     "type": "string",
+     "description": "文章内容"
+    },
+    "cover_image": {
+     "title": "cover_image",
+     "type": "string",
+     "description": "文章封面图片"
+    },
+    "create_time": {
+     "title": "create_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "创建时间"
+    },
+    "description": {
+     "title": "description",
+     "type": "string",
+     "description": "文章简介"
+    },
+    "format": {
+     "title": "format",
+     "type": "integer",
+     "format": "int32",
+     "description": "文章格式 * 0 - ARTICLE_FORMAT_UNKNOWN - 未知格式\n * 1 - ARTICLE_FORMAT_MARKDOWN - Markdown格式\n * 2 - ARTICLE_FORMAT_RICH_TEXT - 富文本格式\n",
+     "enum": [
+      0,
+      1,
+      2
+     ]
+    },
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "基本数据\n主键"
+    },
+    "is_appreciation": {
+     "title": "is_appreciation",
+     "type": "boolean",
+     "description": "是否开启赞赏"
+    },
+    "is_comment_enabled": {
+     "title": "is_comment_enabled",
+     "type": "boolean",
+     "description": "是否开启评论"
+    },
+    "is_deleted": {
+     "title": "is_deleted",
+     "type": "boolean",
+     "description": "公共字段\n是否删除"
+    },
+    "is_recommend": {
+     "title": "is_recommend",
+     "type": "boolean",
+     "description": "是否推荐"
+    },
+    "is_top": {
+     "title": "is_top",
+     "type": "boolean",
+     "description": "标志位\n是否置顶"
+    },
+    "original_url": {
+     "title": "original_url",
+     "type": "string",
+     "description": "原文链接"
+    },
+    "password": {
+     "title": "password",
+     "type": "string",
+     "description": "辅助信息\n密码保护"
+    },
+    "read_time": {
+     "title": "read_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "阅读时长（分钟）"
+    },
+    "status": {
+     "title": "status",
+     "type": "integer",
+     "format": "int32",
+     "description": "文章状态 * 0 - ARTICLE_STATUS_DRAFT - 草稿\n * 1 - ARTICLE_STATUS_PUBLISHED - 已发布\n",
+     "enum": [
+      0,
+      1
+     ]
+    },
+    "title": {
+     "title": "title",
+     "type": "string",
+     "description": "文章标题"
+    },
+    "type": {
+     "title": "type",
+     "type": "integer",
+     "format": "int32",
+     "description": "类型描述\n文章类型 * 0 - ARTICLE_TYPE_UNKNOWN - 未知类型\n * 1 - ARTICLE_TYPE_ORIGINAL - 原创\n * 2 - ARTICLE_TYPE_REPOST - 转载\n * 3 - ARTICLE_TYPE_TRANSLATION - 翻译\n",
+     "enum": [
+      0,
+      1,
+      2,
+      3
+     ]
+    },
+    "update_time": {
+     "title": "update_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新时间"
+    },
+    "visibility": {
+     "title": "visibility",
+     "type": "integer",
+     "format": "int32",
+     "description": "文章可见性 * 0 - ARTICLE_VISIBILITY_UNKNOWN - 未知可见性\n * 1 - ARTICLE_VISIBILITY_PUBLIC - 公开\n * 2 - ARTICLE_VISIBILITY_PRIVATE - 私密\n * 3 - ARTICLE_VISIBILITY_PASSWORD_PROTECTED - 密码保护\n",
+     "enum": [
+      0,
+      1,
+      2,
+      3
+     ]
+    },
+    "words": {
+     "title": "words",
+     "type": "integer",
+     "format": "uint32",
+     "description": "文章字数"
+    }
+   },
+   "title": "go_blog.blog.Article",
+   "description": "文章信息定义"
+  },
+  "go_blog.blog.EmptyRsp": {
+   "type": "object",
+   "title": "go_blog.blog.EmptyRsp",
+   "description": "空响应"
+  },
+  "go_blog.blog.SearchArticleRsp": {
+   "type": "object",
+   "properties": {
+    "data": {
+     "title": "data",
+     "type": "array",
+     "description": " 文章集合\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.blog.Article"
+     }
+    },
+    "total": {
+     "title": "total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    }
+   },
+   "title": "go_blog.blog.SearchArticleRsp",
+   "description": "SearchArticleRsp"
+  }
+ }
+}

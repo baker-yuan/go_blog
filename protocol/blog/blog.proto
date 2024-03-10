@@ -1,0 +1,171 @@
+syntax = "proto3";
+
+package go_blog.blog;
+
+option  go_package ="github.com/baker-yuan/go-blog/protocol/blog";
+
+import "validate/validate.proto";
+import "trpc/proto/trpc_options.proto";
+import "trpc/swagger/swagger.proto";
+
+// validate参考
+// https://github.com/bufbuild/protoc-gen-validate/blob/v1.0.2/README.md
+
+// trpc参考
+// https://github.com/trpc-group/trpc-cmdline/blob/483259c22a2fd1e477c7ebc4b5b1572a5a47010c/docs/examples/example-1/README.zh_CN.md
+// https://github.com/trpc-group/trpc-cmdline/blob/483259c22a2fd1e477c7ebc4b5b1572a5a47010c/docs/examples/example-2/README.zh_CN.md
+
+// 空响应
+message EmptyRsp {
+
+}
+
+// 添加修改资源返回值
+message AddOrUpdateRsp {
+  uint32 id = 1; // 资源id
+}
+
+
+// 资源类型
+enum ResourceType {
+  RT_UNKNOWN = 0; // 未知
+  TB_ARTICLE = 1; // 文章
+}
+
+
+// 文章类型枚举定义
+enum ArticleType {
+  ARTICLE_TYPE_UNKNOWN = 0;     // 未知类型
+  ARTICLE_TYPE_ORIGINAL = 1;    // 原创
+  ARTICLE_TYPE_REPOST = 2;      // 转载
+  ARTICLE_TYPE_TRANSLATION = 3; // 翻译
+}
+
+// 文章状态枚举定义
+enum ArticleStatus {
+  ARTICLE_STATUS_DRAFT = 0;       // 草稿
+  ARTICLE_STATUS_PUBLISHED = 1;   // 已发布
+}
+
+// 文章格式枚举定义
+enum ArticleFormat {
+  ARTICLE_FORMAT_UNKNOWN = 0;       // 未知格式
+  ARTICLE_FORMAT_MARKDOWN = 1;      // Markdown格式
+  ARTICLE_FORMAT_RICH_TEXT = 2;     // 富文本格式
+}
+
+// 文章可见性枚举定义
+enum ArticleVisibility {
+  ARTICLE_VISIBILITY_UNKNOWN = 0;             // 未知可见性
+  ARTICLE_VISIBILITY_PUBLIC = 1;              // 公开
+  ARTICLE_VISIBILITY_PRIVATE = 2;             // 私密
+  ARTICLE_VISIBILITY_PASSWORD_PROTECTED = 3;  // 密码保护
+}
+
+// 文章信息定义
+message Article {
+  // 基本数据
+  uint32 id = 1;                  // 主键
+  uint32 category_id = 2;         // 文章分类表ID
+  string title = 3;               // 文章标题
+  string description = 4;         // 文章简介
+  string content = 5;             // 文章内容
+  string cover_image = 6;         // 文章封面图片
+  string original_url = 7;        // 原文链接
+
+  // 辅助信息
+  string password = 8;            // 密码保护
+  uint32 words = 9;               // 文章字数
+  uint32 read_time = 10;          // 阅读时长（分钟）
+
+  // 类型描述
+  ArticleType type = 11;                  // 文章类型
+  ArticleStatus status = 12;              // 文章状态
+  ArticleFormat format = 13;              // 文章格式
+  ArticleVisibility visibility = 14;      // 文章可见性
+
+  // 标志位
+  bool is_top = 15;                 // 是否置顶
+  bool is_recommend = 16;           // 是否推荐
+  bool is_appreciation = 17;        // 是否开启赞赏
+  bool is_comment_enabled = 18;     // 是否开启评论
+
+  // 公共字段
+  bool is_deleted = 19;             // 是否删除
+  uint32 create_time = 20;          // 创建时间
+  uint32 update_time = 21;          // 更新时间
+}
+
+
+// 文章搜索
+message SearchArticleReq {
+  string search = 1; // 查询条件 {a:?,b:?}
+
+  uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+}
+
+message SearchArticleRsp {
+  uint32 total = 1; // 分页查询
+  repeated Article data = 2; // 文章集合
+}
+
+// 文章详情
+message ArticleDetailReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 添加修改文章
+message AddOrUpdateArticleReq {
+  // 基本数据
+  uint32 id = 1;                  // 主键
+  uint32 category_id = 2 [(validate.rules).uint32.gt = 0];         // 文章分类表ID
+  string title = 3 [(validate.rules).string.min_len = 1];               // 文章标题
+  string description = 4 [(validate.rules).string.min_len = 1];         // 文章简介
+  string content = 5 [(validate.rules).string.min_len = 1];             // 文章内容
+  string cover_image = 6;         // 文章封面图片
+  string original_url = 7;        // 原文链接
+
+  // 辅助信息
+  string password = 8;            // 密码保护
+
+  // 类型描述
+  ArticleType type = 11 [(validate.rules).enum = {in: [1,2,3]}];                  // 文章类型
+  ArticleStatus status = 12 [(validate.rules).enum = {in: [0,1]}];              // 文章状态
+  ArticleFormat format = 13 [(validate.rules).enum = {in: [1,2]}];              // 文章格式
+  ArticleVisibility visibility = 14 [(validate.rules).enum = {in: [1,2,3]}];      // 文章可见性
+
+  // 标志位
+  bool is_top = 15;                 // 是否置顶
+  bool is_recommend = 16;           // 是否推荐
+  bool is_appreciation = 17;        // 是否开启赞赏
+  bool is_comment_enabled = 18;     // 是否开启评论
+}
+
+// 删除文章
+message DeleteArticleReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 博客api
+service BlogApi {
+  // 文章搜索
+  rpc SearchArticle (SearchArticleReq) returns (SearchArticleRsp) {
+    option(trpc.alias) = "/blog/admin/searchArticle";
+  }
+  // 添加修改文章
+  rpc AddOrUpdateArticle (AddOrUpdateArticleReq) returns (AddOrUpdateRsp) {
+    option(trpc.alias) = "/blog/admin/updateArticle";
+  }
+  // 删除文章
+  rpc DeleteArticle (DeleteArticleReq) returns (EmptyRsp) {
+    option(trpc.alias) = "/blog/admin/deleteArticle";
+  }
+  // 文章详情
+  rpc ArticleDetail (ArticleDetailReq) returns (Article) {
+    option(trpc.alias) = "/blog/admin/articleDetail";
+  }
+
+
+
+}

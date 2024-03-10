@@ -1,0 +1,141 @@
+# https://github.com/trpc-group/trpc-go/blob/main/docs/user_guide/framework_conf.zh_CN.md
+
+# https://github.com/trpc-ecosystem/go-naming-polarismesh/blob/main/README.zh_CN.md
+# https://polarismesh.cn
+
+#全局配置
+global:
+  # 必填，通常使用 Production 或 Development
+  namespace: Production
+  # 选填，环境名称 test formal
+  env_name: formal
+
+# 服务端配置
+server:
+  # 必填，服务所属的应用名
+  app: go_blog
+  # 必填，服务所属的服务名
+  server: blog
+  # 选填，可执行文件的路径
+  bin_path: /usr/local/trpc/bin/
+  # 选填，数据文件的路径
+  data_path: /usr/local/trpc/data/
+  # 选填，配置文件的路径
+  conf_path: /usr/local/trpc/conf/
+  # 选填，服务常用的管理功能
+  admin:
+    # 选填，网卡名，ip 字段为空时，会尝试从网卡获取 IP
+    #nic: eth1
+    # 选填，admin 绑定的端口，如果为 0，即默认值，admin 功能不会开启
+    port: 8080
+    # 选填，读超时时间，单位为 ms，默认为 3000ms
+    read_timeout: 120000
+    # 选填，写超时时间，单位为 ms，默认为 3000ms
+    write_timeout: 120000
+  # 选填，所有 service 共享的拦截器配置
+  filter:
+    # panic捕获
+    - recovery
+    # 请求日志打印
+    - jsondebuglog
+    # 数据校验
+    - validation
+  service:
+    - name: trpc.blog.template.BlogApiHttp
+      # 选填，该 service 绑定的网卡，只有 ip 为空时，才会生效
+      #nic: eth1
+      # 选填，该 service 绑定的端口，address 为空时，port 必填
+      port: 8001
+      # 选填，网络类型，为空时，使用 server.network
+      network: tcp
+      # 选填，协议类型，为空时，使用 server.protocol
+      protocol: http
+      # 选填，service 处理请求的超时时间 单位 毫秒
+      timeout: 8000
+      # 选填，使用哪个注册中心 polaris
+      registry: polaris
+    - name: trpc.blog.template.BlogApiTrpc
+      # 选填，该 service 绑定的网卡，只有 ip 为空时，才会生效
+      #nic: eth1
+      # 选填，该 service 绑定的端口，address 为空时，port 必填
+      port: 8000
+      # 选填，网络类型，为空时，使用 server.network
+      network: tcp
+      # 选填，协议类型，为空时，使用 server.protocol
+      protocol: trpc
+      # 选填，service 处理请求的超时时间 单位 毫秒
+      timeout: 8848
+      # 选填，使用哪个注册中心 polaris
+      registry: polaris
+
+# 插件配置
+plugins:
+  # 日志插件
+  log:
+    # 默认
+    default:
+      # 本地文件日志
+      - writer: file
+        # 本地文件滚动日志的级别
+        level: debug
+        # 本地文件输出具体配置
+        writer_config:
+          # 本地文件日志路径
+          log_path: /usr/local/trpc/log/
+          # 本地文件日志文件名
+          filename: trpc.log
+          # 文件滚动类型,size为按大小滚动
+          roll_type: size
+          # 最大日志保留天数
+          max_age: 7
+          # 本地文件滚动日志的大小 单位 MB
+          max_size: 10
+          # 最大日志文件数
+          max_backups: 10
+          # 日志文件是否压缩
+          compress: false
+
+  registry:
+    # 北极星名字注册服务的配置
+    # https://github.com/trpc-ecosystem/go-naming-polarismesh/blob/main/README.zh_CN.md
+    polarismesh:
+      # 北极星服务的地址 ip1:port1,ip2:port2
+      address_list: 119.91.66.223:8091
+      # 是否进行服务自注册, 默认为 false
+      register_self: false
+      # 北极星日志目录
+      log_dir: /usr/local/trpc/polarismesh/log
+      # 服务缓存持久化目录，按照服务维度将数据持久化到磁盘
+      persistDir: /usr/local/trpc/polarismesh/backup
+  # 针对 trpc 框架服务发现的配置
+  selector:
+    # 北极星服务发现的配置
+    polarismesh:
+      # 名字服务远程交互协议类型
+      protocol: grpc
+      # 北极星服务的地址 ip1:port1,ip2:port2
+      address_list: 119.91.66.223:8091
+      # 北极星日志目录
+      log_dir: /usr/local/trpc/polarismesh/log
+      # 服务缓存持久化目录，按照服务维度将数据持久化到磁盘
+      persistDir: /usr/local/trpc/polarismesh/backup
+      #
+      discovery:
+        # 刷新间隔，毫秒
+        refresh_interval: 10000
+
+# 客户端配置
+client:
+  # 选填，所有 service 共享的拦截器配置
+  filter:
+    # 请求日志打印
+    - debuglog
+  # 选填，为空时，使用 global.namespace
+  namespace: Production
+  # 选填，客户端超时时间，当 service 未配置 timeout，以该字段为准 单位 毫秒
+  timeout: 2000
+  # 必填，被调服务列表
+  service:
+    # mysql
+    - name: trpc.mysql.blog.template
+      target: dsn://root:123456@tcp(127.0.0.1:3306)/baker_blog_blog?charset=utf8mb4&parseTime=True

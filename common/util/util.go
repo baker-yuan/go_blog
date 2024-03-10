@@ -1,11 +1,12 @@
 package util
 
 import (
-	"common/util/conversion"
-	"common/util/page"
-	"common/util/slice"
-	"common/util/stack"
-	"common/util/str"
+	"github.com/baker-yuan/go-blog/common/util/conversion"
+	"github.com/baker-yuan/go-blog/common/util/obj"
+	"github.com/baker-yuan/go-blog/common/util/page"
+	"github.com/baker-yuan/go-blog/common/util/slice"
+	"github.com/baker-yuan/go-blog/common/util/stack"
+	"github.com/baker-yuan/go-blog/common/util/str"
 )
 
 var (
@@ -27,4 +28,9 @@ func NewFieldExtractor[T any, K comparable]() slice.FieldExtractor[T, K] {
 // NewPageUtils 内存分页
 func NewPageUtils[T any]() page.PageUtils[T] {
 	return page.PageUtils[T]{}
+}
+
+// NewObjectUtils 对象操作
+func NewObjectUtils[T any]() obj.ObjectUtils[T] {
+	return obj.ObjectUtils[T]{}
 }

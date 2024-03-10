@@ -6,5 +6,10 @@
 # https://github.com/bufbuild/protoc-gen-validate/blob/main/validate/validate.proto
 # https://github.com/bufbuild/protoc-gen-validate/blob/v1.0.2/README.md
 
-find ./template -type f ! -name 'template.proto' -exec rm -f {} +
-trpc create --protofile=template/template.proto --validate=true --rpconly -o template
+
+#find ./template -type f ! -name 'template.proto' -exec rm -f {} +
+#trpc create --protofile=template/template.proto --validate=true --rpconly -o template
+
+
+find ./blog -type f ! -name 'blog.proto' -exec rm -f {} +
+trpc create --protofile=blog/blog.proto --validate=true --rpconly --alias --swagger -o blog

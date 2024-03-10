@@ -1,0 +1,142 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/codegen", "usecase.xt")
+
+
+package usecase
+
+import (
+	"context"
+	"database/sql"
+	"fmt"
+	"time"
+
+)
+
+// $!{tableInfo.name}UseCase $!{tableInfo.comment}管理
+type $!{tableInfo.name}UseCase struct {
+    ICommonUseCase
+	$!tool.firstLowerCase($!{tableInfo.name})Repo        I$!{tableInfo.name}Repo
+}
+
+// New$!{tableInfo.name}UseCase 创建$!{tableInfo.comment}管理service
+func New$!{tableInfo.name}UseCase(
+	commonUseCase ICommonUseCase,
+	$!tool.firstLowerCase($!{tableInfo.name})Repo I$!{tableInfo.name}Repo,
+) *$!{tableInfo.name}UseCase {
+	return &$!{tableInfo.name}UseCase{
+        ICommonUseCase:  commonUseCase,
+		$!tool.firstLowerCase($!{tableInfo.name})Repo:        $!tool.firstLowerCase($!{tableInfo.name})Repo,
+	}
+}
+
+// $!{tableInfo.name}Detail $!{tableInfo.comment}详情
+func (c *$!{tableInfo.name}UseCase) $!{tableInfo.name}Detail(ctx context.Context, req *pb.$!{tableInfo.name}DetailReq) (*pb.$!{tableInfo.name}, error) {
+	$!tool.firstLowerCase($!{tableInfo.name}), err := c.$!tool.firstLowerCase($!{tableInfo.name})Repo. Get$!{tableInfo.name}ByID(ctx, int(req.GetId()))
+	if err != nil {
+		return nil, err
+	}
+	pb$!{tableInfo.name} := assembler.$!{tableInfo.name}EntityToModel($!tool.firstLowerCase($!{tableInfo.name}))
+	return pb$!{tableInfo.name}, nil
+}
+
+// Search$!{tableInfo.name} $!{tableInfo.comment}搜索
+func (c *$!{tableInfo.name}UseCase) Search$!{tableInfo.name}(ctx context.Context, req *pb.Search$!{tableInfo.name}Req) ([]*pb.$!{tableInfo.name}, uint32, error) {
+	$!tool.firstLowerCase($!{tableInfo.name})s, total, err := c.$!tool.firstLowerCase($!{tableInfo.name})Repo. Search$!{tableInfo.name}(ctx, req)
+	if err != nil {
+		return nil, 0, err
+	}
+	data := make([]*pb.$!{tableInfo.name}, 0)
+	for _, $!tool.firstLowerCase($!{tableInfo.name}) := range $!tool.firstLowerCase($!{tableInfo.name})s {
+		data = append(data, assembler.$!{tableInfo.name}EntityToModel($!tool.firstLowerCase($!{tableInfo.name})))
+	}
+	return data, total, nil
+}
+
+
+// AddOrUpdate$!{tableInfo.name} 添加修改$!{tableInfo.comment}
+func (c *$!{tableInfo.name}UseCase) AddOrUpdate$!{tableInfo.name}(ctx context.Context, req *pb.AddOrUpdate$!{tableInfo.name}Req) (uint32, error) {
+	loginName, err := pkg_util.GetLoginStaffName(ctx)
+	if err != nil {
+		return 0, err
+	}
+
+	if req.GetId() == 0 {
+		return c.add$!{tableInfo.name}(ctx, loginName, req)
+	} else {
+		db$!{tableInfo.name}, err := c.$!tool.firstLowerCase($!{tableInfo.name})Repo. Get$!{tableInfo.name}ByID(ctx, int(req.GetId()))
+    	if err != nil {
+    		return 0, err
+    	}
+
+		return c.update$!{tableInfo.name}(ctx, db$!{tableInfo.name}, loginName, req)
+	}
+}
+
+func (c *$!{tableInfo.name}UseCase) add$!{tableInfo.name}(ctx context.Context, loginName string, req *pb.AddOrUpdate$!{tableInfo.name}Req) (uint32, error) {
+	$!tool.firstLowerCase($!{tableInfo.name}) := assembler.AddOrUpdate$!{tableInfo.name}ReqToEntity(req)
+	$!tool.firstLowerCase($!{tableInfo.name}) .AddTime = sql.NullTime{Time: time.Now(), Valid: true}
+	$!tool.firstLowerCase($!{tableInfo.name}) .AddOperator = loginName
+	$!tool.firstLowerCase($!{tableInfo.name}) .LastChgTime = sql.NullTime{Time: time.Now(), Valid: true}
+	$!tool.firstLowerCase($!{tableInfo.name}) .LastChgUser = loginName
+
+	lastInsertID, err := c.$!tool.firstLowerCase($!{tableInfo.name})Repo. Save(ctx, $!tool.firstLowerCase($!{tableInfo.name}))
+	if err != nil {
+		return 0, err
+	}
+
+	c.SaveChangeLog(ctx,
+		lastInsertID, pb.ResourceType_RT_,
+		"{}", $!tool.firstLowerCase($!{tableInfo.name}),
+		"新增$!{tableInfo.comment}",
+	)
+
+	return lastInsertID, nil
+}
+
+func (c *$!{tableInfo.name}UseCase) update$!{tableInfo.name}(ctx context.Context, db$!{tableInfo.name} *entity.$!{tableInfo.name}, loginName string, req *pb.AddOrUpdate$!{tableInfo.name}Req) (uint32, error) {
+	save$!{tableInfo.name} := assembler.AddOrUpdate$!{tableInfo.name}ReqToEntity(req)
+	save$!{tableInfo.name}.AddTime = db$!{tableInfo.name}.AddTime
+	save$!{tableInfo.name}.AddOperator = db$!{tableInfo.name}.AddOperator
+	save$!{tableInfo.name}.LastChgTime = sql.NullTime{Time: time.Now(), Valid: true}
+	save$!{tableInfo.name}.LastChgUser = loginName
+
+	if err := c.$!tool.firstLowerCase($!{tableInfo.name})Repo. UpdateByID(ctx, save$!{tableInfo.name}); err != nil {
+		return 0, err
+	}
+
+	c.SaveChangeLog(ctx,
+		req.GetId(), pb.ResourceType_RT_,
+		db$!{tableInfo.name}, save$!{tableInfo.name},
+		"全字段修改$!{tableInfo.comment}",
+	)
+
+	return req.GetId(), nil
+}
+
+// Delete$!{tableInfo.name} 删除$!{tableInfo.comment}
+func (c *$!{tableInfo.name}UseCase) Delete$!{tableInfo.name}(ctx context.Context, req *pb.Delete$!{tableInfo.name}Req) error {
+	loginName, err := pkg_util.GetLoginStaffName(ctx)
+	if err != nil {
+		return err
+	}
+
+	$!tool.firstLowerCase($!{tableInfo.name}), err := c.$!tool.firstLowerCase($!{tableInfo.name})Repo. Get$!{tableInfo.name}ByID(ctx, int(req.GetId()))
+	if err != nil {
+		return err
+	}
+
+	if err := c.$!tool.firstLowerCase($!{tableInfo.name})Repo. DeleteByID(ctx, int(req.GetId())); err != nil {
+		return err
+	}
+
+	c.SaveChangeLog(ctx,
+		req.GetId(), pb.ResourceType_RT_,
+		$!tool.firstLowerCase($!{tableInfo.name}), "{}",
+		"删除$!{tableInfo.comment}",
+	)
+
+	return nil
+}

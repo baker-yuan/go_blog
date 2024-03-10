@@ -156,7 +156,9 @@ func (m *AddOrUpdateRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Id
+	if m.Id != nil {
+		// no validation rules for Id
+	}
 
 	if len(errors) > 0 {
 		return AddOrUpdateRspMultiError(errors)
@@ -258,25 +260,45 @@ func (m *FriendLink) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Id
+	if m.Id != nil {
+		// no validation rules for Id
+	}
 
-	// no validation rules for LinkName
+	if m.LinkName != nil {
+		// no validation rules for LinkName
+	}
 
-	// no validation rules for LinkAvatar
+	if m.LinkAvatar != nil {
+		// no validation rules for LinkAvatar
+	}
 
-	// no validation rules for LinkAddress
+	if m.LinkAddress != nil {
+		// no validation rules for LinkAddress
+	}
 
-	// no validation rules for LinkIntro
+	if m.LinkIntro != nil {
+		// no validation rules for LinkIntro
+	}
 
-	// no validation rules for Sort
+	if m.Sort != nil {
+		// no validation rules for Sort
+	}
 
-	// no validation rules for Status
+	if m.Status != nil {
+		// no validation rules for Status
+	}
 
-	// no validation rules for IsDeleted
+	if m.IsDeleted != nil {
+		// no validation rules for IsDeleted
+	}
 
-	// no validation rules for CreateTime
+	if m.CreateTime != nil {
+		// no validation rules for CreateTime
+	}
 
-	// no validation rules for UpdateTime
+	if m.UpdateTime != nil {
+		// no validation rules for UpdateTime
+	}
 
 	if len(errors) > 0 {
 		return FriendLinkMultiError(errors)
@@ -377,26 +399,34 @@ func (m *SearchFriendLinkReq) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetPageNum() <= 0 {
-		err := SearchFriendLinkReqValidationError{
-			field:  "PageNum",
-			reason: "value must be greater than 0",
+	if m.PageNum != nil {
+
+		if m.GetPageNum() <= 0 {
+			err := SearchFriendLinkReqValidationError{
+				field:  "PageNum",
+				reason: "value must be greater than 0",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
 		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
+
 	}
 
-	if m.GetPageSize() <= 0 {
-		err := SearchFriendLinkReqValidationError{
-			field:  "PageSize",
-			reason: "value must be greater than 0",
+	if m.PageSize != nil {
+
+		if m.GetPageSize() <= 0 {
+			err := SearchFriendLinkReqValidationError{
+				field:  "PageSize",
+				reason: "value must be greater than 0",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
 		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
+
 	}
 
 	if len(errors) > 0 {
@@ -501,8 +531,6 @@ func (m *SearchFriendLinkRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Total
-
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -535,6 +563,10 @@ func (m *SearchFriendLinkRsp) validate(all bool) error {
 			}
 		}
 
+	}
+
+	if m.Total != nil {
+		// no validation rules for Total
 	}
 
 	if len(errors) > 0 {
@@ -639,15 +671,19 @@ func (m *FriendLinkDetailReq) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetId() <= 0 {
-		err := FriendLinkDetailReqValidationError{
-			field:  "Id",
-			reason: "value must be greater than 0",
+	if m.Id != nil {
+
+		if m.GetId() <= 0 {
+			err := FriendLinkDetailReqValidationError{
+				field:  "Id",
+				reason: "value must be greater than 0",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
 		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
+
 	}
 
 	if len(errors) > 0 {
@@ -854,15 +890,19 @@ func (m *DeleteFriendLinkReq) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetId() <= 0 {
-		err := DeleteFriendLinkReqValidationError{
-			field:  "Id",
-			reason: "value must be greater than 0",
+	if m.Id != nil {
+
+		if m.GetId() <= 0 {
+			err := DeleteFriendLinkReqValidationError{
+				field:  "Id",
+				reason: "value must be greater than 0",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
 		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
+
 	}
 
 	if len(errors) > 0 {
