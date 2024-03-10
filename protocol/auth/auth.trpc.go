@@ -103,7 +103,7 @@ func AuthApiService_MenuDetail_Handler(svr interface{}, ctx context.Context, f s
 
 // AuthApiServer_ServiceDesc descriptor for server.RegisterService.
 var AuthApiServer_ServiceDesc = server.ServiceDesc{
-	ServiceName: "go_blog.blog.AuthApi",
+	ServiceName: "go_blog.auth.AuthApi",
 	HandlerType: ((*AuthApiService)(nil)),
 	Methods: []server.Method{
 		{
@@ -123,19 +123,19 @@ var AuthApiServer_ServiceDesc = server.ServiceDesc{
 			Func: AuthApiService_MenuDetail_Handler,
 		},
 		{
-			Name: "/go_blog.blog.AuthApi/SearchMenu",
+			Name: "/go_blog.auth.AuthApi/SearchMenu",
 			Func: AuthApiService_SearchMenu_Handler,
 		},
 		{
-			Name: "/go_blog.blog.AuthApi/AddOrUpdateMenu",
+			Name: "/go_blog.auth.AuthApi/AddOrUpdateMenu",
 			Func: AuthApiService_AddOrUpdateMenu_Handler,
 		},
 		{
-			Name: "/go_blog.blog.AuthApi/DeleteMenu",
+			Name: "/go_blog.auth.AuthApi/DeleteMenu",
 			Func: AuthApiService_DeleteMenu_Handler,
 		},
 		{
-			Name: "/go_blog.blog.AuthApi/MenuDetail",
+			Name: "/go_blog.auth.AuthApi/MenuDetail",
 			Func: AuthApiService_MenuDetail_Handler,
 		},
 	},

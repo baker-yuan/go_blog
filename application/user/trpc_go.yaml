@@ -15,7 +15,7 @@ server:
   # 必填，服务所属的应用名
   app: go_blog
   # 必填，服务所属的服务名
-  server: auth
+  server: user
   # 选填，可执行文件的路径
   bin_path: /usr/local/trpc/bin/
   # 选填，数据文件的路径
@@ -27,7 +27,7 @@ server:
     # 选填，网卡名，ip 字段为空时，会尝试从网卡获取 IP
     #nic: eth1
     # 选填，admin 绑定的端口，如果为 0，即默认值，admin 功能不会开启
-    port: 8080
+    port: 7000
     # 选填，读超时时间，单位为 ms，默认为 3000ms
     read_timeout: 3000
     # 选填，写超时时间，单位为 ms，默认为 3000ms
@@ -41,11 +41,11 @@ server:
     # 数据校验
     - validation
   service:
-    - name: trpc.blog.auth.BlogApiHttp
+    - name: trpc.blog.user.UserApiHttp
       # 选填，该 service 绑定的网卡，只有 ip 为空时，才会生效
       #nic: eth1
       # 选填，该 service 绑定的端口，address 为空时，port 必填
-      port: 9002
+      port: 7100
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
@@ -54,17 +54,17 @@ server:
       timeout: 2000
       # 选填，使用哪个注册中心 polaris
       registry: polaris
-    - name: trpc.blog.auth.BlogApiTrpc
+    - name: trpc.blog.user.UserApiTrpc
       # 选填，该 service 绑定的网卡，只有 ip 为空时，才会生效
       #nic: eth1
       # 选填，该 service 绑定的端口，address 为空时，port 必填
-      port: 9100
+      port: 8001
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
       protocol: trpc
       # 选填，service 处理请求的超时时间 单位 毫秒
-      timeout:
+      timeout: 2000
       # 选填，使用哪个注册中心 polaris
       registry: polaris
 

@@ -1,0 +1,368 @@
+{
+ "swagger": "2.0",
+ "info": {
+  "title": "user",
+  "description": "The api document of user.proto",
+  "version": "2.0"
+ },
+ "consumes": [
+  "application/json"
+ ],
+ "produces": [
+  "application/json"
+ ],
+ "paths": {
+  "/go_blog.user.UserApi/AddOrUpdateUser": {
+   "post": {
+    "summary": "添加修改用户",
+    "operationId": "AddOrUpdateUser",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.user.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": null,
+    "tags": [
+     "userapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.user.UserApi/DeleteUser": {
+   "post": {
+    "summary": "删除用户",
+    "operationId": "DeleteUser",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.user.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "userapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.user.UserApi/SearchUser": {
+   "post": {
+    "summary": "用户搜索",
+    "operationId": "SearchUser",
+    "responses": {
+     "200": {
+      "description": "SearchUserRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.user.SearchUserRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     }
+    ],
+    "tags": [
+     "userapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.user.UserApi/UserDetail": {
+   "post": {
+    "summary": "用户详情",
+    "operationId": "UserDetail",
+    "responses": {
+     "200": {
+      "description": "用户信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.user.User"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "userapi.trpc"
+    ]
+   }
+  },
+  "/user/admin/deleteUser": {
+   "post": {
+    "summary": "删除用户",
+    "operationId": "DeleteUser2",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.user.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "userapi.trpc"
+    ]
+   }
+  },
+  "/user/admin/searchUser": {
+   "post": {
+    "summary": "用户搜索",
+    "operationId": "SearchUser2",
+    "responses": {
+     "200": {
+      "description": "SearchUserRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.user.SearchUserRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     }
+    ],
+    "tags": [
+     "userapi.trpc"
+    ]
+   }
+  },
+  "/user/admin/updateUser": {
+   "post": {
+    "summary": "添加修改用户",
+    "operationId": "AddOrUpdateUser2",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.user.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": null,
+    "tags": [
+     "userapi.trpc"
+    ]
+   }
+  },
+  "/user/admin/userDetail": {
+   "post": {
+    "summary": "用户详情",
+    "operationId": "UserDetail2",
+    "responses": {
+     "200": {
+      "description": "用户信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.user.User"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "userapi.trpc"
+    ]
+   }
+  }
+ },
+ "definitions": {
+  "go_blog.user.AddOrUpdateRsp": {
+   "type": "object",
+   "properties": {
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "资源id"
+    }
+   },
+   "title": "go_blog.user.AddOrUpdateRsp",
+   "description": "添加修改资源返回值"
+  },
+  "go_blog.user.EmptyRsp": {
+   "type": "object",
+   "title": "go_blog.user.EmptyRsp",
+   "description": "空响应"
+  },
+  "go_blog.user.SearchUserRsp": {
+   "type": "object",
+   "properties": {
+    "data": {
+     "title": "data",
+     "type": "array",
+     "description": " 用户集合\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.user.User"
+     }
+    },
+    "total": {
+     "title": "total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    }
+   },
+   "title": "go_blog.user.SearchUserRsp",
+   "description": "SearchUserRsp"
+  },
+  "go_blog.user.User": {
+   "type": "object",
+   "properties": {
+    "avatar": {
+     "title": "avatar",
+     "type": "string",
+     "description": "头像地址"
+    },
+    "create_time": {
+     "title": "create_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "创建时间"
+    },
+    "email": {
+     "title": "email",
+     "type": "string",
+     "description": "邮箱号"
+    },
+    "intro": {
+     "title": "intro",
+     "type": "string",
+     "description": "用户简介"
+    },
+    "is_deleted": {
+     "title": "is_deleted",
+     "type": "boolean",
+     "description": "是否注销"
+    },
+    "login_type": {
+     "title": "login_type",
+     "type": "integer",
+     "format": "uint32",
+     "description": "登录方式"
+    },
+    "nickname": {
+     "title": "nickname",
+     "type": "string",
+     "description": "昵称"
+    },
+    "password": {
+     "title": "password",
+     "type": "string",
+     "description": "登录密码"
+    },
+    "salt": {
+     "title": "salt",
+     "type": "string",
+     "description": "盐"
+    },
+    "status": {
+     "title": "status",
+     "type": "integer",
+     "format": "uint32",
+     "description": "状态"
+    },
+    "uid": {
+     "title": "uid",
+     "type": "integer",
+     "format": "uint32",
+     "description": "主键"
+    },
+    "union_id": {
+     "title": "union_id",
+     "type": "string",
+     "description": "用户唯一标识（第三方网站）"
+    },
+    "update_time": {
+     "title": "update_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "修改时间"
+    },
+    "user_type": {
+     "title": "user_type",
+     "type": "integer",
+     "format": "int32",
+     "description": "用户类型 * 0 - USER - 普通用户\n * 1 - ADMIN - 管理员\n",
+     "enum": [
+      0,
+      1
+     ]
+    },
+    "username": {
+     "title": "username",
+     "type": "string",
+     "description": "用户名"
+    },
+    "web_site": {
+     "title": "web_site",
+     "type": "string",
+     "description": "个人网站"
+    }
+   },
+   "title": "go_blog.user.User",
+   "description": "用户信息定义"
+  }
+ }
+}

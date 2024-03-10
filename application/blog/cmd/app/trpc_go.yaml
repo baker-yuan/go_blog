@@ -29,9 +29,9 @@ server:
     # 选填，admin 绑定的端口，如果为 0，即默认值，admin 功能不会开启
     port: 8080
     # 选填，读超时时间，单位为 ms，默认为 3000ms
-    read_timeout: 120000
+    read_timeout: 3000
     # 选填，写超时时间，单位为 ms，默认为 3000ms
-    write_timeout: 120000
+    write_timeout: 3000
   # 选填，所有 service 共享的拦截器配置
   filter:
     # panic捕获
@@ -41,7 +41,7 @@ server:
     # 数据校验
     - validation
   service:
-    - name: trpc.blog.template.BlogApiHttp
+    - name: trpc.blog.blog.BlogApiHttp
       # 选填，该 service 绑定的网卡，只有 ip 为空时，才会生效
       #nic: eth1
       # 选填，该 service 绑定的端口，address 为空时，port 必填
@@ -54,7 +54,7 @@ server:
       timeout: 2000
       # 选填，使用哪个注册中心 polaris
       registry: polaris
-    - name: trpc.blog.template.BlogApiTrpc
+    - name: trpc.blog.blog.BlogApiTrpc
       # 选填，该 service 绑定的网卡，只有 ip 为空时，才会生效
       #nic: eth1
       # 选填，该 service 绑定的端口，address 为空时，port 必填

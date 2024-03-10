@@ -20,7 +20,7 @@
      "200": {
       "description": "空响应",
       "schema": {
-       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
       }
      }
     },
@@ -47,7 +47,7 @@
      "200": {
       "description": "菜单资源信息定义",
       "schema": {
-       "$ref": "#/definitions/go_blog.blog.Menu"
+       "$ref": "#/definitions/go_blog.auth.Menu"
       }
      }
     },
@@ -74,7 +74,7 @@
      "200": {
       "description": "SearchMenuRsp",
       "schema": {
-       "$ref": "#/definitions/go_blog.blog.SearchMenuRsp"
+       "$ref": "#/definitions/go_blog.auth.SearchMenuRsp"
       }
      }
     },
@@ -109,7 +109,7 @@
      "200": {
       "description": "添加修改资源返回值",
       "schema": {
-       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+       "$ref": "#/definitions/go_blog.auth.AddOrUpdateRsp"
       }
      }
     },
@@ -119,7 +119,7 @@
     ]
    }
   },
-  "/go_blog.blog.AuthApi/AddOrUpdateMenu": {
+  "/go_blog.auth.AuthApi/AddOrUpdateMenu": {
    "post": {
     "summary": "添加修改菜单",
     "operationId": "AddOrUpdateMenu2",
@@ -127,7 +127,7 @@
      "200": {
       "description": "添加修改资源返回值",
       "schema": {
-       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+       "$ref": "#/definitions/go_blog.auth.AddOrUpdateRsp"
       }
      }
     },
@@ -137,7 +137,7 @@
     ]
    }
   },
-  "/go_blog.blog.AuthApi/DeleteMenu": {
+  "/go_blog.auth.AuthApi/DeleteMenu": {
    "post": {
     "summary": "删除菜单",
     "operationId": "DeleteMenu2",
@@ -145,7 +145,7 @@
      "200": {
       "description": "空响应",
       "schema": {
-       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
       }
      }
     },
@@ -164,7 +164,7 @@
     ]
    }
   },
-  "/go_blog.blog.AuthApi/MenuDetail": {
+  "/go_blog.auth.AuthApi/MenuDetail": {
    "post": {
     "summary": "菜单详情",
     "operationId": "MenuDetail2",
@@ -172,7 +172,7 @@
      "200": {
       "description": "菜单资源信息定义",
       "schema": {
-       "$ref": "#/definitions/go_blog.blog.Menu"
+       "$ref": "#/definitions/go_blog.auth.Menu"
       }
      }
     },
@@ -191,7 +191,7 @@
     ]
    }
   },
-  "/go_blog.blog.AuthApi/SearchMenu": {
+  "/go_blog.auth.AuthApi/SearchMenu": {
    "post": {
     "summary": "菜单搜索",
     "operationId": "SearchMenu2",
@@ -199,7 +199,7 @@
      "200": {
       "description": "SearchMenuRsp",
       "schema": {
-       "$ref": "#/definitions/go_blog.blog.SearchMenuRsp"
+       "$ref": "#/definitions/go_blog.auth.SearchMenuRsp"
       }
      }
     },
@@ -228,7 +228,7 @@
   }
  },
  "definitions": {
-  "go_blog.blog.AddOrUpdateRsp": {
+  "go_blog.auth.AddOrUpdateRsp": {
    "type": "object",
    "properties": {
     "id": {
@@ -238,15 +238,15 @@
      "description": "资源id"
     }
    },
-   "title": "go_blog.blog.AddOrUpdateRsp",
+   "title": "go_blog.auth.AddOrUpdateRsp",
    "description": "添加修改资源返回值"
   },
-  "go_blog.blog.EmptyRsp": {
+  "go_blog.auth.EmptyRsp": {
    "type": "object",
-   "title": "go_blog.blog.EmptyRsp",
+   "title": "go_blog.auth.EmptyRsp",
    "description": "空响应"
   },
-  "go_blog.blog.Menu": {
+  "go_blog.auth.Menu": {
    "type": "object",
    "properties": {
     "component": {
@@ -322,10 +322,10 @@
      "description": "更新人id"
     }
    },
-   "title": "go_blog.blog.Menu",
+   "title": "go_blog.auth.Menu",
    "description": "菜单资源信息定义"
   },
-  "go_blog.blog.SearchMenuRsp": {
+  "go_blog.auth.SearchMenuRsp": {
    "type": "object",
    "properties": {
     "data": {
@@ -333,7 +333,7 @@
      "type": "array",
      "description": " 菜单集合\n",
      "items": {
-      "$ref": "#/definitions/go_blog.blog.Menu"
+      "$ref": "#/definitions/go_blog.auth.Menu"
      }
     },
     "total": {
@@ -343,7 +343,7 @@
      "description": "分页查询"
     }
    },
-   "title": "go_blog.blog.SearchMenuRsp",
+   "title": "go_blog.auth.SearchMenuRsp",
    "description": "SearchMenuRsp"
   }
  }

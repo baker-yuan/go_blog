@@ -16,3 +16,6 @@
 
 find ./auth -type f ! -name 'auth.proto' -exec rm -f {} +
 trpc create --protofile=auth/auth.proto --validate=true --rpconly --alias --swagger -o auth
+
+find ./user -type f ! -name 'user.proto' -exec rm -f {} +
+trpc create --protofile=user/user.proto --validate=true --rpconly --alias --swagger -o user
