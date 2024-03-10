@@ -1,0 +1,163 @@
+
+syntax = "proto3";
+
+package go_blog.blog;
+
+option  go_package ="github.com/baker-yuan/go-blog/protocol/auth";
+
+import "validate/validate.proto";
+import "trpc/proto/trpc_options.proto";
+import "trpc/swagger/swagger.proto";
+
+// validate参考
+// https://github.com/bufbuild/protoc-gen-validate/blob/v1.0.2/README.md
+
+// trpc参考
+// https://github.com/trpc-group/trpc-cmdline/blob/483259c22a2fd1e477c7ebc4b5b1572a5a47010c/docs/examples/example-1/README.zh_CN.md
+// https://github.com/trpc-group/trpc-cmdline/blob/483259c22a2fd1e477c7ebc4b5b1572a5a47010c/docs/examples/example-2/README.zh_CN.md
+
+// 空响应
+message EmptyRsp {
+
+}
+
+// 添加修改资源返回值
+message AddOrUpdateRsp {
+  uint32 id = 1; // 资源id
+}
+
+// 菜单资源信息定义
+message Menu {
+  uint32 id = 1;                  // ID
+  string name = 2;                // 菜单名称
+  string describe = 3;            // 功能描述
+  string path = 4;                // 对应路由path
+  string component = 5;           // 对应路由组件component
+  bool is_hidden = 6;             // 是否隐藏
+  uint32 sort_value = 7;          // 排序
+  string icon = 8;                // 菜单图标
+  uint32 parent_id = 9;           // 父级菜单id
+  uint32 create_user = 10;        // 创建人id
+  uint32 update_user = 11;        // 更新人id
+  uint32 create_time = 12;        // 创建时间
+  uint32 update_time = 13;        // 更新时间
+}
+
+
+// 菜单搜索
+message SearchMenuReq {
+
+  optional uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  optional uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+}
+
+message SearchMenuRsp {
+  optional uint32 total = 1; // 分页查询
+  repeated Menu data = 2; // 菜单集合
+}
+
+// 菜单详情
+message MenuDetailReq {
+  optional uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 添加修改菜单
+message AddOrUpdateMenuReq {
+
+}
+
+// 删除菜单
+message DeleteMenuReq {
+  optional uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// ResourceType 资源类型枚举
+enum ResourceResourceType {
+  UNKNOWN_RESOURCE_TYPE = 0;  // 未知类型
+  DIRECTORY = 1;              // 目录
+  INTERFACE = 2;              // 接口
+}
+
+// Status 接口状态枚举
+enum ResourceStatus {
+  UNKNOWN_STATUS = 0;  // 未知状态
+  UNPUBLISHED = 1;     // 未发布
+  PUBLISHED = 2;       // 已发布
+  OFFLINE = 3;         // 以下线
+}
+
+// 接口信息定义
+message Resource {
+  uint32 id = 1;                  // ID
+  string name = 2;                // 接口名称
+  ResourceResourceType resource_type = 3; // 资源类型 1-目录 2-接口
+  ResourceStatus status = 4;              // 接口状态 0-未发布 1-已发布 2-以下线
+  string url = 5;                 // 接口URL
+  uint32 parent_id = 6;           // 父接口ID
+  string http_method = 7;         // 请求方式
+  string describe = 8;            // 接口描述
+  bool is_need_login = 9;         // 是否需要登录校验
+  bool is_need_permission = 10;   // 是否需要权限校验
+  string service = 11;            // API服务名
+  string method = 12;             // API接口名
+  uint32 create_user = 13;        // 创建人id
+  uint32 update_user = 14;        // 更新人id
+  uint32 create_time = 15;        // 创建时间
+  uint32 update_time = 16;        // 更新时间
+}
+
+
+// 角色信息定义
+message Role {
+  uint32 id = 1;                  // ID
+  string name = 2;                // 角色名称
+  string code = 3;                // 角色编码
+  string describe = 4;            // 功能描述
+  bool is_enable = 5;             // 是否启用
+  uint32 create_user = 6;         // 创建人id
+  uint32 update_user = 7;         // 更新人id
+  uint32 create_time = 8;         // 创建时间
+  uint32 update_time = 9;         // 更新时间
+}
+
+
+// RoleAuthority 定义角色关联的资源和目录信息
+message RoleAuthority {
+  uint32 id = 1;                   // ID
+  uint32 authority_id = 2;         // 权限id
+  string authority_type = 3;       // 权限类型 MENU-菜单 RESOURCE-资源
+  uint32 role_id = 4;              // 角色id
+  uint32 create_user = 5;          // 创建人ID
+  uint32 create_time = 6;          // 插入时间
+}
+
+
+
+// UserRole 定义账号角色绑定信息
+message UserRole {
+  uint32 id = 1;          // ID
+  uint32 role_id = 2;     // 角色ID
+  uint32 user_id = 3;     // 用户ID
+  uint32 create_user = 4; // 创建人ID
+  uint32 create_time = 5; // 插入时间
+}
+
+// 权限api
+service AuthApi {
+  // 菜单搜索
+  rpc SearchMenu (SearchMenuReq) returns (SearchMenuRsp) {
+    option(trpc.alias) = "/auth/admin/searchMenu";
+  }
+  // 添加修改菜单
+  rpc AddOrUpdateMenu (AddOrUpdateMenuReq) returns (AddOrUpdateRsp) {
+    option(trpc.alias) = "/auth/admin/updateMenu";
+  }
+  // 删除菜单
+  rpc DeleteMenu (DeleteMenuReq) returns (EmptyRsp) {
+    option(trpc.alias) = "/auth/admin/deleteMenu";
+  }
+  // 菜单详情
+  rpc MenuDetail (MenuDetailReq) returns (Menu) {
+    option(trpc.alias) = "/auth/admin/menuDetail";
+  }
+}

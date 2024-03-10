@@ -11,5 +11,8 @@
 #trpc create --protofile=template/template.proto --validate=true --rpconly -o template
 
 
-find ./blog -type f ! -name 'blog.proto' -exec rm -f {} +
-trpc create --protofile=blog/blog.proto --validate=true --rpconly --alias --swagger -o blog
+#find ./blog -type f ! -name 'blog.proto' -exec rm -f {} +
+#trpc create --protofile=blog/blog.proto --validate=true --rpconly --alias --swagger -o blog
+
+find ./auth -type f ! -name 'auth.proto' -exec rm -f {} +
+trpc create --protofile=auth/auth.proto --validate=true --rpconly --alias --swagger -o auth

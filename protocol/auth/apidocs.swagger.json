@@ -1,0 +1,350 @@
+{
+ "swagger": "2.0",
+ "info": {
+  "title": "auth",
+  "description": "The api document of auth.proto",
+  "version": "2.0"
+ },
+ "consumes": [
+  "application/json"
+ ],
+ "produces": [
+  "application/json"
+ ],
+ "paths": {
+  "/auth/admin/deleteMenu": {
+   "post": {
+    "summary": "删除菜单",
+    "operationId": "DeleteMenu",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/menuDetail": {
+   "post": {
+    "summary": "菜单详情",
+    "operationId": "MenuDetail",
+    "responses": {
+     "200": {
+      "description": "菜单资源信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.Menu"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/searchMenu": {
+   "post": {
+    "summary": "菜单搜索",
+    "operationId": "SearchMenu",
+    "responses": {
+     "200": {
+      "description": "SearchMenuRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.SearchMenuRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/updateMenu": {
+   "post": {
+    "summary": "添加修改菜单",
+    "operationId": "AddOrUpdateMenu",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": null,
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.AuthApi/AddOrUpdateMenu": {
+   "post": {
+    "summary": "添加修改菜单",
+    "operationId": "AddOrUpdateMenu2",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": null,
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.AuthApi/DeleteMenu": {
+   "post": {
+    "summary": "删除菜单",
+    "operationId": "DeleteMenu2",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.AuthApi/MenuDetail": {
+   "post": {
+    "summary": "菜单详情",
+    "operationId": "MenuDetail2",
+    "responses": {
+     "200": {
+      "description": "菜单资源信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.Menu"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.AuthApi/SearchMenu": {
+   "post": {
+    "summary": "菜单搜索",
+    "operationId": "SearchMenu2",
+    "responses": {
+     "200": {
+      "description": "SearchMenuRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.SearchMenuRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  }
+ },
+ "definitions": {
+  "go_blog.blog.AddOrUpdateRsp": {
+   "type": "object",
+   "properties": {
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "资源id"
+    }
+   },
+   "title": "go_blog.blog.AddOrUpdateRsp",
+   "description": "添加修改资源返回值"
+  },
+  "go_blog.blog.EmptyRsp": {
+   "type": "object",
+   "title": "go_blog.blog.EmptyRsp",
+   "description": "空响应"
+  },
+  "go_blog.blog.Menu": {
+   "type": "object",
+   "properties": {
+    "component": {
+     "title": "component",
+     "type": "string",
+     "description": "对应路由组件component"
+    },
+    "create_time": {
+     "title": "create_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "创建时间"
+    },
+    "create_user": {
+     "title": "create_user",
+     "type": "integer",
+     "format": "uint32",
+     "description": "创建人id"
+    },
+    "describe": {
+     "title": "describe",
+     "type": "string",
+     "description": "功能描述"
+    },
+    "icon": {
+     "title": "icon",
+     "type": "string",
+     "description": "菜单图标"
+    },
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "ID"
+    },
+    "is_hidden": {
+     "title": "is_hidden",
+     "type": "boolean",
+     "description": "是否隐藏"
+    },
+    "name": {
+     "title": "name",
+     "type": "string",
+     "description": "菜单名称"
+    },
+    "parent_id": {
+     "title": "parent_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "父级菜单id"
+    },
+    "path": {
+     "title": "path",
+     "type": "string",
+     "description": "对应路由path"
+    },
+    "sort_value": {
+     "title": "sort_value",
+     "type": "integer",
+     "format": "uint32",
+     "description": "排序"
+    },
+    "update_time": {
+     "title": "update_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新时间"
+    },
+    "update_user": {
+     "title": "update_user",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新人id"
+    }
+   },
+   "title": "go_blog.blog.Menu",
+   "description": "菜单资源信息定义"
+  },
+  "go_blog.blog.SearchMenuRsp": {
+   "type": "object",
+   "properties": {
+    "data": {
+     "title": "data",
+     "type": "array",
+     "description": " 菜单集合\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.blog.Menu"
+     }
+    },
+    "total": {
+     "title": "total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    }
+   },
+   "title": "go_blog.blog.SearchMenuRsp",
+   "description": "SearchMenuRsp"
+  }
+ }
+}
