@@ -28,15 +28,19 @@ message AddOrUpdateRsp {
 
 // 菜单资源信息定义
 message Menu {
+  // 基本信息
   uint32 id = 1;                  // ID
-  string name = 2;                // 菜单名称
-  string describe = 3;            // 功能描述
-  string path = 4;                // 对应路由path
-  string component = 5;           // 对应路由组件component
-  bool is_hidden = 6;             // 是否隐藏
-  uint32 sort_value = 7;          // 排序
-  string icon = 8;                // 菜单图标
-  uint32 parent_id = 9;           // 父级菜单id
+  uint32 parent_id = 2;           // 父级菜单id
+  string name = 3;                // 菜单名称
+  string icon = 4;                // 菜单图标
+  string describe = 5;            // 功能描述
+  uint32 sort_value = 6;          // 排序
+  // 前端
+  string path = 7;                // 对应路由path
+  string component = 8;           // 对应路由组件component
+  // 状态
+  bool is_hidden = 9;             // 是否隐藏
+  // 公共字段
   uint32 create_user = 10;        // 创建人id
   uint32 update_user = 11;        // 更新人id
   uint32 create_time = 12;        // 创建时间
@@ -63,13 +67,28 @@ message MenuDetailReq {
 
 // 添加修改菜单
 message AddOrUpdateMenuReq {
-
+  // 基本信息
+  uint32 id = 1;                                                        // ID
+  uint32 parent_id = 2 [(validate.rules).uint32.gt = 0];                // 父级菜单id
+  string name = 3 [(validate.rules).string.min_len = 1];                // 菜单名称
+  string icon = 4 [(validate.rules).string.min_len = 1];                // 菜单图标
+  string describe = 5 [(validate.rules).string.min_len = 1];            // 功能描述
+  uint32 sort_value = 6 [(validate.rules).uint32.gt = 0];               // 排序
+  // 前端
+  string path = 7 [(validate.rules).string.min_len = 1];                // 对应路由path
+  string component = 8 [(validate.rules).string.min_len = 1];           // 对应路由组件component
+  // 状态
+  bool is_hidden = 9;                                                    // 是否隐藏
 }
 
 // 删除菜单
 message DeleteMenuReq {
   optional uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
 }
+
+
+
+
 
 // ResourceType 资源类型枚举
 enum ResourceResourceType {
@@ -88,24 +107,82 @@ enum ResourceStatus {
 
 // 接口信息定义
 message Resource {
+  // 基本信息
   uint32 id = 1;                  // ID
-  string name = 2;                // 接口名称
-  ResourceResourceType resource_type = 3; // 资源类型 1-目录 2-接口
-  ResourceStatus status = 4;              // 接口状态 0-未发布 1-已发布 2-以下线
-  string url = 5;                 // 接口URL
-  uint32 parent_id = 6;           // 父接口ID
-  string http_method = 7;         // 请求方式
-  string describe = 8;            // 接口描述
+  uint32 parent_id = 2;           // 父接口ID
+  string name = 3;                // 接口名称
+  string describe = 4;            // 接口描述
+  //
+  ResourceResourceType resource_type = 5; // 资源类型 1-目录 2-接口
+  ResourceStatus status = 6;              // 接口状态 0-未发布 1-已发布 2-以下线
+  // 路径定位
+  string url = 7;                 // 接口URL
+  string http_method = 8;         // 请求方式
+  // 权限校验
   bool is_need_login = 9;         // 是否需要登录校验
   bool is_need_permission = 10;   // 是否需要权限校验
+  // 下游服务信息
   string service = 11;            // API服务名
   string method = 12;             // API接口名
+  // 公共字段
   uint32 create_user = 13;        // 创建人id
   uint32 update_user = 14;        // 更新人id
   uint32 create_time = 15;        // 创建时间
   uint32 update_time = 16;        // 更新时间
 }
 
+// 接口搜索
+message SearchResourceReq {
+  string search = 1; // 查询条件 {a:?,b:?}
+
+  optional uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  optional uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+}
+
+message SearchResourceRsp {
+  optional uint32 total = 1; // 分页查询
+  repeated Resource data = 2; // 接口集合
+}
+
+// 接口详情
+message ResourceDetailReq {
+  optional uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 添加修改接口
+message AddOrUpdateResourceReq {
+  // 基本信息
+  uint32 id = 1;                                                   // ID
+  uint32 parent_id = 2 [(validate.rules).uint32.gt = 0];           // 父接口ID
+  string name = 3 [(validate.rules).string.min_len = 1];           // 接口名称
+  string describe = 4 [(validate.rules).string.min_len = 1];       // 接口描述
+  //
+  ResourceResourceType resource_type = 5 [(validate.rules).enum = {in: [1,2]}]; // 资源类型 1-目录 2-接口
+  ResourceStatus status = 6 [(validate.rules).enum = {in: [0,1,2]}];              // 接口状态 0-未发布 1-已发布 2-以下线
+  // 路径定位
+  string url = 7 [(validate.rules).string.min_len = 1];                 // 接口URL
+  string http_method = 8 [(validate.rules).string.min_len = 1];         // 请求方式
+  // 权限校验
+  bool is_need_login = 9;         // 是否需要登录校验
+  bool is_need_permission = 10;   // 是否需要权限校验
+  // 下游服务信息
+  string service = 11 [(validate.rules).string.min_len = 1];            // API服务名
+  string method = 12 [(validate.rules).string.min_len = 1];             // API接口名
+}
+
+// 删除接口
+message DeleteResourceReq {
+  optional uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 获取有效状态下的接口
+message GetEffectiveResourceReq {
+
+}
+
+message GetEffectiveResourceRsp {
+  repeated Resource data = 1; // 接口集合
+}
 
 // 角色信息定义
 message Role {
@@ -142,6 +219,9 @@ message UserRole {
   uint32 create_time = 5; // 插入时间
 }
 
+
+
+
 // 权限api
 service AuthApi {
   // 菜单搜索
@@ -160,4 +240,29 @@ service AuthApi {
   rpc MenuDetail (MenuDetailReq) returns (Menu) {
     option(trpc.alias) = "/auth/admin/menuDetail";
   }
+
+
+  // 接口搜索
+  rpc SearchResource (SearchResourceReq) returns (SearchResourceRsp) {
+    option(trpc.alias) = "/auth/admin/searchResource";
+  }
+  // 添加修改接口
+  rpc AddOrUpdateResource (AddOrUpdateResourceReq) returns (AddOrUpdateRsp) {
+    option(trpc.alias) = "/auth/admin/addOrUpdateResource";
+  }
+  // 删除接口
+  rpc DeleteResource (DeleteResourceReq) returns (EmptyRsp) {
+    option(trpc.alias) = "/auth/admin/deleteResource";
+  }
+  // 接口详情
+  rpc ResourceDetail (ResourceDetailReq) returns (Resource) {
+    option(trpc.alias) = "/auth/admin/resourceDetail";
+  }
+
+  // 获取有效状态下的接口
+  rpc GetEffectiveResource (GetEffectiveResourceReq) returns (GetEffectiveResourceRsp) {
+    option(trpc.alias) = "/auth/admin/searchResource";
+  }
+
+
 }

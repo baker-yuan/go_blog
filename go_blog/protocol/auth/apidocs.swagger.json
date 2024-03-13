@@ -12,10 +12,155 @@
   "application/json"
  ],
  "paths": {
+  "/auth/admin/addOrUpdateResource": {
+   "post": {
+    "summary": "添加修改接口",
+    "operationId": "AddOrUpdateResource",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "describe",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "接口描述"
+     },
+     {
+      "name": "http_method",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "请求方式"
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "基本信息\nID"
+     },
+     {
+      "name": "is_need_login",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "权限校验\n是否需要登录校验"
+     },
+     {
+      "name": "is_need_permission",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "是否需要权限校验"
+     },
+     {
+      "name": "method",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "API接口名"
+     },
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "接口名称"
+     },
+     {
+      "name": "parent_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "父接口ID"
+     },
+     {
+      "name": "resource_type",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "资源类型 1-目录 2-接口 * 0 - UNKNOWN_RESOURCE_TYPE - 未知类型\n * 1 - DIRECTORY - 目录\n * 2 - INTERFACE - 接口\n",
+      "enum": [
+       0,
+       1,
+       2
+      ]
+     },
+     {
+      "name": "service",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "下游服务信息\nAPI服务名"
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "接口状态 0-未发布 1-已发布 2-以下线 * 0 - UNKNOWN_STATUS - 未知状态\n * 1 - UNPUBLISHED - 未发布\n * 2 - PUBLISHED - 已发布\n * 3 - OFFLINE - 以下线\n",
+      "enum": [
+       0,
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "name": "url",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "路径定位\n接口URL"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/auth/admin/deleteMenu": {
    "post": {
     "summary": "删除菜单",
     "operationId": "DeleteMenu",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/deleteResource": {
+   "post": {
+    "summary": "删除接口",
+    "operationId": "DeleteResource",
     "responses": {
      "200": {
       "description": "空响应",
@@ -48,6 +193,33 @@
       "description": "菜单资源信息定义",
       "schema": {
        "$ref": "#/definitions/go_blog.auth.Menu"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/resourceDetail": {
+   "post": {
+    "summary": "接口详情",
+    "operationId": "ResourceDetail",
+    "responses": {
+     "200": {
+      "description": "接口信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.Resource"
       }
      }
     },
@@ -101,6 +273,24 @@
     ]
    }
   },
+  "/auth/admin/searchResource": {
+   "post": {
+    "summary": "获取有效状态下的接口",
+    "operationId": "GetEffectiveResource",
+    "responses": {
+     "200": {
+      "description": "GetEffectiveResourceRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.GetEffectiveResourceRsp"
+      }
+     }
+    },
+    "parameters": null,
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/auth/admin/updateMenu": {
    "post": {
     "summary": "添加修改菜单",
@@ -113,7 +303,74 @@
       }
      }
     },
-    "parameters": null,
+    "parameters": [
+     {
+      "name": "component",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "对应路由组件component"
+     },
+     {
+      "name": "describe",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "功能描述"
+     },
+     {
+      "name": "icon",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "菜单图标"
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "基本信息\nID"
+     },
+     {
+      "name": "is_hidden",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "状态\n是否隐藏"
+     },
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "菜单名称"
+     },
+     {
+      "name": "parent_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "父级菜单id"
+     },
+     {
+      "name": "path",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "前端\n对应路由path"
+     },
+     {
+      "name": "sort_value",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "排序"
+     }
+    ],
     "tags": [
      "authapi.trpc"
     ]
@@ -131,7 +388,192 @@
       }
      }
     },
-    "parameters": null,
+    "parameters": [
+     {
+      "name": "component",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "对应路由组件component"
+     },
+     {
+      "name": "describe",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "功能描述"
+     },
+     {
+      "name": "icon",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "菜单图标"
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "基本信息\nID"
+     },
+     {
+      "name": "is_hidden",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "状态\n是否隐藏"
+     },
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "菜单名称"
+     },
+     {
+      "name": "parent_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "父级菜单id"
+     },
+     {
+      "name": "path",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "前端\n对应路由path"
+     },
+     {
+      "name": "sort_value",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "排序"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.auth.AuthApi/AddOrUpdateResource": {
+   "post": {
+    "summary": "添加修改接口",
+    "operationId": "AddOrUpdateResource2",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "describe",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "接口描述"
+     },
+     {
+      "name": "http_method",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "请求方式"
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "基本信息\nID"
+     },
+     {
+      "name": "is_need_login",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "权限校验\n是否需要登录校验"
+     },
+     {
+      "name": "is_need_permission",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "是否需要权限校验"
+     },
+     {
+      "name": "method",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "API接口名"
+     },
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "接口名称"
+     },
+     {
+      "name": "parent_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "父接口ID"
+     },
+     {
+      "name": "resource_type",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "资源类型 1-目录 2-接口 * 0 - UNKNOWN_RESOURCE_TYPE - 未知类型\n * 1 - DIRECTORY - 目录\n * 2 - INTERFACE - 接口\n",
+      "enum": [
+       0,
+       1,
+       2
+      ]
+     },
+     {
+      "name": "service",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "下游服务信息\nAPI服务名"
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "接口状态 0-未发布 1-已发布 2-以下线 * 0 - UNKNOWN_STATUS - 未知状态\n * 1 - UNPUBLISHED - 未发布\n * 2 - PUBLISHED - 已发布\n * 3 - OFFLINE - 以下线\n",
+      "enum": [
+       0,
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "name": "url",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "路径定位\n接口URL"
+     }
+    ],
     "tags": [
      "authapi.trpc"
     ]
@@ -164,6 +606,51 @@
     ]
    }
   },
+  "/go_blog.auth.AuthApi/DeleteResource": {
+   "post": {
+    "summary": "删除接口",
+    "operationId": "DeleteResource2",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.auth.AuthApi/GetEffectiveResource": {
+   "post": {
+    "summary": "获取有效状态下的接口",
+    "operationId": "GetEffectiveResource2",
+    "responses": {
+     "200": {
+      "description": "GetEffectiveResourceRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.GetEffectiveResourceRsp"
+      }
+     }
+    },
+    "parameters": null,
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/go_blog.auth.AuthApi/MenuDetail": {
    "post": {
     "summary": "菜单详情",
@@ -173,6 +660,33 @@
       "description": "菜单资源信息定义",
       "schema": {
        "$ref": "#/definitions/go_blog.auth.Menu"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.auth.AuthApi/ResourceDetail": {
+   "post": {
+    "summary": "接口详情",
+    "operationId": "ResourceDetail2",
+    "responses": {
+     "200": {
+      "description": "接口信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.Resource"
       }
      }
     },
@@ -225,6 +739,48 @@
      "authapi.trpc"
     ]
    }
+  },
+  "/go_blog.auth.AuthApi/SearchResource": {
+   "post": {
+    "summary": "接口搜索",
+    "operationId": "SearchResource",
+    "responses": {
+     "200": {
+      "description": "SearchResourceRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.SearchResourceRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
   }
  },
  "definitions": {
@@ -246,6 +802,21 @@
    "title": "go_blog.auth.EmptyRsp",
    "description": "空响应"
   },
+  "go_blog.auth.GetEffectiveResourceRsp": {
+   "type": "object",
+   "properties": {
+    "data": {
+     "title": "data",
+     "type": "array",
+     "description": " 接口集合\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.auth.Resource"
+     }
+    }
+   },
+   "title": "go_blog.auth.GetEffectiveResourceRsp",
+   "description": "GetEffectiveResourceRsp"
+  },
   "go_blog.auth.Menu": {
    "type": "object",
    "properties": {
@@ -264,7 +835,7 @@
      "title": "create_user",
      "type": "integer",
      "format": "uint32",
-     "description": "创建人id"
+     "description": "公共字段\n创建人id"
     },
     "describe": {
      "title": "describe",
@@ -280,12 +851,12 @@
      "title": "id",
      "type": "integer",
      "format": "uint32",
-     "description": "ID"
+     "description": "基本信息\nID"
     },
     "is_hidden": {
      "title": "is_hidden",
      "type": "boolean",
-     "description": "是否隐藏"
+     "description": "状态\n是否隐藏"
     },
     "name": {
      "title": "name",
@@ -301,7 +872,7 @@
     "path": {
      "title": "path",
      "type": "string",
-     "description": "对应路由path"
+     "description": "前端\n对应路由path"
     },
     "sort_value": {
      "title": "sort_value",
@@ -325,6 +896,112 @@
    "title": "go_blog.auth.Menu",
    "description": "菜单资源信息定义"
   },
+  "go_blog.auth.Resource": {
+   "type": "object",
+   "properties": {
+    "create_time": {
+     "title": "create_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "创建时间"
+    },
+    "create_user": {
+     "title": "create_user",
+     "type": "integer",
+     "format": "uint32",
+     "description": "公共字段\n创建人id"
+    },
+    "describe": {
+     "title": "describe",
+     "type": "string",
+     "description": "接口描述"
+    },
+    "http_method": {
+     "title": "http_method",
+     "type": "string",
+     "description": "请求方式"
+    },
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "基本信息\nID"
+    },
+    "is_need_login": {
+     "title": "is_need_login",
+     "type": "boolean",
+     "description": "权限校验\n是否需要登录校验"
+    },
+    "is_need_permission": {
+     "title": "is_need_permission",
+     "type": "boolean",
+     "description": "是否需要权限校验"
+    },
+    "method": {
+     "title": "method",
+     "type": "string",
+     "description": "API接口名"
+    },
+    "name": {
+     "title": "name",
+     "type": "string",
+     "description": "接口名称"
+    },
+    "parent_id": {
+     "title": "parent_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "父接口ID"
+    },
+    "resource_type": {
+     "title": "resource_type",
+     "type": "integer",
+     "format": "int32",
+     "description": "资源类型 1-目录 2-接口 * 0 - UNKNOWN_RESOURCE_TYPE - 未知类型\n * 1 - DIRECTORY - 目录\n * 2 - INTERFACE - 接口\n",
+     "enum": [
+      0,
+      1,
+      2
+     ]
+    },
+    "service": {
+     "title": "service",
+     "type": "string",
+     "description": "下游服务信息\nAPI服务名"
+    },
+    "status": {
+     "title": "status",
+     "type": "integer",
+     "format": "int32",
+     "description": "接口状态 0-未发布 1-已发布 2-以下线 * 0 - UNKNOWN_STATUS - 未知状态\n * 1 - UNPUBLISHED - 未发布\n * 2 - PUBLISHED - 已发布\n * 3 - OFFLINE - 以下线\n",
+     "enum": [
+      0,
+      1,
+      2,
+      3
+     ]
+    },
+    "update_time": {
+     "title": "update_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新时间"
+    },
+    "update_user": {
+     "title": "update_user",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新人id"
+    },
+    "url": {
+     "title": "url",
+     "type": "string",
+     "description": "路径定位\n接口URL"
+    }
+   },
+   "title": "go_blog.auth.Resource",
+   "description": "接口信息定义"
+  },
   "go_blog.auth.SearchMenuRsp": {
    "type": "object",
    "properties": {
@@ -345,6 +1022,27 @@
    },
    "title": "go_blog.auth.SearchMenuRsp",
    "description": "SearchMenuRsp"
+  },
+  "go_blog.auth.SearchResourceRsp": {
+   "type": "object",
+   "properties": {
+    "data": {
+     "title": "data",
+     "type": "array",
+     "description": " 接口集合\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.auth.Resource"
+     }
+    },
+    "total": {
+     "title": "total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    }
+   },
+   "title": "go_blog.auth.SearchResourceRsp",
+   "description": "SearchResourceRsp"
   }
  }
 }

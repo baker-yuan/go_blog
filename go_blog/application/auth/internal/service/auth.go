@@ -36,3 +36,34 @@ func (a AuthService) MenuDetail(ctx context.Context, req *pb.MenuDetailReq) (*pb
 	//TODO implement me
 	panic("implement me")
 }
+
+// SearchResource 接口搜索
+func (a AuthService) SearchResource(ctx context.Context, req *pb.SearchResourceReq) (*pb.SearchResourceRsp, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+// AddOrUpdateResource 添加修改接口
+func (a AuthService) AddOrUpdateResource(ctx context.Context, req *pb.AddOrUpdateResourceReq) (*pb.AddOrUpdateRsp, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+// DeleteResource 删除接口
+func (a AuthService) DeleteResource(ctx context.Context, req *pb.DeleteResourceReq) (*pb.EmptyRsp, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+// ResourceDetail 接口详情
+func (a AuthService) ResourceDetail(ctx context.Context, req *pb.ResourceDetailReq) (*pb.Resource, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+// GetEffectiveResource 获取有效状态下的接口
+func (a AuthService) GetEffectiveResource(ctx context.Context,
+	req *pb.GetEffectiveResourceReq) (*pb.GetEffectiveResourceRsp, error) {
+	//TODO implement me
+	panic("implement me")
+}

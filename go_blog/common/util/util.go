@@ -4,6 +4,7 @@ import (
 	"github.com/baker-yuan/go-blog/common/util/conversion"
 	"github.com/baker-yuan/go-blog/common/util/obj"
 	"github.com/baker-yuan/go-blog/common/util/page"
+	"github.com/baker-yuan/go-blog/common/util/session"
 	"github.com/baker-yuan/go-blog/common/util/slice"
 	"github.com/baker-yuan/go-blog/common/util/stack"
 	"github.com/baker-yuan/go-blog/common/util/str"
@@ -13,6 +14,7 @@ var (
 	TypeConversionUtils conversion.ConversionUtils // 类型转换，用于string，int，int64，float等数据转换，免去err的接收，和设置默认值
 	StackUtils          stack.StackUtils           // 堆栈处理
 	StrUtils            str.StrUtils               // 字符串处理
+	SessionUtils        session.SessionUtils       // 会话
 )
 
 // NewSliceUtils 是 SliceUtils 的构造函数，返回一个 SliceUtils 的实例。

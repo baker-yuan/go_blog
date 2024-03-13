@@ -1,10 +1,46 @@
 package persistence
 
 import (
+	"context"
+
 	"github.com/baker-yuan/go-blog/application/user/domain/entity"
 	"github.com/baker-yuan/go-blog/application/user/domain/repository"
+	"github.com/baker-yuan/go-blog/common/db"
+	pb "github.com/baker-yuan/go-blog/protocol/user"
 	"gorm.io/gorm"
 )
+
+// User 用户表
+type User struct {
+	// 账号信息
+	UID      uint32 `gorm:"primary_key;column:uid;type:int unsigned auto_increment;comment:主键"`
+	Username string `gorm:"unique;column:username;type:varchar(100);not null;comment:用户名(唯一)"`
+	Password string `gorm:"column:password;type:varchar(100);not null;comment:登录密码"`
+	Salt     string `gorm:"column:salt;type:varchar(20);not null;default:'';comment:盐"`
+	UserType string `gorm:"column:user_type;type:enum('ADMIN','USER');not null;default:'USER';comment:用户类型 ADMIN-管理员 USER-普通用户"`
+	// 基本信息
+	Email    string `gorm:"column:email;type:varchar(50);not null;default:'';comment:邮箱号"`
+	Nickname string `gorm:"column:nickname;type:varchar(30);not null;default:'';comment:昵称"`
+	Avatar   string `gorm:"column:avatar;type:varchar(255);not null;default:'';comment:头像地址"`
+	Intro    string `gorm:"column:intro;type:varchar(255);not null;default:'';comment:用户简介"`
+	WebSite  string `gorm:"column:web_site;type:varchar(255);not null;default:'';comment:个人网站"`
+	// 状态
+	Status uint8 `gorm:"column:status;type:tinyint unsigned;not null;default:0;comment:状态 0-正常 1-禁用"`
+	// 三方登录
+	LoginType uint8  `gorm:"column:login_type;type:tinyint unsigned;not null;default:0;comment:登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博"`
+	UnionID   string `gorm:"column:union_id;type:varchar(50);not null;default:'';comment:用户唯一标识（第三方网站）"`
+	// 公共字段
+	IsDeleted    db.BoolBit   `gorm:"column:is_deleted;type:bit(1);not null;default:b'0';comment:是否注销"`
+	CreateUserID string       `gorm:"column:create_user_id;type:int(10) unsigned;not null;default:0;comment:创建人"`
+	UpdateUserID string       `gorm:"column:update_user_id;type:int(10) unsigned;not null;default:0;comment:修改人"`
+	CreateTime   db.Timestamp `gorm:"column:create_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:创建时间"`
+	UpdateTime   db.Timestamp `gorm:"column:update_time;type:timestamp;not null;default:CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;comment:修改时间"`
+}
+
+// TableName 设置 User 结构体对应的数据库表名
+func (User) TableName() string {
+	return "blog_user"
+}
 
 type UserRepo struct {
 	db *gorm.DB
@@ -17,74 +53,32 @@ func NewUserRepository(db *gorm.DB) *UserRepo {
 // UserRepo 强制UserRepo实现repository.UserRepository接口
 var _ repository.UserRepository = &UserRepo{}
 
-// SaveUser 保存用户
-func (r *UserRepo) SaveUser(user *entity.User) (*entity.User, map[string]string) {
-	//dbErr := map[string]string{}
-	//err := r.db.Debug().Create(&user).Error
-	//if err != nil {
-	//	// If the email is already taken
-	//	if strings.Contains(err.Error(), "duplicate") || strings.Contains(err.Error(), "Duplicate") {
-	//		dbErr["email_taken"] = "email already taken"
-	//		return nil, dbErr
-	//	}
-	//	// any other db error
-	//	dbErr["db_error"] = "database error"
-	//	return nil, dbErr
-	//}
-	//return user, nil
-	return nil, nil
-}
-
-// GetUser 通过用户ID查询用户
-func (r *UserRepo) GetUser(id uint64) (*entity.User, error) {
-	//var user entity.User
-	//err := r.db.Debug().Where("id = ?", id).Take(&user).Error
-	//if err != nil {
-	//	return nil, err
-	//}
-	//if gorm.IsRecordNotFoundError(err) {
-	//	return nil, errors.New("user not found")
-	//}
-	//return &user, nil
+// GetUserByID 根据用户id查询用户
+func (r *UserRepo) GetUserByID(ctx context.Context, id uint32) (*entity.User, error) {
 
 	return nil, nil
 }
 
-// GetUsers 获取所有用户
-func (r *UserRepo) GetUsers() ([]entity.User, error) {
-	//var users []entity.User
-	//err := r.db.Debug().Find(&users).Error
-	//if err != nil {
-	//	return nil, err
-	//}
-	//if gorm.IsRecordNotFoundError(err) {
-	//	return nil, errors.New("user not found")
-	//}
-	//return users, nil
+// GetUserByIDs 根据用户id集合查询用户
+func (r *UserRepo) GetUserByIDs(ctx context.Context, ids []uint32) (entity.Users, error) {
 
 	return nil, nil
 }
 
-// GetUserByEmailAndPassword 通过邮箱+用户吗查找用户，并且验证密码
-func (r *UserRepo) GetUserByEmailAndPassword(u *entity.User) (*entity.User, map[string]string) {
-	//var user entity.User
-	//dbErr := map[string]string{}
-	//err := r.db.Debug().Where("email = ?", u.Email).Take(&user).Error
-	//if gorm.IsRecordNotFoundError(err) {
-	//	dbErr["no_user"] = "user not found"
-	//	return nil, dbErr
-	//}
-	//if err != nil {
-	//	dbErr["db_error"] = "database error"
-	//	return nil, dbErr
-	//}
-	//// 校验密码
-	//err = security.VerifyPassword(user.Password, u.Password)
-	//if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
-	//	dbErr["incorrect_password"] = "incorrect password"
-	//	return nil, dbErr
-	//}
-	//return &user, nil
+// Save 保存用户
+func (r *UserRepo) Save(ctx context.Context, user *entity.User) (uint32, error) {
 
-	return nil, nil
+	return 0, nil
+}
+
+// UpdateByID 根据ID修改用户
+func (r *UserRepo) UpdateByID(ctx context.Context, user *entity.User) error {
+
+	return nil
+}
+
+// SearchUser 用户搜索
+func (r *UserRepo) SearchUser(ctx context.Context, req *pb.SearchUserReq) (entity.Users, uint32, error) {
+
+	return nil, 0, nil
 }

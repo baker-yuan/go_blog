@@ -25,58 +25,91 @@ message AddOrUpdateRsp {
   uint32 id = 1; // 资源id
 }
 
+// LoginType 登录方式枚举
+enum LoginType {
+  LOGIN_TYPE_UNSPECIFIED = 0; // 未指定，默认值
+  LOGIN_TYPE_USERNAME = 1;    // 用户名登录
+  LOGIN_TYPE_GITHUB = 2;      // GitHub登录
+  LOGIN_TYPE_GITEE = 3;       // 码云登录
+  LOGIN_TYPE_QQ = 4;          // QQ登录
+  LOGIN_TYPE_WEIBO = 5;       // 微博登录
+}
+
+// UserStatus 用户状态枚举
+enum UserStatus {
+  USER_STATUS_NORMAL = 0; // 正常
+  USER_STATUS_DISABLED = 1; // 禁用
+}
 
 // 用户信息定义
 message User {
+  // 账号信息
   uint32 uid = 1;                  // 主键
   string username = 2;             // 用户名
   string password = 3;             // 登录密码
-  string email = 4;                // 邮箱号
   string salt = 5;                 // 盐
+  string user_type = 10;           // 用户类型 ADMIN-管理员 USER-普通用户
+  // 基本信息
+  string email = 4;                // 邮箱号
   string nickname = 6;             // 昵称
   string avatar = 7;               // 头像地址
   string intro = 8;                // 用户简介
   string web_site = 9;             // 个人网站
-  UserType user_type = 10;         // 用户类型
-  uint32 login_type = 11;          // 登录方式
-  uint32 status = 12;              // 状态
+  // 三方登录
+  LoginType login_type = 11;       // 登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博
+  string union_id = 16;            // 用户唯一标识（第三方网站）
+  // 状态
+  UserStatus status = 12;          // 状态 0-正常 1-禁用
   bool is_deleted = 13;            // 是否注销
+  // 公共字段
   uint32 create_time = 14;         // 创建时间
   uint32 update_time = 15;         // 修改时间
-  string union_id = 16;            // 用户唯一标识（第三方网站）
 }
 
-// 用户类型枚举
-enum UserType {
-  USER = 0;  // 普通用户
-  ADMIN = 1; // 管理员
-}
+
 
 // 用户搜索
 message SearchUserReq {
 
-  optional uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
-  optional uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
 }
 
 message SearchUserRsp {
-  optional uint32 total = 1; // 分页查询
+  uint32 total = 1; // 分页查询
   repeated User data = 2; // 用户集合
 }
 
 // 用户详情
 message UserDetailReq {
-  optional uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
 }
 
 // 添加修改用户
 message AddOrUpdateUserReq {
-
+  // 账号信息
+  uint32 uid = 1;                  // 主键
+  string username = 2;             // 用户名
+  string password = 3;             // 登录密码
+  string salt = 5;                 // 盐
+  string user_type = 10;           // 用户类型 ADMIN-管理员 USER-普通用户
+  // 基本信息
+  string email = 4;                // 邮箱号
+  string nickname = 6;             // 昵称
+  string avatar = 7;               // 头像地址
+  string intro = 8;                // 用户简介
+  string web_site = 9;             // 个人网站
+  // 三方登录
+  LoginType login_type = 11;       // 登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博
+  string union_id = 16;            // 用户唯一标识（第三方网站）
+  // 状态
+  UserStatus status = 12;          // 状态 0-正常 1-禁用
+  bool is_deleted = 13;            // 是否注销
 }
 
 // 删除用户
 message DeleteUserReq {
-  optional uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
 }
 
 // 博客api

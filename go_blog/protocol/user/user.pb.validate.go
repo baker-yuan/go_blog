@@ -263,9 +263,11 @@ func (m *User) validate(all bool) error {
 
 	// no validation rules for Password
 
-	// no validation rules for Email
-
 	// no validation rules for Salt
+
+	// no validation rules for UserType
+
+	// no validation rules for Email
 
 	// no validation rules for Nickname
 
@@ -275,9 +277,9 @@ func (m *User) validate(all bool) error {
 
 	// no validation rules for WebSite
 
-	// no validation rules for UserType
-
 	// no validation rules for LoginType
+
+	// no validation rules for UnionId
 
 	// no validation rules for Status
 
@@ -286,8 +288,6 @@ func (m *User) validate(all bool) error {
 	// no validation rules for CreateTime
 
 	// no validation rules for UpdateTime
-
-	// no validation rules for UnionId
 
 	if len(errors) > 0 {
 		return UserMultiError(errors)
@@ -388,34 +388,26 @@ func (m *SearchUserReq) validate(all bool) error {
 
 	var errors []error
 
-	if m.PageNum != nil {
-
-		if m.GetPageNum() <= 0 {
-			err := SearchUserReqValidationError{
-				field:  "PageNum",
-				reason: "value must be greater than 0",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if m.GetPageNum() <= 0 {
+		err := SearchUserReqValidationError{
+			field:  "PageNum",
+			reason: "value must be greater than 0",
 		}
-
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
-	if m.PageSize != nil {
-
-		if m.GetPageSize() <= 0 {
-			err := SearchUserReqValidationError{
-				field:  "PageSize",
-				reason: "value must be greater than 0",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if m.GetPageSize() <= 0 {
+		err := SearchUserReqValidationError{
+			field:  "PageSize",
+			reason: "value must be greater than 0",
 		}
-
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
 	if len(errors) > 0 {
@@ -518,6 +510,8 @@ func (m *SearchUserRsp) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Total
+
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -550,10 +544,6 @@ func (m *SearchUserRsp) validate(all bool) error {
 			}
 		}
 
-	}
-
-	if m.Total != nil {
-		// no validation rules for Total
 	}
 
 	if len(errors) > 0 {
@@ -656,19 +646,15 @@ func (m *UserDetailReq) validate(all bool) error {
 
 	var errors []error
 
-	if m.Id != nil {
-
-		if m.GetId() <= 0 {
-			err := UserDetailReqValidationError{
-				field:  "Id",
-				reason: "value must be greater than 0",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if m.GetId() <= 0 {
+		err := UserDetailReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
 		}
-
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
 	if len(errors) > 0 {
@@ -770,6 +756,34 @@ func (m *AddOrUpdateUserReq) validate(all bool) error {
 	}
 
 	var errors []error
+
+	// no validation rules for Uid
+
+	// no validation rules for Username
+
+	// no validation rules for Password
+
+	// no validation rules for Salt
+
+	// no validation rules for UserType
+
+	// no validation rules for Email
+
+	// no validation rules for Nickname
+
+	// no validation rules for Avatar
+
+	// no validation rules for Intro
+
+	// no validation rules for WebSite
+
+	// no validation rules for LoginType
+
+	// no validation rules for UnionId
+
+	// no validation rules for Status
+
+	// no validation rules for IsDeleted
 
 	if len(errors) > 0 {
 		return AddOrUpdateUserReqMultiError(errors)
@@ -873,19 +887,15 @@ func (m *DeleteUserReq) validate(all bool) error {
 
 	var errors []error
 
-	if m.Id != nil {
-
-		if m.GetId() <= 0 {
-			err := DeleteUserReqValidationError{
-				field:  "Id",
-				reason: "value must be greater than 0",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if m.GetId() <= 0 {
+		err := DeleteUserReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
 		}
-
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
 	if len(errors) > 0 {

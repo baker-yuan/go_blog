@@ -27,6 +27,16 @@ type AuthApiService interface {
 	DeleteMenu(ctx context.Context, req *DeleteMenuReq) (*EmptyRsp, error)
 	// MenuDetail 菜单详情
 	MenuDetail(ctx context.Context, req *MenuDetailReq) (*Menu, error)
+	// SearchResource 接口搜索
+	SearchResource(ctx context.Context, req *SearchResourceReq) (*SearchResourceRsp, error)
+	// AddOrUpdateResource 添加修改接口
+	AddOrUpdateResource(ctx context.Context, req *AddOrUpdateResourceReq) (*AddOrUpdateRsp, error)
+	// DeleteResource 删除接口
+	DeleteResource(ctx context.Context, req *DeleteResourceReq) (*EmptyRsp, error)
+	// ResourceDetail 接口详情
+	ResourceDetail(ctx context.Context, req *ResourceDetailReq) (*Resource, error)
+	// GetEffectiveResource 获取有效状态下的接口
+	GetEffectiveResource(ctx context.Context, req *GetEffectiveResourceReq) (*GetEffectiveResourceRsp, error)
 }
 
 func AuthApiService_SearchMenu_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -101,6 +111,96 @@ func AuthApiService_MenuDetail_Handler(svr interface{}, ctx context.Context, f s
 	return rsp, nil
 }
 
+func AuthApiService_SearchResource_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &SearchResourceReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).SearchResource(ctx, reqbody.(*SearchResourceReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_AddOrUpdateResource_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &AddOrUpdateResourceReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).AddOrUpdateResource(ctx, reqbody.(*AddOrUpdateResourceReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_DeleteResource_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &DeleteResourceReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).DeleteResource(ctx, reqbody.(*DeleteResourceReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_ResourceDetail_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &ResourceDetailReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).ResourceDetail(ctx, reqbody.(*ResourceDetailReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_GetEffectiveResource_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &GetEffectiveResourceReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).GetEffectiveResource(ctx, reqbody.(*GetEffectiveResourceReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 // AuthApiServer_ServiceDesc descriptor for server.RegisterService.
 var AuthApiServer_ServiceDesc = server.ServiceDesc{
 	ServiceName: "go_blog.auth.AuthApi",
@@ -123,6 +223,26 @@ var AuthApiServer_ServiceDesc = server.ServiceDesc{
 			Func: AuthApiService_MenuDetail_Handler,
 		},
 		{
+			Name: "/auth/admin/searchResource",
+			Func: AuthApiService_SearchResource_Handler,
+		},
+		{
+			Name: "/auth/admin/addOrUpdateResource",
+			Func: AuthApiService_AddOrUpdateResource_Handler,
+		},
+		{
+			Name: "/auth/admin/deleteResource",
+			Func: AuthApiService_DeleteResource_Handler,
+		},
+		{
+			Name: "/auth/admin/resourceDetail",
+			Func: AuthApiService_ResourceDetail_Handler,
+		},
+		{
+			Name: "/auth/admin/searchResource",
+			Func: AuthApiService_GetEffectiveResource_Handler,
+		},
+		{
 			Name: "/go_blog.auth.AuthApi/SearchMenu",
 			Func: AuthApiService_SearchMenu_Handler,
 		},
@@ -137,6 +257,26 @@ var AuthApiServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/go_blog.auth.AuthApi/MenuDetail",
 			Func: AuthApiService_MenuDetail_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/SearchResource",
+			Func: AuthApiService_SearchResource_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/AddOrUpdateResource",
+			Func: AuthApiService_AddOrUpdateResource_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/DeleteResource",
+			Func: AuthApiService_DeleteResource_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/ResourceDetail",
+			Func: AuthApiService_ResourceDetail_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/GetEffectiveResource",
+			Func: AuthApiService_GetEffectiveResource_Handler,
 		},
 	},
 }
@@ -172,6 +312,31 @@ func (s *UnimplementedAuthApi) MenuDetail(ctx context.Context, req *MenuDetailRe
 	return nil, errors.New("rpc MenuDetail of service AuthApi is not implemented")
 }
 
+// SearchResource 接口搜索
+func (s *UnimplementedAuthApi) SearchResource(ctx context.Context, req *SearchResourceReq) (*SearchResourceRsp, error) {
+	return nil, errors.New("rpc SearchResource of service AuthApi is not implemented")
+}
+
+// AddOrUpdateResource 添加修改接口
+func (s *UnimplementedAuthApi) AddOrUpdateResource(ctx context.Context, req *AddOrUpdateResourceReq) (*AddOrUpdateRsp, error) {
+	return nil, errors.New("rpc AddOrUpdateResource of service AuthApi is not implemented")
+}
+
+// DeleteResource 删除接口
+func (s *UnimplementedAuthApi) DeleteResource(ctx context.Context, req *DeleteResourceReq) (*EmptyRsp, error) {
+	return nil, errors.New("rpc DeleteResource of service AuthApi is not implemented")
+}
+
+// ResourceDetail 接口详情
+func (s *UnimplementedAuthApi) ResourceDetail(ctx context.Context, req *ResourceDetailReq) (*Resource, error) {
+	return nil, errors.New("rpc ResourceDetail of service AuthApi is not implemented")
+}
+
+// GetEffectiveResource 获取有效状态下的接口
+func (s *UnimplementedAuthApi) GetEffectiveResource(ctx context.Context, req *GetEffectiveResourceReq) (*GetEffectiveResourceRsp, error) {
+	return nil, errors.New("rpc GetEffectiveResource of service AuthApi is not implemented")
+}
+
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
 
 // END ======================================= Server Service Definition ======================================= END
@@ -188,6 +353,16 @@ type AuthApiClientProxy interface {
 	DeleteMenu(ctx context.Context, req *DeleteMenuReq, opts ...client.Option) (rsp *EmptyRsp, err error)
 	// MenuDetail 菜单详情
 	MenuDetail(ctx context.Context, req *MenuDetailReq, opts ...client.Option) (rsp *Menu, err error)
+	// SearchResource 接口搜索
+	SearchResource(ctx context.Context, req *SearchResourceReq, opts ...client.Option) (rsp *SearchResourceRsp, err error)
+	// AddOrUpdateResource 添加修改接口
+	AddOrUpdateResource(ctx context.Context, req *AddOrUpdateResourceReq, opts ...client.Option) (rsp *AddOrUpdateRsp, err error)
+	// DeleteResource 删除接口
+	DeleteResource(ctx context.Context, req *DeleteResourceReq, opts ...client.Option) (rsp *EmptyRsp, err error)
+	// ResourceDetail 接口详情
+	ResourceDetail(ctx context.Context, req *ResourceDetailReq, opts ...client.Option) (rsp *Resource, err error)
+	// GetEffectiveResource 获取有效状态下的接口
+	GetEffectiveResource(ctx context.Context, req *GetEffectiveResourceReq, opts ...client.Option) (rsp *GetEffectiveResourceRsp, err error)
 }
 
 type AuthApiClientProxyImpl struct {
@@ -273,6 +448,106 @@ func (c *AuthApiClientProxyImpl) MenuDetail(ctx context.Context, req *MenuDetail
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &Menu{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) SearchResource(ctx context.Context, req *SearchResourceReq, opts ...client.Option) (*SearchResourceRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/searchResource")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("SearchResource")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &SearchResourceRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) AddOrUpdateResource(ctx context.Context, req *AddOrUpdateResourceReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/addOrUpdateResource")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("AddOrUpdateResource")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &AddOrUpdateRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) DeleteResource(ctx context.Context, req *DeleteResourceReq, opts ...client.Option) (*EmptyRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/deleteResource")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("DeleteResource")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &EmptyRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) ResourceDetail(ctx context.Context, req *ResourceDetailReq, opts ...client.Option) (*Resource, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/resourceDetail")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("ResourceDetail")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &Resource{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) GetEffectiveResource(ctx context.Context, req *GetEffectiveResourceReq, opts ...client.Option) (*GetEffectiveResourceRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/searchResource")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("GetEffectiveResource")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &GetEffectiveResourceRsp{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}

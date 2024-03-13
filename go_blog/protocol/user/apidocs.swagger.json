@@ -24,7 +24,121 @@
       }
      }
     },
-    "parameters": null,
+    "parameters": [
+     {
+      "name": "avatar",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "头像地址"
+     },
+     {
+      "name": "email",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "基本信息\n邮箱号"
+     },
+     {
+      "name": "intro",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "用户简介"
+     },
+     {
+      "name": "is_deleted",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "是否注销"
+     },
+     {
+      "name": "login_type",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "三方登录\n登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博 * 0 - LOGIN_TYPE_UNSPECIFIED - 未指定，默认值\n * 1 - LOGIN_TYPE_USERNAME - 用户名登录\n * 2 - LOGIN_TYPE_GITHUB - GitHub登录\n * 3 - LOGIN_TYPE_GITEE - 码云登录\n * 4 - LOGIN_TYPE_QQ - QQ登录\n * 5 - LOGIN_TYPE_WEIBO - 微博登录\n",
+      "enum": [
+       0,
+       1,
+       2,
+       3,
+       4,
+       5
+      ]
+     },
+     {
+      "name": "nickname",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "昵称"
+     },
+     {
+      "name": "password",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "登录密码"
+     },
+     {
+      "name": "salt",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "盐"
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "状态\n状态 0-正常 1-禁用 * 0 - USER_STATUS_NORMAL - 正常\n * 1 - USER_STATUS_DISABLED - 禁用\n",
+      "enum": [
+       0,
+       1
+      ]
+     },
+     {
+      "name": "uid",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "账号信息\n主键"
+     },
+     {
+      "name": "union_id",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "用户唯一标识（第三方网站）"
+     },
+     {
+      "name": "user_type",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "用户类型 ADMIN-管理员 USER-普通用户"
+     },
+     {
+      "name": "username",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "用户名"
+     },
+     {
+      "name": "web_site",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "个人网站"
+     }
+    ],
     "tags": [
      "userapi.trpc"
     ]
@@ -193,7 +307,121 @@
       }
      }
     },
-    "parameters": null,
+    "parameters": [
+     {
+      "name": "avatar",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "头像地址"
+     },
+     {
+      "name": "email",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "基本信息\n邮箱号"
+     },
+     {
+      "name": "intro",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "用户简介"
+     },
+     {
+      "name": "is_deleted",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "是否注销"
+     },
+     {
+      "name": "login_type",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "三方登录\n登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博 * 0 - LOGIN_TYPE_UNSPECIFIED - 未指定，默认值\n * 1 - LOGIN_TYPE_USERNAME - 用户名登录\n * 2 - LOGIN_TYPE_GITHUB - GitHub登录\n * 3 - LOGIN_TYPE_GITEE - 码云登录\n * 4 - LOGIN_TYPE_QQ - QQ登录\n * 5 - LOGIN_TYPE_WEIBO - 微博登录\n",
+      "enum": [
+       0,
+       1,
+       2,
+       3,
+       4,
+       5
+      ]
+     },
+     {
+      "name": "nickname",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "昵称"
+     },
+     {
+      "name": "password",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "登录密码"
+     },
+     {
+      "name": "salt",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "盐"
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "状态\n状态 0-正常 1-禁用 * 0 - USER_STATUS_NORMAL - 正常\n * 1 - USER_STATUS_DISABLED - 禁用\n",
+      "enum": [
+       0,
+       1
+      ]
+     },
+     {
+      "name": "uid",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "账号信息\n主键"
+     },
+     {
+      "name": "union_id",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "用户唯一标识（第三方网站）"
+     },
+     {
+      "name": "user_type",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "用户类型 ADMIN-管理员 USER-普通用户"
+     },
+     {
+      "name": "username",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "用户名"
+     },
+     {
+      "name": "web_site",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "个人网站"
+     }
+    ],
     "tags": [
      "userapi.trpc"
     ]
@@ -279,12 +507,12 @@
      "title": "create_time",
      "type": "integer",
      "format": "uint32",
-     "description": "创建时间"
+     "description": "公共字段\n创建时间"
     },
     "email": {
      "title": "email",
      "type": "string",
-     "description": "邮箱号"
+     "description": "基本信息\n邮箱号"
     },
     "intro": {
      "title": "intro",
@@ -299,8 +527,16 @@
     "login_type": {
      "title": "login_type",
      "type": "integer",
-     "format": "uint32",
-     "description": "登录方式"
+     "format": "int32",
+     "description": "三方登录\n登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博 * 0 - LOGIN_TYPE_UNSPECIFIED - 未指定，默认值\n * 1 - LOGIN_TYPE_USERNAME - 用户名登录\n * 2 - LOGIN_TYPE_GITHUB - GitHub登录\n * 3 - LOGIN_TYPE_GITEE - 码云登录\n * 4 - LOGIN_TYPE_QQ - QQ登录\n * 5 - LOGIN_TYPE_WEIBO - 微博登录\n",
+     "enum": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ]
     },
     "nickname": {
      "title": "nickname",
@@ -320,14 +556,18 @@
     "status": {
      "title": "status",
      "type": "integer",
-     "format": "uint32",
-     "description": "状态"
+     "format": "int32",
+     "description": "状态\n状态 0-正常 1-禁用 * 0 - USER_STATUS_NORMAL - 正常\n * 1 - USER_STATUS_DISABLED - 禁用\n",
+     "enum": [
+      0,
+      1
+     ]
     },
     "uid": {
      "title": "uid",
      "type": "integer",
      "format": "uint32",
-     "description": "主键"
+     "description": "账号信息\n主键"
     },
     "union_id": {
      "title": "union_id",
@@ -342,13 +582,8 @@
     },
     "user_type": {
      "title": "user_type",
-     "type": "integer",
-     "format": "int32",
-     "description": "用户类型 * 0 - USER - 普通用户\n * 1 - ADMIN - 管理员\n",
-     "enum": [
-      0,
-      1
-     ]
+     "type": "string",
+     "description": "用户类型 ADMIN-管理员 USER-普通用户"
     },
     "username": {
      "title": "username",
