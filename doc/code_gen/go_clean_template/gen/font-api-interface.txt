@@ -1,0 +1,17 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/gencode", "font-api-interface.ts")
+
+// $!{tableInfo.comment}管理模块
+export namespace $!{tableInfo.name} {
+  // $!{tableInfo.comment}模型
+  export interface $!{tableInfo.name}Model {
+  }
+
+  // 分页查询$!{tableInfo.comment}
+  export interface Req$!{tableInfo.name}ListParams extends ReqPage {
+  }
+
+}

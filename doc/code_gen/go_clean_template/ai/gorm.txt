@@ -1,0 +1,117 @@
+CREATE TABLE `blog_article_v2`
+(
+    `id`                 int unsigned                            NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `category_id`        int                                     NOT NULL DEFAULT '0' COMMENT '文章分类表ID|biz_type表主键',
+    `title`              varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '文章标题',
+    `description`        varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '文章简介，最多200字',
+    `content`            mediumtext COLLATE utf8mb4_unicode_ci   NOT NULL COMMENT '文章内容',
+    `cover_image`        varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '文章封面图片',
+    `original_url`       varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '原文链接',
+    `password`           varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '密码保护',
+    `words`              int unsigned                            NOT NULL DEFAULT '0' COMMENT '文章字数',
+    `read_time`          int unsigned                            NOT NULL DEFAULT '0' COMMENT '文章阅读时长(分钟)',
+    `type`               tinyint unsigned                        NOT NULL DEFAULT '0' COMMENT '文章类型 1-原创 2-转载 3-翻译',
+    `status`             tinyint unsigned                        NOT NULL DEFAULT '0' COMMENT '文章状态 0-草稿 1-已发布',
+    `format`             tinyint unsigned                        NOT NULL DEFAULT '0' COMMENT '文章格式 1-markdown 2-富文本',
+    `visibility`         tinyint unsigned                        NOT NULL DEFAULT '0' COMMENT '文章可见性 1-公开 2-私密 3-密码保护',
+    `is_top`             bit(1)                                  NOT NULL DEFAULT b'0' COMMENT '置顶开关',
+    `is_recommend`       bit(1)                                  NOT NULL DEFAULT b'0' COMMENT '推荐开关',
+    `is_appreciation`    bit(1)                                  NOT NULL DEFAULT b'0' COMMENT '赞赏开关',
+    `is_comment_enabled` bit(1)                                  NOT NULL DEFAULT b'0' COMMENT '评论开关',
+    `is_deleted`         bit(1)                                  NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    `create_time`        timestamp                               NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time`        timestamp                               NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    PRIMARY KEY (`id`),
+    KEY `idx_category_id` (`category_id`),
+    KEY `idx_create_time` (`create_time`),
+    KEY `idx_update_time` (`update_time`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci COMMENT ='文章表';
+
+生成gorm结构体+proto定义
+1、不要josn表
+2、注释需要
+3、 int(1)对应  标签type:tinyint(4)  和 go的uint8
+4、column加上，放在第一
+5、int 对应 uint32
+6、datetime 对应 uint32 type:int(10);unsigned;not null;default:0
+7、数组类型都带上 ;not null;default:0;
+8、decimal(10,2) 默认值对应 0.00
+9、auto_increment是在type后面的
+10、不要有多余的解释，尽量和我的例子一样
+11、说中文，中文注释
+12、比如我的案例生成的结构体是去掉了blog前缀的，保持一致
+13、通过注释判断，如果字段是枚举字段，在proto定义对应的枚举，结构体使用枚举类型，gorm对应的这个结构体也用枚举，比如type字段在gorm里面将用了pb.ArticleType
+14、枚举类型是从0开始的
+例子
+
+// Article 文章表
+type Article struct {
+	// 基本数据
+	ID          uint32 `gorm:"primary_key;column:id;type:int unsigned auto_increment;comment:主键"`
+	CategoryID  uint32 `gorm:"index:idx_category_id;column:category_id;type:int(10);unsigned;not null;default:0;comment:文章分类表ID|biz_type表主键"`
+	Title       string `gorm:"column:title;type:varchar(255);not null;default:'';comment:文章标题"`
+	Description string `gorm:"column:description;type:varchar(200);not null;default:'';comment:文章简介，最多200字"`
+	Content     string `gorm:"column:content;type:mediumtext;not null;comment:文章内容"`
+	CoverImage  string `gorm:"column:cover_image;type:varchar(255);not null;default:'';comment:文章封面图片"`
+	OriginalURL string `gorm:"column:original_url;type:varchar(255);not null;default:'';comment:原文链接"`
+	//
+	Password string `gorm:"column:password;type:varchar(255);not null;default:'';comment:密码保护"`
+	// 辅助
+	Words    uint32 `gorm:"column:words;type:int unsigned;not null;default:0;comment:文章字数"`
+	ReadTime uint32 `gorm:"column:read_time;type:int unsigned;not null;default:0;comment:文章阅读时长(分钟)"`
+	// 类型描述
+	Type       pb.ArticleType       `gorm:"column:type;type:tinyint unsigned;not null;default:0;comment:文章类型 1-原创 2-转载 3-翻译"`
+	Status     pb.ArticleStatus     `gorm:"column:status;type:tinyint unsigned;not null;default:0;comment:文章状态 0-草稿 1-已发布"`
+	Format     pb.ArticleFormat     `gorm:"column:format;type:tinyint unsigned;not null;default:0;comment:文章格式 1-markdown 2-富文本"`
+	Visibility pb.ArticleVisibility `gorm:"column:visibility;type:tinyint unsigned;not null;default:0;comment:文章可见性 1-公开 2-私密 3-密码保护"`
+	// 标志
+	IsTop            BoolBit `gorm:"column:is_top;type:bit(1);not null;default:b'0';comment:置顶开关"`
+	IsRecommend      BoolBit `gorm:"column:is_recommend;type:bit(1);not null;default:b'0';comment:推荐开关"`
+	IsAppreciation   BoolBit `gorm:"column:is_appreciation;type:bit(1);not null;default:b'0';comment:赞赏开关"`
+	IsCommentEnabled BoolBit `gorm:"column:is_comment_enabled;type:bit(1);not null;default:b'0';comment:评论开关"`
+	// 公共字段
+	IsDeleted  BoolBit   `gorm:"column:is_deleted;type:bit(1);not null;default:b'0';comment:是否删除"`
+	CreateTime Timestamp `gorm:"index:idx_create_time;column:create_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:创建时间"`
+	UpdateTime Timestamp `gorm:"index:idx_update_time;column:update_time;type:timestamp;not null;default:CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;comment:修改时间"`
+}
+
+// TableName 设置 Article 结构体对应的数据库表名
+func (Article) TableName() string {
+	return "blog_article"
+}
+
+// 文章信息定义
+message Article {
+  // 基本数据
+  uint32 id = 1;                  // 主键
+  uint32 category_id = 2;         // 文章分类表ID
+  string title = 3;               // 文章标题
+  string description = 4;         // 文章简介
+  string content = 5;             // 文章内容
+  string cover_image = 6;         // 文章封面图片
+  string original_url = 7;        // 原文链接
+
+  // 辅助信息
+  string password = 8;            // 密码保护
+  uint32 words = 9;               // 文章字数
+  uint32 read_time = 10;          // 阅读时长（分钟）
+
+  // 类型描述
+  ArticleType type = 11;                  // 文章类型
+  ArticleStatus status = 12;              // 文章状态
+  ArticleFormat format = 13;              // 文章格式
+  ArticleVisibility visibility = 14;      // 文章可见性
+
+  // 标志位
+  bool is_top = 15;                 // 是否置顶
+  bool is_recommend = 16;           // 是否推荐
+  bool is_appreciation = 17;        // 是否开启赞赏
+  bool is_comment_enabled = 18;     // 是否开启评论
+
+  // 公共字段
+  bool is_deleted = 19;             // 是否删除
+  uint32 create_time = 20;          // 创建时间
+  uint32 update_time = 21;          // 更新时间
+}

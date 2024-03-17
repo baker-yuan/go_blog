@@ -41,7 +41,7 @@ func LoadResourceList(ctx context.Context, cfg *config.Config) error {
 }
 
 // MatchResource 路由匹配
-func MatchResource(ctx biz_ctx.BizContext) *auth_pb.Resource {
+func MatchResource(ctx biz_ctx.IBizContext) *auth_pb.Resource {
 	//httpContext, err := biz_ctx.Assert(ctx)
 	//if err != nil {
 	//	return nil

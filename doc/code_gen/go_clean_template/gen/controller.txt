@@ -1,0 +1,88 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/gencode", "controller.go")
+
+
+// Create$!{tableInfo.name} 添加$!{tableInfo.comment}
+func (s *AdminApiImpl) Create$!{tableInfo.name}(ctx context.Context, param *pb.AddOrUpdate$!{tableInfo.name}Param) (*pb.CommonRsp, error) {
+    var (
+        res = &pb.CommonRsp{}
+    )
+
+	if err := s.$!tool.firstLowerCase($!{tableInfo.name}). Create$!{tableInfo.name}(ctx, param); err != nil {
+		return nil, err
+	}
+
+	res.Code, res.Message = retcode.GetRetCodeMsg(retcode.RetSuccess)
+	return res, nil
+}
+
+// Update$!{tableInfo.name} 修改$!{tableInfo.comment}
+func (s *AdminApiImpl) Update$!{tableInfo.name}(ctx context.Context, param *pb.AddOrUpdate$!{tableInfo.name}Param) (*pb.CommonRsp, error) {
+    var (
+        res = &pb.CommonRsp{}
+    )
+
+	if err := s.$!tool.firstLowerCase($!{tableInfo.name}). Update$!{tableInfo.name}(ctx, param); err != nil {
+		return nil, err
+	}
+
+	res.Code, res.Message = retcode.GetRetCodeMsg(retcode.RetSuccess)
+	return res, nil
+}
+
+// Get$!{tableInfo.name}s 分页查询$!{tableInfo.comment}
+func (s *AdminApiImpl) Get$!{tableInfo.name}s(ctx context.Context, param *pb.Get$!{tableInfo.name}sParam) (*pb.Get$!{tableInfo.name}sRsp, error) {
+    var (
+        res = &pb.Get$!{tableInfo.name}sRsp{}
+    )
+
+	$!tool.firstLowerCase($!{tableInfo.name})s, pageTotal, err := s.$!tool.firstLowerCase($!{tableInfo.name}). Get$!{tableInfo.name}s(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+
+
+    res.Data = &pb.$!{tableInfo.name}sData{
+        Data:      $!tool.firstLowerCase($!{tableInfo.name})s,
+        PageTotal: pageTotal,
+        PageSize:  param.GetPageSize(),
+        PageNum:   param.GetPageNum(),
+    }
+
+
+	res.Code, res.Message = retcode.GetRetCodeMsg(retcode.RetSuccess)
+	return res, nil
+}
+
+// Get$!{tableInfo.name} 根据id获取$!{tableInfo.comment}
+func (s *AdminApiImpl) Get$!{tableInfo.name}(ctx context.Context, param *pb.Get$!{tableInfo.name}Req) (*pb.Get$!{tableInfo.name}Rsp, error) {
+    var (
+        res = &pb.Get$!{tableInfo.name}Rsp{}
+    )
+
+	$!tool.firstLowerCase($!{tableInfo.name}), err := s.$!tool.firstLowerCase($!{tableInfo.name}). Get$!{tableInfo.name}(ctx, param.GetId())
+	if err != nil {
+		return nil, err
+	}
+	res.Data = $!tool.firstLowerCase($!{tableInfo.name})
+
+	res.Code, res.Message = retcode.GetRetCodeMsg(retcode.RetSuccess)
+	return res, nil
+}
+
+// Delete$!{tableInfo.name} 删除$!{tableInfo.comment}
+func (s *AdminApiImpl) Delete$!{tableInfo.name}(ctx context.Context, param *pb.Delete$!{tableInfo.name}Req) (*pb.CommonRsp, error) {
+    var (
+        res = &pb.CommonRsp{}
+    )
+
+	if err := s.$!tool.firstLowerCase($!{tableInfo.name}). Delete$!{tableInfo.name}(ctx, param.GetId()); err != nil {
+		return nil, err
+	}
+
+	res.Code, res.Message = retcode.GetRetCodeMsg(retcode.RetSuccess)
+	return res, nil
+}

@@ -6,14 +6,14 @@ import (
 )
 
 //// HandlerFunc 定义了中间件处理函数的类型
-//type HandlerFunc func(bizCtx biz_ctx.BizContext, next func())
+//type HandlerFunc func(bizCtx biz_ctx.IBizContext, next func())
 //
 //// Chain 构建中间件链
 //func Chain(handlers ...HandlerFunc) HandlerFunc {
-//	return func(bizCtx biz_ctx.BizContext, next func()) {
+//	return func(bizCtx biz_ctx.IBizContext, next func()) {
 //		// 构建中间件链
 //		chain := func(current HandlerFunc, next HandlerFunc) HandlerFunc {
-//			return func(bizCtx biz_ctx.BizContext, final func()) {
+//			return func(bizCtx biz_ctx.IBizContext, final func()) {
 //				current(bizCtx, func() {
 //					next(bizCtx, final)
 //				})
@@ -21,7 +21,7 @@ import (
 //		}
 //
 //		// 最后一个中间件调用next
-//		final := func(bizCtx biz_ctx.BizContext, final func()) {
+//		final := func(bizCtx biz_ctx.IBizContext, final func()) {
 //			next()
 //		}
 //
@@ -36,7 +36,7 @@ import (
 //}
 
 // HandlerFunc 定义了业务处理函数的类型
-type HandlerFunc func(bizCtx biz_ctx.BizContext, cfg *config.Config)
+type HandlerFunc func(bizCtx biz_ctx.IBizContext, cfg *config.Config)
 
 // Middleware 定义了中间件的类型
 type Middleware func(HandlerFunc) HandlerFunc

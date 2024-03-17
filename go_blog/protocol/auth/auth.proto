@@ -34,6 +34,7 @@ enum ResourceType {
   RT_UNKNOWN = 0; // 未知
   TB_MENU = 1; // 菜单
   TB_RESOURCE = 2; // 接口
+  TB_Role = 3; // 角色
 }
 
 
@@ -52,8 +53,8 @@ message Menu {
   // 状态
   bool is_hidden = 9;             // 是否隐藏
   // 公共字段
-  uint32 create_user_id = 10;        // 创建人id
-  uint32 update_user_id = 11;        // 更新人id
+  uint32 create_user = 10;        // 创建人id
+  uint32 update_user = 11;        // 更新人id
   uint32 create_time = 12;        // 创建时间
   uint32 update_time = 13;        // 更新时间
 }
@@ -148,8 +149,8 @@ message Resource {
   string service = 11;            // API服务名
   string method = 12;             // API接口名
   // 公共字段
-  uint32 create_user_id = 13;        // 创建人id
-  uint32 update_user_id = 14;        // 更新人id
+  uint32 create_user = 13;        // 创建人id
+  uint32 update_user = 14;        // 更新人id
   uint32 create_time = 15;        // 创建时间
   uint32 update_time = 16;        // 更新时间
 }
@@ -209,16 +210,54 @@ message GetEffectiveResourceRsp {
 
 // 角色信息定义
 message Role {
+  // 基本信息
   uint32 id = 1;                  // ID
   string name = 2;                // 角色名称
   string code = 3;                // 角色编码
   string describe = 4;            // 功能描述
+  //
   bool is_enable = 5;             // 是否启用
+  // 公共字段
   uint32 create_user = 6;         // 创建人id
   uint32 update_user = 7;         // 更新人id
   uint32 create_time = 8;         // 创建时间
   uint32 update_time = 9;         // 更新时间
 }
+
+// 角色搜索
+message SearchRoleReq {
+  string search = 1; // 查询条件 {a:?,b:?}
+
+  uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+}
+
+message SearchRoleRsp {
+  uint32 total = 1; // 分页查询
+  repeated Role data = 2; // 角色集合
+}
+
+// 角色详情
+message RoleDetailReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 添加修改角色
+message AddOrUpdateRoleReq {
+  // 基本信息
+  uint32 id = 1 [(validate.rules).uint32.gt = 0];                  // ID
+  string name = 2 [(validate.rules).string.min_len = 1];           // 角色名称
+  string code = 3 [(validate.rules).string.min_len = 1];           // 角色编码
+  string describe = 4;            // 功能描述
+  //
+  bool is_enable = 5;             // 是否启用
+}
+
+// 删除角色
+message DeleteRoleReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
 
 
 // RoleAuthority 定义角色关联的资源和目录信息
@@ -248,44 +287,60 @@ message UserRole {
 // 权限api
 service AuthApi {
   // 菜单搜索
-  rpc SearchMenu (SearchMenuReq) returns (SearchMenuRsp) {
+  rpc SearchMenu(SearchMenuReq) returns (SearchMenuRsp) {
     option(trpc.alias) = "/auth/admin/searchMenu";
   }
   // 添加修改菜单
-  rpc AddOrUpdateMenu (AddOrUpdateMenuReq) returns (AddOrUpdateRsp) {
+  rpc AddOrUpdateMenu(AddOrUpdateMenuReq) returns (AddOrUpdateRsp) {
     option(trpc.alias) = "/auth/admin/updateMenu";
   }
   // 删除菜单
-  rpc DeleteMenu (DeleteMenuReq) returns (EmptyRsp) {
+  rpc DeleteMenu(DeleteMenuReq) returns (EmptyRsp) {
     option(trpc.alias) = "/auth/admin/deleteMenu";
   }
   // 菜单详情
-  rpc MenuDetail (MenuDetailReq) returns (Menu) {
+  rpc MenuDetail(MenuDetailReq) returns (Menu) {
     option(trpc.alias) = "/auth/admin/menuDetail";
   }
 
 
   // 接口搜索
-  rpc SearchResource (SearchResourceReq) returns (SearchResourceRsp) {
+  rpc SearchResource(SearchResourceReq) returns (SearchResourceRsp) {
     option(trpc.alias) = "/auth/admin/searchResource";
   }
   // 添加修改接口
-  rpc AddOrUpdateResource (AddOrUpdateResourceReq) returns (AddOrUpdateRsp) {
+  rpc AddOrUpdateResource(AddOrUpdateResourceReq) returns (AddOrUpdateRsp) {
     option(trpc.alias) = "/auth/admin/addOrUpdateResource";
   }
   // 删除接口
-  rpc DeleteResource (DeleteResourceReq) returns (EmptyRsp) {
+  rpc DeleteResource(DeleteResourceReq) returns (EmptyRsp) {
     option(trpc.alias) = "/auth/admin/deleteResource";
   }
   // 接口详情
-  rpc ResourceDetail (ResourceDetailReq) returns (Resource) {
+  rpc ResourceDetail(ResourceDetailReq) returns (Resource) {
     option(trpc.alias) = "/auth/admin/resourceDetail";
   }
 
   // 获取有效状态下的接口
-  rpc GetEffectiveResource (GetEffectiveResourceReq) returns (GetEffectiveResourceRsp) {
+  rpc GetEffectiveResource(GetEffectiveResourceReq) returns (GetEffectiveResourceRsp) {
     option(trpc.alias) = "/auth/effectiveResource";
   }
 
 
+  // 角色搜索
+  rpc SearchRole(SearchRoleReq) returns (SearchRoleRsp) {
+    option(trpc.alias) = "/auth/admin/searchRole";
+  }
+  // 添加修改角色
+  rpc AddOrUpdateRole(AddOrUpdateRoleReq) returns (AddOrUpdateRsp) {
+    option(trpc.alias) = "/auth/admin/addOrUpdateRole";
+  }
+  // 删除角色
+  rpc DeleteRole(DeleteRoleReq) returns (EmptyRsp)  {
+    option(trpc.alias) = "/auth/admin/deleteRole";
+  }
+  // 角色详情
+  rpc RoleDetail(RoleDetailReq) returns (Role)  {
+    option(trpc.alias) = "/auth/admin/RoleDetail";
+  }
 }

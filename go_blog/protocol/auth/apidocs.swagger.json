@@ -12,6 +12,33 @@
   "application/json"
  ],
  "paths": {
+  "/auth/admin/RoleDetail": {
+   "post": {
+    "summary": "角色详情",
+    "operationId": "RoleDetail",
+    "responses": {
+     "200": {
+      "description": "角色信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.Role"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/auth/admin/addOrUpdateResource": {
    "post": {
     "summary": "添加修改接口",
@@ -139,6 +166,61 @@
     ]
    }
   },
+  "/auth/admin/addOrUpdateRole": {
+   "post": {
+    "summary": "添加修改角色",
+    "operationId": "AddOrUpdateRole",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "code",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "角色编码"
+     },
+     {
+      "name": "describe",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "功能描述"
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "基本信息\nID"
+     },
+     {
+      "name": "is_enable",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "是否启用"
+     },
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "角色名称"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/auth/admin/deleteMenu": {
    "post": {
     "summary": "删除菜单",
@@ -170,6 +252,33 @@
    "post": {
     "summary": "删除接口",
     "operationId": "DeleteResource",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/deleteRole": {
+   "post": {
+    "summary": "删除角色",
+    "operationId": "DeleteRole",
     "responses": {
      "200": {
       "description": "空响应",
@@ -298,6 +407,48 @@
       "description": "SearchResourceRsp",
       "schema": {
        "$ref": "#/definitions/go_blog.auth.SearchResourceRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/searchRole": {
+   "post": {
+    "summary": "角色搜索",
+    "operationId": "SearchRole",
+    "responses": {
+     "200": {
+      "description": "SearchRoleRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.SearchRoleRsp"
       }
      }
     },
@@ -646,6 +797,61 @@
     ]
    }
   },
+  "/go_blog.auth.AuthApi/AddOrUpdateRole": {
+   "post": {
+    "summary": "添加修改角色",
+    "operationId": "AddOrUpdateRole2",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "code",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "角色编码"
+     },
+     {
+      "name": "describe",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "功能描述"
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "基本信息\nID"
+     },
+     {
+      "name": "is_enable",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "是否启用"
+     },
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "角色名称"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/go_blog.auth.AuthApi/DeleteMenu": {
    "post": {
     "summary": "删除菜单",
@@ -677,6 +883,33 @@
    "post": {
     "summary": "删除接口",
     "operationId": "DeleteResource2",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.auth.AuthApi/DeleteRole": {
+   "post": {
+    "summary": "删除角色",
+    "operationId": "DeleteRole2",
     "responses": {
      "200": {
       "description": "空响应",
@@ -754,6 +987,33 @@
       "description": "接口信息定义",
       "schema": {
        "$ref": "#/definitions/go_blog.auth.Resource"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.auth.AuthApi/RoleDetail": {
+   "post": {
+    "summary": "角色详情",
+    "operationId": "RoleDetail2",
+    "responses": {
+     "200": {
+      "description": "角色信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.Role"
       }
      }
     },
@@ -855,6 +1115,48 @@
      "authapi.trpc"
     ]
    }
+  },
+  "/go_blog.auth.AuthApi/SearchRole": {
+   "post": {
+    "summary": "角色搜索",
+    "operationId": "SearchRole2",
+    "responses": {
+     "200": {
+      "description": "SearchRoleRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.SearchRoleRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
   }
  },
  "definitions": {
@@ -905,8 +1207,8 @@
      "format": "uint32",
      "description": "创建时间"
     },
-    "create_user_id": {
-     "title": "create_user_id",
+    "create_user": {
+     "title": "create_user",
      "type": "integer",
      "format": "uint32",
      "description": "公共字段\n创建人id"
@@ -960,8 +1262,8 @@
      "format": "uint32",
      "description": "更新时间"
     },
-    "update_user_id": {
-     "title": "update_user_id",
+    "update_user": {
+     "title": "update_user",
      "type": "integer",
      "format": "uint32",
      "description": "更新人id"
@@ -979,8 +1281,8 @@
      "format": "uint32",
      "description": "创建时间"
     },
-    "create_user_id": {
-     "title": "create_user_id",
+    "create_user": {
+     "title": "create_user",
      "type": "integer",
      "format": "uint32",
      "description": "公共字段\n创建人id"
@@ -1070,8 +1372,8 @@
      "format": "uint32",
      "description": "更新时间"
     },
-    "update_user_id": {
-     "title": "update_user_id",
+    "update_user": {
+     "title": "update_user",
      "type": "integer",
      "format": "uint32",
      "description": "更新人id"
@@ -1084,6 +1386,63 @@
    },
    "title": "go_blog.auth.Resource",
    "description": "接口信息定义"
+  },
+  "go_blog.auth.Role": {
+   "type": "object",
+   "properties": {
+    "code": {
+     "title": "code",
+     "type": "string",
+     "description": "角色编码"
+    },
+    "create_time": {
+     "title": "create_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "创建时间"
+    },
+    "create_user": {
+     "title": "create_user",
+     "type": "integer",
+     "format": "uint32",
+     "description": "公共字段\n创建人id"
+    },
+    "describe": {
+     "title": "describe",
+     "type": "string",
+     "description": "功能描述"
+    },
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "基本信息\nID"
+    },
+    "is_enable": {
+     "title": "is_enable",
+     "type": "boolean",
+     "description": "是否启用"
+    },
+    "name": {
+     "title": "name",
+     "type": "string",
+     "description": "角色名称"
+    },
+    "update_time": {
+     "title": "update_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新时间"
+    },
+    "update_user": {
+     "title": "update_user",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新人id"
+    }
+   },
+   "title": "go_blog.auth.Role",
+   "description": "角色信息定义"
   },
   "go_blog.auth.SearchMenuRsp": {
    "type": "object",
@@ -1126,6 +1485,27 @@
    },
    "title": "go_blog.auth.SearchResourceRsp",
    "description": "SearchResourceRsp"
+  },
+  "go_blog.auth.SearchRoleRsp": {
+   "type": "object",
+   "properties": {
+    "data": {
+     "title": "data",
+     "type": "array",
+     "description": " 角色集合\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.auth.Role"
+     }
+    },
+    "total": {
+     "title": "total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    }
+   },
+   "title": "go_blog.auth.SearchRoleRsp",
+   "description": "SearchRoleRsp"
   }
  }
 }

@@ -1,0 +1,41 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/gencode", "interfaces.go")
+
+
+
+
+// $!{tableInfo.name} $!{tableInfo.comment}
+type (
+	// I$!{tableInfo.name}UseCase 业务逻辑
+	I$!{tableInfo.name}UseCase interface {
+		// Create$!{tableInfo.name} 添加$!{tableInfo.comment}
+		Create$!{tableInfo.name}(ctx context.Context, param *pb.AddOrUpdate$!{tableInfo.name}Param) error
+		// Update$!{tableInfo.name} 修改$!{tableInfo.comment}
+		Update$!{tableInfo.name}(ctx context.Context, param *pb.AddOrUpdate$!{tableInfo.name}Param) error
+		// Get$!{tableInfo.name}s 分页查询$!{tableInfo.comment}
+		Get$!{tableInfo.name}s(ctx context.Context, param *pb.Get$!{tableInfo.name}sParam) ([]*pb.$!{tableInfo.name}, uint32, error)
+		// Get$!{tableInfo.name} 根据id获取$!{tableInfo.comment}
+		Get$!{tableInfo.name}(ctx context.Context, id uint64) (*pb.$!{tableInfo.name}, error)
+		// Delete$!{tableInfo.name} 删除$!{tableInfo.comment}
+		Delete$!{tableInfo.name}(ctx context.Context, id uint64) error
+	}
+
+	// I$!{tableInfo.name}Repo 数据存储操作
+	I$!{tableInfo.name}Repo interface {
+		// Create 创建$!{tableInfo.comment}
+		Create(ctx context.Context, $!tool.firstLowerCase($!{tableInfo.name}) *entity.$!{tableInfo.name}) error
+		// DeleteByID 根据主键ID删除$!{tableInfo.comment}
+		DeleteByID(ctx context.Context, id uint64) error
+		// Update 修改$!{tableInfo.comment}
+		Update(ctx context.Context, $!tool.firstLowerCase($!{tableInfo.name}) *entity.$!{tableInfo.name}) error
+		// GetByID 根据主键ID查询$!{tableInfo.comment}
+		GetByID(ctx context.Context, id uint64) (*entity.$!{tableInfo.name}, error)
+		// GetByDBOption 根据动态条件查询$!{tableInfo.comment}
+        GetByDBOption(ctx context.Context, pageNum uint32, pageSize uint32, opts ...db.DBOption) ([]*entity.$!{tableInfo.name}, uint32, error)
+	}
+)
+
+

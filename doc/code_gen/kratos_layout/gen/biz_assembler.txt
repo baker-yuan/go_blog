@@ -1,0 +1,30 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/codegen", "biz_assembler.txt")
+
+
+package assembler
+
+
+
+// $!{tableInfo.name}EntityToModel entity转pb
+func $!{tableInfo.name}EntityToModel($!tool.firstLowerCase($!{tableInfo.name}) *$!{tableInfo.name}) *pb.$!{tableInfo.name} {
+	modelRes := &pb.$!{tableInfo.name}{
+#foreach($column in $tableInfo.fullColumn)
+      $!tool.firstUpperCase($!{column.name}) : $!tool.firstLowerCase($!{tableInfo.name}) . $!tool.firstUpperCase($!{column.name}),
+#end
+	}
+	return modelRes
+}
+
+// AddOrUpdate$!{tableInfo.name}ReqToEntity pb转entity
+func AddOrUpdate$!{tableInfo.name}ReqToEntity(pb$!{tableInfo.name} *pb.AddOrUpdate$!{tableInfo.name}Req) *$!{tableInfo.name} {
+	entityRes := &$!{tableInfo.name}{
+#foreach($column in $tableInfo.fullColumn)
+      $!tool.firstUpperCase($!{column.name}) : pb$!{tableInfo.name} . $!tool.firstUpperCase($!{column.name}),
+#end
+	}
+	return entityRes
+}

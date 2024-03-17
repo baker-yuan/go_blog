@@ -65,6 +65,21 @@ func (mr *MockAuthApiServiceMockRecorder) AddOrUpdateResource(ctx, req interface
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateResource", reflect.TypeOf((*MockAuthApiService)(nil).AddOrUpdateResource), ctx, req)
 }
 
+// AddOrUpdateRole mocks base method.
+func (m *MockAuthApiService) AddOrUpdateRole(ctx context.Context, req *AddOrUpdateRoleReq) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddOrUpdateRole", ctx, req)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateRole indicates an expected call of AddOrUpdateRole.
+func (mr *MockAuthApiServiceMockRecorder) AddOrUpdateRole(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateRole", reflect.TypeOf((*MockAuthApiService)(nil).AddOrUpdateRole), ctx, req)
+}
+
 // DeleteMenu mocks base method.
 func (m *MockAuthApiService) DeleteMenu(ctx context.Context, req *DeleteMenuReq) (*EmptyRsp, error) {
 	m.ctrl.T.Helper()
@@ -93,6 +108,21 @@ func (m *MockAuthApiService) DeleteResource(ctx context.Context, req *DeleteReso
 func (mr *MockAuthApiServiceMockRecorder) DeleteResource(ctx, req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteResource", reflect.TypeOf((*MockAuthApiService)(nil).DeleteResource), ctx, req)
+}
+
+// DeleteRole mocks base method.
+func (m *MockAuthApiService) DeleteRole(ctx context.Context, req *DeleteRoleReq) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteRole", ctx, req)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteRole indicates an expected call of DeleteRole.
+func (mr *MockAuthApiServiceMockRecorder) DeleteRole(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteRole", reflect.TypeOf((*MockAuthApiService)(nil).DeleteRole), ctx, req)
 }
 
 // GetEffectiveResource mocks base method.
@@ -140,6 +170,21 @@ func (mr *MockAuthApiServiceMockRecorder) ResourceDetail(ctx, req interface{}) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ResourceDetail", reflect.TypeOf((*MockAuthApiService)(nil).ResourceDetail), ctx, req)
 }
 
+// RoleDetail mocks base method.
+func (m *MockAuthApiService) RoleDetail(ctx context.Context, req *RoleDetailReq) (*Role, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RoleDetail", ctx, req)
+	ret0, _ := ret[0].(*Role)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RoleDetail indicates an expected call of RoleDetail.
+func (mr *MockAuthApiServiceMockRecorder) RoleDetail(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RoleDetail", reflect.TypeOf((*MockAuthApiService)(nil).RoleDetail), ctx, req)
+}
+
 // SearchMenu mocks base method.
 func (m *MockAuthApiService) SearchMenu(ctx context.Context, req *SearchMenuReq) (*SearchMenuRsp, error) {
 	m.ctrl.T.Helper()
@@ -168,6 +213,21 @@ func (m *MockAuthApiService) SearchResource(ctx context.Context, req *SearchReso
 func (mr *MockAuthApiServiceMockRecorder) SearchResource(ctx, req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchResource", reflect.TypeOf((*MockAuthApiService)(nil).SearchResource), ctx, req)
+}
+
+// SearchRole mocks base method.
+func (m *MockAuthApiService) SearchRole(ctx context.Context, req *SearchRoleReq) (*SearchRoleRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SearchRole", ctx, req)
+	ret0, _ := ret[0].(*SearchRoleRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchRole indicates an expected call of SearchRole.
+func (mr *MockAuthApiServiceMockRecorder) SearchRole(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchRole", reflect.TypeOf((*MockAuthApiService)(nil).SearchRole), ctx, req)
 }
 
 // MockAuthApiClientProxy is a mock of AuthApiClientProxy interface.
@@ -233,6 +293,26 @@ func (mr *MockAuthApiClientProxyMockRecorder) AddOrUpdateResource(ctx, req inter
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateResource", reflect.TypeOf((*MockAuthApiClientProxy)(nil).AddOrUpdateResource), varargs...)
 }
 
+// AddOrUpdateRole mocks base method.
+func (m *MockAuthApiClientProxy) AddOrUpdateRole(ctx context.Context, req *AddOrUpdateRoleReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AddOrUpdateRole", varargs...)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateRole indicates an expected call of AddOrUpdateRole.
+func (mr *MockAuthApiClientProxyMockRecorder) AddOrUpdateRole(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateRole", reflect.TypeOf((*MockAuthApiClientProxy)(nil).AddOrUpdateRole), varargs...)
+}
+
 // DeleteMenu mocks base method.
 func (m *MockAuthApiClientProxy) DeleteMenu(ctx context.Context, req *DeleteMenuReq, opts ...client.Option) (*EmptyRsp, error) {
 	m.ctrl.T.Helper()
@@ -271,6 +351,26 @@ func (mr *MockAuthApiClientProxyMockRecorder) DeleteResource(ctx, req interface{
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteResource", reflect.TypeOf((*MockAuthApiClientProxy)(nil).DeleteResource), varargs...)
+}
+
+// DeleteRole mocks base method.
+func (m *MockAuthApiClientProxy) DeleteRole(ctx context.Context, req *DeleteRoleReq, opts ...client.Option) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteRole", varargs...)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteRole indicates an expected call of DeleteRole.
+func (mr *MockAuthApiClientProxyMockRecorder) DeleteRole(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteRole", reflect.TypeOf((*MockAuthApiClientProxy)(nil).DeleteRole), varargs...)
 }
 
 // GetEffectiveResource mocks base method.
@@ -333,6 +433,26 @@ func (mr *MockAuthApiClientProxyMockRecorder) ResourceDetail(ctx, req interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ResourceDetail", reflect.TypeOf((*MockAuthApiClientProxy)(nil).ResourceDetail), varargs...)
 }
 
+// RoleDetail mocks base method.
+func (m *MockAuthApiClientProxy) RoleDetail(ctx context.Context, req *RoleDetailReq, opts ...client.Option) (*Role, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RoleDetail", varargs...)
+	ret0, _ := ret[0].(*Role)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RoleDetail indicates an expected call of RoleDetail.
+func (mr *MockAuthApiClientProxyMockRecorder) RoleDetail(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RoleDetail", reflect.TypeOf((*MockAuthApiClientProxy)(nil).RoleDetail), varargs...)
+}
+
 // SearchMenu mocks base method.
 func (m *MockAuthApiClientProxy) SearchMenu(ctx context.Context, req *SearchMenuReq, opts ...client.Option) (*SearchMenuRsp, error) {
 	m.ctrl.T.Helper()
@@ -371,4 +491,24 @@ func (mr *MockAuthApiClientProxyMockRecorder) SearchResource(ctx, req interface{
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchResource", reflect.TypeOf((*MockAuthApiClientProxy)(nil).SearchResource), varargs...)
+}
+
+// SearchRole mocks base method.
+func (m *MockAuthApiClientProxy) SearchRole(ctx context.Context, req *SearchRoleReq, opts ...client.Option) (*SearchRoleRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SearchRole", varargs...)
+	ret0, _ := ret[0].(*SearchRoleRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchRole indicates an expected call of SearchRole.
+func (mr *MockAuthApiClientProxyMockRecorder) SearchRole(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchRole", reflect.TypeOf((*MockAuthApiClientProxy)(nil).SearchRole), varargs...)
 }

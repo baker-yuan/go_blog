@@ -1,0 +1,52 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/codegen", "proto.txt")
+
+// $!{tableInfo.comment}搜索
+message Search$!{tableInfo.name}Req {
+  string search = 1; // 查询条件 {a:?,b:?}
+
+  uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+}
+
+message Search$!{tableInfo.name}Rsp {
+  uint32 total = 1; // 分页查询
+  repeated $!{tableInfo.name} data = 2; // $!{tableInfo.comment}集合
+}
+
+// $!{tableInfo.comment}详情
+message $!{tableInfo.name}DetailReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 添加修改$!{tableInfo.comment}
+message AddOrUpdate$!{tableInfo.name}Req {
+
+}
+
+// 删除$!{tableInfo.comment}
+message Delete$!{tableInfo.name}Req {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+
+service PortalApi {
+  // $!{tableInfo.comment}搜索
+  rpc Search$!{tableInfo.name}(Search$!{tableInfo.name}Req) returns (Search$!{tableInfo.name}Rsp) {
+    option(trpc.alias) = "/xxx/search$!{tableInfo.name}";
+  }
+  // 添加修改$!{tableInfo.comment}
+  rpc AddOrUpdate$!{tableInfo.name}(AddOrUpdate$!{tableInfo.name}Req) returns (AddOrUpdateRsp) {
+    option(trpc.alias) = "/xxx/addOrUpdate$!{tableInfo.name}";
+  }
+  // 删除$!{tableInfo.comment}
+  rpc Delete$!{tableInfo.name}(Delete$!{tableInfo.name}Req) returns (EmptyRsp)  {
+    option(trpc.alias) = "/xxx/delete$!{tableInfo.name}";
+  }
+  // $!{tableInfo.comment}详情
+  rpc $!{tableInfo.name}Detail($!{tableInfo.name}DetailReq) returns ($!{tableInfo.name})  {
+    option(trpc.alias) = "/xxx/$!{tableInfo.name}Detail";
+  }

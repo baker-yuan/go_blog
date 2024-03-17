@@ -1,0 +1,106 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/gencode", "repo.go")
+
+
+package repo
+
+import (
+	"context"
+	"errors"
+
+	"github.com/baker-yuan/go-mall/common/entity"
+	"github.com/baker-yuan/go-mall/common/db"
+	"github.com/baker-yuan/go-mall/application/admin/pkg/util"
+	"gorm.io/gorm"
+)
+
+// $!{tableInfo.name}Repo $!{tableInfo.comment}
+type $!{tableInfo.name}Repo struct {
+	*db.GenericDao[entity.$!{tableInfo.name}, uint64]
+}
+
+// New$!{tableInfo.name}Repo 创建
+func New$!{tableInfo.name}Repo(conn *gorm.DB) *$!{tableInfo.name}Repo {
+	return &$!{tableInfo.name}Repo{
+		GenericDao: &db.GenericDao[entity.$!{tableInfo.name}, uint64]{
+			DB: conn,
+		},
+	}
+}
+
+func init() {
+	registerInitField(init$!{tableInfo.name}Field)
+}
+
+var (
+	// 全字段修改$!{tableInfo.name}那些字段不修改
+	notUpdate$!{tableInfo.name}Field = []string{
+		"created_at",
+	}
+	update$!{tableInfo.name}Field []string
+)
+
+// Init$!{tableInfo.name}Field 全字段修改
+func init$!{tableInfo.name}Field(db *gorm.DB) error {
+	columnTypes, err := db.Migrator().ColumnTypes(&entity.$!{tableInfo.name}{})
+	if err != nil {
+		return err
+	}
+	columns := make([]string, 0)
+	for _, v := range columnTypes {
+		columns = append(columns, v.Name())
+	}
+	update$!{tableInfo.name}Field = util.SliceRemove[string](columns, notUpdate$!{tableInfo.name}Field...)
+	return nil
+}
+
+// Create 创建$!{tableInfo.comment}
+func (r $!{tableInfo.name}Repo) Create(ctx context.Context, $!tool.firstLowerCase($!{tableInfo.name}) *entity.$!{tableInfo.name}) error {
+	if $!tool.firstLowerCase($!{tableInfo.name}) .ID > 0 {
+		return errors.New("illegal argument $!tool.firstLowerCase($!{tableInfo.name}) id exist")
+	}
+	return r.GenericDao.Create(ctx, $!tool.firstLowerCase($!{tableInfo.name}))
+}
+
+// DeleteByID 根据主键ID删除$!{tableInfo.comment}
+func (r $!{tableInfo.name}Repo) DeleteByID(ctx context.Context, id uint64) error {
+	return r.GenericDao.DeleteByID(ctx, id)
+}
+
+// Update 修改$!{tableInfo.comment}
+func (r $!{tableInfo.name}Repo) Update(ctx context.Context, $!tool.firstLowerCase($!{tableInfo.name}) *entity.$!{tableInfo.name}) error {
+	if $!tool.firstLowerCase($!{tableInfo.name}) .ID == 0 {
+		return errors.New("illegal argument $!tool.firstLowerCase($!{tableInfo.name}) exist")
+	}
+	return r.GenericDao.DB.WithContext(ctx).Select(update$!{tableInfo.name}Field).Updates($!tool.firstLowerCase($!{tableInfo.name})).Error
+}
+
+// GetByID 根据主键ID查询$!{tableInfo.comment}
+func (r $!{tableInfo.name}Repo) GetByID(ctx context.Context, id uint64) (*entity.$!{tableInfo.name}, error) {
+	return r.GenericDao.GetByID(ctx, id)
+}
+
+// GetByDBOption 根据动态条件查询$!{tableInfo.comment}
+func (r $!{tableInfo.name}Repo) GetByDBOption(ctx context.Context, pageNum uint32, pageSize uint32, opts ...db.DBOption) ([]*entity.$!{tableInfo.name}, uint32, error) {
+	var (
+		res       = make([]*entity.$!{tableInfo.name}, 0)
+		pageTotal = int64(0)
+		offset    = (pageNum - 1) * pageSize
+	)
+
+	session := r.GenericDao.DB.WithContext(ctx)
+	for _, opt := range opts {
+		session = opt(session)
+	}
+
+	session = session.Offset(int(offset)).Limit(int(pageSize)).Order("id desc").Find(&res).
+		Offset(-1).Limit(-1).Count(&pageTotal)
+
+	if err := session.Error; err != nil {
+		return nil, 0, err
+	}
+	return res, uint32(pageTotal), nil
+}

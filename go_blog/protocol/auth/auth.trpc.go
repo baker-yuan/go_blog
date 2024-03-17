@@ -37,6 +37,14 @@ type AuthApiService interface {
 	ResourceDetail(ctx context.Context, req *ResourceDetailReq) (*Resource, error)
 	// GetEffectiveResource 获取有效状态下的接口
 	GetEffectiveResource(ctx context.Context, req *GetEffectiveResourceReq) (*GetEffectiveResourceRsp, error)
+	// SearchRole 角色搜索
+	SearchRole(ctx context.Context, req *SearchRoleReq) (*SearchRoleRsp, error)
+	// AddOrUpdateRole 添加修改角色
+	AddOrUpdateRole(ctx context.Context, req *AddOrUpdateRoleReq) (*AddOrUpdateRsp, error)
+	// DeleteRole 删除角色
+	DeleteRole(ctx context.Context, req *DeleteRoleReq) (*EmptyRsp, error)
+	// RoleDetail 角色详情
+	RoleDetail(ctx context.Context, req *RoleDetailReq) (*Role, error)
 }
 
 func AuthApiService_SearchMenu_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -201,6 +209,78 @@ func AuthApiService_GetEffectiveResource_Handler(svr interface{}, ctx context.Co
 	return rsp, nil
 }
 
+func AuthApiService_SearchRole_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &SearchRoleReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).SearchRole(ctx, reqbody.(*SearchRoleReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_AddOrUpdateRole_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &AddOrUpdateRoleReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).AddOrUpdateRole(ctx, reqbody.(*AddOrUpdateRoleReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_DeleteRole_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &DeleteRoleReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).DeleteRole(ctx, reqbody.(*DeleteRoleReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_RoleDetail_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &RoleDetailReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).RoleDetail(ctx, reqbody.(*RoleDetailReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 // AuthApiServer_ServiceDesc descriptor for server.RegisterService.
 var AuthApiServer_ServiceDesc = server.ServiceDesc{
 	ServiceName: "go_blog.auth.AuthApi",
@@ -243,6 +323,22 @@ var AuthApiServer_ServiceDesc = server.ServiceDesc{
 			Func: AuthApiService_GetEffectiveResource_Handler,
 		},
 		{
+			Name: "/auth/admin/searchRole",
+			Func: AuthApiService_SearchRole_Handler,
+		},
+		{
+			Name: "/auth/admin/addOrUpdateRole",
+			Func: AuthApiService_AddOrUpdateRole_Handler,
+		},
+		{
+			Name: "/auth/admin/deleteRole",
+			Func: AuthApiService_DeleteRole_Handler,
+		},
+		{
+			Name: "/auth/admin/RoleDetail",
+			Func: AuthApiService_RoleDetail_Handler,
+		},
+		{
 			Name: "/go_blog.auth.AuthApi/SearchMenu",
 			Func: AuthApiService_SearchMenu_Handler,
 		},
@@ -277,6 +373,22 @@ var AuthApiServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/go_blog.auth.AuthApi/GetEffectiveResource",
 			Func: AuthApiService_GetEffectiveResource_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/SearchRole",
+			Func: AuthApiService_SearchRole_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/AddOrUpdateRole",
+			Func: AuthApiService_AddOrUpdateRole_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/DeleteRole",
+			Func: AuthApiService_DeleteRole_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/RoleDetail",
+			Func: AuthApiService_RoleDetail_Handler,
 		},
 	},
 }
@@ -337,6 +449,26 @@ func (s *UnimplementedAuthApi) GetEffectiveResource(ctx context.Context, req *Ge
 	return nil, errors.New("rpc GetEffectiveResource of service AuthApi is not implemented")
 }
 
+// SearchRole 角色搜索
+func (s *UnimplementedAuthApi) SearchRole(ctx context.Context, req *SearchRoleReq) (*SearchRoleRsp, error) {
+	return nil, errors.New("rpc SearchRole of service AuthApi is not implemented")
+}
+
+// AddOrUpdateRole 添加修改角色
+func (s *UnimplementedAuthApi) AddOrUpdateRole(ctx context.Context, req *AddOrUpdateRoleReq) (*AddOrUpdateRsp, error) {
+	return nil, errors.New("rpc AddOrUpdateRole of service AuthApi is not implemented")
+}
+
+// DeleteRole 删除角色
+func (s *UnimplementedAuthApi) DeleteRole(ctx context.Context, req *DeleteRoleReq) (*EmptyRsp, error) {
+	return nil, errors.New("rpc DeleteRole of service AuthApi is not implemented")
+}
+
+// RoleDetail 角色详情
+func (s *UnimplementedAuthApi) RoleDetail(ctx context.Context, req *RoleDetailReq) (*Role, error) {
+	return nil, errors.New("rpc RoleDetail of service AuthApi is not implemented")
+}
+
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
 
 // END ======================================= Server Service Definition ======================================= END
@@ -363,6 +495,14 @@ type AuthApiClientProxy interface {
 	ResourceDetail(ctx context.Context, req *ResourceDetailReq, opts ...client.Option) (rsp *Resource, err error)
 	// GetEffectiveResource 获取有效状态下的接口
 	GetEffectiveResource(ctx context.Context, req *GetEffectiveResourceReq, opts ...client.Option) (rsp *GetEffectiveResourceRsp, err error)
+	// SearchRole 角色搜索
+	SearchRole(ctx context.Context, req *SearchRoleReq, opts ...client.Option) (rsp *SearchRoleRsp, err error)
+	// AddOrUpdateRole 添加修改角色
+	AddOrUpdateRole(ctx context.Context, req *AddOrUpdateRoleReq, opts ...client.Option) (rsp *AddOrUpdateRsp, err error)
+	// DeleteRole 删除角色
+	DeleteRole(ctx context.Context, req *DeleteRoleReq, opts ...client.Option) (rsp *EmptyRsp, err error)
+	// RoleDetail 角色详情
+	RoleDetail(ctx context.Context, req *RoleDetailReq, opts ...client.Option) (rsp *Role, err error)
 }
 
 type AuthApiClientProxyImpl struct {
@@ -548,6 +688,86 @@ func (c *AuthApiClientProxyImpl) GetEffectiveResource(ctx context.Context, req *
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &GetEffectiveResourceRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) SearchRole(ctx context.Context, req *SearchRoleReq, opts ...client.Option) (*SearchRoleRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/searchRole")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("SearchRole")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &SearchRoleRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) AddOrUpdateRole(ctx context.Context, req *AddOrUpdateRoleReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/addOrUpdateRole")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("AddOrUpdateRole")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &AddOrUpdateRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) DeleteRole(ctx context.Context, req *DeleteRoleReq, opts ...client.Option) (*EmptyRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/deleteRole")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("DeleteRole")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &EmptyRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) RoleDetail(ctx context.Context, req *RoleDetailReq, opts ...client.Option) (*Role, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/RoleDetail")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("RoleDetail")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &Role{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}

@@ -23,10 +23,10 @@ func ResourceEntityToModel(resource *Resource) *pb.Resource {
 		Service: resource.Service,
 		Method:  resource.Method,
 		// 公共字段
-		CreateUserId: resource.CreateUserID,
-		UpdateUserId: resource.UpdateUserID,
-		CreateTime:   resource.CreateTime,
-		UpdateTime:   resource.UpdateTime,
+		CreateUser: resource.CreateUser,
+		UpdateUser: resource.UpdateUser,
+		CreateTime: resource.CreateTime,
+		UpdateTime: resource.UpdateTime,
 	}
 	return modelRes
 }

@@ -1,0 +1,44 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/codegen", "service.txt")
+
+
+
+// Search$!{tableInfo.name} 查询$!{tableInfo.comment}
+func (s *AuthService) Search$!{tableInfo.name}(ctx context.Context, req *pb.Search$!{tableInfo.name}Req) (*pb.Search$!{tableInfo.name}Rsp, error) {
+	rsp := &pb.Search$!{tableInfo.name}Rsp{}
+	$!tool.firstLowerCase($!{tableInfo.name})s, pageTotal, err := s.$!tool.firstLowerCase($!{tableInfo.name}). Search$!{tableInfo.name}(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Data = $!tool.firstLowerCase($!{tableInfo.name})s
+	rsp.Total = pageTotal
+	return rsp, nil
+}
+
+// $!{tableInfo.name}Detail $!{tableInfo.comment}详情
+func (s *AuthService) $!{tableInfo.name}Detail(ctx context.Context, req *pb.$!{tableInfo.name}DetailReq) (*pb.$!{tableInfo.name}, error) {
+	return s.$!tool.firstLowerCase($!{tableInfo.name}). $!{tableInfo.name}Detail(ctx, req)
+}
+
+// AddOrUpdate$!{tableInfo.name} 添加修改$!{tableInfo.comment}
+func (s *AuthService) AddOrUpdate$!{tableInfo.name}(ctx context.Context, req *pb.AddOrUpdate$!{tableInfo.name}Req) (*pb.AddOrUpdateRsp, error) {
+	rsp := &pb.AddOrUpdateRsp{}
+	id, err := s.$!tool.firstLowerCase($!{tableInfo.name}). AddOrUpdate$!{tableInfo.name}(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Id = id
+	return rsp, nil
+}
+
+// Delete$!{tableInfo.name} 删除$!{tableInfo.comment}
+func (s *AuthService) Delete$!{tableInfo.name}(ctx context.Context, req *pb.Delete$!{tableInfo.name}Req) (*pb.EmptyRsp, error) {
+	rsp := &pb.EmptyRsp{}
+	if err := s.$!tool.firstLowerCase($!{tableInfo.name}). Delete$!{tableInfo.name}(ctx, req); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}

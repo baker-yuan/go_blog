@@ -1,0 +1,38 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/codegen", "data_assembler.txt")
+
+
+package assembler
+
+
+// $!{tableInfo.name}POsToEntity po转entity
+func $!{tableInfo.name}POsToEntity(db$!{tableInfo.name}s []*$!{tableInfo.name}) []*biz.$!{tableInfo.name} {
+	res := make([]*biz.$!{tableInfo.name}, 0)
+	for _, db$!{tableInfo.name} := range db$!{tableInfo.name}s {
+		res = append(res, $!{tableInfo.name}POToEntity(db$!{tableInfo.name}))
+	}
+	return res
+}
+
+// $!{tableInfo.name}POToEntity po转entity
+func $!{tableInfo.name}POToEntity(db$!{tableInfo.name} *$!{tableInfo.name}) *biz.$!{tableInfo.name} {
+	poRes := &biz.$!{tableInfo.name}{
+#foreach($column in $tableInfo.fullColumn)
+      $!tool.firstUpperCase($!{column.name}) : db$!{tableInfo.name} . $!tool.firstUpperCase($!{column.name}),
+#end
+	}
+	return poRes
+}
+
+// $!{tableInfo.name}EntityToPO entity转po
+func $!{tableInfo.name}EntityToPO(role *biz.Role) *$!{tableInfo.name} {
+	poRes := &$!{tableInfo.name}{
+#foreach($column in $tableInfo.fullColumn)
+      $!tool.firstUpperCase($!{column.name}) : $!tool.firstLowerCase($!{tableInfo.name}) . $!tool.firstUpperCase($!{column.name}),
+#end
+	}
+	return poRes
+}

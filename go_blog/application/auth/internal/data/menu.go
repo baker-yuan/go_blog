@@ -33,7 +33,7 @@ type Menu struct {
 }
 
 // TableName 设置 AuthMenu 结构体对应的数据库表名
-func (Menu) TableName() string {
+func (m Menu) TableName() string {
 	return "baker_auth_menu"
 }
 

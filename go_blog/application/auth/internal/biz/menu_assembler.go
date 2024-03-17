@@ -18,10 +18,10 @@ func MenuEntityToModel(menu *Menu) *pb.Menu {
 		// 状态
 		IsHidden: menu.IsHidden,
 		// 公共字段
-		CreateUserId: menu.CreateUserID,
-		UpdateUserId: menu.UpdateUserID,
-		CreateTime:   menu.CreateTime,
-		UpdateTime:   menu.UpdateTime,
+		CreateUser: menu.CreateUser,
+		UpdateUser: menu.UpdateUser,
+		CreateTime: menu.CreateTime,
+		UpdateTime: menu.UpdateTime,
 	}
 	return modelRes
 }

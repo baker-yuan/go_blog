@@ -19,4 +19,5 @@ type AuthService struct {
 
 	menu     *biz.MenuUsecase
 	resource *biz.ResourceUseCase
+	role     *biz.RoleUseCase
 }

@@ -7,6 +7,7 @@ import (
 	pb "github.com/baker-yuan/go-blog/protocol/auth"
 )
 
+// NewAuthService 权限
 func NewAuthService(menu *biz.MenuUsecase, resource *biz.ResourceUseCase) *AuthService {
 	return &AuthService{
 		menu:     menu,
@@ -15,9 +16,9 @@ func NewAuthService(menu *biz.MenuUsecase, resource *biz.ResourceUseCase) *AuthS
 }
 
 // SearchMenu 菜单搜索
-func (a AuthService) SearchMenu(ctx context.Context, req *pb.SearchMenuReq) (*pb.SearchMenuRsp, error) {
+func (s *AuthService) SearchMenu(ctx context.Context, req *pb.SearchMenuReq) (*pb.SearchMenuRsp, error) {
 	rsp := &pb.SearchMenuRsp{}
-	menus, pageTotal, err := a.menu.SearchMenu(ctx, req)
+	menus, pageTotal, err := s.menu.SearchMenu(ctx, req)
 	if err != nil {
 		return nil, err
 	}
@@ -27,9 +28,9 @@ func (a AuthService) SearchMenu(ctx context.Context, req *pb.SearchMenuReq) (*pb
 }
 
 // AddOrUpdateMenu 添加修改菜单
-func (a AuthService) AddOrUpdateMenu(ctx context.Context, req *pb.AddOrUpdateMenuReq) (*pb.AddOrUpdateRsp, error) {
+func (s *AuthService) AddOrUpdateMenu(ctx context.Context, req *pb.AddOrUpdateMenuReq) (*pb.AddOrUpdateRsp, error) {
 	rsp := &pb.AddOrUpdateRsp{}
-	id, err := a.menu.AddOrUpdateMenu(ctx, req)
+	id, err := s.menu.AddOrUpdateMenu(ctx, req)
 	if err != nil {
 		return nil, err
 	}
@@ -38,23 +39,23 @@ func (a AuthService) AddOrUpdateMenu(ctx context.Context, req *pb.AddOrUpdateMen
 }
 
 // DeleteMenu 删除菜单
-func (a AuthService) DeleteMenu(ctx context.Context, req *pb.DeleteMenuReq) (*pb.EmptyRsp, error) {
+func (s *AuthService) DeleteMenu(ctx context.Context, req *pb.DeleteMenuReq) (*pb.EmptyRsp, error) {
 	rsp := &pb.EmptyRsp{}
-	if err := a.menu.DeleteMenu(ctx, req); err != nil {
+	if err := s.menu.DeleteMenu(ctx, req); err != nil {
 		return nil, err
 	}
 	return rsp, nil
 }
 
 // MenuDetail 菜单详情
-func (a AuthService) MenuDetail(ctx context.Context, req *pb.MenuDetailReq) (*pb.Menu, error) {
-	return a.menu.MenuDetail(ctx, req)
+func (s *AuthService) MenuDetail(ctx context.Context, req *pb.MenuDetailReq) (*pb.Menu, error) {
+	return s.menu.MenuDetail(ctx, req)
 }
 
 // SearchResource 接口搜索
-func (a AuthService) SearchResource(ctx context.Context, req *pb.SearchResourceReq) (*pb.SearchResourceRsp, error) {
+func (s *AuthService) SearchResource(ctx context.Context, req *pb.SearchResourceReq) (*pb.SearchResourceRsp, error) {
 	rsp := &pb.SearchResourceRsp{}
-	resources, pageTotal, err := a.resource.SearchResource(ctx, req)
+	resources, pageTotal, err := s.resource.SearchResource(ctx, req)
 	if err != nil {
 		return nil, err
 	}
@@ -64,9 +65,9 @@ func (a AuthService) SearchResource(ctx context.Context, req *pb.SearchResourceR
 }
 
 // AddOrUpdateResource 添加修改接口
-func (a AuthService) AddOrUpdateResource(ctx context.Context, req *pb.AddOrUpdateResourceReq) (*pb.AddOrUpdateRsp, error) {
+func (s *AuthService) AddOrUpdateResource(ctx context.Context, req *pb.AddOrUpdateResourceReq) (*pb.AddOrUpdateRsp, error) {
 	rsp := &pb.AddOrUpdateRsp{}
-	id, err := a.resource.AddOrUpdateResource(ctx, req)
+	id, err := s.resource.AddOrUpdateResource(ctx, req)
 	if err != nil {
 		return nil, err
 	}
@@ -75,27 +76,64 @@ func (a AuthService) AddOrUpdateResource(ctx context.Context, req *pb.AddOrUpdat
 }
 
 // DeleteResource 删除接口
-func (a AuthService) DeleteResource(ctx context.Context, req *pb.DeleteResourceReq) (*pb.EmptyRsp, error) {
+func (s *AuthService) DeleteResource(ctx context.Context, req *pb.DeleteResourceReq) (*pb.EmptyRsp, error) {
 	rsp := &pb.EmptyRsp{}
-	if err := a.resource.DeleteResource(ctx, req); err != nil {
+	if err := s.resource.DeleteResource(ctx, req); err != nil {
 		return nil, err
 	}
 	return rsp, nil
 }
 
 // ResourceDetail 接口详情
-func (a AuthService) ResourceDetail(ctx context.Context, req *pb.ResourceDetailReq) (*pb.Resource, error) {
-	return a.resource.ResourceDetail(ctx, req)
+func (s *AuthService) ResourceDetail(ctx context.Context, req *pb.ResourceDetailReq) (*pb.Resource, error) {
+	return s.resource.ResourceDetail(ctx, req)
 }
 
 // GetEffectiveResource 获取有效状态下的接口
-func (a AuthService) GetEffectiveResource(ctx context.Context,
+func (s *AuthService) GetEffectiveResource(ctx context.Context,
 	req *pb.GetEffectiveResourceReq) (*pb.GetEffectiveResourceRsp, error) {
 	res := &pb.GetEffectiveResourceRsp{}
-	data, err := a.resource.GetEffectiveResource(ctx, req)
+	data, err := s.resource.GetEffectiveResource(ctx, req)
 	if err != nil {
 		return nil, err
 	}
 	res.Data = data
 	return res, nil
+}
+
+// SearchRole 查询角色
+func (s *AuthService) SearchRole(ctx context.Context, req *pb.SearchRoleReq) (*pb.SearchRoleRsp, error) {
+	rsp := &pb.SearchRoleRsp{}
+	roles, pageTotal, err := s.role.SearchRole(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Data = roles
+	rsp.Total = pageTotal
+	return rsp, nil
+}
+
+// RoleDetail 角色详情
+func (s *AuthService) RoleDetail(ctx context.Context, req *pb.RoleDetailReq) (*pb.Role, error) {
+	return s.role.RoleDetail(ctx, req)
+}
+
+// AddOrUpdateRole 添加修改角色
+func (s *AuthService) AddOrUpdateRole(ctx context.Context, req *pb.AddOrUpdateRoleReq) (*pb.AddOrUpdateRsp, error) {
+	rsp := &pb.AddOrUpdateRsp{}
+	id, err := s.role.AddOrUpdateRole(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Id = id
+	return rsp, nil
+}
+
+// DeleteRole 删除角色
+func (s *AuthService) DeleteRole(ctx context.Context, req *pb.DeleteRoleReq) (*pb.EmptyRsp, error) {
+	rsp := &pb.EmptyRsp{}
+	if err := s.role.DeleteRole(ctx, req); err != nil {
+		return nil, err
+	}
+	return rsp, nil
 }

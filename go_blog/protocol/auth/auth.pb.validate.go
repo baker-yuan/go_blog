@@ -275,9 +275,9 @@ func (m *Menu) validate(all bool) error {
 
 	// no validation rules for IsHidden
 
-	// no validation rules for CreateUserId
+	// no validation rules for CreateUser
 
-	// no validation rules for UpdateUserId
+	// no validation rules for UpdateUser
 
 	// no validation rules for CreateTime
 
@@ -1071,9 +1071,9 @@ func (m *Resource) validate(all bool) error {
 
 	// no validation rules for Method
 
-	// no validation rules for CreateUserId
+	// no validation rules for CreateUser
 
-	// no validation rules for UpdateUserId
+	// no validation rules for UpdateUser
 
 	// no validation rules for CreateTime
 
@@ -2217,6 +2217,627 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RoleValidationError{}
+
+// Validate checks the field values on SearchRoleReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *SearchRoleReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchRoleReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in SearchRoleReqMultiError, or
+// nil if none found.
+func (m *SearchRoleReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchRoleReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Search
+
+	if m.GetPageNum() <= 0 {
+		err := SearchRoleReqValidationError{
+			field:  "PageNum",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetPageSize() <= 0 {
+		err := SearchRoleReqValidationError{
+			field:  "PageSize",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return SearchRoleReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchRoleReqMultiError is an error wrapping multiple validation errors
+// returned by SearchRoleReq.ValidateAll() if the designated constraints
+// aren't met.
+type SearchRoleReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchRoleReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchRoleReqMultiError) AllErrors() []error { return m }
+
+// SearchRoleReqValidationError is the validation error returned by
+// SearchRoleReq.Validate if the designated constraints aren't met.
+type SearchRoleReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchRoleReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchRoleReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchRoleReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchRoleReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchRoleReqValidationError) ErrorName() string { return "SearchRoleReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SearchRoleReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchRoleReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchRoleReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchRoleReqValidationError{}
+
+// Validate checks the field values on SearchRoleRsp with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *SearchRoleRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchRoleRsp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in SearchRoleRspMultiError, or
+// nil if none found.
+func (m *SearchRoleRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchRoleRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Total
+
+	for idx, item := range m.GetData() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, SearchRoleRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, SearchRoleRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SearchRoleRspValidationError{
+					field:  fmt.Sprintf("Data[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return SearchRoleRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchRoleRspMultiError is an error wrapping multiple validation errors
+// returned by SearchRoleRsp.ValidateAll() if the designated constraints
+// aren't met.
+type SearchRoleRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchRoleRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchRoleRspMultiError) AllErrors() []error { return m }
+
+// SearchRoleRspValidationError is the validation error returned by
+// SearchRoleRsp.Validate if the designated constraints aren't met.
+type SearchRoleRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchRoleRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchRoleRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchRoleRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchRoleRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchRoleRspValidationError) ErrorName() string { return "SearchRoleRspValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SearchRoleRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchRoleRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchRoleRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchRoleRspValidationError{}
+
+// Validate checks the field values on RoleDetailReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *RoleDetailReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on RoleDetailReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in RoleDetailReqMultiError, or
+// nil if none found.
+func (m *RoleDetailReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *RoleDetailReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := RoleDetailReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return RoleDetailReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// RoleDetailReqMultiError is an error wrapping multiple validation errors
+// returned by RoleDetailReq.ValidateAll() if the designated constraints
+// aren't met.
+type RoleDetailReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m RoleDetailReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m RoleDetailReqMultiError) AllErrors() []error { return m }
+
+// RoleDetailReqValidationError is the validation error returned by
+// RoleDetailReq.Validate if the designated constraints aren't met.
+type RoleDetailReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RoleDetailReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RoleDetailReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RoleDetailReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RoleDetailReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RoleDetailReqValidationError) ErrorName() string { return "RoleDetailReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e RoleDetailReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRoleDetailReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RoleDetailReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RoleDetailReqValidationError{}
+
+// Validate checks the field values on AddOrUpdateRoleReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AddOrUpdateRoleReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddOrUpdateRoleReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddOrUpdateRoleReqMultiError, or nil if none found.
+func (m *AddOrUpdateRoleReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddOrUpdateRoleReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := AddOrUpdateRoleReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		err := AddOrUpdateRoleReqValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetCode()) < 1 {
+		err := AddOrUpdateRoleReqValidationError{
+			field:  "Code",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Describe
+
+	// no validation rules for IsEnable
+
+	if len(errors) > 0 {
+		return AddOrUpdateRoleReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddOrUpdateRoleReqMultiError is an error wrapping multiple validation errors
+// returned by AddOrUpdateRoleReq.ValidateAll() if the designated constraints
+// aren't met.
+type AddOrUpdateRoleReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddOrUpdateRoleReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddOrUpdateRoleReqMultiError) AllErrors() []error { return m }
+
+// AddOrUpdateRoleReqValidationError is the validation error returned by
+// AddOrUpdateRoleReq.Validate if the designated constraints aren't met.
+type AddOrUpdateRoleReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddOrUpdateRoleReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddOrUpdateRoleReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddOrUpdateRoleReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddOrUpdateRoleReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddOrUpdateRoleReqValidationError) ErrorName() string {
+	return "AddOrUpdateRoleReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddOrUpdateRoleReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddOrUpdateRoleReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddOrUpdateRoleReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddOrUpdateRoleReqValidationError{}
+
+// Validate checks the field values on DeleteRoleReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *DeleteRoleReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteRoleReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in DeleteRoleReqMultiError, or
+// nil if none found.
+func (m *DeleteRoleReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteRoleReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := DeleteRoleReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DeleteRoleReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeleteRoleReqMultiError is an error wrapping multiple validation errors
+// returned by DeleteRoleReq.ValidateAll() if the designated constraints
+// aren't met.
+type DeleteRoleReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteRoleReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteRoleReqMultiError) AllErrors() []error { return m }
+
+// DeleteRoleReqValidationError is the validation error returned by
+// DeleteRoleReq.Validate if the designated constraints aren't met.
+type DeleteRoleReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteRoleReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteRoleReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteRoleReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteRoleReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteRoleReqValidationError) ErrorName() string { return "DeleteRoleReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DeleteRoleReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteRoleReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteRoleReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteRoleReqValidationError{}
 
 // Validate checks the field values on RoleAuthority with the rules defined in
 // the proto definition for this message. If any rules are violated, the first

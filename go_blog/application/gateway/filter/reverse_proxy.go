@@ -11,7 +11,7 @@ import (
 )
 
 // ForwardHandler 请求转发处理
-func ForwardHandler(bizCtx biz_ctx.BizContext, cfg *config.Config) {
+func ForwardHandler(bizCtx biz_ctx.IBizContext, cfg *config.Config) {
 	httpCtx, _ := bizCtx.(*biz_ctx.HttpContext)
 	ctx := httpCtx.FastCtx()
 

@@ -23,10 +23,10 @@ type Menu struct {
 	// 状态
 	IsHidden bool
 	// 公共字段
-	CreateUserID uint32
-	UpdateUserID uint32
-	CreateTime   uint32
-	UpdateTime   uint32
+	CreateUser uint32
+	UpdateUser uint32
+	CreateTime uint32
+	UpdateTime uint32
 }
 
 type Menus []*Menu
@@ -106,9 +106,9 @@ func (c *MenuUsecase) AddOrUpdateMenu(ctx context.Context, req *pb.AddOrUpdateMe
 
 func (c *MenuUsecase) addMenu(ctx context.Context, userID uint32, req *pb.AddOrUpdateMenuReq) (uint32, error) {
 	menu := AddOrUpdateMenuReqToEntity(req)
-	menu.CreateUserID = userID
+	menu.CreateUser = userID
 	menu.CreateTime = uint32(time.Now().Unix())
-	menu.UpdateUserID = userID
+	menu.UpdateUser = userID
 	menu.UpdateTime = uint32(time.Now().Unix())
 
 	lastInsertID, err := c.repo.Save(ctx, menu)
@@ -127,9 +127,9 @@ func (c *MenuUsecase) addMenu(ctx context.Context, userID uint32, req *pb.AddOrU
 
 func (c *MenuUsecase) updateMenu(ctx context.Context, dbMenu *Menu, userID uint32, req *pb.AddOrUpdateMenuReq) (uint32, error) {
 	saveMenu := AddOrUpdateMenuReqToEntity(req)
-	saveMenu.CreateUserID = dbMenu.CreateUserID
+	saveMenu.CreateUser = dbMenu.CreateUser
 	saveMenu.CreateTime = dbMenu.CreateTime
-	saveMenu.UpdateUserID = userID
+	saveMenu.UpdateUser = userID
 	saveMenu.UpdateTime = uint32(time.Now().Unix())
 
 	if err := c.repo.UpdateByID(ctx, saveMenu); err != nil {

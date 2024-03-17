@@ -28,12 +28,13 @@ type Resource struct {
 	Service string
 	Method  string
 	// 公共字段
-	CreateUserID uint32
-	UpdateUserID uint32
-	CreateTime   uint32
-	UpdateTime   uint32
+	CreateUser uint32
+	UpdateUser uint32
+	CreateTime uint32
+	UpdateTime uint32
 }
 
+// Resources 接口集合
 type Resources []*Resource
 
 type ResourceRepo interface {
@@ -114,9 +115,9 @@ func (c *ResourceUseCase) AddOrUpdateResource(ctx context.Context, req *pb.AddOr
 
 func (c *ResourceUseCase) addResource(ctx context.Context, userID uint32, req *pb.AddOrUpdateResourceReq) (uint32, error) {
 	resource := AddOrUpdateResourceReqToEntity(req)
-	resource.CreateUserID = userID
+	resource.CreateUser = userID
 	resource.CreateTime = uint32(time.Now().Unix())
-	resource.UpdateUserID = userID
+	resource.UpdateUser = userID
 	resource.UpdateTime = uint32(time.Now().Unix())
 
 	lastInsertID, err := c.repo.Save(ctx, resource)
@@ -135,9 +136,9 @@ func (c *ResourceUseCase) addResource(ctx context.Context, userID uint32, req *p
 
 func (c *ResourceUseCase) updateResource(ctx context.Context, dbResource *Resource, userID uint32, req *pb.AddOrUpdateResourceReq) (uint32, error) {
 	saveResource := AddOrUpdateResourceReqToEntity(req)
-	saveResource.CreateUserID = dbResource.CreateUserID
+	saveResource.CreateUser = dbResource.CreateUser
 	saveResource.CreateTime = dbResource.CreateTime
-	saveResource.UpdateUserID = userID
+	saveResource.UpdateUser = userID
 	saveResource.UpdateTime = uint32(time.Now().Unix())
 
 	if err := c.repo.UpdateByID(ctx, saveResource); err != nil {

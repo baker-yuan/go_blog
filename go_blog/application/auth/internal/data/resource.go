@@ -38,7 +38,7 @@ type Resource struct {
 }
 
 // TableName 设置 AuthResource 结构体对应的数据库表名
-func (Resource) TableName() string {
+func (r Resource) TableName() string {
 	return ResourceTbName
 }
 

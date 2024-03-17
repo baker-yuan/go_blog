@@ -8,7 +8,7 @@ import (
 )
 
 func Recovery(next HandlerFunc) HandlerFunc {
-	return func(bizCtx biz_ctx.BizContext, cfg *config.Config) {
+	return func(bizCtx biz_ctx.IBizContext, cfg *config.Config) {
 		log.Println("Recovery before")
 		next(bizCtx, cfg)
 		log.Println("Recovery after")
