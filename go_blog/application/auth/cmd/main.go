@@ -13,7 +13,7 @@ import (
 
 func init() {
 	// todo 临时设置
-	trpc.ServerConfigPath = "/Users/yuanyu/code/go-study/go-blog/go_blog/application/auth/cmd/trpc_go.yaml"
+	trpc.ServerConfigPath = "/Users/yuanyu/code/go-study/go-blog/go_blog/go_blog/application/auth/cmd/trpc_go.yaml"
 }
 
 func main() {

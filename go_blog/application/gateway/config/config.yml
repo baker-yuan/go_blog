@@ -1,0 +1,9 @@
+#全局配置
+global:
+  # 必填，通常使用 Production 或 Development
+  namespace: Production
+  # 选填，环境名称 test formal
+  env_name: formal
+
+http:
+  addr: :8849

@@ -239,7 +239,7 @@ var AuthApiServer_ServiceDesc = server.ServiceDesc{
 			Func: AuthApiService_ResourceDetail_Handler,
 		},
 		{
-			Name: "/auth/admin/searchResource",
+			Name: "/auth/effectiveResource",
 			Func: AuthApiService_GetEffectiveResource_Handler,
 		},
 		{
@@ -537,7 +537,7 @@ func (c *AuthApiClientProxyImpl) ResourceDetail(ctx context.Context, req *Resour
 func (c *AuthApiClientProxyImpl) GetEffectiveResource(ctx context.Context, req *GetEffectiveResourceReq, opts ...client.Option) (*GetEffectiveResourceRsp, error) {
 	ctx, msg := codec.WithCloneMessage(ctx)
 	defer codec.PutBackMessage(msg)
-	msg.WithClientRPCName("/auth/admin/searchResource")
+	msg.WithClientRPCName("/auth/effectiveResource")
 	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
 	msg.WithCalleeApp("")
 	msg.WithCalleeServer("")

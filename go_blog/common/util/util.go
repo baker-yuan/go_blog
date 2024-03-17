@@ -4,6 +4,7 @@ import (
 	"github.com/baker-yuan/go-blog/common/util/conversion"
 	"github.com/baker-yuan/go-blog/common/util/obj"
 	"github.com/baker-yuan/go-blog/common/util/page"
+	"github.com/baker-yuan/go-blog/common/util/reflect"
 	"github.com/baker-yuan/go-blog/common/util/session"
 	"github.com/baker-yuan/go-blog/common/util/slice"
 	"github.com/baker-yuan/go-blog/common/util/stack"
@@ -15,6 +16,7 @@ var (
 	StackUtils          stack.StackUtils           // 堆栈处理
 	StrUtils            str.StrUtils               // 字符串处理
 	SessionUtils        session.SessionUtils       // 会话
+	ReflectUtils        reflect.ReflectUtils       // 反射
 )
 
 // NewSliceUtils 是 SliceUtils 的构造函数，返回一个 SliceUtils 的实例。

@@ -275,9 +275,9 @@ func (m *Menu) validate(all bool) error {
 
 	// no validation rules for IsHidden
 
-	// no validation rules for CreateUser
+	// no validation rules for CreateUserId
 
-	// no validation rules for UpdateUser
+	// no validation rules for UpdateUserId
 
 	// no validation rules for CreateTime
 
@@ -382,34 +382,28 @@ func (m *SearchMenuReq) validate(all bool) error {
 
 	var errors []error
 
-	if m.PageNum != nil {
+	// no validation rules for Search
 
-		if m.GetPageNum() <= 0 {
-			err := SearchMenuReqValidationError{
-				field:  "PageNum",
-				reason: "value must be greater than 0",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if m.GetPageNum() <= 0 {
+		err := SearchMenuReqValidationError{
+			field:  "PageNum",
+			reason: "value must be greater than 0",
 		}
-
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
-	if m.PageSize != nil {
-
-		if m.GetPageSize() <= 0 {
-			err := SearchMenuReqValidationError{
-				field:  "PageSize",
-				reason: "value must be greater than 0",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if m.GetPageSize() <= 0 {
+		err := SearchMenuReqValidationError{
+			field:  "PageSize",
+			reason: "value must be greater than 0",
 		}
-
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
 	if len(errors) > 0 {
@@ -512,6 +506,8 @@ func (m *SearchMenuRsp) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Total
+
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -544,10 +540,6 @@ func (m *SearchMenuRsp) validate(all bool) error {
 			}
 		}
 
-	}
-
-	if m.Total != nil {
-		// no validation rules for Total
 	}
 
 	if len(errors) > 0 {
@@ -650,19 +642,15 @@ func (m *MenuDetailReq) validate(all bool) error {
 
 	var errors []error
 
-	if m.Id != nil {
-
-		if m.GetId() <= 0 {
-			err := MenuDetailReqValidationError{
-				field:  "Id",
-				reason: "value must be greater than 0",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if m.GetId() <= 0 {
+		err := MenuDetailReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
 		}
-
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
 	if len(errors) > 0 {
@@ -948,19 +936,15 @@ func (m *DeleteMenuReq) validate(all bool) error {
 
 	var errors []error
 
-	if m.Id != nil {
-
-		if m.GetId() <= 0 {
-			err := DeleteMenuReqValidationError{
-				field:  "Id",
-				reason: "value must be greater than 0",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if m.GetId() <= 0 {
+		err := DeleteMenuReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
 		}
-
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
 	if len(errors) > 0 {
@@ -1087,9 +1071,9 @@ func (m *Resource) validate(all bool) error {
 
 	// no validation rules for Method
 
-	// no validation rules for CreateUser
+	// no validation rules for CreateUserId
 
-	// no validation rules for UpdateUser
+	// no validation rules for UpdateUserId
 
 	// no validation rules for CreateTime
 
@@ -1196,34 +1180,26 @@ func (m *SearchResourceReq) validate(all bool) error {
 
 	// no validation rules for Search
 
-	if m.PageNum != nil {
-
-		if m.GetPageNum() <= 0 {
-			err := SearchResourceReqValidationError{
-				field:  "PageNum",
-				reason: "value must be greater than 0",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if m.GetPageNum() <= 0 {
+		err := SearchResourceReqValidationError{
+			field:  "PageNum",
+			reason: "value must be greater than 0",
 		}
-
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
-	if m.PageSize != nil {
-
-		if m.GetPageSize() <= 0 {
-			err := SearchResourceReqValidationError{
-				field:  "PageSize",
-				reason: "value must be greater than 0",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if m.GetPageSize() <= 0 {
+		err := SearchResourceReqValidationError{
+			field:  "PageSize",
+			reason: "value must be greater than 0",
 		}
-
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
 	if len(errors) > 0 {
@@ -1328,6 +1304,8 @@ func (m *SearchResourceRsp) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Total
+
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -1360,10 +1338,6 @@ func (m *SearchResourceRsp) validate(all bool) error {
 			}
 		}
 
-	}
-
-	if m.Total != nil {
-		// no validation rules for Total
 	}
 
 	if len(errors) > 0 {
@@ -1468,19 +1442,15 @@ func (m *ResourceDetailReq) validate(all bool) error {
 
 	var errors []error
 
-	if m.Id != nil {
-
-		if m.GetId() <= 0 {
-			err := ResourceDetailReqValidationError{
-				field:  "Id",
-				reason: "value must be greater than 0",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if m.GetId() <= 0 {
+		err := ResourceDetailReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
 		}
-
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
 	if len(errors) > 0 {
@@ -1634,7 +1604,7 @@ func (m *AddOrUpdateResourceReq) validate(all bool) error {
 	if _, ok := _AddOrUpdateResourceReq_Status_InLookup[m.GetStatus()]; !ok {
 		err := AddOrUpdateResourceReqValidationError{
 			field:  "Status",
-			reason: "value must be in list [UNKNOWN_STATUS UNPUBLISHED PUBLISHED]",
+			reason: "value must be in list [UNPUBLISHED PUBLISHED OFFLINE]",
 		}
 		if !all {
 			return err
@@ -1803,19 +1773,15 @@ func (m *DeleteResourceReq) validate(all bool) error {
 
 	var errors []error
 
-	if m.Id != nil {
-
-		if m.GetId() <= 0 {
-			err := DeleteResourceReqValidationError{
-				field:  "Id",
-				reason: "value must be greater than 0",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if m.GetId() <= 0 {
+		err := DeleteResourceReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
 		}
-
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
 	if len(errors) > 0 {

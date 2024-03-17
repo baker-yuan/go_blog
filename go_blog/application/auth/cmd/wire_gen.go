@@ -26,13 +26,16 @@ import (
 
 // wireApp 初始化应用
 func wireApp(trpcServer *server.Server) (*App, error) {
-	menuRepo := data.NewMenuRepo()
-	menuUsecase := biz.NewArticleUsecase(menuRepo)
-	authService := service.NewAuthService(menuUsecase)
+	commonUseCase := biz.NewCommonUseCase()
 	dataData, err := data.NewData()
 	if err != nil {
 		return nil, err
 	}
+	menuRepo := data.NewMenuRepo(dataData)
+	menuUsecase := biz.NewMenuUsecase(commonUseCase, menuRepo)
+	resourceRepo := data.NewResourceRepo(dataData)
+	resourceUseCase := biz.NewResourceUseCase(commonUseCase, resourceRepo)
+	authService := service.NewAuthService(menuUsecase, resourceUseCase)
 	app := newApp(trpcServer, authService, dataData)
 	return app, nil
 }

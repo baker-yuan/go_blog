@@ -16,6 +16,9 @@ import "trpc/swagger/swagger.proto";
 // https://github.com/trpc-group/trpc-cmdline/blob/483259c22a2fd1e477c7ebc4b5b1572a5a47010c/docs/examples/example-1/README.zh_CN.md
 // https://github.com/trpc-group/trpc-cmdline/blob/483259c22a2fd1e477c7ebc4b5b1572a5a47010c/docs/examples/example-2/README.zh_CN.md
 
+
+
+
 // 空响应
 message EmptyRsp {
 
@@ -25,6 +28,14 @@ message EmptyRsp {
 message AddOrUpdateRsp {
   uint32 id = 1; // 资源id
 }
+
+// 资源类型
+enum ResourceType {
+  RT_UNKNOWN = 0; // 未知
+  TB_MENU = 1; // 菜单
+  TB_RESOURCE = 2; // 接口
+}
+
 
 // 菜单资源信息定义
 message Menu {
@@ -41,8 +52,8 @@ message Menu {
   // 状态
   bool is_hidden = 9;             // 是否隐藏
   // 公共字段
-  uint32 create_user = 10;        // 创建人id
-  uint32 update_user = 11;        // 更新人id
+  uint32 create_user_id = 10;        // 创建人id
+  uint32 update_user_id = 11;        // 更新人id
   uint32 create_time = 12;        // 创建时间
   uint32 update_time = 13;        // 更新时间
 }
@@ -50,19 +61,20 @@ message Menu {
 
 // 菜单搜索
 message SearchMenuReq {
+  string search = 1; // 查询条件 {a:?,b:?}
 
-  optional uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
-  optional uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
 }
 
 message SearchMenuRsp {
-  optional uint32 total = 1; // 分页查询
+  uint32 total = 1; // 分页查询
   repeated Menu data = 2; // 菜单集合
 }
 
 // 菜单详情
 message MenuDetailReq {
-  optional uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
 }
 
 // 添加修改菜单
@@ -83,7 +95,7 @@ message AddOrUpdateMenuReq {
 
 // 删除菜单
 message DeleteMenuReq {
-  optional uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
 }
 
 
@@ -99,10 +111,21 @@ enum ResourceResourceType {
 
 // Status 接口状态枚举
 enum ResourceStatus {
-  UNKNOWN_STATUS = 0;  // 未知状态
-  UNPUBLISHED = 1;     // 未发布
-  PUBLISHED = 2;       // 已发布
-  OFFLINE = 3;         // 以下线
+  UNPUBLISHED = 0;     // 未发布
+  PUBLISHED = 1;       // 已发布
+  OFFLINE = 2;         // 以下线
+}
+
+// 定义是否需要登录校验的枚举
+enum NeedLogin {
+  LOGIN_NOT_REQUIRED = 0; // 不需要登录校验
+  LOGIN_REQUIRED = 1;     // 需要登录校验
+}
+
+// 定义是否需要权限校验的枚举
+enum NeedPermission {
+  PERMISSION_NOT_REQUIRED = 0; // 不需要权限校验
+  PERMISSION_REQUIRED = 1;     // 需要权限校验
 }
 
 // 接口信息定义
@@ -119,14 +142,14 @@ message Resource {
   string url = 7;                 // 接口URL
   string http_method = 8;         // 请求方式
   // 权限校验
-  bool is_need_login = 9;         // 是否需要登录校验
-  bool is_need_permission = 10;   // 是否需要权限校验
+  NeedLogin is_need_login = 9;         // 是否需要登录校验
+  NeedPermission is_need_permission = 10;   // 是否需要权限校验
   // 下游服务信息
   string service = 11;            // API服务名
   string method = 12;             // API接口名
   // 公共字段
-  uint32 create_user = 13;        // 创建人id
-  uint32 update_user = 14;        // 更新人id
+  uint32 create_user_id = 13;        // 创建人id
+  uint32 update_user_id = 14;        // 更新人id
   uint32 create_time = 15;        // 创建时间
   uint32 update_time = 16;        // 更新时间
 }
@@ -135,18 +158,18 @@ message Resource {
 message SearchResourceReq {
   string search = 1; // 查询条件 {a:?,b:?}
 
-  optional uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
-  optional uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
 }
 
 message SearchResourceRsp {
-  optional uint32 total = 1; // 分页查询
+  uint32 total = 1; // 分页查询
   repeated Resource data = 2; // 接口集合
 }
 
 // 接口详情
 message ResourceDetailReq {
-  optional uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
 }
 
 // 添加修改接口
@@ -163,8 +186,8 @@ message AddOrUpdateResourceReq {
   string url = 7 [(validate.rules).string.min_len = 1];                 // 接口URL
   string http_method = 8 [(validate.rules).string.min_len = 1];         // 请求方式
   // 权限校验
-  bool is_need_login = 9;         // 是否需要登录校验
-  bool is_need_permission = 10;   // 是否需要权限校验
+  NeedLogin is_need_login = 9;         // 是否需要登录校验
+  NeedPermission is_need_permission = 10;   // 是否需要权限校验
   // 下游服务信息
   string service = 11 [(validate.rules).string.min_len = 1];            // API服务名
   string method = 12 [(validate.rules).string.min_len = 1];             // API接口名
@@ -172,7 +195,7 @@ message AddOrUpdateResourceReq {
 
 // 删除接口
 message DeleteResourceReq {
-  optional uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
 }
 
 // 获取有效状态下的接口
@@ -261,7 +284,7 @@ service AuthApi {
 
   // 获取有效状态下的接口
   rpc GetEffectiveResource (GetEffectiveResourceReq) returns (GetEffectiveResourceRsp) {
-    option(trpc.alias) = "/auth/admin/searchResource";
+    option(trpc.alias) = "/auth/effectiveResource";
   }
 
 

@@ -27,7 +27,7 @@ server:
     # 选填，网卡名，ip 字段为空时，会尝试从网卡获取 IP
     #nic: eth1
     # 选填，admin 绑定的端口，如果为 0，即默认值，admin 功能不会开启
-    port: 8080
+    #port: 8080
     # 选填，读超时时间，单位为 ms，默认为 3000ms
     read_timeout: 3000
     # 选填，写超时时间，单位为 ms，默认为 3000ms
@@ -45,28 +45,32 @@ server:
       # 选填，该 service 绑定的网卡，只有 ip 为空时，才会生效
       #nic: eth1
       # 选填，该 service 绑定的端口，address 为空时，port 必填
-      port: 9002
+      #port: 9002
+      # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
+      address: 127.0.0.1:9002
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
       protocol: http
       # 选填，service 处理请求的超时时间 单位 毫秒
       timeout: 2000
-      # 选填，使用哪个注册中心 polaris
-      registry: polaris
+      # 选填，使用哪个注册中心 polarismesh
+      registry: polarismesh
     - name: trpc.blog.auth.BlogApiTrpc
       # 选填，该 service 绑定的网卡，只有 ip 为空时，才会生效
       #nic: eth1
       # 选填，该 service 绑定的端口，address 为空时，port 必填
-      port: 9100
+      #port: 9100
+      # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
+      address: 127.0.0.1:9100
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
       protocol: trpc
       # 选填，service 处理请求的超时时间 单位 毫秒
       timeout:
-      # 选填，使用哪个注册中心 polaris
-      registry: polaris
+      # 选填，使用哪个注册中心 polarismesh
+      registry: polarismesh
 
 # 插件配置
 plugins:
@@ -97,16 +101,29 @@ plugins:
 
   registry:
     # 北极星名字注册服务的配置
+    # https://polarismesh.cn/
     # https://github.com/trpc-ecosystem/go-naming-polarismesh/blob/main/README.zh_CN.md
     polarismesh:
       # 北极星服务的地址 ip1:port1,ip2:port2
-      address_list: 119.91.66.223:8091
+      address_list: 127.0.0.1:8091
       # 是否进行服务自注册, 默认为 false
-      register_self: false
+      register_self: true
       # 北极星日志目录
       log_dir: /usr/local/trpc/polarismesh/log
       # 服务缓存持久化目录，按照服务维度将数据持久化到磁盘
       persistDir: /usr/local/trpc/polarismesh/backup
+      # 北极星交互协议支持 http，grpc，trpc
+      protocol: grpc
+      # 需要进行注册的各服务信息
+      service:
+        - name: trpc.blog.auth.BlogApiHttp
+          # 该服务需要注册的命名空间
+          namespace: Production
+          # 前往北极星控制台进行申请或查看
+          token: xxx
+        - name: trpc.blog.auth.BlogApiTrpc
+          namespace: Production
+          token: xxx
   # 针对 trpc 框架服务发现的配置
   selector:
     # 北极星服务发现的配置
@@ -114,7 +131,7 @@ plugins:
       # 名字服务远程交互协议类型
       protocol: grpc
       # 北极星服务的地址 ip1:port1,ip2:port2
-      address_list: 119.91.66.223:8091
+      address_list: 127.0.0.1:8091
       # 北极星日志目录
       log_dir: /usr/local/trpc/polarismesh/log
       # 服务缓存持久化目录，按照服务维度将数据持久化到磁盘
@@ -138,4 +155,4 @@ client:
   service:
     # mysql
     - name: trpc.mysql.blog.template
-      target: dsn://root:123456@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True
+      target: dsn://root:123456@tcp(127.0.0.1:3306)/baker_blog_pem?charset=utf8mb4&parseTime=True

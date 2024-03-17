@@ -4,11 +4,13 @@ import (
 	"log"
 
 	"github.com/baker-yuan/go-blog/application/blog/gateway/biz_ctx"
+	"github.com/baker-yuan/go-blog/application/blog/gateway/config"
 )
 
-// Recovery 捕获所有panic，并且返回错误信息
-func Recovery(bizCtx *biz_ctx.HttpContext, next func()) {
-	log.Println("Middleware1 before")
-	next()
-	log.Println("Middleware1 after")
+func Recovery(next HandlerFunc) HandlerFunc {
+	return func(bizCtx biz_ctx.BizContext, cfg *config.Config) {
+		log.Println("Recovery before")
+		next(bizCtx, cfg)
+		log.Println("Recovery after")
+	}
 }

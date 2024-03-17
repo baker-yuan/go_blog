@@ -51,15 +51,25 @@
       "name": "is_need_login",
       "in": "query",
       "required": false,
-      "type": "boolean",
-      "description": "权限校验\n是否需要登录校验"
+      "type": "integer",
+      "format": "int32",
+      "description": "权限校验\n是否需要登录校验 * 0 - LOGIN_NOT_REQUIRED - 不需要登录校验\n * 1 - LOGIN_REQUIRED - 需要登录校验\n",
+      "enum": [
+       0,
+       1
+      ]
      },
      {
       "name": "is_need_permission",
       "in": "query",
       "required": false,
-      "type": "boolean",
-      "description": "是否需要权限校验"
+      "type": "integer",
+      "format": "int32",
+      "description": "是否需要权限校验 * 0 - PERMISSION_NOT_REQUIRED - 不需要权限校验\n * 1 - PERMISSION_REQUIRED - 需要权限校验\n",
+      "enum": [
+       0,
+       1
+      ]
      },
      {
       "name": "method",
@@ -109,12 +119,11 @@
       "required": false,
       "type": "integer",
       "format": "int32",
-      "description": "接口状态 0-未发布 1-已发布 2-以下线 * 0 - UNKNOWN_STATUS - 未知状态\n * 1 - UNPUBLISHED - 未发布\n * 2 - PUBLISHED - 已发布\n * 3 - OFFLINE - 以下线\n",
+      "description": "接口状态 0-未发布 1-已发布 2-以下线 * 0 - UNPUBLISHED - 未发布\n * 1 - PUBLISHED - 已发布\n * 2 - OFFLINE - 以下线\n",
       "enum": [
        0,
        1,
-       2,
-       3
+       2
       ]
      },
      {
@@ -266,6 +275,13 @@
       "type": "integer",
       "format": "uint32",
       "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
      }
     ],
     "tags": [
@@ -275,17 +291,41 @@
   },
   "/auth/admin/searchResource": {
    "post": {
-    "summary": "获取有效状态下的接口",
-    "operationId": "GetEffectiveResource",
+    "summary": "接口搜索",
+    "operationId": "SearchResource",
     "responses": {
      "200": {
-      "description": "GetEffectiveResourceRsp",
+      "description": "SearchResourceRsp",
       "schema": {
-       "$ref": "#/definitions/go_blog.auth.GetEffectiveResourceRsp"
+       "$ref": "#/definitions/go_blog.auth.SearchResourceRsp"
       }
      }
     },
-    "parameters": null,
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
     "tags": [
      "authapi.trpc"
     ]
@@ -371,6 +411,24 @@
       "description": "排序"
      }
     ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/effectiveResource": {
+   "post": {
+    "summary": "获取有效状态下的接口",
+    "operationId": "GetEffectiveResource",
+    "responses": {
+     "200": {
+      "description": "GetEffectiveResourceRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.GetEffectiveResourceRsp"
+      }
+     }
+    },
+    "parameters": null,
     "tags": [
      "authapi.trpc"
     ]
@@ -500,15 +558,25 @@
       "name": "is_need_login",
       "in": "query",
       "required": false,
-      "type": "boolean",
-      "description": "权限校验\n是否需要登录校验"
+      "type": "integer",
+      "format": "int32",
+      "description": "权限校验\n是否需要登录校验 * 0 - LOGIN_NOT_REQUIRED - 不需要登录校验\n * 1 - LOGIN_REQUIRED - 需要登录校验\n",
+      "enum": [
+       0,
+       1
+      ]
      },
      {
       "name": "is_need_permission",
       "in": "query",
       "required": false,
-      "type": "boolean",
-      "description": "是否需要权限校验"
+      "type": "integer",
+      "format": "int32",
+      "description": "是否需要权限校验 * 0 - PERMISSION_NOT_REQUIRED - 不需要权限校验\n * 1 - PERMISSION_REQUIRED - 需要权限校验\n",
+      "enum": [
+       0,
+       1
+      ]
      },
      {
       "name": "method",
@@ -558,12 +626,11 @@
       "required": false,
       "type": "integer",
       "format": "int32",
-      "description": "接口状态 0-未发布 1-已发布 2-以下线 * 0 - UNKNOWN_STATUS - 未知状态\n * 1 - UNPUBLISHED - 未发布\n * 2 - PUBLISHED - 已发布\n * 3 - OFFLINE - 以下线\n",
+      "description": "接口状态 0-未发布 1-已发布 2-以下线 * 0 - UNPUBLISHED - 未发布\n * 1 - PUBLISHED - 已发布\n * 2 - OFFLINE - 以下线\n",
       "enum": [
        0,
        1,
-       2,
-       3
+       2
       ]
      },
      {
@@ -733,6 +800,13 @@
       "type": "integer",
       "format": "uint32",
       "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
      }
     ],
     "tags": [
@@ -743,7 +817,7 @@
   "/go_blog.auth.AuthApi/SearchResource": {
    "post": {
     "summary": "接口搜索",
-    "operationId": "SearchResource",
+    "operationId": "SearchResource2",
     "responses": {
      "200": {
       "description": "SearchResourceRsp",
@@ -831,8 +905,8 @@
      "format": "uint32",
      "description": "创建时间"
     },
-    "create_user": {
-     "title": "create_user",
+    "create_user_id": {
+     "title": "create_user_id",
      "type": "integer",
      "format": "uint32",
      "description": "公共字段\n创建人id"
@@ -886,8 +960,8 @@
      "format": "uint32",
      "description": "更新时间"
     },
-    "update_user": {
-     "title": "update_user",
+    "update_user_id": {
+     "title": "update_user_id",
      "type": "integer",
      "format": "uint32",
      "description": "更新人id"
@@ -905,8 +979,8 @@
      "format": "uint32",
      "description": "创建时间"
     },
-    "create_user": {
-     "title": "create_user",
+    "create_user_id": {
+     "title": "create_user_id",
      "type": "integer",
      "format": "uint32",
      "description": "公共字段\n创建人id"
@@ -929,13 +1003,23 @@
     },
     "is_need_login": {
      "title": "is_need_login",
-     "type": "boolean",
-     "description": "权限校验\n是否需要登录校验"
+     "type": "integer",
+     "format": "int32",
+     "description": "权限校验\n是否需要登录校验 * 0 - LOGIN_NOT_REQUIRED - 不需要登录校验\n * 1 - LOGIN_REQUIRED - 需要登录校验\n",
+     "enum": [
+      0,
+      1
+     ]
     },
     "is_need_permission": {
      "title": "is_need_permission",
-     "type": "boolean",
-     "description": "是否需要权限校验"
+     "type": "integer",
+     "format": "int32",
+     "description": "是否需要权限校验 * 0 - PERMISSION_NOT_REQUIRED - 不需要权限校验\n * 1 - PERMISSION_REQUIRED - 需要权限校验\n",
+     "enum": [
+      0,
+      1
+     ]
     },
     "method": {
      "title": "method",
@@ -973,12 +1057,11 @@
      "title": "status",
      "type": "integer",
      "format": "int32",
-     "description": "接口状态 0-未发布 1-已发布 2-以下线 * 0 - UNKNOWN_STATUS - 未知状态\n * 1 - UNPUBLISHED - 未发布\n * 2 - PUBLISHED - 已发布\n * 3 - OFFLINE - 以下线\n",
+     "description": "接口状态 0-未发布 1-已发布 2-以下线 * 0 - UNPUBLISHED - 未发布\n * 1 - PUBLISHED - 已发布\n * 2 - OFFLINE - 以下线\n",
      "enum": [
       0,
       1,
-      2,
-      3
+      2
      ]
     },
     "update_time": {
@@ -987,8 +1070,8 @@
      "format": "uint32",
      "description": "更新时间"
     },
-    "update_user": {
-     "title": "update_user",
+    "update_user_id": {
+     "title": "update_user_id",
      "type": "integer",
      "format": "uint32",
      "description": "更新人id"
