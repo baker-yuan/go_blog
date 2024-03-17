@@ -75,7 +75,7 @@ func (r *$!tool.firstLowerCase($!{tableInfo.name})Repo) Get$!{tableInfo.name}ByI
 	if err != nil {
 		return nil, err
 	}
-	return $!{tableInfo.name}POToEntity(db$!{tableInfo.name}), err
+	return $!{tableInfo.name}POToEntity(db$!{tableInfo.name}), nil
 }
 
 // Get$!{tableInfo.name}ByIDs 根据$!{tableInfo.comment}id集合查询$!{tableInfo.comment}
@@ -96,7 +96,7 @@ func (r *$!tool.firstLowerCase($!{tableInfo.name})Repo) Save(ctx context.Context
 	if err := r.GenericDao.Create(ctx, db$!{tableInfo.name}); err != nil {
 		return 0, err
 	}
-	return $!tool.firstLowerCase($!{tableInfo.name}) .ID, nil
+	return db$!{tableInfo.name} .ID, nil
 }
 
 // UpdateByID 根据ID修改$!{tableInfo.comment}

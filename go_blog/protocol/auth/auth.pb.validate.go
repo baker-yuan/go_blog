@@ -3059,3 +3059,843 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = UserRoleValidationError{}
+
+// Validate checks the field values on RoleBindMenuReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *RoleBindMenuReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on RoleBindMenuReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// RoleBindMenuReqMultiError, or nil if none found.
+func (m *RoleBindMenuReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *RoleBindMenuReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetRoleId() <= 0 {
+		err := RoleBindMenuReqValidationError{
+			field:  "RoleId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(m.GetMenuIds()) < 1 {
+		err := RoleBindMenuReqValidationError{
+			field:  "MenuIds",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return RoleBindMenuReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// RoleBindMenuReqMultiError is an error wrapping multiple validation errors
+// returned by RoleBindMenuReq.ValidateAll() if the designated constraints
+// aren't met.
+type RoleBindMenuReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m RoleBindMenuReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m RoleBindMenuReqMultiError) AllErrors() []error { return m }
+
+// RoleBindMenuReqValidationError is the validation error returned by
+// RoleBindMenuReq.Validate if the designated constraints aren't met.
+type RoleBindMenuReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RoleBindMenuReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RoleBindMenuReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RoleBindMenuReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RoleBindMenuReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RoleBindMenuReqValidationError) ErrorName() string { return "RoleBindMenuReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e RoleBindMenuReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRoleBindMenuReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RoleBindMenuReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RoleBindMenuReqValidationError{}
+
+// Validate checks the field values on RoleBindResourceReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *RoleBindResourceReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on RoleBindResourceReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// RoleBindResourceReqMultiError, or nil if none found.
+func (m *RoleBindResourceReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *RoleBindResourceReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetRoleId() <= 0 {
+		err := RoleBindResourceReqValidationError{
+			field:  "RoleId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(m.GetResourceIds()) < 1 {
+		err := RoleBindResourceReqValidationError{
+			field:  "ResourceIds",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return RoleBindResourceReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// RoleBindResourceReqMultiError is an error wrapping multiple validation
+// errors returned by RoleBindResourceReq.ValidateAll() if the designated
+// constraints aren't met.
+type RoleBindResourceReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m RoleBindResourceReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m RoleBindResourceReqMultiError) AllErrors() []error { return m }
+
+// RoleBindResourceReqValidationError is the validation error returned by
+// RoleBindResourceReq.Validate if the designated constraints aren't met.
+type RoleBindResourceReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RoleBindResourceReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RoleBindResourceReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RoleBindResourceReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RoleBindResourceReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RoleBindResourceReqValidationError) ErrorName() string {
+	return "RoleBindResourceReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RoleBindResourceReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRoleBindResourceReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RoleBindResourceReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RoleBindResourceReqValidationError{}
+
+// Validate checks the field values on UserBindRoleReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *UserBindRoleReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UserBindRoleReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UserBindRoleReqMultiError, or nil if none found.
+func (m *UserBindRoleReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UserBindRoleReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetUserId() <= 0 {
+		err := UserBindRoleReqValidationError{
+			field:  "UserId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(m.GetRoleIds()) < 1 {
+		err := UserBindRoleReqValidationError{
+			field:  "RoleIds",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return UserBindRoleReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// UserBindRoleReqMultiError is an error wrapping multiple validation errors
+// returned by UserBindRoleReq.ValidateAll() if the designated constraints
+// aren't met.
+type UserBindRoleReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UserBindRoleReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UserBindRoleReqMultiError) AllErrors() []error { return m }
+
+// UserBindRoleReqValidationError is the validation error returned by
+// UserBindRoleReq.Validate if the designated constraints aren't met.
+type UserBindRoleReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UserBindRoleReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UserBindRoleReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UserBindRoleReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UserBindRoleReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UserBindRoleReqValidationError) ErrorName() string { return "UserBindRoleReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e UserBindRoleReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUserBindRoleReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UserBindRoleReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UserBindRoleReqValidationError{}
+
+// Validate checks the field values on GetUserRoleReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *GetUserRoleReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetUserRoleReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in GetUserRoleReqMultiError,
+// or nil if none found.
+func (m *GetUserRoleReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetUserRoleReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(m.GetUserIds()) < 1 {
+		err := GetUserRoleReqValidationError{
+			field:  "UserIds",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return GetUserRoleReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetUserRoleReqMultiError is an error wrapping multiple validation errors
+// returned by GetUserRoleReq.ValidateAll() if the designated constraints
+// aren't met.
+type GetUserRoleReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetUserRoleReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetUserRoleReqMultiError) AllErrors() []error { return m }
+
+// GetUserRoleReqValidationError is the validation error returned by
+// GetUserRoleReq.Validate if the designated constraints aren't met.
+type GetUserRoleReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUserRoleReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUserRoleReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUserRoleReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUserRoleReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUserRoleReqValidationError) ErrorName() string { return "GetUserRoleReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetUserRoleReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUserRoleReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUserRoleReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUserRoleReqValidationError{}
+
+// Validate checks the field values on GetUserRoleRsp with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *GetUserRoleRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetUserRoleRsp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in GetUserRoleRspMultiError,
+// or nil if none found.
+func (m *GetUserRoleRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetUserRoleRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	{
+		sorted_keys := make([]uint32, len(m.GetData()))
+		i := 0
+		for key := range m.GetData() {
+			sorted_keys[i] = key
+			i++
+		}
+		sort.Slice(sorted_keys, func(i, j int) bool { return sorted_keys[i] < sorted_keys[j] })
+		for _, key := range sorted_keys {
+			val := m.GetData()[key]
+			_ = val
+
+			// no validation rules for Data[key]
+
+			if all {
+				switch v := interface{}(val).(type) {
+				case interface{ ValidateAll() error }:
+					if err := v.ValidateAll(); err != nil {
+						errors = append(errors, GetUserRoleRspValidationError{
+							field:  fmt.Sprintf("Data[%v]", key),
+							reason: "embedded message failed validation",
+							cause:  err,
+						})
+					}
+				case interface{ Validate() error }:
+					if err := v.Validate(); err != nil {
+						errors = append(errors, GetUserRoleRspValidationError{
+							field:  fmt.Sprintf("Data[%v]", key),
+							reason: "embedded message failed validation",
+							cause:  err,
+						})
+					}
+				}
+			} else if v, ok := interface{}(val).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return GetUserRoleRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", key),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetUserRoleRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetUserRoleRspMultiError is an error wrapping multiple validation errors
+// returned by GetUserRoleRsp.ValidateAll() if the designated constraints
+// aren't met.
+type GetUserRoleRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetUserRoleRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetUserRoleRspMultiError) AllErrors() []error { return m }
+
+// GetUserRoleRspValidationError is the validation error returned by
+// GetUserRoleRsp.Validate if the designated constraints aren't met.
+type GetUserRoleRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUserRoleRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUserRoleRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUserRoleRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUserRoleRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUserRoleRspValidationError) ErrorName() string { return "GetUserRoleRspValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetUserRoleRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUserRoleRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUserRoleRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUserRoleRspValidationError{}
+
+// Validate checks the field values on GetUserResourceReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetUserResourceReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetUserResourceReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetUserResourceReqMultiError, or nil if none found.
+func (m *GetUserResourceReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetUserResourceReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetUserId() <= 0 {
+		err := GetUserResourceReqValidationError{
+			field:  "UserId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return GetUserResourceReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetUserResourceReqMultiError is an error wrapping multiple validation errors
+// returned by GetUserResourceReq.ValidateAll() if the designated constraints
+// aren't met.
+type GetUserResourceReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetUserResourceReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetUserResourceReqMultiError) AllErrors() []error { return m }
+
+// GetUserResourceReqValidationError is the validation error returned by
+// GetUserResourceReq.Validate if the designated constraints aren't met.
+type GetUserResourceReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUserResourceReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUserResourceReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUserResourceReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUserResourceReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUserResourceReqValidationError) ErrorName() string {
+	return "GetUserResourceReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetUserResourceReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUserResourceReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUserResourceReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUserResourceReqValidationError{}
+
+// Validate checks the field values on GetUserResourceRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetUserResourceRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetUserResourceRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetUserResourceRspMultiError, or nil if none found.
+func (m *GetUserResourceRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetUserResourceRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return GetUserResourceRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetUserResourceRspMultiError is an error wrapping multiple validation errors
+// returned by GetUserResourceRsp.ValidateAll() if the designated constraints
+// aren't met.
+type GetUserResourceRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetUserResourceRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetUserResourceRspMultiError) AllErrors() []error { return m }
+
+// GetUserResourceRspValidationError is the validation error returned by
+// GetUserResourceRsp.Validate if the designated constraints aren't met.
+type GetUserResourceRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUserResourceRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUserResourceRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUserResourceRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUserResourceRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUserResourceRspValidationError) ErrorName() string {
+	return "GetUserResourceRspValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetUserResourceRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUserResourceRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUserResourceRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUserResourceRspValidationError{}

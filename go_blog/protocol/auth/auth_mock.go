@@ -140,6 +140,36 @@ func (mr *MockAuthApiServiceMockRecorder) GetEffectiveResource(ctx, req interfac
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEffectiveResource", reflect.TypeOf((*MockAuthApiService)(nil).GetEffectiveResource), ctx, req)
 }
 
+// GetUserResource mocks base method.
+func (m *MockAuthApiService) GetUserResource(ctx context.Context, req *GetUserResourceReq) (*GetUserResourceRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserResource", ctx, req)
+	ret0, _ := ret[0].(*GetUserResourceRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserResource indicates an expected call of GetUserResource.
+func (mr *MockAuthApiServiceMockRecorder) GetUserResource(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserResource", reflect.TypeOf((*MockAuthApiService)(nil).GetUserResource), ctx, req)
+}
+
+// GetUserRole mocks base method.
+func (m *MockAuthApiService) GetUserRole(ctx context.Context, req *GetUserRoleReq) (*GetUserRoleRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserRole", ctx, req)
+	ret0, _ := ret[0].(*GetUserRoleRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserRole indicates an expected call of GetUserRole.
+func (mr *MockAuthApiServiceMockRecorder) GetUserRole(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserRole", reflect.TypeOf((*MockAuthApiService)(nil).GetUserRole), ctx, req)
+}
+
 // MenuDetail mocks base method.
 func (m *MockAuthApiService) MenuDetail(ctx context.Context, req *MenuDetailReq) (*Menu, error) {
 	m.ctrl.T.Helper()
@@ -168,6 +198,36 @@ func (m *MockAuthApiService) ResourceDetail(ctx context.Context, req *ResourceDe
 func (mr *MockAuthApiServiceMockRecorder) ResourceDetail(ctx, req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ResourceDetail", reflect.TypeOf((*MockAuthApiService)(nil).ResourceDetail), ctx, req)
+}
+
+// RoleBindMenu mocks base method.
+func (m *MockAuthApiService) RoleBindMenu(ctx context.Context, req *RoleBindMenuReq) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RoleBindMenu", ctx, req)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RoleBindMenu indicates an expected call of RoleBindMenu.
+func (mr *MockAuthApiServiceMockRecorder) RoleBindMenu(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RoleBindMenu", reflect.TypeOf((*MockAuthApiService)(nil).RoleBindMenu), ctx, req)
+}
+
+// RoleBindResource mocks base method.
+func (m *MockAuthApiService) RoleBindResource(ctx context.Context, req *RoleBindResourceReq) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RoleBindResource", ctx, req)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RoleBindResource indicates an expected call of RoleBindResource.
+func (mr *MockAuthApiServiceMockRecorder) RoleBindResource(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RoleBindResource", reflect.TypeOf((*MockAuthApiService)(nil).RoleBindResource), ctx, req)
 }
 
 // RoleDetail mocks base method.
@@ -228,6 +288,21 @@ func (m *MockAuthApiService) SearchRole(ctx context.Context, req *SearchRoleReq)
 func (mr *MockAuthApiServiceMockRecorder) SearchRole(ctx, req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchRole", reflect.TypeOf((*MockAuthApiService)(nil).SearchRole), ctx, req)
+}
+
+// UserBindRole mocks base method.
+func (m *MockAuthApiService) UserBindRole(ctx context.Context, req *UserBindRoleReq) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UserBindRole", ctx, req)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UserBindRole indicates an expected call of UserBindRole.
+func (mr *MockAuthApiServiceMockRecorder) UserBindRole(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UserBindRole", reflect.TypeOf((*MockAuthApiService)(nil).UserBindRole), ctx, req)
 }
 
 // MockAuthApiClientProxy is a mock of AuthApiClientProxy interface.
@@ -393,6 +468,46 @@ func (mr *MockAuthApiClientProxyMockRecorder) GetEffectiveResource(ctx, req inte
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEffectiveResource", reflect.TypeOf((*MockAuthApiClientProxy)(nil).GetEffectiveResource), varargs...)
 }
 
+// GetUserResource mocks base method.
+func (m *MockAuthApiClientProxy) GetUserResource(ctx context.Context, req *GetUserResourceReq, opts ...client.Option) (*GetUserResourceRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetUserResource", varargs...)
+	ret0, _ := ret[0].(*GetUserResourceRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserResource indicates an expected call of GetUserResource.
+func (mr *MockAuthApiClientProxyMockRecorder) GetUserResource(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserResource", reflect.TypeOf((*MockAuthApiClientProxy)(nil).GetUserResource), varargs...)
+}
+
+// GetUserRole mocks base method.
+func (m *MockAuthApiClientProxy) GetUserRole(ctx context.Context, req *GetUserRoleReq, opts ...client.Option) (*GetUserRoleRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetUserRole", varargs...)
+	ret0, _ := ret[0].(*GetUserRoleRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserRole indicates an expected call of GetUserRole.
+func (mr *MockAuthApiClientProxyMockRecorder) GetUserRole(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserRole", reflect.TypeOf((*MockAuthApiClientProxy)(nil).GetUserRole), varargs...)
+}
+
 // MenuDetail mocks base method.
 func (m *MockAuthApiClientProxy) MenuDetail(ctx context.Context, req *MenuDetailReq, opts ...client.Option) (*Menu, error) {
 	m.ctrl.T.Helper()
@@ -431,6 +546,46 @@ func (mr *MockAuthApiClientProxyMockRecorder) ResourceDetail(ctx, req interface{
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ResourceDetail", reflect.TypeOf((*MockAuthApiClientProxy)(nil).ResourceDetail), varargs...)
+}
+
+// RoleBindMenu mocks base method.
+func (m *MockAuthApiClientProxy) RoleBindMenu(ctx context.Context, req *RoleBindMenuReq, opts ...client.Option) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RoleBindMenu", varargs...)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RoleBindMenu indicates an expected call of RoleBindMenu.
+func (mr *MockAuthApiClientProxyMockRecorder) RoleBindMenu(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RoleBindMenu", reflect.TypeOf((*MockAuthApiClientProxy)(nil).RoleBindMenu), varargs...)
+}
+
+// RoleBindResource mocks base method.
+func (m *MockAuthApiClientProxy) RoleBindResource(ctx context.Context, req *RoleBindResourceReq, opts ...client.Option) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RoleBindResource", varargs...)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RoleBindResource indicates an expected call of RoleBindResource.
+func (mr *MockAuthApiClientProxyMockRecorder) RoleBindResource(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RoleBindResource", reflect.TypeOf((*MockAuthApiClientProxy)(nil).RoleBindResource), varargs...)
 }
 
 // RoleDetail mocks base method.
@@ -511,4 +666,24 @@ func (mr *MockAuthApiClientProxyMockRecorder) SearchRole(ctx, req interface{}, o
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchRole", reflect.TypeOf((*MockAuthApiClientProxy)(nil).SearchRole), varargs...)
+}
+
+// UserBindRole mocks base method.
+func (m *MockAuthApiClientProxy) UserBindRole(ctx context.Context, req *UserBindRoleReq, opts ...client.Option) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UserBindRole", varargs...)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UserBindRole indicates an expected call of UserBindRole.
+func (mr *MockAuthApiClientProxyMockRecorder) UserBindRole(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UserBindRole", reflect.TypeOf((*MockAuthApiClientProxy)(nil).UserBindRole), varargs...)
 }

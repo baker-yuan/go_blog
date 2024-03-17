@@ -12,6 +12,94 @@
   "application/json"
  ],
  "paths": {
+  "/blog/admin/CategoryDetail": {
+   "post": {
+    "summary": "文章分类详情",
+    "operationId": "CategoryDetail",
+    "responses": {
+     "200": {
+      "description": "Category 文章分类信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.Category"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/blog/admin/addOrUpdateCategory": {
+   "post": {
+    "summary": "添加修改文章分类",
+    "operationId": "AddOrUpdateCategory",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "available",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "是否可用 * 0 - CATEGORY_STATUS_UNAVAILABLE - 不可用\n * 1 - CATEGORY_STATUS_AVAILABLE - 可用\n",
+      "enum": [
+       0,
+       1
+      ]
+     },
+     {
+      "name": "description",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "类型介绍"
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "基本信息\n主键"
+     },
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "文章类型名"
+     },
+     {
+      "name": "sort",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "排序"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
   "/blog/admin/articleDetail": {
    "post": {
     "summary": "文章详情",
@@ -66,6 +154,33 @@
     ]
    }
   },
+  "/blog/admin/deleteCategory": {
+   "post": {
+    "summary": "删除文章分类",
+    "operationId": "DeleteCategory",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
   "/blog/admin/searchArticle": {
    "post": {
     "summary": "文章搜索",
@@ -75,6 +190,48 @@
       "description": "SearchArticleRsp",
       "schema": {
        "$ref": "#/definitions/go_blog.blog.SearchArticleRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/blog/admin/searchCategory": {
+   "post": {
+    "summary": "文章分类搜索",
+    "operationId": "SearchCategory",
+    "responses": {
+     "200": {
+      "description": "SearchCategoryRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.SearchCategoryRsp"
       }
      }
     },
@@ -424,6 +581,67 @@
     ]
    }
   },
+  "/go_blog.blog.BlogApi/AddOrUpdateCategory": {
+   "post": {
+    "summary": "添加修改文章分类",
+    "operationId": "AddOrUpdateCategory2",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "available",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "是否可用 * 0 - CATEGORY_STATUS_UNAVAILABLE - 不可用\n * 1 - CATEGORY_STATUS_AVAILABLE - 可用\n",
+      "enum": [
+       0,
+       1
+      ]
+     },
+     {
+      "name": "description",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "类型介绍"
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "基本信息\n主键"
+     },
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "文章类型名"
+     },
+     {
+      "name": "sort",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "排序"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
   "/go_blog.blog.BlogApi/ArticleDetail": {
    "post": {
     "summary": "文章详情",
@@ -433,6 +651,33 @@
       "description": "文章信息定义",
       "schema": {
        "$ref": "#/definitions/go_blog.blog.Article"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/CategoryDetail": {
+   "post": {
+    "summary": "文章分类详情",
+    "operationId": "CategoryDetail2",
+    "responses": {
+     "200": {
+      "description": "Category 文章分类信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.Category"
       }
      }
     },
@@ -478,6 +723,33 @@
     ]
    }
   },
+  "/go_blog.blog.BlogApi/DeleteCategory": {
+   "post": {
+    "summary": "删除文章分类",
+    "operationId": "DeleteCategory2",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
   "/go_blog.blog.BlogApi/SearchArticle": {
    "post": {
     "summary": "文章搜索",
@@ -487,6 +759,48 @@
       "description": "SearchArticleRsp",
       "schema": {
        "$ref": "#/definitions/go_blog.blog.SearchArticleRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/SearchCategory": {
+   "post": {
+    "summary": "文章分类搜索",
+    "operationId": "SearchCategory2",
+    "responses": {
+     "200": {
+      "description": "SearchCategoryRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.SearchCategoryRsp"
       }
      }
     },
@@ -678,6 +992,57 @@
    "title": "go_blog.blog.Article",
    "description": "文章信息定义"
   },
+  "go_blog.blog.Category": {
+   "type": "object",
+   "properties": {
+    "available": {
+     "title": "available",
+     "type": "integer",
+     "format": "int32",
+     "description": "是否可用 * 0 - CATEGORY_STATUS_UNAVAILABLE - 不可用\n * 1 - CATEGORY_STATUS_AVAILABLE - 可用\n",
+     "enum": [
+      0,
+      1
+     ]
+    },
+    "create_time": {
+     "title": "create_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "公共字段\n创建时间"
+    },
+    "description": {
+     "title": "description",
+     "type": "string",
+     "description": "类型介绍"
+    },
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "基本信息\n主键"
+    },
+    "name": {
+     "title": "name",
+     "type": "string",
+     "description": "文章类型名"
+    },
+    "sort": {
+     "title": "sort",
+     "type": "integer",
+     "format": "uint32",
+     "description": "排序"
+    },
+    "update_time": {
+     "title": "update_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新时间"
+    }
+   },
+   "title": "go_blog.blog.Category",
+   "description": "Category 文章分类信息定义"
+  },
   "go_blog.blog.EmptyRsp": {
    "type": "object",
    "title": "go_blog.blog.EmptyRsp",
@@ -703,6 +1068,27 @@
    },
    "title": "go_blog.blog.SearchArticleRsp",
    "description": "SearchArticleRsp"
+  },
+  "go_blog.blog.SearchCategoryRsp": {
+   "type": "object",
+   "properties": {
+    "data": {
+     "title": "data",
+     "type": "array",
+     "description": " 文章分类集合\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.blog.Category"
+     }
+    },
+    "total": {
+     "title": "total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    }
+   },
+   "title": "go_blog.blog.SearchCategoryRsp",
+   "description": "SearchCategoryRsp"
   }
  }
 }

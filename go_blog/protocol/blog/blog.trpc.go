@@ -27,6 +27,14 @@ type BlogApiService interface {
 	DeleteArticle(ctx context.Context, req *DeleteArticleReq) (*EmptyRsp, error)
 	// ArticleDetail 文章详情
 	ArticleDetail(ctx context.Context, req *ArticleDetailReq) (*Article, error)
+	// SearchCategory 文章分类搜索
+	SearchCategory(ctx context.Context, req *SearchCategoryReq) (*SearchCategoryRsp, error)
+	// AddOrUpdateCategory 添加修改文章分类
+	AddOrUpdateCategory(ctx context.Context, req *AddOrUpdateCategoryReq) (*AddOrUpdateRsp, error)
+	// DeleteCategory 删除文章分类
+	DeleteCategory(ctx context.Context, req *DeleteCategoryReq) (*EmptyRsp, error)
+	// CategoryDetail 文章分类详情
+	CategoryDetail(ctx context.Context, req *CategoryDetailReq) (*Category, error)
 }
 
 func BlogApiService_SearchArticle_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -101,6 +109,78 @@ func BlogApiService_ArticleDetail_Handler(svr interface{}, ctx context.Context, 
 	return rsp, nil
 }
 
+func BlogApiService_SearchCategory_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &SearchCategoryReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).SearchCategory(ctx, reqbody.(*SearchCategoryReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_AddOrUpdateCategory_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &AddOrUpdateCategoryReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).AddOrUpdateCategory(ctx, reqbody.(*AddOrUpdateCategoryReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_DeleteCategory_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &DeleteCategoryReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).DeleteCategory(ctx, reqbody.(*DeleteCategoryReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_CategoryDetail_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &CategoryDetailReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).CategoryDetail(ctx, reqbody.(*CategoryDetailReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 // BlogApiServer_ServiceDesc descriptor for server.RegisterService.
 var BlogApiServer_ServiceDesc = server.ServiceDesc{
 	ServiceName: "go_blog.blog.BlogApi",
@@ -123,6 +203,22 @@ var BlogApiServer_ServiceDesc = server.ServiceDesc{
 			Func: BlogApiService_ArticleDetail_Handler,
 		},
 		{
+			Name: "/blog/admin/searchCategory",
+			Func: BlogApiService_SearchCategory_Handler,
+		},
+		{
+			Name: "/blog/admin/addOrUpdateCategory",
+			Func: BlogApiService_AddOrUpdateCategory_Handler,
+		},
+		{
+			Name: "/blog/admin/deleteCategory",
+			Func: BlogApiService_DeleteCategory_Handler,
+		},
+		{
+			Name: "/blog/admin/CategoryDetail",
+			Func: BlogApiService_CategoryDetail_Handler,
+		},
+		{
 			Name: "/go_blog.blog.BlogApi/SearchArticle",
 			Func: BlogApiService_SearchArticle_Handler,
 		},
@@ -137,6 +233,22 @@ var BlogApiServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/go_blog.blog.BlogApi/ArticleDetail",
 			Func: BlogApiService_ArticleDetail_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/SearchCategory",
+			Func: BlogApiService_SearchCategory_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/AddOrUpdateCategory",
+			Func: BlogApiService_AddOrUpdateCategory_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/DeleteCategory",
+			Func: BlogApiService_DeleteCategory_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/CategoryDetail",
+			Func: BlogApiService_CategoryDetail_Handler,
 		},
 	},
 }
@@ -172,6 +284,26 @@ func (s *UnimplementedBlogApi) ArticleDetail(ctx context.Context, req *ArticleDe
 	return nil, errors.New("rpc ArticleDetail of service BlogApi is not implemented")
 }
 
+// SearchCategory 文章分类搜索
+func (s *UnimplementedBlogApi) SearchCategory(ctx context.Context, req *SearchCategoryReq) (*SearchCategoryRsp, error) {
+	return nil, errors.New("rpc SearchCategory of service BlogApi is not implemented")
+}
+
+// AddOrUpdateCategory 添加修改文章分类
+func (s *UnimplementedBlogApi) AddOrUpdateCategory(ctx context.Context, req *AddOrUpdateCategoryReq) (*AddOrUpdateRsp, error) {
+	return nil, errors.New("rpc AddOrUpdateCategory of service BlogApi is not implemented")
+}
+
+// DeleteCategory 删除文章分类
+func (s *UnimplementedBlogApi) DeleteCategory(ctx context.Context, req *DeleteCategoryReq) (*EmptyRsp, error) {
+	return nil, errors.New("rpc DeleteCategory of service BlogApi is not implemented")
+}
+
+// CategoryDetail 文章分类详情
+func (s *UnimplementedBlogApi) CategoryDetail(ctx context.Context, req *CategoryDetailReq) (*Category, error) {
+	return nil, errors.New("rpc CategoryDetail of service BlogApi is not implemented")
+}
+
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
 
 // END ======================================= Server Service Definition ======================================= END
@@ -188,6 +320,14 @@ type BlogApiClientProxy interface {
 	DeleteArticle(ctx context.Context, req *DeleteArticleReq, opts ...client.Option) (rsp *EmptyRsp, err error)
 	// ArticleDetail 文章详情
 	ArticleDetail(ctx context.Context, req *ArticleDetailReq, opts ...client.Option) (rsp *Article, err error)
+	// SearchCategory 文章分类搜索
+	SearchCategory(ctx context.Context, req *SearchCategoryReq, opts ...client.Option) (rsp *SearchCategoryRsp, err error)
+	// AddOrUpdateCategory 添加修改文章分类
+	AddOrUpdateCategory(ctx context.Context, req *AddOrUpdateCategoryReq, opts ...client.Option) (rsp *AddOrUpdateRsp, err error)
+	// DeleteCategory 删除文章分类
+	DeleteCategory(ctx context.Context, req *DeleteCategoryReq, opts ...client.Option) (rsp *EmptyRsp, err error)
+	// CategoryDetail 文章分类详情
+	CategoryDetail(ctx context.Context, req *CategoryDetailReq, opts ...client.Option) (rsp *Category, err error)
 }
 
 type BlogApiClientProxyImpl struct {
@@ -273,6 +413,86 @@ func (c *BlogApiClientProxyImpl) ArticleDetail(ctx context.Context, req *Article
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &Article{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) SearchCategory(ctx context.Context, req *SearchCategoryReq, opts ...client.Option) (*SearchCategoryRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/searchCategory")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("SearchCategory")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &SearchCategoryRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) AddOrUpdateCategory(ctx context.Context, req *AddOrUpdateCategoryReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/addOrUpdateCategory")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("AddOrUpdateCategory")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &AddOrUpdateRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) DeleteCategory(ctx context.Context, req *DeleteCategoryReq, opts ...client.Option) (*EmptyRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/deleteCategory")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("DeleteCategory")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &EmptyRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) CategoryDetail(ctx context.Context, req *CategoryDetailReq, opts ...client.Option) (*Category, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/CategoryDetail")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("CategoryDetail")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &Category{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}

@@ -113,7 +113,7 @@ func (r *roleRepo) Save(ctx context.Context, role *biz.Role) (uint32, error) {
 	if err := r.GenericDao.Create(ctx, dbRole); err != nil {
 		return 0, err
 	}
-	return role.ID, nil
+	return dbRole.ID, nil
 }
 
 // UpdateByID 根据ID修改角色

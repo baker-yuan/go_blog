@@ -1,0 +1,17 @@
+# 基于go-mysql监听binlog
+bin_log:
+  # 指定位置开始监听
+  # 在binlog文件的名称
+  position_name: ''
+  # 在binlog文件中的位置（偏移量）
+  position_pos: 0
+
+# 监听的mysql
+mysql:
+  addr: 127.0.0.1:3306
+  user: root
+  password: 123456
+
+# 处理消息的队列
+consumer:
+  buffer_size: 1000

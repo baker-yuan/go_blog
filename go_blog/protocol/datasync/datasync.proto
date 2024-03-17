@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package go_blog.blog;
+
+option  go_package ="github.com/baker-yuan/go-blog/protocol/datasync";
+
+// trpc参考
+// https://github.com/trpc-group/trpc-cmdline/blob/483259c22a2fd1e477c7ebc4b5b1572a5a47010c/docs/examples/example-1/README.zh_CN.md
+// https://github.com/trpc-group/trpc-cmdline/blob/483259c22a2fd1e477c7ebc4b5b1572a5a47010c/docs/examples/example-2/README.zh_CN.md
+
+
+// 数据变动
+message TableChange {
+  // 库名
+  string db_name = 1;
+  // 表名
+  string tb_name = 2;
+  // 变更字段，优先取变更后的值，没有取变更前
+  // key=字段名 value=字段值
+  map<string, string> column_map = 3;
+  // 变更前
+  // key=字段名 value=字段值
+  map<string, string> before_column_map = 4;
+  // 变更后
+  // key=字段名 value=字段值
+  map<string, string> after_column_map = 5;
+}
+
+service DataSyncApi {
+
+}

@@ -302,6 +302,64 @@
     ]
    }
   },
+  "/auth/admin/getUserResource": {
+   "post": {
+    "summary": "获取用户关联的接口权限",
+    "operationId": "GetUserResource",
+    "responses": {
+     "200": {
+      "description": "GetUserResourceRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.GetUserResourceRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "user_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "用户ID"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/getUserRole": {
+   "post": {
+    "summary": "获取用户绑定的角色",
+    "operationId": "GetUserRole",
+    "responses": {
+     "200": {
+      "description": "GetUserRoleRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.GetUserRoleRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "user_ids",
+      "in": "query",
+      "required": false,
+      "type": "array",
+      "format": "uint32",
+      "description": "用户ID集合",
+      "items": {
+       "type": "integer",
+       "format": "uint32"
+      }
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/auth/admin/menuDetail": {
    "post": {
     "summary": "菜单详情",
@@ -349,6 +407,84 @@
       "type": "integer",
       "format": "uint32",
       "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/roleBindMenu": {
+   "post": {
+    "summary": "角色绑定菜单权限",
+    "operationId": "RoleBindMenu",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "menu_ids",
+      "in": "query",
+      "required": false,
+      "type": "array",
+      "format": "uint32",
+      "description": "菜单ID集合",
+      "items": {
+       "type": "integer",
+       "format": "uint32"
+      }
+     },
+     {
+      "name": "role_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "角色ID"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/roleBindResource": {
+   "post": {
+    "summary": "角色绑定资源权限",
+    "operationId": "RoleBindResource",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "resource_ids",
+      "in": "query",
+      "required": false,
+      "type": "array",
+      "format": "uint32",
+      "description": "资源ID集合",
+      "items": {
+       "type": "integer",
+       "format": "uint32"
+      }
+     },
+     {
+      "name": "role_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "角色ID"
      }
     ],
     "tags": [
@@ -560,6 +696,45 @@
       "type": "integer",
       "format": "uint32",
       "description": "排序"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/userBindRole": {
+   "post": {
+    "summary": "用户绑定角色",
+    "operationId": "UserBindRole",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "role_ids",
+      "in": "query",
+      "required": false,
+      "type": "array",
+      "format": "uint32",
+      "description": "角色ID集合",
+      "items": {
+       "type": "integer",
+       "format": "uint32"
+      }
+     },
+     {
+      "name": "user_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "用户ID"
      }
     ],
     "tags": [
@@ -951,6 +1126,64 @@
     ]
    }
   },
+  "/go_blog.auth.AuthApi/GetUserResource": {
+   "post": {
+    "summary": "获取用户关联的接口权限",
+    "operationId": "GetUserResource2",
+    "responses": {
+     "200": {
+      "description": "GetUserResourceRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.GetUserResourceRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "user_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "用户ID"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.auth.AuthApi/GetUserRole": {
+   "post": {
+    "summary": "获取用户绑定的角色",
+    "operationId": "GetUserRole2",
+    "responses": {
+     "200": {
+      "description": "GetUserRoleRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.GetUserRoleRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "user_ids",
+      "in": "query",
+      "required": false,
+      "type": "array",
+      "format": "uint32",
+      "description": "用户ID集合",
+      "items": {
+       "type": "integer",
+       "format": "uint32"
+      }
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/go_blog.auth.AuthApi/MenuDetail": {
    "post": {
     "summary": "菜单详情",
@@ -998,6 +1231,84 @@
       "type": "integer",
       "format": "uint32",
       "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.auth.AuthApi/RoleBindMenu": {
+   "post": {
+    "summary": "角色绑定菜单权限",
+    "operationId": "RoleBindMenu2",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "menu_ids",
+      "in": "query",
+      "required": false,
+      "type": "array",
+      "format": "uint32",
+      "description": "菜单ID集合",
+      "items": {
+       "type": "integer",
+       "format": "uint32"
+      }
+     },
+     {
+      "name": "role_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "角色ID"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.auth.AuthApi/RoleBindResource": {
+   "post": {
+    "summary": "角色绑定资源权限",
+    "operationId": "RoleBindResource2",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "resource_ids",
+      "in": "query",
+      "required": false,
+      "type": "array",
+      "format": "uint32",
+      "description": "资源ID集合",
+      "items": {
+       "type": "integer",
+       "format": "uint32"
+      }
+     },
+     {
+      "name": "role_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "角色ID"
      }
     ],
     "tags": [
@@ -1157,6 +1468,45 @@
      "authapi.trpc"
     ]
    }
+  },
+  "/go_blog.auth.AuthApi/UserBindRole": {
+   "post": {
+    "summary": "用户绑定角色",
+    "operationId": "UserBindRole2",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "role_ids",
+      "in": "query",
+      "required": false,
+      "type": "array",
+      "format": "uint32",
+      "description": "角色ID集合",
+      "items": {
+       "type": "integer",
+       "format": "uint32"
+      }
+     },
+     {
+      "name": "user_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "用户ID"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
   }
  },
  "definitions": {
@@ -1192,6 +1542,41 @@
    },
    "title": "go_blog.auth.GetEffectiveResourceRsp",
    "description": "GetEffectiveResourceRsp"
+  },
+  "go_blog.auth.GetUserResourceRsp": {
+   "type": "object",
+   "title": "go_blog.auth.GetUserResourceRsp",
+   "description": "GetUserResourceRsp"
+  },
+  "go_blog.auth.GetUserRoleRsp": {
+   "type": "object",
+   "properties": {
+    "data": {
+     "title": "data",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/go_blog.auth.GetUserRoleRsp.DataEntry"
+     }
+    }
+   },
+   "title": "go_blog.auth.GetUserRoleRsp",
+   "description": "GetUserRoleRsp"
+  },
+  "go_blog.auth.GetUserRoleRsp.DataEntry": {
+   "type": "object",
+   "properties": {
+    "key": {
+     "title": "key",
+     "type": "integer",
+     "format": "uint32"
+    },
+    "value": {
+     "title": "value",
+     "$ref": "#/definitions/go_blog.auth.Role"
+    }
+   },
+   "title": "go_blog.auth.GetUserRoleRsp.DataEntry",
+   "description": "DataEntry"
   },
   "go_blog.auth.Menu": {
    "type": "object",

@@ -2,6 +2,7 @@ package util
 
 import (
 	"github.com/baker-yuan/go-blog/common/util/conversion"
+	"github.com/baker-yuan/go-blog/common/util/date"
 	"github.com/baker-yuan/go-blog/common/util/obj"
 	"github.com/baker-yuan/go-blog/common/util/page"
 	"github.com/baker-yuan/go-blog/common/util/reflect"
@@ -17,6 +18,7 @@ var (
 	StrUtils            str.StrUtils               // 字符串处理
 	SessionUtils        session.SessionUtils       // 会话
 	ReflectUtils        reflect.ReflectUtils       // 反射
+	DateUtils           date.DateUtils             // 时间
 )
 
 // NewSliceUtils 是 SliceUtils 的构造函数，返回一个 SliceUtils 的实例。

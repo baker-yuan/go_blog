@@ -1,4 +1,4 @@
-CREATE TABLE `blog_article_v2`
+CREATE TABLE `blog_article`
 (
     `id`                 int unsigned                            NOT NULL AUTO_INCREMENT COMMENT '主键',
     `category_id`        int                                     NOT NULL DEFAULT '0' COMMENT '文章分类表ID|biz_type表主键',

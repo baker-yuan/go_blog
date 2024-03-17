@@ -1,0 +1,41 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/codegen", "interfaces.txt")
+
+
+
+
+// $!{tableInfo.name} $!{tableInfo.comment}
+type (
+	// I$!{tableInfo.name}UseCase 业务逻辑
+	I$!{tableInfo.name}UseCase interface {
+		// Search$!{tableInfo.name} 查询$!{tableInfo.comment}
+		Search$!{tableInfo.name}(ctx context.Context, req *pb.Search$!{tableInfo.name}Req) ([]*pb.$!{tableInfo.name}, uint32, error)
+		// $!{tableInfo.name}Detail $!{tableInfo.comment}详情
+		$!{tableInfo.name}Detail(ctx context.Context, req *pb.$!{tableInfo.name}DetailReq) (*pb.$!{tableInfo.name}, error)
+		// AddOrUpdate$!{tableInfo.name} 添加修改$!{tableInfo.comment}
+		AddOrUpdate$!{tableInfo.name}(ctx context.Context, req *pb.AddOrUpdate$!{tableInfo.name}Req) (uint32, error)
+		// Delete$!{tableInfo.name} 删除$!{tableInfo.comment}
+		Delete$!{tableInfo.name}(ctx context.Context, req *pb.Delete$!{tableInfo.name}Req) error
+	}
+
+	// I$!{tableInfo.name}Repo 数据存储操作
+	I$!{tableInfo.name}Repo interface {
+        // Get$!{tableInfo.name}ByID 根据$!{tableInfo.comment}id集合查询$!{tableInfo.comment}
+        Get$!{tableInfo.name}ByID(ctx context.Context, id uint32) (*entity.$!{tableInfo.name}, error)
+        // Get$!{tableInfo.name}ByIDs 根据$!{tableInfo.comment}id集合查询$!{tableInfo.comment}
+        Get$!{tableInfo.name}ByIDs(ctx context.Context, ids []uint32) (entity.$!{tableInfo.name}s, error)
+        // Save 保存$!{tableInfo.comment}
+        Save(ctx context.Context, $!tool.firstLowerCase($!{tableInfo.name}) *entity.$!{tableInfo.name}) (uint32, error)
+        // UpdateByID 根据ID修改$!{tableInfo.comment}
+        UpdateByID(ctx context.Context, $!tool.firstLowerCase($!{tableInfo.name}) *entity.$!{tableInfo.name}) error
+        // DeleteByID 根据ID删除$!{tableInfo.comment}
+        DeleteByID(ctx context.Context, id uint32) error
+        // Search$!{tableInfo.name} $!{tableInfo.comment}搜索
+        Search$!{tableInfo.name}(ctx context.Context, req *pb.Search$!{tableInfo.name}Req) (entity.$!{tableInfo.name}s, uint32, error)
+	}
+)
+
+

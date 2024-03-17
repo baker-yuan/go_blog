@@ -30,6 +30,7 @@ message AddOrUpdateRsp {
 enum ResourceType {
   RT_UNKNOWN = 0; // 未知
   TB_ARTICLE = 1; // 文章
+  TB_CATEGORY = 2; // 文章
 }
 
 
@@ -223,14 +224,54 @@ enum CategoryStatus {
 
 // Category 文章分类信息定义
 message Category {
+  // 基本信息
   uint32 id = 1;          // 主键
   string name = 2;        // 文章类型名
   string description = 3; // 类型介绍
-  int32 sort = 4;         // 排序
+  uint32 sort = 4;         // 排序
+  //
   CategoryStatus available = 5; // 是否可用
+  // 公共字段
   uint32 create_time = 6; // 创建时间
   uint32 update_time = 7; // 更新时间
 }
+
+
+// 文章分类搜索
+message SearchCategoryReq {
+  string search = 1; // 查询条件 {a:?,b:?}
+
+  uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+}
+
+message SearchCategoryRsp {
+  uint32 total = 1; // 分页查询
+  repeated Category data = 2; // 文章分类集合
+}
+
+// 文章分类详情
+message CategoryDetailReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 添加修改文章分类
+message AddOrUpdateCategoryReq {
+  // 基本信息
+  uint32 id = 1 [(validate.rules).uint32.gt = 0];          // 主键
+  string name = 2 [(validate.rules).string.min_len = 1];        // 文章类型名
+  string description = 3; // 类型介绍
+  uint32 sort = 4 [(validate.rules).uint32.gt = 0];         // 排序
+  //
+  CategoryStatus available = 5 [(validate.rules).enum = {in: [0,1]}]; // 是否可用
+}
+
+// 删除文章分类
+message DeleteCategoryReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+
 
 // ArticleTag 文章标签关联信息定义
 message ArticleTag {
@@ -261,5 +302,21 @@ service BlogApi {
   }
 
 
+  // 文章分类搜索
+  rpc SearchCategory(SearchCategoryReq) returns (SearchCategoryRsp) {
+    option(trpc.alias) = "/blog/admin/searchCategory";
+  }
+  // 添加修改文章分类
+  rpc AddOrUpdateCategory(AddOrUpdateCategoryReq) returns (AddOrUpdateRsp) {
+    option(trpc.alias) = "/blog/admin/addOrUpdateCategory";
+  }
+  // 删除文章分类
+  rpc DeleteCategory(DeleteCategoryReq) returns (EmptyRsp)  {
+    option(trpc.alias) = "/blog/admin/deleteCategory";
+  }
+  // 文章分类详情
+  rpc CategoryDetail(CategoryDetailReq) returns (Category)  {
+    option(trpc.alias) = "/blog/admin/CategoryDetail";
+  }
 
 }

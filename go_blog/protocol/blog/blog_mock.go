@@ -50,6 +50,21 @@ func (mr *MockBlogApiServiceMockRecorder) AddOrUpdateArticle(ctx, req interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateArticle", reflect.TypeOf((*MockBlogApiService)(nil).AddOrUpdateArticle), ctx, req)
 }
 
+// AddOrUpdateCategory mocks base method.
+func (m *MockBlogApiService) AddOrUpdateCategory(ctx context.Context, req *AddOrUpdateCategoryReq) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddOrUpdateCategory", ctx, req)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateCategory indicates an expected call of AddOrUpdateCategory.
+func (mr *MockBlogApiServiceMockRecorder) AddOrUpdateCategory(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateCategory", reflect.TypeOf((*MockBlogApiService)(nil).AddOrUpdateCategory), ctx, req)
+}
+
 // ArticleDetail mocks base method.
 func (m *MockBlogApiService) ArticleDetail(ctx context.Context, req *ArticleDetailReq) (*Article, error) {
 	m.ctrl.T.Helper()
@@ -63,6 +78,21 @@ func (m *MockBlogApiService) ArticleDetail(ctx context.Context, req *ArticleDeta
 func (mr *MockBlogApiServiceMockRecorder) ArticleDetail(ctx, req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ArticleDetail", reflect.TypeOf((*MockBlogApiService)(nil).ArticleDetail), ctx, req)
+}
+
+// CategoryDetail mocks base method.
+func (m *MockBlogApiService) CategoryDetail(ctx context.Context, req *CategoryDetailReq) (*Category, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CategoryDetail", ctx, req)
+	ret0, _ := ret[0].(*Category)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CategoryDetail indicates an expected call of CategoryDetail.
+func (mr *MockBlogApiServiceMockRecorder) CategoryDetail(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CategoryDetail", reflect.TypeOf((*MockBlogApiService)(nil).CategoryDetail), ctx, req)
 }
 
 // DeleteArticle mocks base method.
@@ -80,6 +110,21 @@ func (mr *MockBlogApiServiceMockRecorder) DeleteArticle(ctx, req interface{}) *g
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteArticle", reflect.TypeOf((*MockBlogApiService)(nil).DeleteArticle), ctx, req)
 }
 
+// DeleteCategory mocks base method.
+func (m *MockBlogApiService) DeleteCategory(ctx context.Context, req *DeleteCategoryReq) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteCategory", ctx, req)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteCategory indicates an expected call of DeleteCategory.
+func (mr *MockBlogApiServiceMockRecorder) DeleteCategory(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCategory", reflect.TypeOf((*MockBlogApiService)(nil).DeleteCategory), ctx, req)
+}
+
 // SearchArticle mocks base method.
 func (m *MockBlogApiService) SearchArticle(ctx context.Context, req *SearchArticleReq) (*SearchArticleRsp, error) {
 	m.ctrl.T.Helper()
@@ -93,6 +138,21 @@ func (m *MockBlogApiService) SearchArticle(ctx context.Context, req *SearchArtic
 func (mr *MockBlogApiServiceMockRecorder) SearchArticle(ctx, req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchArticle", reflect.TypeOf((*MockBlogApiService)(nil).SearchArticle), ctx, req)
+}
+
+// SearchCategory mocks base method.
+func (m *MockBlogApiService) SearchCategory(ctx context.Context, req *SearchCategoryReq) (*SearchCategoryRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SearchCategory", ctx, req)
+	ret0, _ := ret[0].(*SearchCategoryRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchCategory indicates an expected call of SearchCategory.
+func (mr *MockBlogApiServiceMockRecorder) SearchCategory(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchCategory", reflect.TypeOf((*MockBlogApiService)(nil).SearchCategory), ctx, req)
 }
 
 // MockBlogApiClientProxy is a mock of BlogApiClientProxy interface.
@@ -138,6 +198,26 @@ func (mr *MockBlogApiClientProxyMockRecorder) AddOrUpdateArticle(ctx, req interf
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateArticle", reflect.TypeOf((*MockBlogApiClientProxy)(nil).AddOrUpdateArticle), varargs...)
 }
 
+// AddOrUpdateCategory mocks base method.
+func (m *MockBlogApiClientProxy) AddOrUpdateCategory(ctx context.Context, req *AddOrUpdateCategoryReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AddOrUpdateCategory", varargs...)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateCategory indicates an expected call of AddOrUpdateCategory.
+func (mr *MockBlogApiClientProxyMockRecorder) AddOrUpdateCategory(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateCategory", reflect.TypeOf((*MockBlogApiClientProxy)(nil).AddOrUpdateCategory), varargs...)
+}
+
 // ArticleDetail mocks base method.
 func (m *MockBlogApiClientProxy) ArticleDetail(ctx context.Context, req *ArticleDetailReq, opts ...client.Option) (*Article, error) {
 	m.ctrl.T.Helper()
@@ -156,6 +236,26 @@ func (mr *MockBlogApiClientProxyMockRecorder) ArticleDetail(ctx, req interface{}
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ArticleDetail", reflect.TypeOf((*MockBlogApiClientProxy)(nil).ArticleDetail), varargs...)
+}
+
+// CategoryDetail mocks base method.
+func (m *MockBlogApiClientProxy) CategoryDetail(ctx context.Context, req *CategoryDetailReq, opts ...client.Option) (*Category, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "CategoryDetail", varargs...)
+	ret0, _ := ret[0].(*Category)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CategoryDetail indicates an expected call of CategoryDetail.
+func (mr *MockBlogApiClientProxyMockRecorder) CategoryDetail(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CategoryDetail", reflect.TypeOf((*MockBlogApiClientProxy)(nil).CategoryDetail), varargs...)
 }
 
 // DeleteArticle mocks base method.
@@ -178,6 +278,26 @@ func (mr *MockBlogApiClientProxyMockRecorder) DeleteArticle(ctx, req interface{}
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteArticle", reflect.TypeOf((*MockBlogApiClientProxy)(nil).DeleteArticle), varargs...)
 }
 
+// DeleteCategory mocks base method.
+func (m *MockBlogApiClientProxy) DeleteCategory(ctx context.Context, req *DeleteCategoryReq, opts ...client.Option) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteCategory", varargs...)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteCategory indicates an expected call of DeleteCategory.
+func (mr *MockBlogApiClientProxyMockRecorder) DeleteCategory(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCategory", reflect.TypeOf((*MockBlogApiClientProxy)(nil).DeleteCategory), varargs...)
+}
+
 // SearchArticle mocks base method.
 func (m *MockBlogApiClientProxy) SearchArticle(ctx context.Context, req *SearchArticleReq, opts ...client.Option) (*SearchArticleRsp, error) {
 	m.ctrl.T.Helper()
@@ -196,4 +316,24 @@ func (mr *MockBlogApiClientProxyMockRecorder) SearchArticle(ctx, req interface{}
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchArticle", reflect.TypeOf((*MockBlogApiClientProxy)(nil).SearchArticle), varargs...)
+}
+
+// SearchCategory mocks base method.
+func (m *MockBlogApiClientProxy) SearchCategory(ctx context.Context, req *SearchCategoryReq, opts ...client.Option) (*SearchCategoryRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SearchCategory", varargs...)
+	ret0, _ := ret[0].(*SearchCategoryRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchCategory indicates an expected call of SearchCategory.
+func (mr *MockBlogApiClientProxyMockRecorder) SearchCategory(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchCategory", reflect.TypeOf((*MockBlogApiClientProxy)(nil).SearchCategory), varargs...)
 }

@@ -33,10 +33,10 @@ func ResourcePOToEntity(dbResource *Resource) *biz.Resource {
 		Service: dbResource.Service,
 		Method:  dbResource.Method,
 		// 公共字段
-		CreateUserID: dbResource.CreateUserID,
-		UpdateUserID: dbResource.UpdateUserID,
-		CreateTime:   uint32(dbResource.CreateTime),
-		UpdateTime:   uint32(dbResource.UpdateTime),
+		CreateUser: dbResource.CreateUser,
+		UpdateUser: dbResource.UpdateUser,
+		CreateTime: uint32(dbResource.CreateTime),
+		UpdateTime: uint32(dbResource.UpdateTime),
 	}
 	return res
 }
@@ -61,10 +61,10 @@ func ResourceEntityToPO(resource *biz.Resource) *Resource {
 		Service: resource.Service,
 		Method:  resource.Method,
 		// 公共字段
-		CreateUserID: resource.CreateUserID,
-		UpdateUserID: resource.UpdateUserID,
-		CreateTime:   db.Timestamp(resource.CreateTime),
-		UpdateTime:   db.Timestamp(resource.UpdateTime),
+		CreateUser: resource.CreateUser,
+		UpdateUser: resource.UpdateUser,
+		CreateTime: db.Timestamp(resource.CreateTime),
+		UpdateTime: db.Timestamp(resource.UpdateTime),
 	}
 	return res
 }

@@ -22,14 +22,16 @@ func Run(trpcServer *server.Server, cfg *config.Config) {
 	}
 
 	var (
-		articleRepo = repo.NewArticleRepo(gormDB)
+		articleRepo  = repo.NewArticleRepo(gormDB)
+		categoryRepo = repo.NewCategoryRepo(gormDB)
 	)
 	var (
-		commonUseCase  = usecase.NewCommonUseCase()
-		articleUseCase = usecase.NewArticleUseCase(commonUseCase, articleRepo)
+		commonUseCase   = usecase.NewCommonUseCase()
+		articleUseCase  = usecase.NewArticleUseCase(commonUseCase, articleRepo)
+		categoryUseCase = usecase.NewCategoryUseCase(commonUseCase, categoryRepo)
 	)
 	var (
-		blogService = controller.NewBlogServiceImpl(articleUseCase)
+		blogService = controller.NewBlogServiceImpl(articleUseCase, categoryUseCase)
 	)
 
 	// 注册服务

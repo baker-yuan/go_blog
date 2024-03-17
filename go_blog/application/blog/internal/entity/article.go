@@ -29,6 +29,8 @@ type Article struct {
 	IsCommentEnabled BoolBit `gorm:"column:is_comment_enabled;type:bit(1);not null;default:b'0';comment:评论开关"`
 	// 公共字段
 	IsDeleted  BoolBit   `gorm:"column:is_deleted;type:bit(1);not null;default:b'0';comment:是否删除"`
+	CreateUser uint32    `gorm:"column:create_user;type:int unsigned;not null;default:0;comment:创建人id"`
+	UpdateUser uint32    `gorm:"column:update_user;type:int unsigned;not null;default:0;comment:更新人id"`
 	CreateTime Timestamp `gorm:"index:idx_create_time;column:create_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:创建时间"`
 	UpdateTime Timestamp `gorm:"index:idx_update_time;column:update_time;type:timestamp;not null;default:CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;comment:修改时间"`
 }

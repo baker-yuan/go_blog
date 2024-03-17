@@ -45,6 +45,16 @@ type AuthApiService interface {
 	DeleteRole(ctx context.Context, req *DeleteRoleReq) (*EmptyRsp, error)
 	// RoleDetail 角色详情
 	RoleDetail(ctx context.Context, req *RoleDetailReq) (*Role, error)
+	// RoleBindMenu 角色绑定菜单权限
+	RoleBindMenu(ctx context.Context, req *RoleBindMenuReq) (*EmptyRsp, error)
+	// RoleBindResource 角色绑定资源权限
+	RoleBindResource(ctx context.Context, req *RoleBindResourceReq) (*EmptyRsp, error)
+	// UserBindRole 用户绑定角色
+	UserBindRole(ctx context.Context, req *UserBindRoleReq) (*EmptyRsp, error)
+	// GetUserRole 获取用户绑定的角色
+	GetUserRole(ctx context.Context, req *GetUserRoleReq) (*GetUserRoleRsp, error)
+	// GetUserResource 获取用户关联的接口权限
+	GetUserResource(ctx context.Context, req *GetUserResourceReq) (*GetUserResourceRsp, error)
 }
 
 func AuthApiService_SearchMenu_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -281,6 +291,96 @@ func AuthApiService_RoleDetail_Handler(svr interface{}, ctx context.Context, f s
 	return rsp, nil
 }
 
+func AuthApiService_RoleBindMenu_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &RoleBindMenuReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).RoleBindMenu(ctx, reqbody.(*RoleBindMenuReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_RoleBindResource_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &RoleBindResourceReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).RoleBindResource(ctx, reqbody.(*RoleBindResourceReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_UserBindRole_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &UserBindRoleReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).UserBindRole(ctx, reqbody.(*UserBindRoleReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_GetUserRole_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &GetUserRoleReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).GetUserRole(ctx, reqbody.(*GetUserRoleReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_GetUserResource_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &GetUserResourceReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).GetUserResource(ctx, reqbody.(*GetUserResourceReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 // AuthApiServer_ServiceDesc descriptor for server.RegisterService.
 var AuthApiServer_ServiceDesc = server.ServiceDesc{
 	ServiceName: "go_blog.auth.AuthApi",
@@ -339,6 +439,26 @@ var AuthApiServer_ServiceDesc = server.ServiceDesc{
 			Func: AuthApiService_RoleDetail_Handler,
 		},
 		{
+			Name: "/auth/admin/roleBindMenu",
+			Func: AuthApiService_RoleBindMenu_Handler,
+		},
+		{
+			Name: "/auth/admin/roleBindResource",
+			Func: AuthApiService_RoleBindResource_Handler,
+		},
+		{
+			Name: "/auth/admin/userBindRole",
+			Func: AuthApiService_UserBindRole_Handler,
+		},
+		{
+			Name: "/auth/admin/getUserRole",
+			Func: AuthApiService_GetUserRole_Handler,
+		},
+		{
+			Name: "/auth/admin/getUserResource",
+			Func: AuthApiService_GetUserResource_Handler,
+		},
+		{
 			Name: "/go_blog.auth.AuthApi/SearchMenu",
 			Func: AuthApiService_SearchMenu_Handler,
 		},
@@ -389,6 +509,26 @@ var AuthApiServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/go_blog.auth.AuthApi/RoleDetail",
 			Func: AuthApiService_RoleDetail_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/RoleBindMenu",
+			Func: AuthApiService_RoleBindMenu_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/RoleBindResource",
+			Func: AuthApiService_RoleBindResource_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/UserBindRole",
+			Func: AuthApiService_UserBindRole_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/GetUserRole",
+			Func: AuthApiService_GetUserRole_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/GetUserResource",
+			Func: AuthApiService_GetUserResource_Handler,
 		},
 	},
 }
@@ -469,6 +609,31 @@ func (s *UnimplementedAuthApi) RoleDetail(ctx context.Context, req *RoleDetailRe
 	return nil, errors.New("rpc RoleDetail of service AuthApi is not implemented")
 }
 
+// RoleBindMenu 角色绑定菜单权限
+func (s *UnimplementedAuthApi) RoleBindMenu(ctx context.Context, req *RoleBindMenuReq) (*EmptyRsp, error) {
+	return nil, errors.New("rpc RoleBindMenu of service AuthApi is not implemented")
+}
+
+// RoleBindResource 角色绑定资源权限
+func (s *UnimplementedAuthApi) RoleBindResource(ctx context.Context, req *RoleBindResourceReq) (*EmptyRsp, error) {
+	return nil, errors.New("rpc RoleBindResource of service AuthApi is not implemented")
+}
+
+// UserBindRole 用户绑定角色
+func (s *UnimplementedAuthApi) UserBindRole(ctx context.Context, req *UserBindRoleReq) (*EmptyRsp, error) {
+	return nil, errors.New("rpc UserBindRole of service AuthApi is not implemented")
+}
+
+// GetUserRole 获取用户绑定的角色
+func (s *UnimplementedAuthApi) GetUserRole(ctx context.Context, req *GetUserRoleReq) (*GetUserRoleRsp, error) {
+	return nil, errors.New("rpc GetUserRole of service AuthApi is not implemented")
+}
+
+// GetUserResource 获取用户关联的接口权限
+func (s *UnimplementedAuthApi) GetUserResource(ctx context.Context, req *GetUserResourceReq) (*GetUserResourceRsp, error) {
+	return nil, errors.New("rpc GetUserResource of service AuthApi is not implemented")
+}
+
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
 
 // END ======================================= Server Service Definition ======================================= END
@@ -503,6 +668,16 @@ type AuthApiClientProxy interface {
 	DeleteRole(ctx context.Context, req *DeleteRoleReq, opts ...client.Option) (rsp *EmptyRsp, err error)
 	// RoleDetail 角色详情
 	RoleDetail(ctx context.Context, req *RoleDetailReq, opts ...client.Option) (rsp *Role, err error)
+	// RoleBindMenu 角色绑定菜单权限
+	RoleBindMenu(ctx context.Context, req *RoleBindMenuReq, opts ...client.Option) (rsp *EmptyRsp, err error)
+	// RoleBindResource 角色绑定资源权限
+	RoleBindResource(ctx context.Context, req *RoleBindResourceReq, opts ...client.Option) (rsp *EmptyRsp, err error)
+	// UserBindRole 用户绑定角色
+	UserBindRole(ctx context.Context, req *UserBindRoleReq, opts ...client.Option) (rsp *EmptyRsp, err error)
+	// GetUserRole 获取用户绑定的角色
+	GetUserRole(ctx context.Context, req *GetUserRoleReq, opts ...client.Option) (rsp *GetUserRoleRsp, err error)
+	// GetUserResource 获取用户关联的接口权限
+	GetUserResource(ctx context.Context, req *GetUserResourceReq, opts ...client.Option) (rsp *GetUserResourceRsp, err error)
 }
 
 type AuthApiClientProxyImpl struct {
@@ -768,6 +943,106 @@ func (c *AuthApiClientProxyImpl) RoleDetail(ctx context.Context, req *RoleDetail
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &Role{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) RoleBindMenu(ctx context.Context, req *RoleBindMenuReq, opts ...client.Option) (*EmptyRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/roleBindMenu")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("RoleBindMenu")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &EmptyRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) RoleBindResource(ctx context.Context, req *RoleBindResourceReq, opts ...client.Option) (*EmptyRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/roleBindResource")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("RoleBindResource")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &EmptyRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) UserBindRole(ctx context.Context, req *UserBindRoleReq, opts ...client.Option) (*EmptyRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/userBindRole")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("UserBindRole")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &EmptyRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) GetUserRole(ctx context.Context, req *GetUserRoleReq, opts ...client.Option) (*GetUserRoleRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/getUserRole")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("GetUserRole")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &GetUserRoleRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) GetUserResource(ctx context.Context, req *GetUserResourceReq, opts ...client.Option) (*GetUserResourceRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/getUserResource")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("GetUserResource")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &GetUserResourceRsp{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}

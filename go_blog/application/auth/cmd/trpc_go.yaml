@@ -42,10 +42,6 @@ server:
     - validation
   service:
     - name: trpc.blog.auth.BlogApiHttp
-      # 选填，该 service 绑定的网卡，只有 ip 为空时，才会生效
-      #nic: eth1
-      # 选填，该 service 绑定的端口，address 为空时，port 必填
-      #port: 9002
       # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
       address: 127.0.0.1:9002
       # 选填，网络类型，为空时，使用 server.network
@@ -57,10 +53,6 @@ server:
       # 选填，使用哪个注册中心 polarismesh
       registry: polarismesh
     - name: trpc.blog.auth.BlogApiTrpc
-      # 选填，该 service 绑定的网卡，只有 ip 为空时，才会生效
-      #nic: eth1
-      # 选填，该 service 绑定的端口，address 为空时，port 必填
-      #port: 9100
       # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
       address: 127.0.0.1:9100
       # 选填，网络类型，为空时，使用 server.network

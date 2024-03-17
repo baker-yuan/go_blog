@@ -137,3 +137,33 @@ func (s *AuthService) DeleteRole(ctx context.Context, req *pb.DeleteRoleReq) (*p
 	}
 	return rsp, nil
 }
+
+// RoleBindMenu 角色绑定菜单权限
+func (s *AuthService) RoleBindMenu(ctx context.Context, req *pb.RoleBindMenuReq) (*pb.EmptyRsp, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+// RoleBindResource 角色绑定资源权限
+func (s *AuthService) RoleBindResource(ctx context.Context, req *pb.RoleBindResourceReq) (*pb.EmptyRsp, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+// UserBindRole 用户绑定角色
+func (s *AuthService) UserBindRole(ctx context.Context, req *pb.UserBindRoleReq) (*pb.EmptyRsp, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+// GetUserRole 获取用户绑定的角色
+func (s *AuthService) GetUserRole(ctx context.Context, req *pb.GetUserRoleReq) (*pb.GetUserRoleRsp, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+// GetUserResource 获取用户关联的接口权限
+func (s *AuthService) GetUserResource(ctx context.Context, req *pb.GetUserResourceReq) (*pb.GetUserResourceRsp, error) {
+	//TODO implement me
+	panic("implement me")
+}

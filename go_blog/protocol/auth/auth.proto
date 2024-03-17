@@ -260,28 +260,64 @@ message DeleteRoleReq {
 
 
 
-// RoleAuthority 定义角色关联的资源和目录信息
+// RoleAuthority 角色关联的资源和目录
 message RoleAuthority {
   uint32 id = 1;                   // ID
   uint32 authority_id = 2;         // 权限id
   string authority_type = 3;       // 权限类型 MENU-菜单 RESOURCE-资源
   uint32 role_id = 4;              // 角色id
+
   uint32 create_user = 5;          // 创建人ID
   uint32 create_time = 6;          // 插入时间
 }
 
 
 
-// UserRole 定义账号角色绑定信息
+// UserRole 账号角色关联
 message UserRole {
   uint32 id = 1;          // ID
   uint32 role_id = 2;     // 角色ID
   uint32 user_id = 3;     // 用户ID
+
   uint32 create_user = 4; // 创建人ID
   uint32 create_time = 5; // 插入时间
 }
 
 
+// 角色绑定菜单权限
+message RoleBindMenuReq {
+  uint32 role_id = 1 [(validate.rules).uint32.gt = 0]; // 角色ID
+  repeated uint32 menu_ids = 2 [(validate.rules).repeated.min_items = 1]; // 菜单ID集合
+}
+
+// 角色绑定资源权限
+message RoleBindResourceReq {
+  uint32 role_id = 1 [(validate.rules).uint32.gt = 0]; // 角色ID
+  repeated uint32 resource_ids = 2 [(validate.rules).repeated.min_items = 1]; // 资源ID集合
+}
+
+// 用户绑定角色
+message UserBindRoleReq {
+  uint32 user_id = 1 [(validate.rules).uint32.gt = 0]; // 用户ID
+  repeated uint32 role_ids = 2 [(validate.rules).repeated.min_items = 1]; // 角色ID集合
+}
+
+// 用户绑定的角色
+message GetUserRoleReq {
+  repeated uint32 user_ids = 1 [(validate.rules).repeated.min_items = 1]; // 用户ID集合
+}
+
+message GetUserRoleRsp {
+  map<uint32, Role> data = 1; // 用户绑定的角色 key=用户ID value=角色集合
+}
+
+// 用户关联的接口权限
+message GetUserResourceReq {
+  uint32 user_id = 1 [(validate.rules).uint32.gt = 0]; // 用户ID
+}
+message GetUserResourceRsp {
+
+}
 
 
 // 权限api
@@ -320,7 +356,6 @@ service AuthApi {
   rpc ResourceDetail(ResourceDetailReq) returns (Resource) {
     option(trpc.alias) = "/auth/admin/resourceDetail";
   }
-
   // 获取有效状态下的接口
   rpc GetEffectiveResource(GetEffectiveResourceReq) returns (GetEffectiveResourceRsp) {
     option(trpc.alias) = "/auth/effectiveResource";
@@ -343,4 +378,26 @@ service AuthApi {
   rpc RoleDetail(RoleDetailReq) returns (Role)  {
     option(trpc.alias) = "/auth/admin/RoleDetail";
   }
+
+  // 角色绑定菜单权限
+  rpc RoleBindMenu(RoleBindMenuReq) returns (EmptyRsp)  {
+    option(trpc.alias) = "/auth/admin/roleBindMenu";
+  }
+  // 角色绑定资源权限
+  rpc RoleBindResource(RoleBindResourceReq) returns (EmptyRsp)  {
+    option(trpc.alias) = "/auth/admin/roleBindResource";
+  }
+  // 用户绑定角色
+  rpc UserBindRole(UserBindRoleReq) returns (EmptyRsp)  {
+    option(trpc.alias) = "/auth/admin/userBindRole";
+  }
+  // 获取用户绑定的角色
+  rpc GetUserRole(GetUserRoleReq) returns (GetUserRoleRsp)  {
+    option(trpc.alias) = "/auth/admin/getUserRole";
+  }
+  // 获取用户关联的接口权限
+  rpc GetUserResource(GetUserResourceReq) returns (GetUserResourceRsp)  {
+    option(trpc.alias) = "/auth/admin/getUserResource";
+  }
+
 }
