@@ -3,12 +3,14 @@ package router
 import (
 	"context"
 	"fmt"
+	"io"
 	"time"
 
 	"github.com/baker-yuan/go-blog/application/blog/gateway/biz_ctx"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/config"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/service"
 	auth_pb "github.com/baker-yuan/go-blog/protocol/auth"
+	datasync_pb "github.com/baker-yuan/go-blog/protocol/datasync"
 	"trpc.group/trpc-go/trpc-go/client"
 	"trpc.group/trpc-go/trpc-go/log"
 )
@@ -54,4 +56,28 @@ func MatchResource(ctx biz_ctx.IBizContext) *auth_pb.Resource {
 		return res
 	}
 	return nil
+}
+
+type HandDataChange struct {
+}
+
+// 强制HandDataChange实现DataSyncApiService
+var _ datasync_pb.DataSyncApiService = (*HandDataChange)(nil)
+
+// DataChange 数据发送变化
+func (h *HandDataChange) DataChange(stream datasync_pb.DataSyncApi_DataChangeServer) error {
+	for {
+		// 循环接受客户端数据
+		tableChange, err := stream.Recv()
+		// 客户端流已经结束
+		if err == io.EOF {
+			return stream.SendAndClose(&datasync_pb.DataChangeRsp{})
+		}
+		// 流发生异常，需要返回
+		if err != nil {
+			return err
+		}
+
+		tableChange = tableChange
+	}
 }

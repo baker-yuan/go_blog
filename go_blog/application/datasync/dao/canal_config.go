@@ -11,6 +11,8 @@ type CanalConfig struct {
 	MonitorInsert db.BoolBit `gorm:"column:monitor_insert;type:bit(1);not null;default:b'0';comment:是否监听插入"`
 	MonitorUpdate db.BoolBit `gorm:"column:monitor_update;type:bit(1);not null;default:b'0';comment:是否监听修改"`
 	MonitorDelete db.BoolBit `gorm:"column:monitor_delete;type:bit(1);not null;default:b'0';comment:是否监听删除"`
+	// 变更通知
+
 	// 公共字段
 	CreateUser uint32       `gorm:"column:create_user;type:int unsigned;not null;default:0;comment:创建人id"`
 	UpdateUser uint32       `gorm:"column:update_user;type:int unsigned;not null;default:0;comment:更新人id"`

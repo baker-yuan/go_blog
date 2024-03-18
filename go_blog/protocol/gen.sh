@@ -21,4 +21,4 @@
 #trpc create --protofile=user/user.proto --validate=true --rpconly --alias --swagger -o user
 
 find ./datasync -type f ! -name 'datasync.proto' -exec rm -f {} +
-trpc create --protofile=datasync/datasync.proto --mock=false --rpconly -o datasync
+trpc create --protofile=datasync/datasync.proto --validate=true --rpconly --alias -o datasync

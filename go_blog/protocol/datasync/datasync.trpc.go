@@ -4,25 +4,65 @@
 package datasync
 
 import (
+	"context"
+	"errors"
 	"fmt"
 
 	_ "trpc.group/trpc-go/trpc-go"
 	"trpc.group/trpc-go/trpc-go/client"
+	"trpc.group/trpc-go/trpc-go/codec"
 	_ "trpc.group/trpc-go/trpc-go/http"
 	"trpc.group/trpc-go/trpc-go/server"
+	"trpc.group/trpc-go/trpc-go/stream"
 )
 
 // START ======================================= Server Service Definition ======================================= START
 
 // DataSyncApiService defines service.
 type DataSyncApiService interface {
+	// DataChange 数据发送变化
+	DataChange(DataSyncApi_DataChangeServer) error
+}
+
+func DataSyncApiService_DataChange_Handler(srv interface{}, stream server.Stream) error {
+	return srv.(DataSyncApiService).DataChange(&dataSyncApiDataChangeServer{stream})
+}
+
+type DataSyncApi_DataChangeServer interface {
+	SendAndClose(*DataChangeRsp) error
+	Recv() (*TableChange, error)
+	server.Stream
+}
+
+type dataSyncApiDataChangeServer struct {
+	server.Stream
+}
+
+func (x *dataSyncApiDataChangeServer) SendAndClose(m *DataChangeRsp) error {
+	return x.Stream.SendMsg(m)
+}
+
+func (x *dataSyncApiDataChangeServer) Recv() (*TableChange, error) {
+	m := new(TableChange)
+	if err := x.Stream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 // DataSyncApiServer_ServiceDesc descriptor for server.RegisterService.
 var DataSyncApiServer_ServiceDesc = server.ServiceDesc{
-	ServiceName: "go_blog.blog.DataSyncApi",
-	HandlerType: ((*DataSyncApiService)(nil)),
-	Methods:     []server.Method{},
+	ServiceName:  "go_blog.blog.DataSyncApi",
+	HandlerType:  ((*DataSyncApiService)(nil)),
+	StreamHandle: stream.NewStreamDispatcher(),
+	Methods:      []server.Method{},
+	Streams: []server.StreamDesc{
+		{
+			StreamName:    "/datasync/dataChange",
+			Handler:       DataSyncApiService_DataChange_Handler,
+			ServerStreams: false,
+		},
+	},
 }
 
 // RegisterDataSyncApiService registers service.
@@ -36,6 +76,11 @@ func RegisterDataSyncApiService(s server.Service, svr DataSyncApiService) {
 
 type UnimplementedDataSyncApi struct{}
 
+// DataChange 数据发送变化
+func (s *UnimplementedDataSyncApi) DataChange(stream DataSyncApi_DataChangeServer) error {
+	return errors.New("rpc DataChange of service DataSyncApi is not implemented")
+}
+
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
 
 // END ======================================= Server Service Definition ======================================= END
@@ -44,15 +89,71 @@ type UnimplementedDataSyncApi struct{}
 
 // DataSyncApiClientProxy defines service client proxy
 type DataSyncApiClientProxy interface {
+	// DataChange 数据发送变化
+	DataChange(ctx context.Context, opts ...client.Option) (DataSyncApi_DataChangeClient, error)
 }
 
 type DataSyncApiClientProxyImpl struct {
-	client client.Client
-	opts   []client.Option
+	client       client.Client
+	streamClient stream.Client
+	opts         []client.Option
 }
 
 var NewDataSyncApiClientProxy = func(opts ...client.Option) DataSyncApiClientProxy {
-	return &DataSyncApiClientProxyImpl{client: client.DefaultClient, opts: opts}
+	return &DataSyncApiClientProxyImpl{client: client.DefaultClient, streamClient: stream.DefaultStreamClient, opts: opts}
+}
+
+func (c *DataSyncApiClientProxyImpl) DataChange(ctx context.Context, opts ...client.Option) (DataSyncApi_DataChangeClient, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+
+	msg.WithClientRPCName("/datasync/dataChange")
+	msg.WithCalleeServiceName(DataSyncApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("DataSyncApi")
+	msg.WithCalleeMethod("DataChange")
+	msg.WithSerializationType(codec.SerializationTypePB)
+
+	clientStreamDesc := &client.ClientStreamDesc{}
+	clientStreamDesc.StreamName = "/datasync/dataChange"
+	clientStreamDesc.ClientStreams = true
+	clientStreamDesc.ServerStreams = false
+
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+
+	stream, err := c.streamClient.NewStream(ctx, clientStreamDesc, "/datasync/dataChange", callopts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &dataSyncApiDataChangeClient{stream}
+	return x, nil
+}
+
+type DataSyncApi_DataChangeClient interface {
+	Send(*TableChange) error
+	CloseAndRecv() (*DataChangeRsp, error)
+	client.ClientStream
+}
+
+type dataSyncApiDataChangeClient struct {
+	client.ClientStream
+}
+
+func (x *dataSyncApiDataChangeClient) Send(m *TableChange) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *dataSyncApiDataChangeClient) CloseAndRecv() (*DataChangeRsp, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(DataChangeRsp)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 // END ======================================= Client Service Definition ======================================= END
