@@ -1,7 +1,6 @@
 package persistence
 
 import (
-	"github.com/baker-yuan/go-blog/application/user/domain/entity"
 	"github.com/baker-yuan/go-blog/application/user/domain/repository"
 	"gorm.io/gorm"
 	tgorm "trpc.group/trpc-go/trpc-database/gorm"
@@ -35,5 +34,17 @@ func (s *Repositories) Close() error {
 
 // AutoMigrate 自动建表
 func (s *Repositories) AutoMigrate() error {
-	return s.db.AutoMigrate(&entity.User{})
+	//return s.db.AutoMigrate(&entity.User{})
+	return nil
+}
+
+type RegisterFuncType func(db *gorm.DB) error
+
+var (
+	initFieldFuncTypes []RegisterFuncType
+)
+
+// 注册全字段更新初始化函数回调
+func registerInitField(funcType RegisterFuncType) {
+	initFieldFuncTypes = append(initFieldFuncTypes, funcType)
 }

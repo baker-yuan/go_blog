@@ -2,6 +2,7 @@ package assembler
 
 import (
 	"github.com/baker-yuan/go-blog/application/user/domain/entity"
+	"github.com/baker-yuan/go-blog/common/db"
 	pb "github.com/baker-yuan/go-blog/protocol/user"
 )
 
@@ -35,6 +36,25 @@ func UserEntityToModel(user *entity.User) *pb.User {
 
 // AddOrUpdateUserReqToEntity pb转entity
 func AddOrUpdateUserReqToEntity(pbUser *pb.AddOrUpdateUserReq) *entity.User {
-	entityRes := &entity.User{}
+	entityRes := &entity.User{
+		// 账号信息
+		UID:      pbUser.Uid,
+		Username: pbUser.Username,
+		Password: pbUser.Password,
+		Salt:     pbUser.Salt,
+		UserType: pbUser.UserType,
+		// 基本信息
+		Email:    pbUser.Email,
+		Nickname: pbUser.Nickname,
+		Avatar:   pbUser.Avatar,
+		Intro:    pbUser.Intro,
+		WebSite:  pbUser.WebSite,
+		// 三方登录
+		LoginType: pbUser.LoginType,
+		UnionID:   pbUser.UnionId,
+		// 状态
+		Status:    pbUser.Status,
+		IsDeleted: db.BoolBit(pbUser.IsDeleted),
+	}
 	return entityRes
 }

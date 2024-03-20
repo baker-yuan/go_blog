@@ -388,6 +388,8 @@ func (m *SearchUserReq) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Search
+
 	if m.GetPageNum() <= 0 {
 		err := SearchUserReqValidationError{
 			field:  "PageNum",

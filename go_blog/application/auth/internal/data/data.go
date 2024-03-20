@@ -25,7 +25,7 @@ func (d *Data) GetDB() *gorm.DB {
 
 // NewData 数据库操作
 func NewData() (*Data, error) {
-	gormDB, err := tgorm.NewClientProxy("trpc.mysql.blog.template")
+	gormDB, err := tgorm.NewClientProxy("trpc.mysql.blog.auth")
 	if err != nil {
 		log.Errorf("gorm init fail err: %+v", err)
 		panic(err)

@@ -70,6 +70,7 @@ message User {
 
 // 用户搜索
 message SearchUserReq {
+  string search = 1; // 查询条件 {a:?,b:?}
 
   uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
   uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
@@ -112,7 +113,7 @@ message DeleteUserReq {
   uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
 }
 
-// 博客api
+// 用户api
 service UserApi {
   // 用户搜索
   rpc SearchUser (SearchUserReq) returns (SearchUserRsp) {
@@ -130,5 +131,4 @@ service UserApi {
   rpc UserDetail (UserDetailReq) returns (User) {
     option(trpc.alias) = "/user/admin/userDetail";
   }
-
 }

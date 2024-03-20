@@ -1,8 +1,8 @@
 {
  "swagger": "2.0",
  "info": {
-  "title": "user",
-  "description": "The api document of user.proto",
+  "title": "login",
+  "description": "The api document of login.proto",
   "version": "2.0"
  },
  "consumes": [
@@ -12,592 +12,130 @@
   "application/json"
  ],
  "paths": {
-  "/go_blog.user.UserApi/AddOrUpdateUser": {
+  "/go_blog.user.LoginApi/Login": {
    "post": {
-    "summary": "添加修改用户",
-    "operationId": "AddOrUpdateUser",
+    "summary": "登录",
+    "operationId": "Login",
     "responses": {
      "200": {
-      "description": "添加修改资源返回值",
+      "description": "LoginRsp",
       "schema": {
-       "$ref": "#/definitions/go_blog.user.AddOrUpdateRsp"
+       "$ref": "#/definitions/go_blog.user.LoginRsp"
       }
      }
     },
-    "parameters": [
-     {
-      "name": "avatar",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "头像地址"
-     },
-     {
-      "name": "email",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "基本信息\n邮箱号"
-     },
-     {
-      "name": "intro",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "用户简介"
-     },
-     {
-      "name": "is_deleted",
-      "in": "query",
-      "required": false,
-      "type": "boolean",
-      "description": "是否注销"
-     },
-     {
-      "name": "login_type",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "int32",
-      "description": "三方登录\n登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博 * 0 - LOGIN_TYPE_UNSPECIFIED - 未指定，默认值\n * 1 - LOGIN_TYPE_USERNAME - 用户名登录\n * 2 - LOGIN_TYPE_GITHUB - GitHub登录\n * 3 - LOGIN_TYPE_GITEE - 码云登录\n * 4 - LOGIN_TYPE_QQ - QQ登录\n * 5 - LOGIN_TYPE_WEIBO - 微博登录\n",
-      "enum": [
-       0,
-       1,
-       2,
-       3,
-       4,
-       5
-      ]
-     },
-     {
-      "name": "nickname",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "昵称"
-     },
-     {
-      "name": "password",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "登录密码"
-     },
-     {
-      "name": "salt",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "盐"
-     },
-     {
-      "name": "status",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "int32",
-      "description": "状态\n状态 0-正常 1-禁用 * 0 - USER_STATUS_NORMAL - 正常\n * 1 - USER_STATUS_DISABLED - 禁用\n",
-      "enum": [
-       0,
-       1
-      ]
-     },
-     {
-      "name": "uid",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "账号信息\n主键"
-     },
-     {
-      "name": "union_id",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "用户唯一标识（第三方网站）"
-     },
-     {
-      "name": "user_type",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "用户类型 ADMIN-管理员 USER-普通用户"
-     },
-     {
-      "name": "username",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "用户名"
-     },
-     {
-      "name": "web_site",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "个人网站"
-     }
-    ],
+    "parameters": null,
     "tags": [
-     "userapi.trpc"
+     "loginapi.trpc"
     ]
    }
   },
-  "/go_blog.user.UserApi/DeleteUser": {
+  "/go_blog.user.LoginApi/Logout": {
    "post": {
-    "summary": "删除用户",
-    "operationId": "DeleteUser",
+    "summary": "退出",
+    "operationId": "Logout",
     "responses": {
      "200": {
-      "description": "空响应",
+      "description": "LogoutRsp",
       "schema": {
-       "$ref": "#/definitions/go_blog.user.EmptyRsp"
+       "$ref": "#/definitions/go_blog.user.LogoutRsp"
       }
      }
     },
-    "parameters": [
-     {
-      "name": "id",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "编号"
-     }
-    ],
+    "parameters": null,
     "tags": [
-     "userapi.trpc"
+     "loginapi.trpc"
     ]
    }
   },
-  "/go_blog.user.UserApi/SearchUser": {
+  "/go_blog.user.LoginApi/Refresh": {
    "post": {
-    "summary": "用户搜索",
-    "operationId": "SearchUser",
+    "summary": "刷新token",
+    "operationId": "Refresh",
     "responses": {
      "200": {
-      "description": "SearchUserRsp",
+      "description": "RefreshRsp",
       "schema": {
-       "$ref": "#/definitions/go_blog.user.SearchUserRsp"
+       "$ref": "#/definitions/go_blog.user.RefreshRsp"
       }
      }
     },
-    "parameters": [
-     {
-      "name": "page_num",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "分页查询"
-     },
-     {
-      "name": "page_size",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "分页查询"
-     }
-    ],
+    "parameters": null,
     "tags": [
-     "userapi.trpc"
+     "loginapi.trpc"
     ]
    }
   },
-  "/go_blog.user.UserApi/UserDetail": {
+  "/user/login": {
    "post": {
-    "summary": "用户详情",
-    "operationId": "UserDetail",
+    "summary": "登录",
+    "operationId": "Login2",
     "responses": {
      "200": {
-      "description": "用户信息定义",
+      "description": "LoginRsp",
       "schema": {
-       "$ref": "#/definitions/go_blog.user.User"
+       "$ref": "#/definitions/go_blog.user.LoginRsp"
       }
      }
     },
-    "parameters": [
-     {
-      "name": "id",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "编号"
-     }
-    ],
+    "parameters": null,
     "tags": [
-     "userapi.trpc"
+     "loginapi.trpc"
     ]
    }
   },
-  "/user/admin/deleteUser": {
+  "/user/logout": {
    "post": {
-    "summary": "删除用户",
-    "operationId": "DeleteUser2",
+    "summary": "退出",
+    "operationId": "Logout2",
     "responses": {
      "200": {
-      "description": "空响应",
+      "description": "LogoutRsp",
       "schema": {
-       "$ref": "#/definitions/go_blog.user.EmptyRsp"
+       "$ref": "#/definitions/go_blog.user.LogoutRsp"
       }
      }
     },
-    "parameters": [
-     {
-      "name": "id",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "编号"
-     }
-    ],
+    "parameters": null,
     "tags": [
-     "userapi.trpc"
+     "loginapi.trpc"
     ]
    }
   },
-  "/user/admin/searchUser": {
+  "/user/refresh": {
    "post": {
-    "summary": "用户搜索",
-    "operationId": "SearchUser2",
+    "summary": "刷新token",
+    "operationId": "Refresh2",
     "responses": {
      "200": {
-      "description": "SearchUserRsp",
+      "description": "RefreshRsp",
       "schema": {
-       "$ref": "#/definitions/go_blog.user.SearchUserRsp"
+       "$ref": "#/definitions/go_blog.user.RefreshRsp"
       }
      }
     },
-    "parameters": [
-     {
-      "name": "page_num",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "分页查询"
-     },
-     {
-      "name": "page_size",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "分页查询"
-     }
-    ],
+    "parameters": null,
     "tags": [
-     "userapi.trpc"
-    ]
-   }
-  },
-  "/user/admin/updateUser": {
-   "post": {
-    "summary": "添加修改用户",
-    "operationId": "AddOrUpdateUser2",
-    "responses": {
-     "200": {
-      "description": "添加修改资源返回值",
-      "schema": {
-       "$ref": "#/definitions/go_blog.user.AddOrUpdateRsp"
-      }
-     }
-    },
-    "parameters": [
-     {
-      "name": "avatar",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "头像地址"
-     },
-     {
-      "name": "email",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "基本信息\n邮箱号"
-     },
-     {
-      "name": "intro",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "用户简介"
-     },
-     {
-      "name": "is_deleted",
-      "in": "query",
-      "required": false,
-      "type": "boolean",
-      "description": "是否注销"
-     },
-     {
-      "name": "login_type",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "int32",
-      "description": "三方登录\n登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博 * 0 - LOGIN_TYPE_UNSPECIFIED - 未指定，默认值\n * 1 - LOGIN_TYPE_USERNAME - 用户名登录\n * 2 - LOGIN_TYPE_GITHUB - GitHub登录\n * 3 - LOGIN_TYPE_GITEE - 码云登录\n * 4 - LOGIN_TYPE_QQ - QQ登录\n * 5 - LOGIN_TYPE_WEIBO - 微博登录\n",
-      "enum": [
-       0,
-       1,
-       2,
-       3,
-       4,
-       5
-      ]
-     },
-     {
-      "name": "nickname",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "昵称"
-     },
-     {
-      "name": "password",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "登录密码"
-     },
-     {
-      "name": "salt",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "盐"
-     },
-     {
-      "name": "status",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "int32",
-      "description": "状态\n状态 0-正常 1-禁用 * 0 - USER_STATUS_NORMAL - 正常\n * 1 - USER_STATUS_DISABLED - 禁用\n",
-      "enum": [
-       0,
-       1
-      ]
-     },
-     {
-      "name": "uid",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "账号信息\n主键"
-     },
-     {
-      "name": "union_id",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "用户唯一标识（第三方网站）"
-     },
-     {
-      "name": "user_type",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "用户类型 ADMIN-管理员 USER-普通用户"
-     },
-     {
-      "name": "username",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "用户名"
-     },
-     {
-      "name": "web_site",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "个人网站"
-     }
-    ],
-    "tags": [
-     "userapi.trpc"
-    ]
-   }
-  },
-  "/user/admin/userDetail": {
-   "post": {
-    "summary": "用户详情",
-    "operationId": "UserDetail2",
-    "responses": {
-     "200": {
-      "description": "用户信息定义",
-      "schema": {
-       "$ref": "#/definitions/go_blog.user.User"
-      }
-     }
-    },
-    "parameters": [
-     {
-      "name": "id",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "编号"
-     }
-    ],
-    "tags": [
-     "userapi.trpc"
+     "loginapi.trpc"
     ]
    }
   }
  },
  "definitions": {
-  "go_blog.user.AddOrUpdateRsp": {
+  "go_blog.user.LoginRsp": {
    "type": "object",
-   "properties": {
-    "id": {
-     "title": "id",
-     "type": "integer",
-     "format": "uint32",
-     "description": "资源id"
-    }
-   },
-   "title": "go_blog.user.AddOrUpdateRsp",
-   "description": "添加修改资源返回值"
+   "title": "go_blog.user.LoginRsp",
+   "description": "LoginRsp"
   },
-  "go_blog.user.EmptyRsp": {
+  "go_blog.user.LogoutRsp": {
    "type": "object",
-   "title": "go_blog.user.EmptyRsp",
-   "description": "空响应"
+   "title": "go_blog.user.LogoutRsp",
+   "description": "LogoutRsp"
   },
-  "go_blog.user.SearchUserRsp": {
+  "go_blog.user.RefreshRsp": {
    "type": "object",
-   "properties": {
-    "data": {
-     "title": "data",
-     "type": "array",
-     "description": " 用户集合\n",
-     "items": {
-      "$ref": "#/definitions/go_blog.user.User"
-     }
-    },
-    "total": {
-     "title": "total",
-     "type": "integer",
-     "format": "uint32",
-     "description": "分页查询"
-    }
-   },
-   "title": "go_blog.user.SearchUserRsp",
-   "description": "SearchUserRsp"
-  },
-  "go_blog.user.User": {
-   "type": "object",
-   "properties": {
-    "avatar": {
-     "title": "avatar",
-     "type": "string",
-     "description": "头像地址"
-    },
-    "create_time": {
-     "title": "create_time",
-     "type": "integer",
-     "format": "uint32",
-     "description": "公共字段\n创建时间"
-    },
-    "email": {
-     "title": "email",
-     "type": "string",
-     "description": "基本信息\n邮箱号"
-    },
-    "intro": {
-     "title": "intro",
-     "type": "string",
-     "description": "用户简介"
-    },
-    "is_deleted": {
-     "title": "is_deleted",
-     "type": "boolean",
-     "description": "是否注销"
-    },
-    "login_type": {
-     "title": "login_type",
-     "type": "integer",
-     "format": "int32",
-     "description": "三方登录\n登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博 * 0 - LOGIN_TYPE_UNSPECIFIED - 未指定，默认值\n * 1 - LOGIN_TYPE_USERNAME - 用户名登录\n * 2 - LOGIN_TYPE_GITHUB - GitHub登录\n * 3 - LOGIN_TYPE_GITEE - 码云登录\n * 4 - LOGIN_TYPE_QQ - QQ登录\n * 5 - LOGIN_TYPE_WEIBO - 微博登录\n",
-     "enum": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5
-     ]
-    },
-    "nickname": {
-     "title": "nickname",
-     "type": "string",
-     "description": "昵称"
-    },
-    "password": {
-     "title": "password",
-     "type": "string",
-     "description": "登录密码"
-    },
-    "salt": {
-     "title": "salt",
-     "type": "string",
-     "description": "盐"
-    },
-    "status": {
-     "title": "status",
-     "type": "integer",
-     "format": "int32",
-     "description": "状态\n状态 0-正常 1-禁用 * 0 - USER_STATUS_NORMAL - 正常\n * 1 - USER_STATUS_DISABLED - 禁用\n",
-     "enum": [
-      0,
-      1
-     ]
-    },
-    "uid": {
-     "title": "uid",
-     "type": "integer",
-     "format": "uint32",
-     "description": "账号信息\n主键"
-    },
-    "union_id": {
-     "title": "union_id",
-     "type": "string",
-     "description": "用户唯一标识（第三方网站）"
-    },
-    "update_time": {
-     "title": "update_time",
-     "type": "integer",
-     "format": "uint32",
-     "description": "修改时间"
-    },
-    "user_type": {
-     "title": "user_type",
-     "type": "string",
-     "description": "用户类型 ADMIN-管理员 USER-普通用户"
-    },
-    "username": {
-     "title": "username",
-     "type": "string",
-     "description": "用户名"
-    },
-    "web_site": {
-     "title": "web_site",
-     "type": "string",
-     "description": "个人网站"
-    }
-   },
-   "title": "go_blog.user.User",
-   "description": "用户信息定义"
+   "title": "go_blog.user.RefreshRsp",
+   "description": "RefreshRsp"
   }
  }
 }

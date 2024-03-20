@@ -30,7 +30,7 @@ https://github.com/baker-yuan/go_blog
 - **kratos-layout**: [GitHub - go-kratos/kratos-layout](https://github.com/go-kratos/kratos-layout)
 - **food-app-server**: [GitHub - victorsteven/food-app-server](https://github.com/victorsteven/food-app-server)
 - **project-layout**: [GitHub - golang-standards/project-layout](https://github.com/golang-standards/project-layout)
-
+- **Geeker-Admin**: [GitHub - https://github.com/HalseySpicy/Geeker-Admin](https://github.com/HalseySpicy/Geeker-Admin)
 
 
 ## 🚀 快速开始

@@ -7,11 +7,12 @@ type RedisService struct {
 	Client *redis.Client
 }
 
-func NewRedisDB(host, port, password string) (*RedisService, error) {
+func NewRedisDB() (*RedisService, error) {
+	// todo
 	redisClient := redis.NewClient(&redis.Options{
-		Addr:     host + ":" + port,
-		Password: password,
-		DB:       0,
+		//Addr:     host + ":" + port,
+		//Password: password,
+		//DB:       0,
 	})
 	return &RedisService{
 		Auth:   NewAuth(redisClient),

@@ -146,5 +146,5 @@ client:
   # 必填，被调服务列表
   service:
     # mysql
-    - name: trpc.mysql.blog.template
+    - name: trpc.mysql.blog.auth
       target: dsn://root:123456@tcp(127.0.0.1:3306)/baker_blog_pem?charset=utf8mb4&parseTime=True

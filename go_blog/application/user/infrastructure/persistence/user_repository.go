@@ -2,10 +2,13 @@ package persistence
 
 import (
 	"context"
+	"errors"
 
 	"github.com/baker-yuan/go-blog/application/user/domain/entity"
 	"github.com/baker-yuan/go-blog/application/user/domain/repository"
+	"github.com/baker-yuan/go-blog/application/user/infrastructure/assembler"
 	"github.com/baker-yuan/go-blog/common/db"
+	"github.com/baker-yuan/go-blog/common/util"
 	pb "github.com/baker-yuan/go-blog/protocol/user"
 	"gorm.io/gorm"
 )
@@ -43,42 +46,112 @@ func (User) TableName() string {
 }
 
 type UserRepo struct {
-	db *gorm.DB
-}
-
-func NewUserRepository(db *gorm.DB) *UserRepo {
-	return &UserRepo{db}
+	*db.GenericDao[User, uint32]
 }
 
 // UserRepo 强制UserRepo实现repository.UserRepository接口
 var _ repository.UserRepository = &UserRepo{}
 
+func NewUserRepository(gormDB *gorm.DB) *UserRepo {
+	return &UserRepo{
+		GenericDao: &db.GenericDao[User, uint32]{
+			DB: gormDB,
+		},
+	}
+}
+
+func init() {
+	registerInitField(initUserField)
+}
+
+var (
+	// 全字段修改User那些字段不修改
+	notUpdateUserField = []string{
+		"created_at",
+	}
+	updateUserField []string
+)
+
+// InitUserField 全字段修改
+func initUserField(db *gorm.DB) error {
+	columnTypes, err := db.Migrator().ColumnTypes(&entity.User{})
+	if err != nil {
+		return err
+	}
+	columns := make([]string, 0)
+	for _, v := range columnTypes {
+		columns = append(columns, v.Name())
+	}
+	updateUserField = util.NewSliceUtils[string]().SliceRemove(columns, notUpdateUserField...)
+	return nil
+}
+
 // GetUserByID 根据用户id查询用户
 func (r *UserRepo) GetUserByID(ctx context.Context, id uint32) (*entity.User, error) {
-
-	return nil, nil
+	user, err := r.GenericDao.GetByID(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	return assembler.UserPoToEntity(user), err
 }
 
 // GetUserByIDs 根据用户id集合查询用户
 func (r *UserRepo) GetUserByIDs(ctx context.Context, ids []uint32) (entity.Users, error) {
+	dbUsers, err := r.GenericDao.GetByIDs(ctx, ids)
+	if err != nil {
+		return nil, err
+	}
+	return assembler.UserPosToEntity(dbUsers), nil
+}
 
-	return nil, nil
+// DeleteByID 根据ID删除用户
+func (r *UserRepo) DeleteByID(ctx context.Context, id uint32) error {
+	return r.GenericDao.DeleteByID(ctx, id)
 }
 
 // Save 保存用户
 func (r *UserRepo) Save(ctx context.Context, user *entity.User) (uint32, error) {
-
-	return 0, nil
+	if user.UID > 0 {
+		return 0, errors.New("illegal argument user id exist")
+	}
+	dbUser := assembler.UserEntityToPo(user)
+	if err := r.GenericDao.Create(ctx, dbUser); err != nil {
+		return 0, err
+	}
+	return dbUser.UID, nil
 }
 
 // UpdateByID 根据ID修改用户
 func (r *UserRepo) UpdateByID(ctx context.Context, user *entity.User) error {
-
-	return nil
+	if user.UID == 0 {
+		return errors.New("illegal argument user exist")
+	}
+	dbUser := assembler.UserEntityToPo(user)
+	return r.GenericDao.DB.WithContext(ctx).Select(updateUserField).Updates(dbUser).Error
 }
 
 // SearchUser 用户搜索
 func (r *UserRepo) SearchUser(ctx context.Context, req *pb.SearchUserReq) (entity.Users, uint32, error) {
+	var (
+		res       []*entity.User
+		pageTotal int64
+	)
+	tx, err := db.BuildSearch(
+		ctx,
+		req.GetSearch(),
+		r.GenericDao.DB.WithContext(ctx),
+		func(search map[string]*db.SearchValue) {
 
-	return nil, 0, nil
+		},
+	)
+	if err != nil {
+		return nil, 0, err
+	}
+	tx = tx.Offset(int((req.GetPageNum() - 1) * req.GetPageSize())).
+		Limit(int(req.GetPageSize())).Find(&res).
+		Offset(-1).Limit(-1).Count(&pageTotal)
+	if err := tx.Error; err != nil {
+		return nil, 0, err
+	}
+	return res, uint32(pageTotal), nil
 }

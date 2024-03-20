@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package go_blog.user;
+
+option  go_package ="github.com/baker-yuan/go-blog/protocol/user";
+
+import "validate/validate.proto";
+import "trpc/proto/trpc_options.proto";
+import "trpc/swagger/swagger.proto";
+
+// validate参考
+// https://github.com/bufbuild/protoc-gen-validate/blob/v1.0.2/README.md
+
+// trpc参考
+// https://github.com/trpc-group/trpc-cmdline/blob/483259c22a2fd1e477c7ebc4b5b1572a5a47010c/docs/examples/example-1/README.zh_CN.md
+// https://github.com/trpc-group/trpc-cmdline/blob/483259c22a2fd1e477c7ebc4b5b1572a5a47010c/docs/examples/example-2/README.zh_CN.md
+
+
+
+// 登录
+message LoginReq {
+
+}
+message LoginRsp {
+
+}
+
+// 退出
+message LogoutReq {
+
+}
+
+message LogoutRsp {
+
+}
+
+// 刷新token
+message RefreshReq {}
+
+message RefreshRsp {}
+
+// 登录api
+service LoginApi {
+  // 登录
+  rpc Login (LoginReq) returns (LoginRsp) {
+    option(trpc.alias) = "/user/login";
+  }
+  // 退出
+  rpc Logout (LogoutReq) returns (LogoutRsp) {
+    option(trpc.alias) = "/user/logout";
+  }
+  // 刷新token
+  rpc Refresh (RefreshReq) returns (RefreshRsp) {
+    option(trpc.alias) = "/user/refresh";
+  }
+}

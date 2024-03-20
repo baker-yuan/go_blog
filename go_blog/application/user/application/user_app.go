@@ -11,13 +11,6 @@ import (
 	pb "github.com/baker-yuan/go-blog/protocol/user"
 )
 
-type userApp struct {
-	us repository.UserRepository
-}
-
-// UserApp 强制userApp实现UserAppInterface
-var _ UserAppInterface = &userApp{}
-
 type UserAppInterface interface {
 	// SearchUser 查询用户
 	SearchUser(ctx context.Context, req *pb.SearchUserReq) ([]*pb.User, uint32, error)
@@ -27,6 +20,19 @@ type UserAppInterface interface {
 	AddOrUpdateUser(ctx context.Context, req *pb.AddOrUpdateUserReq) (uint32, error)
 	// DeleteUser 删除用户
 	DeleteUser(ctx context.Context, req *pb.DeleteUserReq) error
+}
+
+type userApp struct {
+	us repository.UserRepository
+}
+
+// UserApp 强制userApp实现UserAppInterface
+var _ UserAppInterface = &userApp{}
+
+func NewUserApp(us repository.UserRepository) UserAppInterface {
+	return &userApp{
+		us: us,
+	}
 }
 
 // UserDetail 用户详情
