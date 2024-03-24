@@ -1,10 +1,12 @@
-package biz_ctx
+package http
 
 import (
 	"mime/multipart"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/baker-yuan/go-blog/application/blog/gateway/biz_ctx"
 )
 
 // IBodyDataReader 请求体读取
@@ -258,7 +260,7 @@ type IProxy interface {
 // IHttpContext 扩展GatewayContext接口，定义http协议特有的
 type IHttpContext interface {
 	// IBizContext 组合IBizContext
-	IBizContext
+	biz_ctx.IBizContext
 	// Request 请求数据读取接口
 	Request() IRequestReader
 	// Response 处理返回结果，可读可写
@@ -270,7 +272,7 @@ type IHttpContext interface {
 	Proxies() []IProxy
 
 	// SendTo 如果下游是http服务，通过这个方法转发到下游
-	SendTo(scheme string, node IInstance, timeout time.Duration) error
+	SendTo(scheme string, node biz_ctx.IInstance, timeout time.Duration) error
 	// FastFinish 结束请求，释放资源
 	FastFinish()
 }

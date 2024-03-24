@@ -1,4 +1,4 @@
-package biz_ctx
+package http
 
 import (
 	"context"
@@ -8,6 +8,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/baker-yuan/go-blog/application/blog/gateway/biz_ctx"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/config"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/fasthttp_client"
 	"github.com/baker-yuan/go-blog/common/util"
@@ -37,7 +38,7 @@ func newContext() interface{} {
 //}
 
 // 强制HttpContext实现BizContext
-var _ IBizContext = (*HttpContext)(nil)
+var _ biz_ctx.IBizContext = (*HttpContext)(nil)
 
 // 强制HttpContext实现IHttpContext
 var _ IHttpContext = (*HttpContext)(nil)
@@ -56,7 +57,7 @@ type HttpContext struct {
 }
 
 // NewContext 创建Context
-func NewContext(ctx *fasthttp.RequestCtx, cfg *config.Config) IBizContext {
+func NewContext(ctx *fasthttp.RequestCtx, cfg *config.Config) biz_ctx.IBizContext {
 	// 监听端口
 	port := util.TypeConversionUtils.StrToInt(strings.Split(cfg.Http.Addr, ":")[1])
 	// 客户端地址
@@ -171,7 +172,7 @@ func (ctx *HttpContext) Proxies() []IProxy {
 }
 
 // SendTo 发送http请求到下游服务
-func (ctx *HttpContext) SendTo(scheme string, node IInstance, timeout time.Duration) error {
+func (ctx *HttpContext) SendTo(scheme string, node biz_ctx.IInstance, timeout time.Duration) error {
 	host := node.Addr()
 	request := ctx.proxyRequest.Request() // 这里的请求是从proxyRequest拿的
 
@@ -205,7 +206,7 @@ func (ctx *HttpContext) FastFinish() {
 }
 
 // Assert EoContext是否是IHttpContext
-func Assert(ctx IBizContext) (IHttpContext, error) {
+func Assert(ctx biz_ctx.IBizContext) (IHttpContext, error) {
 	var httpContext IHttpContext
 	err := ctx.Assert(&httpContext)
 	return httpContext, err

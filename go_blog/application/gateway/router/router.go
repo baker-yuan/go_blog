@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/baker-yuan/go-blog/application/blog/gateway/biz_ctx"
+	"github.com/baker-yuan/go-blog/application/blog/gateway/biz_ctx/http"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/config"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/service"
 	auth_pb "github.com/baker-yuan/go-blog/protocol/auth"
@@ -49,7 +50,7 @@ func MatchResource(ctx biz_ctx.IBizContext) *auth_pb.Resource {
 	//	return nil
 	//}
 
-	httpCtx, _ := ctx.(*biz_ctx.HttpContext)
+	httpCtx, _ := ctx.(*http.HttpContext)
 
 	url := httpCtx.Request().URI().RequestURI()
 	if res, exist := urlResourceMap[url]; exist {

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/baker-yuan/go-blog/application/blog/gateway/biz_ctx"
+	"github.com/baker-yuan/go-blog/application/blog/gateway/biz_ctx/http"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/config"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/service"
 	auth_pb "github.com/baker-yuan/go-blog/protocol/auth"
@@ -12,7 +13,7 @@ import (
 
 // ForwardHandler 请求转发处理
 func ForwardHandler(bizCtx biz_ctx.IBizContext, cfg *config.Config) {
-	httpCtx, _ := bizCtx.(*biz_ctx.HttpContext)
+	httpCtx, _ := bizCtx.(*http.HttpContext)
 
 	resource := bizCtx.Value(biz_ctx.ResourceCtxKey).(*auth_pb.Resource)
 

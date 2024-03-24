@@ -3,7 +3,7 @@ package http_proxy
 import (
 	"context"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/biz_ctx"
+	"github.com/baker-yuan/go-blog/application/blog/gateway/biz_ctx/http"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/config"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/filter"
 	"github.com/valyala/fasthttp"
@@ -23,7 +23,7 @@ func HttpServerRun(ctx context.Context, cfg *config.Config) {
 				ctx.SetStatusCode(fasthttp.StatusNoContent)
 				return
 			}
-			bizCtx := biz_ctx.NewContext(ctx, cfg)
+			bizCtx := http.NewContext(ctx, cfg)
 			// 构建中间件链并执行
 			handler := filter.Chain(
 				filter.Recovery,
