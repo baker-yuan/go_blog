@@ -56,7 +56,7 @@ type IQueryReader interface {
 	RawQuery() string
 }
 
-// IURIReader 提供了一组方法，用于从 URI 中提取和读取各个组成部分的信息。
+// IURIReader 提供了一组方法，用于从URI中提取和读取各个组成部分的信息。
 // 标准的 URL 格式遵循以下模式：
 // Scheme://Host/Path?Query#Fragment
 // 其中各部分的含义如下：
@@ -150,7 +150,7 @@ type IResponse interface {
 	IStatusGet      // 获取http响应状态码
 	IBodySet        // 设置返回内容
 	IBodyGet        // 获取返回内容
-	IResponseHeader //
+	IResponseHeader // 设置响应头
 
 	// ResponseError 下游响应异常信息
 	ResponseError() error
@@ -173,16 +173,87 @@ type IResponse interface {
 	String() string
 }
 
-//// IRequest 用于组装转发的request
-//type IRequest interface {
-//	Header() IHeaderWriter   //
-//	Body() IBodyDataWriter   //
-//	URI() IURIWriter         //
-//	Method() string          //
-//	ContentLength() int      //
-//	ContentType() string     //
-//	SetMethod(method string) //
-//}
+// IHeaderWriter 设置响应头
+type IHeaderWriter interface {
+	// IHeaderReader 请求头读取
+	IHeaderReader
+
+	// SetHeader 设置请求头中指定字段的值。
+	// 如果字段已存在，它会覆盖现有的值。
+	// 参数 key 是要设置的字段名称，value 是字段的新值。
+	SetHeader(key, value string)
+	// AddHeader 向请求头中添加一个新的字段值。
+	// 如果字段已存在，它不会覆盖现有的值，而是添加一个新的值。
+	// 参数 key 是要添加的字段名称，value 是要添加的字段值。
+	AddHeader(key, value string)
+	// DelHeader 从请求头中删除指定的字段。
+	// 参数 key 是要删除的字段名称。
+	DelHeader(key string)
+	// SetHost 设置请求头中 "Host" 字段的值。
+	// "Host" 字段指定了请求的目标主机名和（可选的）端口号。
+	// 参数 host 是 "Host" 字段的新值。
+	SetHost(host string)
+}
+
+type IBodyDataWriter interface {
+	IBodyDataReader // 请求体读取
+	// SetForm
+	// 设置form数据并将content-type设置 为 application/x-www-form-urlencoded 或 multipart/form-data
+	SetForm(values url.Values) error
+	SetToForm(key, value string) error
+	AddForm(key, value string) error
+	// AddFile
+	// 会替换掉对应掉file信息，并且将content-type 设置为 multipart/form-data
+	AddFile(key string, file *multipart.FileHeader) error
+	// SetRaw
+	// 设置 multipartForm 数据并将content-type设置 为 multipart/form-data
+	// 重置body，会清除掉未处理掉 form和file
+	SetRaw(contentType string, body []byte)
+}
+
+// IQueryWriter 设置url查询参数
+type IQueryWriter interface {
+	IQueryReader                // url参数获取
+	SetQuery(key, value string) //
+	AddQuery(key, value string) //
+	DelQuery(key string)        //
+	SetRawQuery(raw string)     //
+}
+
+type IURIWriter interface {
+	IURIReader               // url参数读取
+	IQueryWriter             // url参数写入
+	SetPath(string)          //
+	SetScheme(scheme string) //
+	SetHost(host string)     //
+}
+
+// IRequest 用于组装转发的request
+type IRequest interface {
+	Header() IHeaderWriter // header写入
+	Body() IBodyDataWriter // body写入
+	URI() IURIWriter       // url写入
+
+	// Method HTTP请求的方法，如 GET、POST、PUT、DELETE 等
+	Method() string
+	// ContentLength HTTP请求中Content-Length头部的值，它表示HTTP消息正文的长度，单位是字节
+	ContentLength() int
+	// ContentType HTTP请求Content-Type头部，它描述了HTTP消息正文的媒体类型（也称为 MIME 类型）
+	ContentType() string
+	// SetMethod 设置HTTP请求的方法。
+	// 参数method是一个字符串，代表要设置的 HTTP 方法，例如 "GET", "POST", "PUT", "DELETE" 等。
+	SetMethod(method string)
+}
+
+// IProxy 记录转发相关信息
+type IProxy interface {
+	IRequest              // 组装转发的request
+	StatusCode() int      //
+	Status() string       //
+	ProxyTime() time.Time //
+	ResponseLength() int  //
+	ResponseTime() int64  //
+}
 
 // IHttpContext 扩展GatewayContext接口，定义http协议特有的
 type IHttpContext interface {
@@ -192,8 +263,11 @@ type IHttpContext interface {
 	Request() IRequestReader
 	// Response 处理返回结果，可读可写
 	Response() IResponse
+
 	// Proxy 组装转发的request
-	//Proxy() IRequest
+	Proxy() IRequest
+	// Proxies 转发信息
+	Proxies() []IProxy
 
 	// SendTo 如果下游是http服务，通过这个方法转发到下游
 	SendTo(scheme string, node IInstance, timeout time.Duration) error

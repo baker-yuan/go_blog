@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/baker-yuan/go-blog/application/blog/gateway/config"
+	"github.com/baker-yuan/go-blog/application/blog/gateway/fasthttp_client"
 	"github.com/baker-yuan/go-blog/common/util"
 	"github.com/google/uuid"
 	"github.com/valyala/fasthttp"
@@ -50,35 +51,30 @@ type HttpContext struct {
 
 	requestReader RequestReader // 请求读取
 	response      Response      // 设置响应
+	proxyRequest  ProxyRequest  // 组装转发的request
+	proxyRequests []IProxy      //
 }
 
 // NewContext 创建Context
 func NewContext(ctx *fasthttp.RequestCtx, cfg *config.Config) IBizContext {
-	//return &HttpContext{
-	//	fastHttpRequestCtx: ctx,
-	//	requestID:          uuid.New().String(),
-	//	port:               util.TypeConversionUtils.StrToInt(strings.Split(cfg.Http.Addr, ":")[1]),
-	//}
-
+	// 监听端口
 	port := util.TypeConversionUtils.StrToInt(strings.Split(cfg.Http.Addr, ":")[1])
-
+	// 客户端地址
 	remoteAddr := ctx.RemoteAddr().String()
+	// 从对象池中获取HttpContext
 	httpContext := pool.Get().(*HttpContext)
 	httpContext.fastHttpRequestCtx = ctx
 	httpContext.requestID = uuid.New().String()
-
 	// 原始请求最大读取body为8k，使用clone request
 	request := fasthttp.AcquireRequest()
 	ctx.Request.CopyTo(request)
 	httpContext.requestReader.reset(request, remoteAddr)
-
 	// proxyRequest保留原始请求
-	//httpContext.proxyRequest.reset(&ctx.Request, remoteAddr)
-	//httpContext.proxyRequests = httpContext.proxyRequests[:0]
-	//httpContext.response.reset(&ctx.Response)
+	httpContext.proxyRequest.reset(&ctx.Request, remoteAddr)
+	httpContext.proxyRequests = httpContext.proxyRequests[:0]
+	httpContext.response.reset(&ctx.Response)
 	httpContext.labels = make(map[string]string)
 	httpContext.port = port
-
 	// 记录请求时间
 	httpContext.ctx = context.Background()
 	httpContext.WithValue("request_time", ctx.Time())
@@ -166,10 +162,44 @@ func (ctx *HttpContext) Response() IResponse {
 	return &ctx.response
 }
 
+func (ctx *HttpContext) Proxy() IRequest {
+	return &ctx.proxyRequest
+}
+
+func (ctx *HttpContext) Proxies() []IProxy {
+	return ctx.proxyRequests
+}
+
 // SendTo 发送http请求到下游服务
 func (ctx *HttpContext) SendTo(scheme string, node IInstance, timeout time.Duration) error {
-	return nil
+	host := node.Addr()
+	request := ctx.proxyRequest.Request() // 这里的请求是从proxyRequest拿的
+
+	beginTime := time.Now()
+
+	// 发送请求，并且吧响应直接塞到fasthttp context里面
+	// 1、填充ctx.fastHttpRequestCtx.Response
+	// 2、设置responseError
+	ctx.response.responseError = fasthttp_client.ProxyTimeout(scheme, node, request, &ctx.fastHttpRequestCtx.Response, timeout)
+
+	agent := newRequestAgent(&ctx.proxyRequest, host, scheme, beginTime, time.Now())
+
+	if ctx.response.responseError != nil {
+		// 设置agent响应结果
+		agent.setStatusCode(504)
+	} else {
+		// 前面直接把下游的响应塞到fasthttp context里面，这里需要重放用户手动设置的请求头
+		ctx.response.ResponseHeader.refresh()
+		// 设置agent响应结果
+		agent.setStatusCode(ctx.fastHttpRequestCtx.Response.StatusCode())
+	}
+
+	agent.setResponseLength(ctx.fastHttpRequestCtx.Response.Header.ContentLength())
+
+	ctx.proxyRequests = append(ctx.proxyRequests, agent)
+	return ctx.response.responseError
 }
+
 func (ctx *HttpContext) FastFinish() {
 
 }

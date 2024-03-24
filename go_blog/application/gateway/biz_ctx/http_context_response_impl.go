@@ -135,7 +135,7 @@ func (r *ResponseHeader) Finish() {
 }
 
 type Response struct {
-	*fasthttp.Response
+	*fasthttp.Response // 客户端和网关之间的响应
 	ResponseHeader
 	length          int
 	responseTime    time.Duration
@@ -224,4 +224,18 @@ func (r *Response) ProxyStatusCode() int {
 
 func (r *Response) ProxyStatus() string {
 	return strconv.Itoa(r.proxyStatusCode)
+}
+
+func (r *Response) Finish() error {
+	r.ResponseHeader.Finish()
+	r.Response = nil
+	r.responseError = nil
+	r.proxyStatusCode = 0
+	return nil
+}
+func (r *Response) reset(resp *fasthttp.Response) {
+	r.Response = resp
+	r.ResponseHeader.reset(&resp.Header)
+	r.responseError = nil
+	r.proxyStatusCode = 0
 }

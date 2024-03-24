@@ -13,13 +13,16 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-// URIRequest url查询参数获取
+// URIRequest url查询参数读取
 type URIRequest struct {
 	uri *fasthttp.URI
 }
 
 // 强制URIRequest实现IURIReader
 var _ IURIReader = (*URIRequest)(nil)
+
+// 强制URIRequest实现IURIWriter
+var _ IURIWriter = (*URIRequest)(nil)
 
 func NewURIRequest(uri *fasthttp.URI) *URIRequest {
 	return &URIRequest{uri: uri}
@@ -53,11 +56,54 @@ func (ur *URIRequest) Path() string {
 	return string(ur.uri.Path())
 }
 
+func (ur *URIRequest) reset(uri *fasthttp.URI) {
+	ur.uri = uri
+}
+
+func (ur *URIRequest) SetQuery(key, value string) {
+	ur.uri.QueryArgs().Set(key, value)
+}
+
+func (ur *URIRequest) AddQuery(key, value string) {
+	ur.uri.QueryArgs().Add(key, value)
+}
+
+func (ur *URIRequest) DelQuery(key string) {
+	queryArgs := ur.uri.QueryArgs()
+	queryArgs.Del(key)
+	if queryArgs.Len() == 0 {
+		ur.uri.SetQueryStringBytes(nil)
+	}
+}
+
+func (ur *URIRequest) SetRawQuery(raw string) {
+	ur.uri.SetQueryString(raw)
+}
+
+func (ur *URIRequest) SetPath(s string) {
+	ur.uri.SetPath(s)
+
+}
+
+func (ur *URIRequest) SetScheme(scheme string) {
+	ur.uri.SetScheme(scheme)
+}
+
+func (ur *URIRequest) SetHost(host string) {
+	ur.uri.SetHost(host)
+}
+
 // RequestHeader 请求头读取
 type RequestHeader struct {
-	header *fasthttp.RequestHeader //
+	header *fasthttp.RequestHeader // 请求头读取
 	tmp    http.Header             // map[string][]string
 }
+
+// 强制RequestHeader实现IHeaderWriter
+var _ IHeaderWriter = (*RequestHeader)(nil)
+
+// 强制RequestHeader实现IHeaderReader
+var _ IHeaderReader = (*RequestHeader)(nil)
 
 // reset 初始化
 func (h *RequestHeader) reset(header *fasthttp.RequestHeader) {
@@ -96,6 +142,34 @@ func (h *RequestHeader) initHeader() {
 	}
 }
 
+func (h *RequestHeader) SetHeader(key, value string) {
+	if h.tmp != nil {
+		h.tmp.Set(key, value)
+	}
+	h.header.Set(key, value)
+}
+
+func (h *RequestHeader) AddHeader(key, value string) {
+	if h.tmp != nil {
+		h.tmp.Add(key, value)
+	}
+	h.header.Add(key, value)
+}
+
+func (h *RequestHeader) DelHeader(key string) {
+	if h.tmp != nil {
+		h.tmp.Del(key)
+	}
+	h.header.Del(key)
+}
+
+func (h *RequestHeader) SetHost(host string) {
+	if h.tmp != nil {
+		h.tmp.Set("Host", host)
+	}
+	h.header.SetHost(host)
+}
+
 // HTTP协议中的内容类型（Content-Type）
 const (
 	// MultipartForm
@@ -126,6 +200,12 @@ type BodyRequestHandler struct {
 	request  *fasthttp.Request
 	formdata *multipart.Form
 }
+
+// 强制IBodyDataWriter实现IHeaderReader
+var _ IBodyDataWriter = (*BodyRequestHandler)(nil)
+
+// 强制IBodyDataWriter实现IBodyDataReader
+var _ IBodyDataReader = (*BodyRequestHandler)(nil)
 
 func NewBodyRequestHandler(request *fasthttp.Request) *BodyRequestHandler {
 	return &BodyRequestHandler{request: request}
@@ -279,12 +359,91 @@ func (b *BodyRequestHandler) resetFile() error {
 	return nil
 }
 
+// SetForm 设置表单参数
+func (b *BodyRequestHandler) SetForm(values url.Values) error {
+	contentType, _, _ := mime.ParseMediaType(b.ContentType())
+	if contentType != FormData && contentType != MultipartForm {
+		return ErrorNotForm
+	}
+	switch contentType {
+	case FormData:
+		b.request.SetBodyString(values.Encode())
+	case MultipartForm:
+		multipartForm, err := b.MultipartForm()
+		if err != nil {
+			return err
+		}
+		multipartForm.Value = values
+		return b.resetFile()
+	}
+	return ErrorNotForm
+}
+
+func (b *BodyRequestHandler) SetToForm(key, value string) error {
+	contentType, _, _ := mime.ParseMediaType(string(b.request.Header.ContentType()))
+	switch contentType {
+	case FormData:
+		b.request.PostArgs().Set(key, value)
+		b.request.SetBodyRaw(b.request.PostArgs().QueryString())
+		return nil
+	case MultipartForm:
+		multipartForm, err := b.MultipartForm()
+		if err != nil {
+			return err
+		}
+		multipartForm.Value[key] = []string{value}
+		return b.resetFile()
+	default:
+		return ErrorNotForm
+	}
+}
+
+// AddForm 新增表单参数
+func (b *BodyRequestHandler) AddForm(key, value string) error {
+	contentType, _, _ := mime.ParseMediaType(string(b.request.Header.ContentType()))
+	switch contentType {
+	case FormData:
+		b.request.PostArgs().Add(key, value)
+		b.request.SetBody(b.request.PostArgs().QueryString())
+		return nil
+	case MultipartForm:
+		multipartForm, err := b.MultipartForm()
+		if err != nil {
+			return err
+		}
+		multipartForm.Value[key] = append(multipartForm.Value[key], value)
+		return b.resetFile()
+	default:
+		return ErrorNotForm
+	}
+}
+
+// AddFile 新增文件参数
+func (b *BodyRequestHandler) AddFile(key string, file *multipart.FileHeader) error {
+	contentType, _, _ := mime.ParseMediaType(b.ContentType())
+	if contentType != FormData && contentType != MultipartForm {
+		return ErrorNotMultipart
+	}
+	multipartForm, err := b.MultipartForm()
+	if err != nil {
+		return err
+	}
+	multipartForm.File[key] = append(multipartForm.File[key], file)
+	return b.resetFile()
+}
+
+// SetRaw 设置raw数据
+func (b *BodyRequestHandler) SetRaw(contentType string, body []byte) {
+	b.request.SetBodyRaw(body)
+	b.request.Header.SetContentType(contentType)
+}
+
 // RequestReader 请求数据读取接口
 type RequestReader struct {
-	req        *fasthttp.Request
-	body       BodyRequestHandler
-	headers    RequestHeader
-	uri        URIRequest
+	req        *fasthttp.Request  // 客户端和网关之间的请求(拷贝后的请求)
+	body       BodyRequestHandler // 请求体读取
+	headers    RequestHeader      // 请求头读取
+	uri        URIRequest         // url查询参数读取
 	remoteAddr string
 	remotePort string
 	realIP     string
@@ -366,4 +525,12 @@ func (r *RequestReader) String() string {
 
 func (r *RequestReader) Request() *fasthttp.Request {
 	return r.req
+}
+
+func (r *RequestReader) Finish() error {
+	r.req = nil
+	r.body.reset(nil)
+	r.headers.reset(nil)
+	r.uri.reset(nil)
+	return nil
 }
