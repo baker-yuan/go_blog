@@ -19,20 +19,20 @@ import "trpc/swagger/swagger.proto";
 
 // 登录
 message LoginReq {
-
+  string username = 1 [(validate.rules).string.min_len = 1]; // 用户名
+  string password = 2 [(validate.rules).string.min_len = 1]; // 密码
 }
 message LoginRsp {
-
+  string access_token = 1 [json_name="access_token"]; // token
+  string refresh_token = 2 [json_name="refresh_token"]; // 刷新token
+  uint32 at_expires = 3 [json_name="at_expires"]; // 访问令牌过期时间
+  uint32 rt_expires = 4 [json_name="rt_expires"]; // 刷新令牌过期时间
 }
 
 // 退出
-message LogoutReq {
+message LogoutReq {}
 
-}
-
-message LogoutRsp {
-
-}
+message LogoutRsp {}
 
 // 刷新token
 message RefreshReq {}
@@ -53,4 +53,5 @@ service LoginApi {
   rpc Refresh (RefreshReq) returns (RefreshRsp) {
     option(trpc.alias) = "/user/refresh";
   }
+
 }

@@ -24,7 +24,22 @@
       }
      }
     },
-    "parameters": null,
+    "parameters": [
+     {
+      "name": "password",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "密码"
+     },
+     {
+      "name": "username",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "用户名"
+     }
+    ],
     "tags": [
      "loginapi.trpc"
     ]
@@ -78,7 +93,22 @@
       }
      }
     },
-    "parameters": null,
+    "parameters": [
+     {
+      "name": "password",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "密码"
+     },
+     {
+      "name": "username",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "用户名"
+     }
+    ],
     "tags": [
      "loginapi.trpc"
     ]
@@ -124,6 +154,30 @@
  "definitions": {
   "go_blog.user.LoginRsp": {
    "type": "object",
+   "properties": {
+    "access_token": {
+     "title": "access_token",
+     "type": "string",
+     "description": "token"
+    },
+    "at_expires": {
+     "title": "at_expires",
+     "type": "integer",
+     "format": "uint32",
+     "description": "访问令牌过期时间"
+    },
+    "refresh_token": {
+     "title": "refresh_token",
+     "type": "string",
+     "description": "刷新token"
+    },
+    "rt_expires": {
+     "title": "rt_expires",
+     "type": "integer",
+     "format": "uint32",
+     "description": "刷新令牌过期时间"
+    }
+   },
    "title": "go_blog.user.LoginRsp",
    "description": "LoginRsp"
   },

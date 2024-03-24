@@ -28,6 +28,7 @@ func HttpServerRun(ctx context.Context, cfg *config.Config) {
 			handler := filter.Chain(
 				filter.Recovery,
 				filter.RequestLog,
+				filter.MatchResource,
 			)(filter.ForwardHandler)
 			handler(bizCtx, cfg)
 		},

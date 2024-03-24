@@ -26,7 +26,7 @@ var _ IHttpContext = (*HttpContext)(nil)
 
 type HttpContext struct {
 	fastHttpRequestCtx *fasthttp.RequestCtx // fastHttp
-	ctx                context.Context      //
+	ctx                context.Context      // ctx
 	requestID          string               // 请求id
 	labels             map[string]string    // 标签
 	port               int                  // 监听端口

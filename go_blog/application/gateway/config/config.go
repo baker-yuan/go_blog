@@ -3,14 +3,16 @@ package config
 import (
 	"fmt"
 
+	"github.com/baker-yuan/go-blog/common/jwt"
 	"github.com/ilyakaznacheev/cleanenv"
 )
 
 type (
 	// Config 配置
 	Config struct {
-		Global `yaml:"global"`
-		Http   `yaml:"http"`
+		Global Global                   `yaml:"global"`
+		Http   Http                     `yaml:"http"`
+		Jwt    jwt.TokenValidatorConfig `yaml:"jwt"`
 	}
 	// Global 全局配置
 	Global struct {

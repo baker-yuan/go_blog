@@ -5,8 +5,6 @@ import (
 	"gorm.io/gorm"
 	tgorm "trpc.group/trpc-go/trpc-database/gorm"
 	"trpc.group/trpc-go/trpc-go/log"
-
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type Repositories struct {

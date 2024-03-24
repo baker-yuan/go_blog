@@ -57,6 +57,28 @@ func (m *LoginReq) validate(all bool) error {
 
 	var errors []error
 
+	if utf8.RuneCountInString(m.GetUsername()) < 1 {
+		err := LoginReqValidationError{
+			field:  "Username",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetPassword()) < 1 {
+		err := LoginReqValidationError{
+			field:  "Password",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(errors) > 0 {
 		return LoginReqMultiError(errors)
 	}
@@ -155,6 +177,14 @@ func (m *LoginRsp) validate(all bool) error {
 	}
 
 	var errors []error
+
+	// no validation rules for AccessToken
+
+	// no validation rules for RefreshToken
+
+	// no validation rules for AtExpires
+
+	// no validation rules for RtExpires
 
 	if len(errors) > 0 {
 		return LoginRspMultiError(errors)

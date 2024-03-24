@@ -1,5 +1,7 @@
 module github.com/baker-yuan/go-blog/application/blog/gateway
 
+go 1.19
+
 replace (
 	github.com/baker-yuan/go-blog/common => ./../../common
 	github.com/baker-yuan/go-blog/protocol/auth => ./../../protocol/auth
@@ -72,4 +74,4 @@ require (
 	trpc.group/trpc/trpc-protocol/pb/go/trpc v1.0.0 // indirect
 )
 
-go 1.19
+

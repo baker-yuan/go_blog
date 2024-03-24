@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/baker-yuan/go-blog/application/user/application"
-	"github.com/baker-yuan/go-blog/application/user/infrastructure/auth"
 	pb "github.com/baker-yuan/go-blog/protocol/user"
 )
 
@@ -14,16 +13,12 @@ var _ pb.UserApiService = &Users{}
 // Users struct defines the dependencies that will be used
 type Users struct {
 	us application.UserAppInterface
-	rd auth.AuthInterface
-	tk auth.TokenInterface
 }
 
 // NewUsers Users constructor
-func NewUsers(us application.UserAppInterface, rd auth.AuthInterface, tk auth.TokenInterface) *Users {
+func NewUsers(us application.UserAppInterface) *Users {
 	return &Users{
 		us: us,
-		rd: rd,
-		tk: tk,
 	}
 }
 

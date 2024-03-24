@@ -1,10 +1,11 @@
 package main
 
 import (
+	"context"
 	"log"
 
 	"github.com/baker-yuan/go-blog/application/user/application"
-	"github.com/baker-yuan/go-blog/application/user/infrastructure/auth"
+	"github.com/baker-yuan/go-blog/application/user/infrastructure/config"
 	"github.com/baker-yuan/go-blog/application/user/infrastructure/persistence"
 	"github.com/baker-yuan/go-blog/application/user/interfaces"
 	pb "github.com/baker-yuan/go-blog/protocol/user"
@@ -23,8 +24,19 @@ func init() {
 }
 
 func main() {
+	ctx := context.Background()
+
+	// todo
+	configPath := "/Users/yuanyu/code/go-study/go-blog/go_blog/go_blog/application/user/config.yaml"
+
 	// trpc服务
 	trpcServer := trpc.NewServer()
+
+	// 加载应用程序配置。
+	cfg, err := config.LoadConfig(configPath)
+	if err != nil {
+		panic(err)
+	}
 
 	// db操作
 	repository, err := persistence.NewRepositories()
@@ -36,23 +48,21 @@ func main() {
 		panic(err)
 	}
 
-	// 应用服务
-	userApp := application.NewUserApp(repository.User)
-
-	// redis工具
-	redisService, err := auth.NewRedisDB()
+	jwtUtil, err := cfg.JWT.Build(ctx)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	// jwt工具
-	tk := auth.NewToken()
 
-	users := interfaces.NewUsers(userApp, redisService.Auth, tk)
-	authenticate := interfaces.NewAuthenticate(userApp, redisService.Auth, tk)
+	// 应用服务
+	userApp := application.NewUserApp(repository.User, jwtUtil)
+
+	// 接口实现
+	userApiImpl := interfaces.NewUsers(userApp)
+	loginApiImpl := interfaces.NewAuthenticate(userApp)
 
 	// 注册
-	pb.RegisterUserApiService(trpcServer, users)
-	pb.RegisterLoginApiService(trpcServer, authenticate)
+	pb.RegisterUserApiService(trpcServer, userApiImpl)
+	pb.RegisterLoginApiService(trpcServer, loginApiImpl)
 
 	// 启动服务
 	log.Fatal(trpcServer.Serve())

@@ -10,6 +10,7 @@ import (
 	"github.com/baker-yuan/go-blog/application/blog/gateway/http_proxy"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/router"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/service"
+	"github.com/baker-yuan/go-blog/application/blog/gateway/util"
 )
 
 func main() {
@@ -20,6 +21,14 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	// jwt工具
+	jwtUtil, err := cfg.Jwt.Build(ctx)
+	if err != nil {
+		panic(err)
+	}
+
+	util.Init(jwtUtil)
 
 	// 服务模块初始化
 	if err := service.Init(); err != nil {

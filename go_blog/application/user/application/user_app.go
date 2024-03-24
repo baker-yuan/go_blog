@@ -7,6 +7,7 @@ import (
 	"github.com/baker-yuan/go-blog/application/user/domain/entity"
 	"github.com/baker-yuan/go-blog/application/user/domain/repository"
 	"github.com/baker-yuan/go-blog/application/user/interfaces/assembler"
+	"github.com/baker-yuan/go-blog/common/jwt"
 	"github.com/baker-yuan/go-blog/common/util"
 	pb "github.com/baker-yuan/go-blog/protocol/user"
 )
@@ -20,18 +21,27 @@ type UserAppInterface interface {
 	AddOrUpdateUser(ctx context.Context, req *pb.AddOrUpdateUserReq) (uint32, error)
 	// DeleteUser 删除用户
 	DeleteUser(ctx context.Context, req *pb.DeleteUserReq) error
+
+	// Login 登录
+	Login(ctx context.Context, req *pb.LoginReq) (*pb.LoginRsp, error)
+	// Logout 退出
+	Logout(ctx context.Context, req *pb.LogoutReq) (*pb.LogoutRsp, error)
+	// Refresh 刷新token
+	Refresh(ctx context.Context, req *pb.RefreshReq) (*pb.RefreshRsp, error)
 }
 
 type userApp struct {
-	us repository.UserRepository
+	us      repository.UserRepository
+	jwtUtil *jwt.TokenGenerator
 }
 
 // UserApp 强制userApp实现UserAppInterface
 var _ UserAppInterface = &userApp{}
 
-func NewUserApp(us repository.UserRepository) UserAppInterface {
+func NewUserApp(us repository.UserRepository, jwtUtil *jwt.TokenGenerator) UserAppInterface {
 	return &userApp{
-		us: us,
+		us:      us,
+		jwtUtil: jwtUtil,
 	}
 }
 
@@ -114,4 +124,37 @@ func (c *userApp) DeleteUser(ctx context.Context, req *pb.DeleteUserReq) error {
 		return err
 	}
 	return nil
+}
+
+// Login 登录
+func (c *userApp) Login(ctx context.Context, req *pb.LoginReq) (*pb.LoginRsp, error) {
+	// 用户名+密码校验
+	user, err := c.us.GetUserByEmailAndPassword(ctx, req.GetUsername(), req.GetPassword())
+	if err != nil {
+		return nil, err
+	}
+	// 生成token
+	token, err := c.jwtUtil.CreateToken(ctx, jwt.NewUserInfoBuilder().UserID(user.UID).Build())
+	if err != nil {
+		return nil, err
+	}
+	// 返回
+	return &pb.LoginRsp{
+		AccessToken:  token.AccessToken,
+		RefreshToken: token.RefreshToken,
+		AtExpires:    token.AtExpires,
+		RtExpires:    token.RtExpires,
+	}, nil
+}
+
+// Logout 退出
+func (c *userApp) Logout(ctx context.Context, req *pb.LogoutReq) (*pb.LogoutRsp, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+// Refresh 刷新token
+func (c *userApp) Refresh(ctx context.Context, req *pb.RefreshReq) (*pb.RefreshRsp, error) {
+	//TODO implement me
+	panic("implement me")
 }

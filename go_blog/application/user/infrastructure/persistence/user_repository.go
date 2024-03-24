@@ -6,7 +6,7 @@ import (
 
 	"github.com/baker-yuan/go-blog/application/user/domain/entity"
 	"github.com/baker-yuan/go-blog/application/user/domain/repository"
-	"github.com/baker-yuan/go-blog/application/user/infrastructure/assembler"
+	"github.com/baker-yuan/go-blog/application/user/infrastructure/security"
 	"github.com/baker-yuan/go-blog/common/db"
 	"github.com/baker-yuan/go-blog/common/util"
 	pb "github.com/baker-yuan/go-blog/protocol/user"
@@ -40,9 +40,29 @@ type User struct {
 	UpdateTime   db.Timestamp `gorm:"column:update_time;type:timestamp;not null;default:CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;comment:修改时间"`
 }
 
+var (
+	UserTbName          = "blog_user"
+	UserFieldUid        = "uid"
+	UserFieldUsername   = "username"
+	UserFieldPassword   = "password"
+	UserFieldEmail      = "email"
+	UserFieldSalt       = "salt"
+	UserFieldNickname   = "nickname"
+	UserFieldAvatar     = "avatar"
+	UserFieldIntro      = "intro"
+	UserFieldWebSite    = "web_site"
+	UserFieldUserType   = "user_type"
+	UserFieldLoginType  = "login_type"
+	UserFieldStatus     = "status"
+	UserFieldIsDeleted  = "is_deleted"
+	UserFieldCreateTime = "create_time"
+	UserFieldUpdateTime = "update_time"
+	UserFieldUnionId    = "union_id"
+)
+
 // TableName 设置 User 结构体对应的数据库表名
 func (User) TableName() string {
-	return "blog_user"
+	return UserTbName
 }
 
 type UserRepo struct {
@@ -92,7 +112,7 @@ func (r *UserRepo) GetUserByID(ctx context.Context, id uint32) (*entity.User, er
 	if err != nil {
 		return nil, err
 	}
-	return assembler.UserPoToEntity(user), err
+	return UserPoToEntity(user), err
 }
 
 // GetUserByIDs 根据用户id集合查询用户
@@ -101,7 +121,7 @@ func (r *UserRepo) GetUserByIDs(ctx context.Context, ids []uint32) (entity.Users
 	if err != nil {
 		return nil, err
 	}
-	return assembler.UserPosToEntity(dbUsers), nil
+	return UserPosToEntity(dbUsers), nil
 }
 
 // DeleteByID 根据ID删除用户
@@ -114,7 +134,7 @@ func (r *UserRepo) Save(ctx context.Context, user *entity.User) (uint32, error) 
 	if user.UID > 0 {
 		return 0, errors.New("illegal argument user id exist")
 	}
-	dbUser := assembler.UserEntityToPo(user)
+	dbUser := UserEntityToPo(user)
 	if err := r.GenericDao.Create(ctx, dbUser); err != nil {
 		return 0, err
 	}
@@ -126,7 +146,7 @@ func (r *UserRepo) UpdateByID(ctx context.Context, user *entity.User) error {
 	if user.UID == 0 {
 		return errors.New("illegal argument user exist")
 	}
-	dbUser := assembler.UserEntityToPo(user)
+	dbUser := UserEntityToPo(user)
 	return r.GenericDao.DB.WithContext(ctx).Select(updateUserField).Updates(dbUser).Error
 }
 
@@ -154,4 +174,20 @@ func (r *UserRepo) SearchUser(ctx context.Context, req *pb.SearchUserReq) (entit
 		return nil, 0, err
 	}
 	return res, uint32(pageTotal), nil
+}
+
+// GetUserByEmailAndPassword 通过用户名查找用户，并且验证密码
+func (r *UserRepo) GetUserByEmailAndPassword(ctx context.Context, username string, password string) (*entity.User, error) {
+	// 查询用户
+	tx := r.GenericDao.DB.WithContext(ctx).
+		Where(UserFieldUsername, username)
+	data := &User{}
+	if err := tx.Find(&data).Error; err != nil {
+		return nil, err
+	}
+	// 校验密码
+	if err := security.VerifyPassword(data.Password, password); err != nil {
+		return nil, err
+	}
+	return UserPoToEntity(data), nil
 }

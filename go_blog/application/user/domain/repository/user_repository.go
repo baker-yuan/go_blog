@@ -18,4 +18,7 @@ type UserRepository interface {
 	UpdateByID(ctx context.Context, user *entity.User) error
 	// SearchUser 用户搜索
 	SearchUser(ctx context.Context, req *pb.SearchUserReq) (entity.Users, uint32, error)
+
+	// GetUserByEmailAndPassword 通过用户名查找用户，并且验证密码
+	GetUserByEmailAndPassword(ctx context.Context, username string, password string) (*entity.User, error)
 }
