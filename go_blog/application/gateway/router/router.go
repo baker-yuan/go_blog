@@ -51,7 +51,7 @@ func MatchResource(ctx biz_ctx.IBizContext) *auth_pb.Resource {
 
 	httpCtx, _ := ctx.(*biz_ctx.HttpContext)
 
-	url := string(httpCtx.FastCtx().Request.RequestURI())
+	url := httpCtx.Request().URI().RequestURI()
 	if res, exist := urlResourceMap[url]; exist {
 		return res
 	}

@@ -10,9 +10,9 @@ import (
 type (
 	// Config 配置
 	Config struct {
-		Global Global                   `yaml:"global"`
-		Http   Http                     `yaml:"http"`
-		Jwt    jwt.TokenValidatorConfig `yaml:"jwt"`
+		Global *Global                   `yaml:"global"`
+		Http   *Http                     `yaml:"http"`
+		Jwt    *jwt.TokenValidatorConfig `yaml:"jwt"`
 	}
 	// Global 全局配置
 	Global struct {

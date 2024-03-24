@@ -13,7 +13,6 @@ import (
 // ForwardHandler 请求转发处理
 func ForwardHandler(bizCtx biz_ctx.IBizContext, cfg *config.Config) {
 	httpCtx, _ := bizCtx.(*biz_ctx.HttpContext)
-	ctx := httpCtx.FastCtx()
 
 	resource := bizCtx.Value(biz_ctx.ResourceCtxKey).(*auth_pb.Resource)
 
@@ -31,8 +30,9 @@ func ForwardHandler(bizCtx biz_ctx.IBizContext, cfg *config.Config) {
 
 	// 复制原始请求的方法、请求URI和正文
 	req.SetRequestURI(targetURL)
-	req.Header.SetMethodBytes(ctx.Method())
-	req.SetBody(ctx.PostBody())
+	req.Header.SetMethodBytes([]byte(httpCtx.Request().Method()))
+	body, _ := httpCtx.Request().Body().RawBody()
+	req.SetBody(body)
 
 	// 复制原始请求的头部（根据需要可以修改或过滤这些头部）
 	//ctx.Request.Header.CopyTo(&req.Header)
@@ -53,7 +53,7 @@ func ForwardHandler(bizCtx biz_ctx.IBizContext, cfg *config.Config) {
 	}
 
 	// 将目标服务器的响应复制回原始客户端的响应
-	resp.Header.CopyTo(&ctx.Response.Header)
-	ctx.SetBody(resp.Body())
-	ctx.SetStatusCode(resp.StatusCode())
+	//resp.Header.CopyTo(&ctx.Response.Header)
+	//ctx.SetBody(resp.Body())
+	//ctx.SetStatusCode(resp.StatusCode())
 }

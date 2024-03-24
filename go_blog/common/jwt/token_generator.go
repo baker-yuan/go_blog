@@ -10,10 +10,10 @@ import (
 
 // TokenGeneratorConfig 用于生成JWT的配置，业务直接使用当前结构体映射配置文件，然后调用Build方法构成jwt工具类
 type TokenGeneratorConfig struct {
-	PrivateKey       string `json:"private_key" mapstructure:"private_key"`               // RSA私钥，base64编码
-	PublicKey        string `json:"public_key" mapstructure:"public_key"`                 // RSA公钥，base64编码
-	AccessExpirySec  int64  `json:"access_expiry_sec" mapstructure:"access_expiry_sec"`   // 访问令牌的有效期（秒）
-	RefreshExpirySec int64  `json:"refresh_expiry_sec" mapstructure:"refresh_expiry_sec"` // 刷新令牌的有效期（秒）
+	PrivateKey       string `json:"private_key" mapstructure:"private_key" yaml:"private_key"`                      // RSA私钥，base64编码
+	PublicKey        string `json:"public_key" mapstructure:"public_key" yaml:"public_key"`                         // RSA公钥，base64编码
+	AccessExpirySec  int64  `json:"access_expiry_sec" mapstructure:"access_expiry_sec" yaml:"access_expiry_sec"`    // 访问令牌的有效期（秒）
+	RefreshExpirySec int64  `json:"refresh_expiry_sec" mapstructure:"refresh_expiry_sec" yaml:"refresh_expiry_sec"` // 刷新令牌的有效期（秒）
 }
 
 // check 配置检查

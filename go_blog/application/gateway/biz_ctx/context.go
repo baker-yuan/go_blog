@@ -48,6 +48,7 @@ type IBizContext interface {
 	GetLabel(name string) string // 获取标签
 	Labels() map[string]string   // 返回所有标签
 
+	RealIP() string      // 客户端IP
 	LocalIP() net.IP     // 本机IP
 	LocalAddr() net.Addr // 服务器监听的本地地址
 	LocalPort() int      // 监听端口

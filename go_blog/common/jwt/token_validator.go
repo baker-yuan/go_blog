@@ -9,7 +9,7 @@ import (
 
 // TokenValidatorConfig 用于验证JWT的配置，业务直接使用当前结构体映射配置文件，然后调用Build方法构成jwt工具类
 type TokenValidatorConfig struct {
-	PublicKey string `json:"public_key" mapstructure:"public_key"` // RSA公钥，base64编码
+	PublicKey string `json:"public_key" mapstructure:"public_key" yaml:"public_key"` // RSA公钥，base64编码
 }
 
 // check 配置检查

@@ -9,7 +9,7 @@ replace (
 )
 
 require (
-github.com/baker-yuan/go-blog/common v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/common v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/protocol/auth v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/protocol/datasync v0.0.0-incompatible
 	github.com/google/uuid v1.6.0
@@ -29,6 +29,7 @@ require (
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-playground/assert/v2 v2.2.0 // indirect
 	github.com/go-playground/form/v4 v4.2.0 // indirect
+	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
@@ -73,5 +74,3 @@ require (
 	trpc.group/trpc-go/tnet v1.0.0 // indirect
 	trpc.group/trpc/trpc-protocol/pb/go/trpc v1.0.0 // indirect
 )
-
-
