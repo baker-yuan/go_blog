@@ -298,9 +298,7 @@ var _ IRequestReader = (*RequestReader)(nil)
 func (r *RequestReader) reset(req *fasthttp.Request, remoteAddr string) {
 	r.req = req
 	r.remoteAddr = remoteAddr
-
 	r.body.reset(req)
-
 	r.headers.reset(&req.Header)
 	r.uri.uri = req.URI()
 
@@ -313,7 +311,6 @@ func (r *RequestReader) reset(req *fasthttp.Request, remoteAddr string) {
 	if length > 0 {
 		r.length = length
 	}
-
 }
 
 func (r *RequestReader) URI() IURIReader {

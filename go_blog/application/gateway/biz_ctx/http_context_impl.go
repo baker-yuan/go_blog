@@ -49,6 +49,7 @@ type HttpContext struct {
 	port               int                  // 监听端口
 
 	requestReader RequestReader // 请求读取
+	response      Response      // 设置响应
 }
 
 // NewContext 创建Context
@@ -159,6 +160,10 @@ func (ctx *HttpContext) LocalPort() int {
 
 func (ctx *HttpContext) Request() IRequestReader {
 	return &ctx.requestReader
+}
+
+func (ctx *HttpContext) Response() IResponse {
+	return &ctx.response
 }
 
 // SendTo 发送http请求到下游服务

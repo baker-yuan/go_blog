@@ -93,15 +93,96 @@ type IRequestReader interface {
 	RemoteAddr() string // 客户端ip地址
 	RemotePort() string // 客户端端口
 
-	// RealIP 获取真实IP
-	RealIP() string    // 客户端ip
-	ForwardIP() string // X-Forwarded-For HTTP请求头用于记录整个请求链路中所有经过的代理服务器的IP地址。当客户端通过一个或多个代理服务器发送请求时，每个代理服务器都会在X-Forwarded-For头部中追加自己的IP地址。
+	// RealIP 客户端ip
+	RealIP() string
+	// ForwardIP X-Forwarded-For HTTP请求头用于记录整个请求链路中所有经过的代理服务器的IP地址。当客户端通过一个或多个代理服务器发送请求时，每个代理服务器都会在X-Forwarded-For头部中追加自己的IP地址。
+	ForwardIP() string
 
-	Method() string      // HTTP请求的方法，如 GET、POST、PUT、DELETE 等
-	ContentLength() int  // HTTP请求中Content-Length头部的值，它表示HTTP消息正文的长度，单位是字节
-	ContentType() string // HTTP请求Content-Type头部，它描述了HTTP消息正文的媒体类型（也称为 MIME 类型）
-	String() string      // 整个HTTP请求的详细信息，包括请求行（如方法、URI和HTTP版本），请求头，以及请求体（如果有的话）。这个字符串表示形式主要用于调试目的，因为它可以让你看到完整的请求内容。
+	// Method HTTP请求的方法，如 GET、POST、PUT、DELETE 等
+	Method() string
+	// ContentLength HTTP请求中Content-Length头部的值，它表示HTTP消息正文的长度，单位是字节
+	ContentLength() int
+	// ContentType HTTP请求Content-Type头部，它描述了HTTP消息正文的媒体类型（也称为 MIME 类型）
+	ContentType() string
+	// String 整个HTTP请求的详细信息，包括请求行（如方法、URI和HTTP版本），请求头，以及请求体（如果有的话）。
+	// 这个字符串表示形式主要用于调试目的，因为它可以让你看到完整的请求内容。
+	String() string
 }
+
+// IResponseHeader 设置响应头
+type IResponseHeader interface {
+	GetHeader(name string) string
+	Headers() http.Header
+	HeadersString() string
+	SetHeader(key, value string)
+	AddHeader(key, value string)
+	DelHeader(key string)
+}
+
+// IStatusSet 设置http状态吗
+type IStatusSet interface {
+	SetStatus(code int, status string)      // 设置http状态吗
+	SetProxyStatus(code int, status string) //
+}
+
+// IStatusGet 获取http响应状态码
+type IStatusGet interface {
+	StatusCode() int      // 获取响应状态码
+	Status() string       // 获取字符串格式的响应状态码
+	ProxyStatusCode() int //
+	ProxyStatus() string  //
+}
+
+// IBodySet 设置请求体
+type IBodySet interface {
+	SetBody([]byte)
+}
+
+// IBodyGet 请求体获取
+type IBodyGet interface {
+	GetBody() []byte
+	BodyLen() int
+}
+
+// IResponse 返回给client端的
+type IResponse interface {
+	IStatusSet      // 设置http响应状态码
+	IStatusGet      // 获取http响应状态码
+	IBodySet        // 设置返回内容
+	IBodyGet        // 获取返回内容
+	IResponseHeader //
+
+	// ResponseError 下游响应异常信息
+	ResponseError() error
+	// ClearError 清空下游响应异常信息
+	ClearError()
+	// SetResponseTime 设置响应时间
+	SetResponseTime(duration time.Duration)
+	// ResponseTime 获取响应时间
+	ResponseTime() time.Duration
+	// ContentLength 返回 HTTP 响应头中 "Content-Length" 字段的值。
+	// "Content-Length" 字段表示响应体的大小，单位为字节。
+	// 如果响应头中没有 "Content-Length" 字段，则该方法返回 -1。
+	ContentLength() int
+	// ContentType 返回 HTTP 响应头中 "Content-Type" 字段的值。
+	// "Content-Type" 字段用于指示资源的 MIME 类型，告知客户端如何解析内容。
+	// 如果响应头中没有 "Content-Type" 字段，则该方法返回空字符串。
+	ContentType() string
+	// String 返回整个HTT 响应的详细字符串表示形式，包括状态行（如状态码和HTTP版本）、响应头以及响应体（如果有的话）。
+	// 这个字符串表示形式主要用于调试目的，因为它可以让你看到完整的响应内容。
+	String() string
+}
+
+//// IRequest 用于组装转发的request
+//type IRequest interface {
+//	Header() IHeaderWriter   //
+//	Body() IBodyDataWriter   //
+//	URI() IURIWriter         //
+//	Method() string          //
+//	ContentLength() int      //
+//	ContentType() string     //
+//	SetMethod(method string) //
+//}
 
 // IHttpContext 扩展GatewayContext接口，定义http协议特有的
 type IHttpContext interface {
@@ -109,6 +190,10 @@ type IHttpContext interface {
 	IBizContext
 	// Request 请求数据读取接口
 	Request() IRequestReader
+	// Response 处理返回结果，可读可写
+	Response() IResponse
+	// Proxy 组装转发的request
+	//Proxy() IRequest
 
 	// SendTo 如果下游是http服务，通过这个方法转发到下游
 	SendTo(scheme string, node IInstance, timeout time.Duration) error
