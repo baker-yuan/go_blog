@@ -27,7 +27,7 @@ var (
 
 func newContext() interface{} {
 	h := new(HttpContext)
-	//h.proxyRequests = make([]http_service.IProxy, 0, 5)
+	h.proxyRequests = make([]IProxy, 0, 5)
 	return h
 }
 
@@ -53,7 +53,7 @@ type HttpContext struct {
 	requestReader RequestReader // 请求读取
 	response      Response      // 设置响应
 	proxyRequest  ProxyRequest  // 组装转发的request
-	proxyRequests []IProxy      //
+	proxyRequests []IProxy      // 记录转发
 }
 
 // NewContext 创建Context

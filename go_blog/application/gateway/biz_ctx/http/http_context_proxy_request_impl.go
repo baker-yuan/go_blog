@@ -35,6 +35,7 @@ var (
 	xforwardedforKey = []byte("x-forwarded-for")
 )
 
+// request 是原始的fasthttp.Request
 func (r *ProxyRequest) reset(request *fasthttp.Request, remoteAddr string) {
 	r.req = request
 	// 从 request 的 Header 中获取 "x-forwarded-for" 的值。

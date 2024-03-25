@@ -13,15 +13,15 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-// URIRequest url查询参数读取
+// URIRequest url查询参数读取，url查询参数写入
 type URIRequest struct {
 	uri *fasthttp.URI
 }
 
-// 强制URIRequest实现IURIReader
+// 强制URIRequest实现IURIReader，IURIReader用于定义url查询参数读取
 var _ IURIReader = (*URIRequest)(nil)
 
-// 强制URIRequest实现IURIWriter
+// 强制URIRequest实现IURIWriter，IURIWriter用于定义url查询参数写入
 var _ IURIWriter = (*URIRequest)(nil)
 
 func NewURIRequest(uri *fasthttp.URI) *URIRequest {
@@ -93,16 +93,16 @@ func (ur *URIRequest) SetHost(host string) {
 	ur.uri.SetHost(host)
 }
 
-// RequestHeader 请求头读取
+// RequestHeader 请求头读取，请求头写入
 type RequestHeader struct {
 	header *fasthttp.RequestHeader // 请求头读取
 	tmp    http.Header             // map[string][]string
 }
 
-// 强制RequestHeader实现IHeaderWriter
+// 强制RequestHeader实现IHeaderWriter，IHeaderWriter用于定义请求头读取
 var _ IHeaderWriter = (*RequestHeader)(nil)
 
-// 强制RequestHeader实现IHeaderReader
+// 强制RequestHeader实现IHeaderReader，IHeaderReader用于定义请求头写入
 var _ IHeaderReader = (*RequestHeader)(nil)
 
 // reset 初始化
@@ -195,16 +195,16 @@ var (
 	ErrorNotSend      = errors.New("not send")
 )
 
-// BodyRequestHandler 请求体读取
+// BodyRequestHandler 请求体读取，请求体写入
 type BodyRequestHandler struct {
 	request  *fasthttp.Request
 	formdata *multipart.Form
 }
 
-// 强制IBodyDataWriter实现IHeaderReader
+// 强制IBodyDataWriter实现IHeaderReader，IBodyDataWriter用于定义请求体读取
 var _ IBodyDataWriter = (*BodyRequestHandler)(nil)
 
-// 强制IBodyDataWriter实现IBodyDataReader
+// 强制IBodyDataWriter实现IBodyDataReader，IBodyDataReader用于定义请求体写入
 var _ IBodyDataReader = (*BodyRequestHandler)(nil)
 
 func NewBodyRequestHandler(request *fasthttp.Request) *BodyRequestHandler {
@@ -440,10 +440,13 @@ func (b *BodyRequestHandler) SetRaw(contentType string, body []byte) {
 
 // RequestReader 请求数据读取接口
 type RequestReader struct {
-	req        *fasthttp.Request  // 客户端和网关之间的请求(拷贝后的请求)
-	body       BodyRequestHandler // 请求体读取
-	headers    RequestHeader      // 请求头读取
-	uri        URIRequest         // url查询参数读取
+	// 客户端和网关之间的请求
+	// req是原始的fasthttp.Request深拷贝而来，直接操作req不会影响到最开始的Request
+	// 在运行过程中这个req会被修改，修改请求方式，修改下游URL路径等等，下游的请求参数就是来自于这个
+	req        *fasthttp.Request
+	body       BodyRequestHandler // 请求体读取，请求体写入
+	headers    RequestHeader      // 请求头读取，请求头写入
+	uri        URIRequest         // url查询参数读取，url查询参数写入
 	remoteAddr string
 	remotePort string
 	realIP     string

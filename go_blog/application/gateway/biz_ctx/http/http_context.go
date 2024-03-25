@@ -199,6 +199,7 @@ type IHeaderWriter interface {
 
 type IBodyDataWriter interface {
 	IBodyDataReader // 请求体读取
+
 	// SetForm
 	// 设置form数据并将content-type设置 为 application/x-www-form-urlencoded 或 multipart/form-data
 	SetForm(values url.Values) error
@@ -215,19 +216,51 @@ type IBodyDataWriter interface {
 
 // IQueryWriter 设置url查询参数
 type IQueryWriter interface {
-	IQueryReader                // url参数获取
-	SetQuery(key, value string) //
-	AddQuery(key, value string) //
-	DelQuery(key string)        //
-	SetRawQuery(raw string)     //
+	IQueryReader // url参数获取
+	// SetQuery 设置或覆盖URL的查询参数。
+	// key: 查询参数的键
+	// value: 查询参数的值
+	SetQuery(key, value string)
+	// AddQuery 添加一个新的查询参数到URL中。如果参数已存在，不会覆盖，而是添加一个新的。
+	// key: 要添加的查询参数的键
+	// value: 要添加的查询参数的值
+	AddQuery(key, value string)
+	// DelQuery 删除指定的查询参数。
+	// key: 要删除的查询参数的键
+	DelQuery(key string)
+	// SetRawQuery 设置整个查询字符串，覆盖现有的所有查询参数。
+	// raw: 完整的查询字符串
+	SetRawQuery(raw string)
 }
 
+// IURIWriter
+// 标准的 URL 格式遵循以下模式：
+// Scheme://Host/Path?Query#Fragment
+// 其中各部分的含义如下：
+// - Scheme: 访问资源所使用的协议类型，例如 "http" 或 "https"。
+// - Host: 资源所在服务器的地址，可能包括端口号，例如 "example.com:8080"。
+// - Path: 服务器上资源的具体路径，例如 "/path/to/resource"。
+// - Query: 服务器用于进一步处理请求的额外参数，例如 "query=123&name=abc"。
+// - Fragment: 页面内部的锚点，不会发送到服务器，例如 "section1"。
+// 例如，对于完整的 URL "http://example.com/path?query=123#fragment"：
+// - RequestURI() 返回路径和查询字符串部分，即 "/path?query=123"。
+// - Scheme() 返回协议方案，即 "http"。
+// - RawURL() 返回不包含 fragment 的完整 URL，即 "http://example.com/path?query=123"。
+// - Host() 返回主机名，即 "example.com"。
+// - Path() 返回路径部分，即 "/path"。
 type IURIWriter interface {
-	IURIReader               // url参数读取
-	IQueryWriter             // url参数写入
-	SetPath(string)          //
-	SetScheme(scheme string) //
-	SetHost(host string)     //
+	IURIReader   // url参数读取
+	IQueryWriter // url参数写入
+
+	// SetPath 设置URL的路径部分。
+	// path: 要设置的路径字符串
+	SetPath(string)
+	// SetScheme 设置URL的协议方案。
+	// scheme: 要设置的协议方案字符串，如 "http" 或 "https"
+	SetScheme(scheme string)
+	// SetHost 设置URL的主机部分。
+	// host: 要设置的主机字符串，可以包含端口号，如 "example.com" 或 "example.com:8080"
+	SetHost(host string)
 }
 
 // IRequest 用于组装转发的request
