@@ -24,6 +24,10 @@ func HttpServerRun(ctx context.Context, cfg *config.Config) {
 				return
 			}
 			bizCtx := http.NewContext(ctx, cfg)
+
+			//bizCtx.SetCompleteHandler(nil)
+			//bizCtx.SetFinish(nil)
+
 			// 构建中间件链并执行
 			handler := filter.Chain(
 				filter.Recovery,

@@ -45,13 +45,7 @@ func LoadResourceList(ctx context.Context, cfg *config.Config) error {
 
 // MatchResource 路由匹配
 func MatchResource(ctx biz_ctx.IBizContext) *auth_pb.Resource {
-	//httpContext, err := biz_ctx.Assert(ctx)
-	//if err != nil {
-	//	return nil
-	//}
-
 	httpCtx, _ := ctx.(*http.HttpContext)
-
 	url := httpCtx.Request().URI().RequestURI()
 	if res, exist := urlResourceMap[url]; exist {
 		return res

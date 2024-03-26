@@ -31,6 +31,19 @@ var (
 	ResourceCtxKey = "resource" // 资源，类型 *auth_pb.Resource
 )
 
+// CompleteHandler 完成转发请求操作
+// 主要作用：
+// 1、转发到下游http、grpc、double服务
+// 2、路由失败，返回路由失败异常
+type CompleteHandler interface {
+	Complete(ctx IBizContext) error
+}
+
+// FinishHandler 结束请求操作，请求执行完后，做资源清理用
+type FinishHandler interface {
+	Finish(ctx IBizContext) error
+}
+
 // IBizContext 上下文，不同的协议实现自己的上下文
 type IBizContext interface {
 	Context() context.Context          // 原始context
@@ -52,4 +65,19 @@ type IBizContext interface {
 	LocalIP() net.IP     // 本机IP
 	LocalAddr() net.Addr // 服务器监听的本地地址
 	LocalPort() int      // 监听端口
+
+	// GetComplete 获取CompleteHandler
+	// CompleteHandler用于定义完成转发请求到下游操作
+	// 主要作用：
+	// 1、转发到下游http、grpc、double服务
+	// 2、路由失败，返回路由失败异常
+	GetComplete() CompleteHandler
+	// SetCompleteHandler 设置CompleteHandler
+	SetCompleteHandler(handler CompleteHandler)
+
+	// GetFinish 获取FinishHandler
+	// FinishHandler用于结束请求操作，请求执行完后，做资源清理用
+	GetFinish() FinishHandler
+	// SetFinish 设置FinishHandler
+	SetFinish(handler FinishHandler)
 }

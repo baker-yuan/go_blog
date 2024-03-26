@@ -54,6 +54,9 @@ type HttpContext struct {
 	response      Response      // 设置响应
 	proxyRequest  ProxyRequest  // 组装转发的request
 	proxyRequests []IProxy      // 记录转发
+
+	completeHandler biz_ctx.CompleteHandler
+	finishHandler   biz_ctx.FinishHandler
 }
 
 // NewContext 创建Context
@@ -169,6 +172,22 @@ func (ctx *HttpContext) Proxy() IRequest {
 
 func (ctx *HttpContext) Proxies() []IProxy {
 	return ctx.proxyRequests
+}
+
+func (ctx *HttpContext) GetComplete() biz_ctx.CompleteHandler {
+	return ctx.completeHandler
+}
+
+func (ctx *HttpContext) SetCompleteHandler(handler biz_ctx.CompleteHandler) {
+	ctx.completeHandler = handler
+}
+
+func (ctx *HttpContext) GetFinish() biz_ctx.FinishHandler {
+	return ctx.finishHandler
+}
+
+func (ctx *HttpContext) SetFinish(handler biz_ctx.FinishHandler) {
+	ctx.finishHandler = handler
 }
 
 // SendTo 发送http请求到下游服务

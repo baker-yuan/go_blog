@@ -43,7 +43,7 @@ server:
   service:
     - name: trpc.blog.auth.BlogApiHttp
       # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
-      address: 127.0.0.1:9002
+      address: 127.0.0.1:9003
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
@@ -54,7 +54,7 @@ server:
       registry: polarismesh
     - name: trpc.blog.auth.BlogApiTrpc
       # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
-      address: 127.0.0.1:9100
+      address: 127.0.0.1:9200
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
