@@ -1,0 +1,146 @@
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import { Card, Form, notification, Steps } from 'antd';
+import { omit } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
+import { history, useIntl } from 'umi';
+
+import ActionBar from '@/components/ActionBar';
+import PluginPage from '@/components/Plugin';
+import { convertToFormData } from '@/components/Upstream/service';
+
+import Preview from './components/Preview';
+import Step1 from './components/Step1';
+import { create, fetchItem, update } from './service';
+
+const { Step } = Steps;
+
+const Page: React.FC = (props) => {
+  const { formatMessage } = useIntl();
+  const [form] = Form.useForm();
+  const [upstreamForm] = Form.useForm();
+  const upstreamRef = useRef<any>();
+  const [plugins, setPlugins] = useState<PluginComponent.Data>({});
+  const [submitLoading, setSubmitLoading] = useState(false);
+
+  const STEP_HEADER = [
+    formatMessage({ id: 'page.service.steps.stepTitle.basicInformation' }),
+    formatMessage({ id: 'page.service.steps.stepTitle.pluginConfig' }),
+    formatMessage({ id: 'component.global.steps.stepTitle.preview' }),
+  ];
+
+  const [stepHeader] = useState(STEP_HEADER);
+  const [step, setStep] = useState(1);
+
+  useEffect(() => {
+    const { serviceId } = (props as any).match.params;
+    if (serviceId) {
+      fetchItem(serviceId).then(({ data }) => {
+        if (data.upstream_id) {
+          upstreamForm.setFieldsValue({ upstream_id: data.upstream_id });
+        } else if (data.upstream) {
+          upstreamForm.setFieldsValue(convertToFormData(data.upstream));
+        } else {
+          upstreamForm.setFieldsValue({ upstream_id: 'None' });
+        }
+
+        form.setFieldsValue(omit(data, ['upstream_id', 'upstream', 'plugins']));
+        setPlugins(data.plugins || {});
+      });
+    }
+  }, []);
+
+  const onSubmit = () => {
+    setSubmitLoading(true);
+    const data = {
+      ...form.getFieldsValue(),
+      plugins,
+    };
+
+    const upstreamFormData = upstreamRef.current?.getData();
+    if (!upstreamFormData?.upstream_id) {
+      data.upstream = upstreamFormData;
+    } else {
+      data.upstream_id = upstreamFormData.upstream_id;
+    }
+
+    const { serviceId } = (props as any).match.params;
+    (serviceId ? update(serviceId, data) : create(data))
+      .then(() => {
+        notification.success({
+          message: `${
+            serviceId
+              ? formatMessage({ id: 'component.global.edit' })
+              : formatMessage({ id: 'component.global.create' })
+          } ${formatMessage({ id: 'menu.service' })} ${formatMessage({
+            id: 'component.status.success',
+          })}`,
+        });
+        history.push('/service/list');
+      })
+      .catch(() => {
+        setStep(3);
+      })
+      .finally(() => {
+        setSubmitLoading(false);
+      });
+  };
+
+  const onStepChange = (nextStep: number) => {
+    if (step === 1 && nextStep === 2) {
+      form.validateFields().then(() => {
+        upstreamForm.validateFields().then(() => {
+          setStep(nextStep);
+        });
+      });
+      return;
+    }
+    if (nextStep === 4) {
+      onSubmit();
+      return;
+    }
+    setStep(nextStep);
+  };
+
+  return (
+    <>
+      <PageHeaderWrapper
+        title={
+          (props as any).match.params.serviceId
+            ? formatMessage({ id: 'page.service.configure' })
+            : formatMessage({ id: 'page.service.create' })
+        }
+      >
+        <Card bordered={false}>
+          <Steps current={step - 1} style={{ marginBottom: '25px' }}>
+            {stepHeader.map((item) => (
+              <Step title={item} key={item} />
+            ))}
+          </Steps>
+          {step === 1 && (
+            <Step1 form={form} upstreamForm={upstreamForm} upstreamRef={upstreamRef} />
+          )}
+          {step === 2 && (
+            <PluginPage initialData={plugins} onChange={setPlugins} schemaType="route" />
+          )}
+          {step === 3 && (
+            <Preview
+              upstreamForm={upstreamForm}
+              upstreamRef={upstreamRef}
+              form={form}
+              plugins={plugins}
+            />
+          )}
+        </Card>
+      </PageHeaderWrapper>
+      <ActionBar
+        loading={submitLoading}
+        step={step}
+        lastStep={3}
+        onChange={onStepChange}
+        withResultView
+      />
+    </>
+  );
+};
+
+export default Page;

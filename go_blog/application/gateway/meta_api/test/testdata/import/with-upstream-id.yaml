@@ -1,0 +1,23 @@
+# If you want to set the specified configuration value, you can set the new
+# in this file. For example if you want to specify the etcd address:
+#
+openapi: 3.0.0
+info:
+  version: 1.0.0-oas3
+  description: test desc
+  license:
+    name: Apache License 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0'
+  title: test title
+paths:
+  /hello:
+    get:
+      x-api-limit: 20
+      description: hello world.
+      operationId: hello
+      x-apisix-upstream_id: upstream1
+      responses:
+        '200':
+          description: list response
+        default:
+          description: unexpected error

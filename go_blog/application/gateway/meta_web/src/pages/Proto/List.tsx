@@ -1,0 +1,147 @@
+import { PlusOutlined } from '@ant-design/icons';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import type { ActionType, ProColumns } from '@ant-design/pro-table';
+import ProTable from '@ant-design/pro-table';
+import { Button, notification, Popconfirm, Space } from 'antd';
+import React, { useRef, useState } from 'react';
+import { useIntl } from 'umi';
+
+import { timestampToLocaleString } from '@/helpers';
+import usePagination from '@/hooks/usePagination';
+
+import ProtoDrawer from './components/ProtoDrawer';
+import { fetchList, remove } from './service';
+
+const Page: React.FC = () => {
+  const ref = useRef<ActionType>();
+  const { formatMessage } = useIntl();
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const { paginationConfig, savePageList, checkPageList } = usePagination();
+  const emptyProtoData = {
+    id: null,
+    content: '',
+    desc: '',
+  };
+  const [protoData, setProtoData] = useState<ProtoModule.ProtoData>(emptyProtoData);
+  const [editMode, setEditMode] = useState<ProtoModule.EditMode>('create');
+  const [deleteLoading, setDeleteLoading] = useState('');
+
+  const refreshTable = () => {
+    ref.current?.reload();
+  };
+
+  const showDrawer = (data: ProtoModule.ProtoData, mode: ProtoModule.EditMode) => {
+    setDrawerVisible(true);
+    setProtoData(data);
+    setEditMode(mode);
+  };
+
+  const columns: ProColumns<ProtoModule.ResponseBody>[] = [
+    {
+      title: formatMessage({ id: 'component.global.id' }),
+      hideInSearch: true,
+      dataIndex: 'id',
+      width: 100,
+    },
+    {
+      title: formatMessage({ id: 'page.proto.desc' }),
+      dataIndex: 'desc',
+      ellipsis: true,
+      width: 200,
+    },
+    {
+      title: formatMessage({ id: 'page.proto.content' }),
+      hideInSearch: true,
+      dataIndex: 'content',
+      ellipsis: true,
+    },
+    {
+      title: formatMessage({ id: 'component.global.updateTime' }),
+      dataIndex: 'update_time',
+      hideInSearch: true,
+      render: (text) => timestampToLocaleString(text as number),
+      width: 200,
+    },
+    {
+      title: formatMessage({ id: 'component.global.operation' }),
+      valueType: 'option',
+      fixed: 'right',
+      hideInSearch: true,
+      render: (_, record) => (
+        <Space align="baseline">
+          <Button
+            type="primary"
+            onClick={() =>
+              showDrawer({ id: record.id, content: record.content, desc: record.desc }, 'update')
+            }
+          >
+            {formatMessage({ id: 'component.global.edit' })}
+          </Button>
+          <Popconfirm
+            title={formatMessage({ id: 'page.proto.list.confirm.delete' })}
+            okText={formatMessage({ id: 'page.proto.list.confirm' })}
+            cancelText={formatMessage({ id: 'page.proto.list.cancel' })}
+            onConfirm={() => {
+              setDeleteLoading(record.id);
+              remove(record.id)
+                .then(() => {
+                  notification.success({
+                    message: formatMessage({ id: 'page.proto.list.delete.successfully' }),
+                  });
+                  checkPageList(ref);
+                })
+                .finally(() => {
+                  setDeleteLoading('');
+                });
+            }}
+          >
+            <Button type="primary" danger loading={record.id === deleteLoading}>
+              {formatMessage({ id: 'page.proto.list.delete' })}
+            </Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ];
+
+  return (
+    <PageHeaderWrapper
+      title={formatMessage({ id: 'page.proto.list' })}
+      content={formatMessage({ id: 'page.proto.list.description' })}
+    >
+      <ProtoDrawer
+        protoData={protoData as ProtoModule.ProtoData}
+        setProtoData={setProtoData}
+        visible={drawerVisible}
+        setVisible={setDrawerVisible}
+        editMode={editMode}
+        refreshTable={refreshTable}
+      />
+      <ProTable<ProtoModule.ResponseBody>
+        actionRef={ref}
+        rowKey="id"
+        columns={columns}
+        request={fetchList}
+        pagination={{
+          onChange: (page, pageSize?) => savePageList(page, pageSize),
+          pageSize: paginationConfig.pageSize,
+          current: paginationConfig.current,
+        }}
+        search={{
+          searchText: formatMessage({ id: 'component.global.search' }),
+          resetText: formatMessage({ id: 'component.global.reset' }),
+        }}
+        toolBarRender={() => [
+          <Button type="primary" onClick={() => showDrawer(emptyProtoData, 'create')}>
+            <PlusOutlined />
+            {formatMessage({ id: 'component.global.create' })}
+          </Button>,
+        ]}
+        tableAlertRender={false}
+        scroll={{ x: 1300 }}
+      />
+    </PageHeaderWrapper>
+  );
+};
+
+export default Page;
