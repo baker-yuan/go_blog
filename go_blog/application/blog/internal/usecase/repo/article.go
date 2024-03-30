@@ -5,9 +5,9 @@ import (
 	"errors"
 
 	"github.com/baker-yuan/go-blog/application/blog/internal/entity"
-	"github.com/baker-yuan/go-blog/common/db"
-	"github.com/baker-yuan/go-blog/common/util"
-	pb "github.com/baker-yuan/go-blog/protocol/blog"
+	"github.com/baker-yuan/go-blog/go_blog/common/db"
+	"github.com/baker-yuan/go-blog/go_blog/common/util"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/blog"
 	"gorm.io/gorm"
 )
 

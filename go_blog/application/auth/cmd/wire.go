@@ -9,7 +9,7 @@ import (
 	"github.com/baker-yuan/go-blog/application/auth/internal/biz"
 	"github.com/baker-yuan/go-blog/application/auth/internal/data"
 	"github.com/baker-yuan/go-blog/application/auth/internal/service"
-	pb "github.com/baker-yuan/go-blog/protocol/auth"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 	"github.com/google/wire"
 	trpc_srv "trpc.group/trpc-go/trpc-go/server"
 )

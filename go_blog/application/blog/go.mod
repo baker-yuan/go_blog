@@ -3,8 +3,8 @@ module github.com/baker-yuan/go-blog/application/blog
 go 1.19
 
 require (
-	github.com/baker-yuan/go-blog/common v0.0.0-incompatible
-	github.com/baker-yuan/go-blog/protocol/blog v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/common v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/protocol/blog v0.0.0-incompatible
 	gorm.io/gorm v1.25.7
 	trpc.group/trpc-go/trpc-database/gorm v1.0.0
 	trpc.group/trpc-go/trpc-filter/debuglog v1.0.0
@@ -15,8 +15,8 @@ require (
 )
 
 replace (
-	github.com/baker-yuan/go-blog/common => ./../../common
-	github.com/baker-yuan/go-blog/protocol/blog => ./../../protocol/blog
+	github.com/baker-yuan/go-blog/go_blog/common => ./../../common
+	github.com/baker-yuan/go-blog/go_blog/protocol/blog => ./../../protocol/blog
 )
 
 require (
@@ -75,8 +75,8 @@ require (
 	github.com/spf13/cast v1.5.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.48.0 // indirect
-	go.opentelemetry.io/otel v1.13.0 // indirect
-	go.opentelemetry.io/otel/trace v1.13.0 // indirect
+	go.opentelemetry.io/otel v1.24.0 // indirect
+	go.opentelemetry.io/otel/trace v1.24.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/automaxprocs v1.5.3 // indirect
 	go.uber.org/multierr v1.11.0 // indirect

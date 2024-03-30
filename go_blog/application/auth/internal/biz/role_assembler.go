@@ -1,7 +1,7 @@
 package biz
 
 import (
-	pb "github.com/baker-yuan/go-blog/protocol/auth"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 )
 
 // RoleEntityToModel entity转pb

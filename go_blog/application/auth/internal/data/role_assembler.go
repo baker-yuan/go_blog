@@ -2,7 +2,7 @@ package data
 
 import (
 	"github.com/baker-yuan/go-blog/application/auth/internal/biz"
-	"github.com/baker-yuan/go-blog/common/db"
+	"github.com/baker-yuan/go-blog/go_blog/common/db"
 )
 
 // RolePOsToEntity po转entity

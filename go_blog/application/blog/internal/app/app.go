@@ -6,7 +6,7 @@ import (
 	"github.com/baker-yuan/go-blog/application/blog/internal/controller"
 	"github.com/baker-yuan/go-blog/application/blog/internal/usecase"
 	"github.com/baker-yuan/go-blog/application/blog/internal/usecase/repo"
-	pb "github.com/baker-yuan/go-blog/protocol/blog"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/blog"
 	"trpc.group/trpc-go/trpc-database/gorm"
 	"trpc.group/trpc-go/trpc-go/log"
 	"trpc.group/trpc-go/trpc-go/server"

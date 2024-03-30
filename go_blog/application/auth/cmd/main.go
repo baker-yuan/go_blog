@@ -2,8 +2,10 @@
 package main
 
 import (
+	"github.com/baker-yuan/go-blog/go_blog/retcode"
 	"trpc.group/trpc-go/trpc-go"
 
+	_ "github.com/baker-yuan/go-blog/go_blog/filters/httptrace"
 	_ "trpc.group/trpc-go/trpc-database/gorm"
 	_ "trpc.group/trpc-go/trpc-filter/debuglog"
 	_ "trpc.group/trpc-go/trpc-filter/recovery"
@@ -18,6 +20,9 @@ func init() {
 
 func main() {
 	trpcServer := trpc.NewServer()
+
+	// 异常处理，统一返回值
+	retcode.InitServerCodec(nil)
 
 	app, err := wireApp(trpcServer)
 	if err != nil {

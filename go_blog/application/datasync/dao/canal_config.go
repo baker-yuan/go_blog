@@ -1,6 +1,6 @@
 package dao
 
-import "github.com/baker-yuan/go-blog/common/db"
+import "github.com/baker-yuan/go-blog/go_blog/common/db"
 
 // CanalConfig canal监听配置表
 type CanalConfig struct {

@@ -1,6 +1,6 @@
 package biz
 
-import pb "github.com/baker-yuan/go-blog/protocol/auth"
+import pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 
 // MenuEntityToModel entity转pb
 func MenuEntityToModel(menu *Menu) *pb.Menu {

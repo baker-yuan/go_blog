@@ -4,14 +4,15 @@ import (
 	"context"
 
 	"github.com/baker-yuan/go-blog/application/auth/internal/biz"
-	pb "github.com/baker-yuan/go-blog/protocol/auth"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 )
 
 // NewAuthService 权限
-func NewAuthService(menu *biz.MenuUsecase, resource *biz.ResourceUseCase) *AuthService {
+func NewAuthService(menu *biz.MenuUsecase, resource *biz.ResourceUseCase, treeNode *biz.TreeNodeUseCase) *AuthService {
 	return &AuthService{
 		menu:     menu,
 		resource: resource,
+		treeNode: treeNode,
 	}
 }
 
@@ -166,4 +167,52 @@ func (s *AuthService) GetUserRole(ctx context.Context, req *pb.GetUserRoleReq) (
 func (s *AuthService) GetUserResource(ctx context.Context, req *pb.GetUserResourceReq) (*pb.GetUserResourceRsp, error) {
 	//TODO implement me
 	panic("implement me")
+}
+
+// SearchTreeNode 查询树形结构表
+func (s *AuthService) SearchTreeNode(ctx context.Context, req *pb.SearchTreeNodeReq) (*pb.SearchTreeNodeRsp, error) {
+	rsp := &pb.SearchTreeNodeRsp{}
+	treeNodes, pageTotal, err := s.treeNode.SearchTreeNode(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Data = treeNodes
+	rsp.Total = pageTotal
+	return rsp, nil
+}
+
+// AddOrUpdateTreeNode 添加修改树形结构表
+func (s *AuthService) AddOrUpdateTreeNode(ctx context.Context, req *pb.AddOrUpdateTreeNodeReq) (*pb.AddOrUpdateRsp, error) {
+	rsp := &pb.AddOrUpdateRsp{}
+	id, err := s.treeNode.AddOrUpdateTreeNode(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Id = id
+	return rsp, nil
+}
+
+// DeleteTreeNode 删除树形结构表
+func (s *AuthService) DeleteTreeNode(ctx context.Context, req *pb.DeleteTreeNodeReq) (*pb.EmptyRsp, error) {
+	rsp := &pb.EmptyRsp{}
+	if err := s.treeNode.DeleteTreeNode(ctx, req); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+// TreeNodeDetail 树形结构表详情
+func (s *AuthService) TreeNodeDetail(ctx context.Context, req *pb.TreeNodeDetailReq) (*pb.TreeNode, error) {
+	return s.treeNode.TreeNodeDetail(ctx, req)
+}
+
+// GetTreeByBizType 获取指定业务类型的树形结构
+func (s *AuthService) GetTreeByBizType(ctx context.Context, req *pb.GetTreeByBizTypeReq) (*pb.GetTreeByBizTypeRsp, error) {
+	rsp := &pb.GetTreeByBizTypeRsp{}
+	nodes, err := s.treeNode.GetTreeByBizType(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Nodes = nodes
+	return rsp, nil
 }

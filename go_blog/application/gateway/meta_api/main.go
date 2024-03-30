@@ -34,8 +34,10 @@ func init() {
 func main() {
 	// 配置初始化
 	conf.InitConf()
+
 	// 日志初始化
 	log.InitLogger()
+
 	// 创建服务
 	s, err := server.NewServer(&server.Options{})
 	if err != nil {
@@ -46,10 +48,11 @@ func main() {
 	errSig := make(chan error, 5)
 	s.Start(errSig)
 
+	// 启动etcd连接检查
 	// start etcd connection checker
 	stopEtcdConnectionChecker := etcdConnectionChecker()
 
-	// 监听关闭信号
+	// 监听系统关闭信号
 	// Signal received to the process externally.
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)

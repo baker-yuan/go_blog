@@ -1,0 +1,20 @@
+
+### 树形结构表搜索
+POST http://localhost:8849/auth/admin/searchTreeNode
+Content-Type: application/json
+
+{
+  "pageNum": 1,
+  "pageSize": 1
+}
+
+
+
+### 根据业务类型查询数
+POST http://localhost:8849/auth/admin/getTreeByBizType
+Content-Type: application/json
+
+{
+  "bizType": 1
+}
+

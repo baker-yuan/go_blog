@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/baker-yuan/go-blog/common/util"
-	pb "github.com/baker-yuan/go-blog/protocol/auth"
+	"github.com/baker-yuan/go-blog/go_blog/common/util"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 )
 
 // Resource 接口资源

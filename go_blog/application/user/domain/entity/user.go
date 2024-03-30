@@ -1,8 +1,8 @@
 package entity
 
 import (
-	"github.com/baker-yuan/go-blog/common/db"
-	pb "github.com/baker-yuan/go-blog/protocol/user"
+	"github.com/baker-yuan/go-blog/go_blog/common/db"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/user"
 )
 
 // User 用户

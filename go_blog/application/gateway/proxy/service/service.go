@@ -33,6 +33,13 @@ func GetOneInstance(namespace string, service string) (string, error) {
 var _ biz_ctx.IInstance = &InstanceImpl{}
 
 type InstanceImpl struct {
+	addr string
+}
+
+func NewInstance(addr string) biz_ctx.IInstance {
+	return &InstanceImpl{
+		addr: addr,
+	}
 }
 
 func (i InstanceImpl) GetAttrs() biz_ctx.Attrs {
@@ -61,7 +68,7 @@ func (i InstanceImpl) Port() int {
 }
 
 func (i InstanceImpl) Addr() string {
-	return "127.0.0.1:9003"
+	return i.addr
 }
 
 func (i InstanceImpl) Status() biz_ctx.NodeStatus {

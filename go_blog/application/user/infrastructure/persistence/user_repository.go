@@ -7,9 +7,9 @@ import (
 	"github.com/baker-yuan/go-blog/application/user/domain/entity"
 	"github.com/baker-yuan/go-blog/application/user/domain/repository"
 	"github.com/baker-yuan/go-blog/application/user/infrastructure/security"
-	"github.com/baker-yuan/go-blog/common/db"
-	"github.com/baker-yuan/go-blog/common/util"
-	pb "github.com/baker-yuan/go-blog/protocol/user"
+	"github.com/baker-yuan/go-blog/go_blog/common/db"
+	"github.com/baker-yuan/go-blog/go_blog/common/util"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/user"
 	"gorm.io/gorm"
 )
 

@@ -3,7 +3,7 @@ module github.com/baker-yuan/go-blog/template/go_clean_template
 go 1.19
 
 require (
-	github.com/baker-yuan/go-blog/common v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/common v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/protocol/template v0.0.0-incompatible
 	google.golang.org/protobuf v1.33.0
 	gorm.io/gorm v1.25.7
@@ -17,7 +17,7 @@ require (
 )
 
 replace (
-	github.com/baker-yuan/go-blog/common => ./../../../common
+	github.com/baker-yuan/go-blog/go_blog/common => ./../../../common
 	github.com/baker-yuan/go-blog/protocol/template => ./../../../protocol/template
 )
 
@@ -77,8 +77,8 @@ require (
 	github.com/spf13/cast v1.5.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.48.0 // indirect
-	go.opentelemetry.io/otel v1.13.0 // indirect
-	go.opentelemetry.io/otel/trace v1.13.0 // indirect
+	go.opentelemetry.io/otel v1.24.0 // indirect
+	go.opentelemetry.io/otel/trace v1.24.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/automaxprocs v1.5.3 // indirect
 	go.uber.org/multierr v1.11.0 // indirect

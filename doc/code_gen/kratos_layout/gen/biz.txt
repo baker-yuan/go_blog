@@ -11,7 +11,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/baker-yuan/go-blog/common/util"
+	"github.com/baker-yuan/go-blog/go_blog/common/util"
 )
 
 // $!{tableInfo.name} $!tool.firstLowerCase($!{tableInfo.name}) $!{tableInfo.comment}

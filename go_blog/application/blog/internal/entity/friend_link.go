@@ -1,6 +1,6 @@
 package entity
 
-import pb "github.com/baker-yuan/go-blog/protocol/blog"
+import pb "github.com/baker-yuan/go-blog/go_blog/protocol/blog"
 
 // FriendLink 友链表
 type FriendLink struct {

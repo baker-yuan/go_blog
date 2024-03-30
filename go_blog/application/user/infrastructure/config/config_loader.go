@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/baker-yuan/go-blog/common/jwt"
+	"github.com/baker-yuan/go-blog/go_blog/common/jwt"
 	"github.com/spf13/viper"
 )
 

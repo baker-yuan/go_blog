@@ -8,8 +8,8 @@ import (
 	"context"
 	"errors"
 
-	"github.com/baker-yuan/go-blog/common/db"
-	"github.com/baker-yuan/go-blog/common/util"
+	"github.com/baker-yuan/go-blog/go_blog/common/db"
+	"github.com/baker-yuan/go-blog/go_blog/common/util"
 	"gorm.io/gorm"
 )
 

@@ -80,6 +80,21 @@ func (mr *MockAuthApiServiceMockRecorder) AddOrUpdateRole(ctx, req interface{}) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateRole", reflect.TypeOf((*MockAuthApiService)(nil).AddOrUpdateRole), ctx, req)
 }
 
+// AddOrUpdateTreeNode mocks base method.
+func (m *MockAuthApiService) AddOrUpdateTreeNode(ctx context.Context, req *AddOrUpdateTreeNodeReq) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddOrUpdateTreeNode", ctx, req)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateTreeNode indicates an expected call of AddOrUpdateTreeNode.
+func (mr *MockAuthApiServiceMockRecorder) AddOrUpdateTreeNode(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateTreeNode", reflect.TypeOf((*MockAuthApiService)(nil).AddOrUpdateTreeNode), ctx, req)
+}
+
 // DeleteMenu mocks base method.
 func (m *MockAuthApiService) DeleteMenu(ctx context.Context, req *DeleteMenuReq) (*EmptyRsp, error) {
 	m.ctrl.T.Helper()
@@ -125,6 +140,21 @@ func (mr *MockAuthApiServiceMockRecorder) DeleteRole(ctx, req interface{}) *gomo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteRole", reflect.TypeOf((*MockAuthApiService)(nil).DeleteRole), ctx, req)
 }
 
+// DeleteTreeNode mocks base method.
+func (m *MockAuthApiService) DeleteTreeNode(ctx context.Context, req *DeleteTreeNodeReq) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteTreeNode", ctx, req)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteTreeNode indicates an expected call of DeleteTreeNode.
+func (mr *MockAuthApiServiceMockRecorder) DeleteTreeNode(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTreeNode", reflect.TypeOf((*MockAuthApiService)(nil).DeleteTreeNode), ctx, req)
+}
+
 // GetEffectiveResource mocks base method.
 func (m *MockAuthApiService) GetEffectiveResource(ctx context.Context, req *GetEffectiveResourceReq) (*GetEffectiveResourceRsp, error) {
 	m.ctrl.T.Helper()
@@ -138,6 +168,21 @@ func (m *MockAuthApiService) GetEffectiveResource(ctx context.Context, req *GetE
 func (mr *MockAuthApiServiceMockRecorder) GetEffectiveResource(ctx, req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEffectiveResource", reflect.TypeOf((*MockAuthApiService)(nil).GetEffectiveResource), ctx, req)
+}
+
+// GetTreeByBizType mocks base method.
+func (m *MockAuthApiService) GetTreeByBizType(ctx context.Context, req *GetTreeByBizTypeReq) (*GetTreeByBizTypeRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetTreeByBizType", ctx, req)
+	ret0, _ := ret[0].(*GetTreeByBizTypeRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetTreeByBizType indicates an expected call of GetTreeByBizType.
+func (mr *MockAuthApiServiceMockRecorder) GetTreeByBizType(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTreeByBizType", reflect.TypeOf((*MockAuthApiService)(nil).GetTreeByBizType), ctx, req)
 }
 
 // GetUserResource mocks base method.
@@ -290,6 +335,36 @@ func (mr *MockAuthApiServiceMockRecorder) SearchRole(ctx, req interface{}) *gomo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchRole", reflect.TypeOf((*MockAuthApiService)(nil).SearchRole), ctx, req)
 }
 
+// SearchTreeNode mocks base method.
+func (m *MockAuthApiService) SearchTreeNode(ctx context.Context, req *SearchTreeNodeReq) (*SearchTreeNodeRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SearchTreeNode", ctx, req)
+	ret0, _ := ret[0].(*SearchTreeNodeRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchTreeNode indicates an expected call of SearchTreeNode.
+func (mr *MockAuthApiServiceMockRecorder) SearchTreeNode(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchTreeNode", reflect.TypeOf((*MockAuthApiService)(nil).SearchTreeNode), ctx, req)
+}
+
+// TreeNodeDetail mocks base method.
+func (m *MockAuthApiService) TreeNodeDetail(ctx context.Context, req *TreeNodeDetailReq) (*TreeNode, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "TreeNodeDetail", ctx, req)
+	ret0, _ := ret[0].(*TreeNode)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// TreeNodeDetail indicates an expected call of TreeNodeDetail.
+func (mr *MockAuthApiServiceMockRecorder) TreeNodeDetail(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TreeNodeDetail", reflect.TypeOf((*MockAuthApiService)(nil).TreeNodeDetail), ctx, req)
+}
+
 // UserBindRole mocks base method.
 func (m *MockAuthApiService) UserBindRole(ctx context.Context, req *UserBindRoleReq) (*EmptyRsp, error) {
 	m.ctrl.T.Helper()
@@ -388,6 +463,26 @@ func (mr *MockAuthApiClientProxyMockRecorder) AddOrUpdateRole(ctx, req interface
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateRole", reflect.TypeOf((*MockAuthApiClientProxy)(nil).AddOrUpdateRole), varargs...)
 }
 
+// AddOrUpdateTreeNode mocks base method.
+func (m *MockAuthApiClientProxy) AddOrUpdateTreeNode(ctx context.Context, req *AddOrUpdateTreeNodeReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AddOrUpdateTreeNode", varargs...)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateTreeNode indicates an expected call of AddOrUpdateTreeNode.
+func (mr *MockAuthApiClientProxyMockRecorder) AddOrUpdateTreeNode(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateTreeNode", reflect.TypeOf((*MockAuthApiClientProxy)(nil).AddOrUpdateTreeNode), varargs...)
+}
+
 // DeleteMenu mocks base method.
 func (m *MockAuthApiClientProxy) DeleteMenu(ctx context.Context, req *DeleteMenuReq, opts ...client.Option) (*EmptyRsp, error) {
 	m.ctrl.T.Helper()
@@ -448,6 +543,26 @@ func (mr *MockAuthApiClientProxyMockRecorder) DeleteRole(ctx, req interface{}, o
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteRole", reflect.TypeOf((*MockAuthApiClientProxy)(nil).DeleteRole), varargs...)
 }
 
+// DeleteTreeNode mocks base method.
+func (m *MockAuthApiClientProxy) DeleteTreeNode(ctx context.Context, req *DeleteTreeNodeReq, opts ...client.Option) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteTreeNode", varargs...)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteTreeNode indicates an expected call of DeleteTreeNode.
+func (mr *MockAuthApiClientProxyMockRecorder) DeleteTreeNode(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTreeNode", reflect.TypeOf((*MockAuthApiClientProxy)(nil).DeleteTreeNode), varargs...)
+}
+
 // GetEffectiveResource mocks base method.
 func (m *MockAuthApiClientProxy) GetEffectiveResource(ctx context.Context, req *GetEffectiveResourceReq, opts ...client.Option) (*GetEffectiveResourceRsp, error) {
 	m.ctrl.T.Helper()
@@ -466,6 +581,26 @@ func (mr *MockAuthApiClientProxyMockRecorder) GetEffectiveResource(ctx, req inte
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEffectiveResource", reflect.TypeOf((*MockAuthApiClientProxy)(nil).GetEffectiveResource), varargs...)
+}
+
+// GetTreeByBizType mocks base method.
+func (m *MockAuthApiClientProxy) GetTreeByBizType(ctx context.Context, req *GetTreeByBizTypeReq, opts ...client.Option) (*GetTreeByBizTypeRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetTreeByBizType", varargs...)
+	ret0, _ := ret[0].(*GetTreeByBizTypeRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetTreeByBizType indicates an expected call of GetTreeByBizType.
+func (mr *MockAuthApiClientProxyMockRecorder) GetTreeByBizType(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTreeByBizType", reflect.TypeOf((*MockAuthApiClientProxy)(nil).GetTreeByBizType), varargs...)
 }
 
 // GetUserResource mocks base method.
@@ -666,6 +801,46 @@ func (mr *MockAuthApiClientProxyMockRecorder) SearchRole(ctx, req interface{}, o
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchRole", reflect.TypeOf((*MockAuthApiClientProxy)(nil).SearchRole), varargs...)
+}
+
+// SearchTreeNode mocks base method.
+func (m *MockAuthApiClientProxy) SearchTreeNode(ctx context.Context, req *SearchTreeNodeReq, opts ...client.Option) (*SearchTreeNodeRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SearchTreeNode", varargs...)
+	ret0, _ := ret[0].(*SearchTreeNodeRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchTreeNode indicates an expected call of SearchTreeNode.
+func (mr *MockAuthApiClientProxyMockRecorder) SearchTreeNode(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchTreeNode", reflect.TypeOf((*MockAuthApiClientProxy)(nil).SearchTreeNode), varargs...)
+}
+
+// TreeNodeDetail mocks base method.
+func (m *MockAuthApiClientProxy) TreeNodeDetail(ctx context.Context, req *TreeNodeDetailReq, opts ...client.Option) (*TreeNode, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "TreeNodeDetail", varargs...)
+	ret0, _ := ret[0].(*TreeNode)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// TreeNodeDetail indicates an expected call of TreeNodeDetail.
+func (mr *MockAuthApiClientProxyMockRecorder) TreeNodeDetail(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TreeNodeDetail", reflect.TypeOf((*MockAuthApiClientProxy)(nil).TreeNodeDetail), varargs...)
 }
 
 // UserBindRole mocks base method.

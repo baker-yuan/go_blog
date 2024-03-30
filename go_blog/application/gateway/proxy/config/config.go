@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 
-	"github.com/baker-yuan/go-blog/common/jwt"
+	"github.com/baker-yuan/go-blog/go_blog/common/jwt"
 	"github.com/ilyakaznacheev/cleanenv"
 )
 

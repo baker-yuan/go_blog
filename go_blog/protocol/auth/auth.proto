@@ -1,9 +1,6 @@
-
 syntax = "proto3";
-
 package go_blog.auth;
-
-option  go_package ="github.com/baker-yuan/go-blog/protocol/auth";
+option  go_package ="github.com/baker-yuan/go-blog/go_blog/protocol/auth";
 
 import "validate/validate.proto";
 import "trpc/proto/trpc_options.proto";
@@ -34,7 +31,8 @@ enum ResourceType {
   RT_UNKNOWN = 0; // 未知
   TB_MENU = 1; // 菜单
   TB_RESOURCE = 2; // 接口
-  TB_Role = 3; // 角色
+  TB_ROLE = 3; // 角色
+  TB_TREE_NODE = 4; // 角色
 }
 
 
@@ -320,6 +318,72 @@ message GetUserResourceRsp {
 }
 
 
+// 业务类型
+enum TreeNodeBizType {
+  UNKNOWN_BIZ_TYPE = 0; // 未知
+  RESOURCE = 1; // 接口资源
+}
+
+// 树节点定义
+message TreeNode {
+  uint32 id = 1; // 节点ID
+  string name = 2; // 节点名称
+  uint32 parent_id = 3; // 父节点ID
+  TreeNodeBizType biz_type = 4; // 业务类型
+  repeated TreeNode children = 5; // 子节点列表
+
+  // 公共字段
+  uint32 create_user = 100;        // 创建人id
+  uint32 update_user = 101;        // 更新人id
+  uint32 create_time = 102;        // 创建时间
+  uint32 update_time = 103;        // 更新时间
+}
+
+
+
+
+
+// 树形结构表搜索
+message SearchTreeNodeReq {
+  string search = 1; // 查询条件 {a:?,b:?}
+
+  uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+}
+
+message SearchTreeNodeRsp {
+  uint32 total = 1; // 分页查询
+  repeated TreeNode data = 2; // 树形结构表集合
+}
+
+// 树形结构表详情
+message TreeNodeDetailReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 添加修改树形结构表
+message AddOrUpdateTreeNodeReq {
+  uint32 id = 1; // 节点ID
+  string name = 2 [(validate.rules).string.min_len = 1]; // 节点名称
+  uint32 parent_id = 3; // 父节点ID
+  TreeNodeBizType biz_type = 4 [(validate.rules).enum = {in: [1]}]; // 业务类型
+}
+
+// 删除树形结构表
+message DeleteTreeNodeReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 获取指定业务类型的树形结构
+message GetTreeByBizTypeReq {
+  TreeNodeBizType biz_type = 1 [(validate.rules).enum = {in: [1]}]; // 业务类型
+}
+
+message GetTreeByBizTypeRsp {
+  repeated TreeNode nodes = 1; // 树节点列表
+}
+
+
 // 权限api
 service AuthApi {
   // 菜单搜索
@@ -398,6 +462,29 @@ service AuthApi {
   // 获取用户关联的接口权限
   rpc GetUserResource(GetUserResourceReq) returns (GetUserResourceRsp)  {
     option(trpc.alias) = "/auth/admin/getUserResource";
+  }
+
+
+  // 树形结构表搜索
+  rpc SearchTreeNode(SearchTreeNodeReq) returns (SearchTreeNodeRsp) {
+    option(trpc.alias) = "/auth/admin/searchTreeNode";
+  }
+  // 添加修改树形结构表
+  rpc AddOrUpdateTreeNode(AddOrUpdateTreeNodeReq) returns (AddOrUpdateRsp) {
+    option(trpc.alias) = "/auth/admin/addOrUpdateTreeNode";
+  }
+  // 删除树形结构表
+  rpc DeleteTreeNode(DeleteTreeNodeReq) returns (EmptyRsp)  {
+    option(trpc.alias) = "/auth/admin/deleteTreeNode";
+  }
+  // 树形结构表详情
+  rpc TreeNodeDetail(TreeNodeDetailReq) returns (TreeNode) {
+    option(trpc.alias) = "/auth/admin/treeNodeDetail";
+  }
+
+  // 获取指定业务类型的树形结构
+  rpc GetTreeByBizType (GetTreeByBizTypeReq) returns (GetTreeByBizTypeRsp) {
+    option(trpc.alias) = "/auth/admin/getTreeByBizType";
   }
 
 }

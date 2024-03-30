@@ -221,6 +221,60 @@
     ]
    }
   },
+  "/auth/admin/addOrUpdateTreeNode": {
+   "post": {
+    "summary": "添加修改树形结构表",
+    "operationId": "AddOrUpdateTreeNode",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "biz_type",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE - 接口资源\n",
+      "enum": [
+       0,
+       1
+      ]
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "节点ID"
+     },
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "节点名称"
+     },
+     {
+      "name": "parent_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "父节点ID"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/auth/admin/deleteMenu": {
    "post": {
     "summary": "删除菜单",
@@ -295,6 +349,64 @@
       "type": "integer",
       "format": "uint32",
       "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/deleteTreeNode": {
+   "post": {
+    "summary": "删除树形结构表",
+    "operationId": "DeleteTreeNode",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/getTreeByBizType": {
+   "post": {
+    "summary": "获取指定业务类型的树形结构",
+    "operationId": "GetTreeByBizType",
+    "responses": {
+     "200": {
+      "description": "GetTreeByBizTypeRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.GetTreeByBizTypeRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "biz_type",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE - 接口资源\n",
+      "enum": [
+       0,
+       1
+      ]
      }
     ],
     "tags": [
@@ -611,6 +723,75 @@
       "required": false,
       "type": "string",
       "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/searchTreeNode": {
+   "post": {
+    "summary": "树形结构表搜索",
+    "operationId": "SearchTreeNode",
+    "responses": {
+     "200": {
+      "description": "SearchTreeNodeRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.SearchTreeNodeRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/treeNodeDetail": {
+   "post": {
+    "summary": "树形结构表详情",
+    "operationId": "TreeNodeDetail",
+    "responses": {
+     "200": {
+      "description": "树节点定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.TreeNode"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
      }
     ],
     "tags": [
@@ -1027,6 +1208,60 @@
     ]
    }
   },
+  "/go_blog.auth.AuthApi/AddOrUpdateTreeNode": {
+   "post": {
+    "summary": "添加修改树形结构表",
+    "operationId": "AddOrUpdateTreeNode2",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "biz_type",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE - 接口资源\n",
+      "enum": [
+       0,
+       1
+      ]
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "节点ID"
+     },
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "节点名称"
+     },
+     {
+      "name": "parent_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "父节点ID"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/go_blog.auth.AuthApi/DeleteMenu": {
    "post": {
     "summary": "删除菜单",
@@ -1108,6 +1343,33 @@
     ]
    }
   },
+  "/go_blog.auth.AuthApi/DeleteTreeNode": {
+   "post": {
+    "summary": "删除树形结构表",
+    "operationId": "DeleteTreeNode2",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/go_blog.auth.AuthApi/GetEffectiveResource": {
    "post": {
     "summary": "获取有效状态下的接口",
@@ -1121,6 +1383,37 @@
      }
     },
     "parameters": null,
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.auth.AuthApi/GetTreeByBizType": {
+   "post": {
+    "summary": "获取指定业务类型的树形结构",
+    "operationId": "GetTreeByBizType2",
+    "responses": {
+     "200": {
+      "description": "GetTreeByBizTypeRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.GetTreeByBizTypeRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "biz_type",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE - 接口资源\n",
+      "enum": [
+       0,
+       1
+      ]
+     }
+    ],
     "tags": [
      "authapi.trpc"
     ]
@@ -1469,6 +1762,75 @@
     ]
    }
   },
+  "/go_blog.auth.AuthApi/SearchTreeNode": {
+   "post": {
+    "summary": "树形结构表搜索",
+    "operationId": "SearchTreeNode2",
+    "responses": {
+     "200": {
+      "description": "SearchTreeNodeRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.SearchTreeNodeRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.auth.AuthApi/TreeNodeDetail": {
+   "post": {
+    "summary": "树形结构表详情",
+    "operationId": "TreeNodeDetail2",
+    "responses": {
+     "200": {
+      "description": "树节点定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.TreeNode"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/go_blog.auth.AuthApi/UserBindRole": {
    "post": {
     "summary": "用户绑定角色",
@@ -1542,6 +1904,21 @@
    },
    "title": "go_blog.auth.GetEffectiveResourceRsp",
    "description": "GetEffectiveResourceRsp"
+  },
+  "go_blog.auth.GetTreeByBizTypeRsp": {
+   "type": "object",
+   "properties": {
+    "nodes": {
+     "title": "nodes",
+     "type": "array",
+     "description": " 树节点列表\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.auth.TreeNode"
+     }
+    }
+   },
+   "title": "go_blog.auth.GetTreeByBizTypeRsp",
+   "description": "GetTreeByBizTypeRsp"
   },
   "go_blog.auth.GetUserResourceRsp": {
    "type": "object",
@@ -1891,6 +2268,93 @@
    },
    "title": "go_blog.auth.SearchRoleRsp",
    "description": "SearchRoleRsp"
+  },
+  "go_blog.auth.SearchTreeNodeRsp": {
+   "type": "object",
+   "properties": {
+    "data": {
+     "title": "data",
+     "type": "array",
+     "description": " 树形结构表集合\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.auth.TreeNode"
+     }
+    },
+    "total": {
+     "title": "total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    }
+   },
+   "title": "go_blog.auth.SearchTreeNodeRsp",
+   "description": "SearchTreeNodeRsp"
+  },
+  "go_blog.auth.TreeNode": {
+   "type": "object",
+   "properties": {
+    "biz_type": {
+     "title": "biz_type",
+     "type": "integer",
+     "format": "int32",
+     "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE - 接口资源\n",
+     "enum": [
+      0,
+      1
+     ]
+    },
+    "children": {
+     "title": "children",
+     "type": "array",
+     "description": " 子节点列表\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.auth.TreeNode"
+     }
+    },
+    "create_time": {
+     "title": "create_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "创建时间"
+    },
+    "create_user": {
+     "title": "create_user",
+     "type": "integer",
+     "format": "uint32",
+     "description": "公共字段\n创建人id"
+    },
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "节点ID"
+    },
+    "name": {
+     "title": "name",
+     "type": "string",
+     "description": "节点名称"
+    },
+    "parent_id": {
+     "title": "parent_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "父节点ID"
+    },
+    "update_time": {
+     "title": "update_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新时间"
+    },
+    "update_user": {
+     "title": "update_user",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新人id"
+    }
+   },
+   "title": "go_blog.auth.TreeNode",
+   "description": "树节点定义"
   }
  }
 }

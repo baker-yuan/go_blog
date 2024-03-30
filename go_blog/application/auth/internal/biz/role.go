@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/baker-yuan/go-blog/common/util"
-	pb "github.com/baker-yuan/go-blog/protocol/auth"
+	"github.com/baker-yuan/go-blog/go_blog/common/util"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 )
 
 // Role 角色
@@ -112,7 +112,7 @@ func (c *RoleUseCase) addRole(ctx context.Context, userID uint32, req *pb.AddOrU
 	}
 
 	c.SaveChangeLog(ctx,
-		lastInsertID, pb.ResourceType_TB_Role,
+		lastInsertID, pb.ResourceType_TB_ROLE,
 		"{}", role,
 		"新增角色",
 	)
@@ -132,7 +132,7 @@ func (c *RoleUseCase) updateRole(ctx context.Context, dbRole *Role, userID uint3
 	}
 
 	c.SaveChangeLog(ctx,
-		req.GetId(), pb.ResourceType_TB_Role,
+		req.GetId(), pb.ResourceType_TB_ROLE,
 		dbRole, saveRole,
 		"全字段修改角色",
 	)
@@ -152,7 +152,7 @@ func (c *RoleUseCase) DeleteRole(ctx context.Context, req *pb.DeleteRoleReq) err
 	}
 
 	c.SaveChangeLog(ctx,
-		req.GetId(), pb.ResourceType_TB_Role,
+		req.GetId(), pb.ResourceType_TB_ROLE,
 		role, "{}",
 		"删除角色",
 	)

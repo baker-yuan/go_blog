@@ -8,9 +8,11 @@ import (
 	"github.com/baker-yuan/go-blog/application/user/infrastructure/config"
 	"github.com/baker-yuan/go-blog/application/user/infrastructure/persistence"
 	"github.com/baker-yuan/go-blog/application/user/interfaces"
-	pb "github.com/baker-yuan/go-blog/protocol/user"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/user"
+	"github.com/baker-yuan/go-blog/go_blog/retcode"
 	"trpc.group/trpc-go/trpc-go"
 
+	_ "github.com/baker-yuan/go-blog/go_blog/filters/httptrace"
 	_ "trpc.group/trpc-go/trpc-database/gorm"
 	_ "trpc.group/trpc-go/trpc-filter/debuglog"
 	_ "trpc.group/trpc-go/trpc-filter/recovery"
@@ -63,6 +65,9 @@ func main() {
 	// 注册
 	pb.RegisterUserApiService(trpcServer, userApiImpl)
 	pb.RegisterLoginApiService(trpcServer, loginApiImpl)
+
+	// 异常处理，统一返回值
+	retcode.InitServerCodec(nil)
 
 	// 启动服务
 	log.Fatal(trpcServer.Serve())

@@ -7,7 +7,7 @@ import (
 	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/biz_ctx/http"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/config"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/service"
-	auth_pb "github.com/baker-yuan/go-blog/protocol/auth"
+	auth_pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 )
 
 // ForwardHandler 请求转发处理
@@ -25,7 +25,12 @@ func ForwardHandler(bizCtx biz_ctx.IBizContext, cfg *config.Config) {
 	httpCtx.Proxy().URI().SetHost(instance)
 	httpCtx.Proxy().Header().SetHeader("Content-Type", "application/json")
 
-	httpCtx.SendTo("http", service.InstanceImpl{}, 3*time.Minute)
+	httpCtx.SendTo("http", service.NewInstance(instance), 3*time.Minute)
+
+	httpCtx.Response().SetHeader("Access-Control-Allow-Origin", "*")
+	httpCtx.Response().SetHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+	httpCtx.Response().SetHeader("Access-Control-Allow-Headers", "Content-Type, Authorization")
+	httpCtx.Response().SetHeader("Access-Control-Allow-Credentials", "true")
 
 	//httpCtx, _ := bizCtx.(*http.HttpContext)
 	//

@@ -3899,3 +3899,1027 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetUserResourceRspValidationError{}
+
+// Validate checks the field values on TreeNode with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *TreeNode) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TreeNode with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in TreeNodeMultiError, or nil
+// if none found.
+func (m *TreeNode) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TreeNode) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for Name
+
+	// no validation rules for ParentId
+
+	// no validation rules for BizType
+
+	for idx, item := range m.GetChildren() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, TreeNodeValidationError{
+						field:  fmt.Sprintf("Children[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, TreeNodeValidationError{
+						field:  fmt.Sprintf("Children[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return TreeNodeValidationError{
+					field:  fmt.Sprintf("Children[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
+
+	// no validation rules for CreateTime
+
+	// no validation rules for UpdateTime
+
+	if len(errors) > 0 {
+		return TreeNodeMultiError(errors)
+	}
+
+	return nil
+}
+
+// TreeNodeMultiError is an error wrapping multiple validation errors returned
+// by TreeNode.ValidateAll() if the designated constraints aren't met.
+type TreeNodeMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TreeNodeMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TreeNodeMultiError) AllErrors() []error { return m }
+
+// TreeNodeValidationError is the validation error returned by
+// TreeNode.Validate if the designated constraints aren't met.
+type TreeNodeValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TreeNodeValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TreeNodeValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TreeNodeValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TreeNodeValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TreeNodeValidationError) ErrorName() string { return "TreeNodeValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TreeNodeValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTreeNode.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TreeNodeValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TreeNodeValidationError{}
+
+// Validate checks the field values on SearchTreeNodeReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *SearchTreeNodeReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchTreeNodeReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SearchTreeNodeReqMultiError, or nil if none found.
+func (m *SearchTreeNodeReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchTreeNodeReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Search
+
+	if m.GetPageNum() <= 0 {
+		err := SearchTreeNodeReqValidationError{
+			field:  "PageNum",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetPageSize() <= 0 {
+		err := SearchTreeNodeReqValidationError{
+			field:  "PageSize",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return SearchTreeNodeReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchTreeNodeReqMultiError is an error wrapping multiple validation errors
+// returned by SearchTreeNodeReq.ValidateAll() if the designated constraints
+// aren't met.
+type SearchTreeNodeReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchTreeNodeReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchTreeNodeReqMultiError) AllErrors() []error { return m }
+
+// SearchTreeNodeReqValidationError is the validation error returned by
+// SearchTreeNodeReq.Validate if the designated constraints aren't met.
+type SearchTreeNodeReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchTreeNodeReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchTreeNodeReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchTreeNodeReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchTreeNodeReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchTreeNodeReqValidationError) ErrorName() string {
+	return "SearchTreeNodeReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SearchTreeNodeReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchTreeNodeReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchTreeNodeReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchTreeNodeReqValidationError{}
+
+// Validate checks the field values on SearchTreeNodeRsp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *SearchTreeNodeRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchTreeNodeRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SearchTreeNodeRspMultiError, or nil if none found.
+func (m *SearchTreeNodeRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchTreeNodeRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Total
+
+	for idx, item := range m.GetData() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, SearchTreeNodeRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, SearchTreeNodeRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SearchTreeNodeRspValidationError{
+					field:  fmt.Sprintf("Data[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return SearchTreeNodeRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchTreeNodeRspMultiError is an error wrapping multiple validation errors
+// returned by SearchTreeNodeRsp.ValidateAll() if the designated constraints
+// aren't met.
+type SearchTreeNodeRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchTreeNodeRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchTreeNodeRspMultiError) AllErrors() []error { return m }
+
+// SearchTreeNodeRspValidationError is the validation error returned by
+// SearchTreeNodeRsp.Validate if the designated constraints aren't met.
+type SearchTreeNodeRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchTreeNodeRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchTreeNodeRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchTreeNodeRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchTreeNodeRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchTreeNodeRspValidationError) ErrorName() string {
+	return "SearchTreeNodeRspValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SearchTreeNodeRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchTreeNodeRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchTreeNodeRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchTreeNodeRspValidationError{}
+
+// Validate checks the field values on TreeNodeDetailReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *TreeNodeDetailReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TreeNodeDetailReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// TreeNodeDetailReqMultiError, or nil if none found.
+func (m *TreeNodeDetailReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TreeNodeDetailReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := TreeNodeDetailReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return TreeNodeDetailReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// TreeNodeDetailReqMultiError is an error wrapping multiple validation errors
+// returned by TreeNodeDetailReq.ValidateAll() if the designated constraints
+// aren't met.
+type TreeNodeDetailReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TreeNodeDetailReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TreeNodeDetailReqMultiError) AllErrors() []error { return m }
+
+// TreeNodeDetailReqValidationError is the validation error returned by
+// TreeNodeDetailReq.Validate if the designated constraints aren't met.
+type TreeNodeDetailReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TreeNodeDetailReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TreeNodeDetailReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TreeNodeDetailReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TreeNodeDetailReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TreeNodeDetailReqValidationError) ErrorName() string {
+	return "TreeNodeDetailReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e TreeNodeDetailReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTreeNodeDetailReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TreeNodeDetailReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TreeNodeDetailReqValidationError{}
+
+// Validate checks the field values on AddOrUpdateTreeNodeReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AddOrUpdateTreeNodeReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddOrUpdateTreeNodeReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddOrUpdateTreeNodeReqMultiError, or nil if none found.
+func (m *AddOrUpdateTreeNodeReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddOrUpdateTreeNodeReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		err := AddOrUpdateTreeNodeReqValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for ParentId
+
+	if _, ok := _AddOrUpdateTreeNodeReq_BizType_InLookup[m.GetBizType()]; !ok {
+		err := AddOrUpdateTreeNodeReqValidationError{
+			field:  "BizType",
+			reason: "value must be in list [RESOURCE]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return AddOrUpdateTreeNodeReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddOrUpdateTreeNodeReqMultiError is an error wrapping multiple validation
+// errors returned by AddOrUpdateTreeNodeReq.ValidateAll() if the designated
+// constraints aren't met.
+type AddOrUpdateTreeNodeReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddOrUpdateTreeNodeReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddOrUpdateTreeNodeReqMultiError) AllErrors() []error { return m }
+
+// AddOrUpdateTreeNodeReqValidationError is the validation error returned by
+// AddOrUpdateTreeNodeReq.Validate if the designated constraints aren't met.
+type AddOrUpdateTreeNodeReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddOrUpdateTreeNodeReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddOrUpdateTreeNodeReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddOrUpdateTreeNodeReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddOrUpdateTreeNodeReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddOrUpdateTreeNodeReqValidationError) ErrorName() string {
+	return "AddOrUpdateTreeNodeReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddOrUpdateTreeNodeReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddOrUpdateTreeNodeReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddOrUpdateTreeNodeReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddOrUpdateTreeNodeReqValidationError{}
+
+var _AddOrUpdateTreeNodeReq_BizType_InLookup = map[TreeNodeBizType]struct{}{
+	1: {},
+}
+
+// Validate checks the field values on DeleteTreeNodeReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *DeleteTreeNodeReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteTreeNodeReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeleteTreeNodeReqMultiError, or nil if none found.
+func (m *DeleteTreeNodeReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteTreeNodeReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := DeleteTreeNodeReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DeleteTreeNodeReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeleteTreeNodeReqMultiError is an error wrapping multiple validation errors
+// returned by DeleteTreeNodeReq.ValidateAll() if the designated constraints
+// aren't met.
+type DeleteTreeNodeReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteTreeNodeReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteTreeNodeReqMultiError) AllErrors() []error { return m }
+
+// DeleteTreeNodeReqValidationError is the validation error returned by
+// DeleteTreeNodeReq.Validate if the designated constraints aren't met.
+type DeleteTreeNodeReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteTreeNodeReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteTreeNodeReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteTreeNodeReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteTreeNodeReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteTreeNodeReqValidationError) ErrorName() string {
+	return "DeleteTreeNodeReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteTreeNodeReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteTreeNodeReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteTreeNodeReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteTreeNodeReqValidationError{}
+
+// Validate checks the field values on GetTreeByBizTypeReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetTreeByBizTypeReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetTreeByBizTypeReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetTreeByBizTypeReqMultiError, or nil if none found.
+func (m *GetTreeByBizTypeReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetTreeByBizTypeReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if _, ok := _GetTreeByBizTypeReq_BizType_InLookup[m.GetBizType()]; !ok {
+		err := GetTreeByBizTypeReqValidationError{
+			field:  "BizType",
+			reason: "value must be in list [RESOURCE]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return GetTreeByBizTypeReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetTreeByBizTypeReqMultiError is an error wrapping multiple validation
+// errors returned by GetTreeByBizTypeReq.ValidateAll() if the designated
+// constraints aren't met.
+type GetTreeByBizTypeReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetTreeByBizTypeReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetTreeByBizTypeReqMultiError) AllErrors() []error { return m }
+
+// GetTreeByBizTypeReqValidationError is the validation error returned by
+// GetTreeByBizTypeReq.Validate if the designated constraints aren't met.
+type GetTreeByBizTypeReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetTreeByBizTypeReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetTreeByBizTypeReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetTreeByBizTypeReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetTreeByBizTypeReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetTreeByBizTypeReqValidationError) ErrorName() string {
+	return "GetTreeByBizTypeReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetTreeByBizTypeReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetTreeByBizTypeReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetTreeByBizTypeReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetTreeByBizTypeReqValidationError{}
+
+var _GetTreeByBizTypeReq_BizType_InLookup = map[TreeNodeBizType]struct{}{
+	1: {},
+}
+
+// Validate checks the field values on GetTreeByBizTypeRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetTreeByBizTypeRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetTreeByBizTypeRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetTreeByBizTypeRspMultiError, or nil if none found.
+func (m *GetTreeByBizTypeRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetTreeByBizTypeRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetNodes() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, GetTreeByBizTypeRspValidationError{
+						field:  fmt.Sprintf("Nodes[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, GetTreeByBizTypeRspValidationError{
+						field:  fmt.Sprintf("Nodes[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GetTreeByBizTypeRspValidationError{
+					field:  fmt.Sprintf("Nodes[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return GetTreeByBizTypeRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetTreeByBizTypeRspMultiError is an error wrapping multiple validation
+// errors returned by GetTreeByBizTypeRsp.ValidateAll() if the designated
+// constraints aren't met.
+type GetTreeByBizTypeRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetTreeByBizTypeRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetTreeByBizTypeRspMultiError) AllErrors() []error { return m }
+
+// GetTreeByBizTypeRspValidationError is the validation error returned by
+// GetTreeByBizTypeRsp.Validate if the designated constraints aren't met.
+type GetTreeByBizTypeRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetTreeByBizTypeRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetTreeByBizTypeRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetTreeByBizTypeRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetTreeByBizTypeRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetTreeByBizTypeRspValidationError) ErrorName() string {
+	return "GetTreeByBizTypeRspValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetTreeByBizTypeRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetTreeByBizTypeRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetTreeByBizTypeRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetTreeByBizTypeRspValidationError{}

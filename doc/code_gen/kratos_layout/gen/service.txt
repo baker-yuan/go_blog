@@ -18,11 +18,6 @@ func (s *AuthService) Search$!{tableInfo.name}(ctx context.Context, req *pb.Sear
 	return rsp, nil
 }
 
-// $!{tableInfo.name}Detail $!{tableInfo.comment}详情
-func (s *AuthService) $!{tableInfo.name}Detail(ctx context.Context, req *pb.$!{tableInfo.name}DetailReq) (*pb.$!{tableInfo.name}, error) {
-	return s.$!tool.firstLowerCase($!{tableInfo.name}). $!{tableInfo.name}Detail(ctx, req)
-}
-
 // AddOrUpdate$!{tableInfo.name} 添加修改$!{tableInfo.comment}
 func (s *AuthService) AddOrUpdate$!{tableInfo.name}(ctx context.Context, req *pb.AddOrUpdate$!{tableInfo.name}Req) (*pb.AddOrUpdateRsp, error) {
 	rsp := &pb.AddOrUpdateRsp{}
@@ -41,4 +36,9 @@ func (s *AuthService) Delete$!{tableInfo.name}(ctx context.Context, req *pb.Dele
 		return nil, err
 	}
 	return rsp, nil
+}
+
+// $!{tableInfo.name}Detail $!{tableInfo.comment}详情
+func (s *AuthService) $!{tableInfo.name}Detail(ctx context.Context, req *pb.$!{tableInfo.name}DetailReq) (*pb.$!{tableInfo.name}, error) {
+	return s.$!tool.firstLowerCase($!{tableInfo.name}). $!{tableInfo.name}Detail(ctx, req)
 }

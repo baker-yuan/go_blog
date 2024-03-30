@@ -55,6 +55,16 @@ type AuthApiService interface {
 	GetUserRole(ctx context.Context, req *GetUserRoleReq) (*GetUserRoleRsp, error)
 	// GetUserResource 获取用户关联的接口权限
 	GetUserResource(ctx context.Context, req *GetUserResourceReq) (*GetUserResourceRsp, error)
+	// SearchTreeNode 树形结构表搜索
+	SearchTreeNode(ctx context.Context, req *SearchTreeNodeReq) (*SearchTreeNodeRsp, error)
+	// AddOrUpdateTreeNode 添加修改树形结构表
+	AddOrUpdateTreeNode(ctx context.Context, req *AddOrUpdateTreeNodeReq) (*AddOrUpdateRsp, error)
+	// DeleteTreeNode 删除树形结构表
+	DeleteTreeNode(ctx context.Context, req *DeleteTreeNodeReq) (*EmptyRsp, error)
+	// TreeNodeDetail 树形结构表详情
+	TreeNodeDetail(ctx context.Context, req *TreeNodeDetailReq) (*TreeNode, error)
+	// GetTreeByBizType 获取指定业务类型的树形结构
+	GetTreeByBizType(ctx context.Context, req *GetTreeByBizTypeReq) (*GetTreeByBizTypeRsp, error)
 }
 
 func AuthApiService_SearchMenu_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -381,6 +391,96 @@ func AuthApiService_GetUserResource_Handler(svr interface{}, ctx context.Context
 	return rsp, nil
 }
 
+func AuthApiService_SearchTreeNode_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &SearchTreeNodeReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).SearchTreeNode(ctx, reqbody.(*SearchTreeNodeReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_AddOrUpdateTreeNode_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &AddOrUpdateTreeNodeReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).AddOrUpdateTreeNode(ctx, reqbody.(*AddOrUpdateTreeNodeReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_DeleteTreeNode_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &DeleteTreeNodeReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).DeleteTreeNode(ctx, reqbody.(*DeleteTreeNodeReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_TreeNodeDetail_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &TreeNodeDetailReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).TreeNodeDetail(ctx, reqbody.(*TreeNodeDetailReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_GetTreeByBizType_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &GetTreeByBizTypeReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).GetTreeByBizType(ctx, reqbody.(*GetTreeByBizTypeReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 // AuthApiServer_ServiceDesc descriptor for server.RegisterService.
 var AuthApiServer_ServiceDesc = server.ServiceDesc{
 	ServiceName: "go_blog.auth.AuthApi",
@@ -459,6 +559,26 @@ var AuthApiServer_ServiceDesc = server.ServiceDesc{
 			Func: AuthApiService_GetUserResource_Handler,
 		},
 		{
+			Name: "/auth/admin/searchTreeNode",
+			Func: AuthApiService_SearchTreeNode_Handler,
+		},
+		{
+			Name: "/auth/admin/addOrUpdateTreeNode",
+			Func: AuthApiService_AddOrUpdateTreeNode_Handler,
+		},
+		{
+			Name: "/auth/admin/deleteTreeNode",
+			Func: AuthApiService_DeleteTreeNode_Handler,
+		},
+		{
+			Name: "/auth/admin/treeNodeDetail",
+			Func: AuthApiService_TreeNodeDetail_Handler,
+		},
+		{
+			Name: "/auth/admin/getTreeByBizType",
+			Func: AuthApiService_GetTreeByBizType_Handler,
+		},
+		{
 			Name: "/go_blog.auth.AuthApi/SearchMenu",
 			Func: AuthApiService_SearchMenu_Handler,
 		},
@@ -529,6 +649,26 @@ var AuthApiServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/go_blog.auth.AuthApi/GetUserResource",
 			Func: AuthApiService_GetUserResource_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/SearchTreeNode",
+			Func: AuthApiService_SearchTreeNode_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/AddOrUpdateTreeNode",
+			Func: AuthApiService_AddOrUpdateTreeNode_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/DeleteTreeNode",
+			Func: AuthApiService_DeleteTreeNode_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/TreeNodeDetail",
+			Func: AuthApiService_TreeNodeDetail_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/GetTreeByBizType",
+			Func: AuthApiService_GetTreeByBizType_Handler,
 		},
 	},
 }
@@ -634,6 +774,31 @@ func (s *UnimplementedAuthApi) GetUserResource(ctx context.Context, req *GetUser
 	return nil, errors.New("rpc GetUserResource of service AuthApi is not implemented")
 }
 
+// SearchTreeNode 树形结构表搜索
+func (s *UnimplementedAuthApi) SearchTreeNode(ctx context.Context, req *SearchTreeNodeReq) (*SearchTreeNodeRsp, error) {
+	return nil, errors.New("rpc SearchTreeNode of service AuthApi is not implemented")
+}
+
+// AddOrUpdateTreeNode 添加修改树形结构表
+func (s *UnimplementedAuthApi) AddOrUpdateTreeNode(ctx context.Context, req *AddOrUpdateTreeNodeReq) (*AddOrUpdateRsp, error) {
+	return nil, errors.New("rpc AddOrUpdateTreeNode of service AuthApi is not implemented")
+}
+
+// DeleteTreeNode 删除树形结构表
+func (s *UnimplementedAuthApi) DeleteTreeNode(ctx context.Context, req *DeleteTreeNodeReq) (*EmptyRsp, error) {
+	return nil, errors.New("rpc DeleteTreeNode of service AuthApi is not implemented")
+}
+
+// TreeNodeDetail 树形结构表详情
+func (s *UnimplementedAuthApi) TreeNodeDetail(ctx context.Context, req *TreeNodeDetailReq) (*TreeNode, error) {
+	return nil, errors.New("rpc TreeNodeDetail of service AuthApi is not implemented")
+}
+
+// GetTreeByBizType 获取指定业务类型的树形结构
+func (s *UnimplementedAuthApi) GetTreeByBizType(ctx context.Context, req *GetTreeByBizTypeReq) (*GetTreeByBizTypeRsp, error) {
+	return nil, errors.New("rpc GetTreeByBizType of service AuthApi is not implemented")
+}
+
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
 
 // END ======================================= Server Service Definition ======================================= END
@@ -678,6 +843,16 @@ type AuthApiClientProxy interface {
 	GetUserRole(ctx context.Context, req *GetUserRoleReq, opts ...client.Option) (rsp *GetUserRoleRsp, err error)
 	// GetUserResource 获取用户关联的接口权限
 	GetUserResource(ctx context.Context, req *GetUserResourceReq, opts ...client.Option) (rsp *GetUserResourceRsp, err error)
+	// SearchTreeNode 树形结构表搜索
+	SearchTreeNode(ctx context.Context, req *SearchTreeNodeReq, opts ...client.Option) (rsp *SearchTreeNodeRsp, err error)
+	// AddOrUpdateTreeNode 添加修改树形结构表
+	AddOrUpdateTreeNode(ctx context.Context, req *AddOrUpdateTreeNodeReq, opts ...client.Option) (rsp *AddOrUpdateRsp, err error)
+	// DeleteTreeNode 删除树形结构表
+	DeleteTreeNode(ctx context.Context, req *DeleteTreeNodeReq, opts ...client.Option) (rsp *EmptyRsp, err error)
+	// TreeNodeDetail 树形结构表详情
+	TreeNodeDetail(ctx context.Context, req *TreeNodeDetailReq, opts ...client.Option) (rsp *TreeNode, err error)
+	// GetTreeByBizType 获取指定业务类型的树形结构
+	GetTreeByBizType(ctx context.Context, req *GetTreeByBizTypeReq, opts ...client.Option) (rsp *GetTreeByBizTypeRsp, err error)
 }
 
 type AuthApiClientProxyImpl struct {
@@ -1043,6 +1218,106 @@ func (c *AuthApiClientProxyImpl) GetUserResource(ctx context.Context, req *GetUs
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &GetUserResourceRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) SearchTreeNode(ctx context.Context, req *SearchTreeNodeReq, opts ...client.Option) (*SearchTreeNodeRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/searchTreeNode")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("SearchTreeNode")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &SearchTreeNodeRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) AddOrUpdateTreeNode(ctx context.Context, req *AddOrUpdateTreeNodeReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/addOrUpdateTreeNode")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("AddOrUpdateTreeNode")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &AddOrUpdateRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) DeleteTreeNode(ctx context.Context, req *DeleteTreeNodeReq, opts ...client.Option) (*EmptyRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/deleteTreeNode")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("DeleteTreeNode")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &EmptyRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) TreeNodeDetail(ctx context.Context, req *TreeNodeDetailReq, opts ...client.Option) (*TreeNode, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/treeNodeDetail")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("TreeNodeDetail")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &TreeNode{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) GetTreeByBizType(ctx context.Context, req *GetTreeByBizTypeReq, opts ...client.Option) (*GetTreeByBizTypeRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/getTreeByBizType")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("GetTreeByBizType")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &GetTreeByBizTypeRsp{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}

@@ -1,0 +1,10 @@
+
+### 验证码登录
+POST http://localhost:8849/user/login/byCaptcha
+Content-Type: application/json
+
+{
+  "username": "admin@qq.com",
+  "password": "123456"
+}
+

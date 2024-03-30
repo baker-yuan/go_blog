@@ -1,4 +1,4 @@
-# https://github.com/trpc-group/trpc-go/blob/main/docs/user_guide/framework_conf.zh_CN.md
+ # https://github.com/trpc-group/trpc-go/blob/main/docs/user_guide/framework_conf.zh_CN.md
 
 # https://github.com/trpc-ecosystem/go-naming-polarismesh/blob/main/README.zh_CN.md
 # https://polarismesh.cn
@@ -98,7 +98,7 @@ plugins:
       # 北极星服务的地址 ip1:port1,ip2:port2
       address_list: 127.0.0.1:8091
       # 是否进行服务自注册, 默认为 false
-      register_self: false
+      register_self: true
       # 北极星日志目录
       log_dir: /usr/local/trpc/polarismesh/log
       # 服务缓存持久化目录，按照服务维度将数据持久化到磁盘
@@ -146,4 +146,4 @@ client:
   service:
     # mysql
     - name: trpc.mysql.blog.user
-      target: dsn://root:123456@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True
+      target: dsn://root:123456@tcp(127.0.0.1:3306)/baker_blog_user?charset=utf8mb4&parseTime=True

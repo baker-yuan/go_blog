@@ -11,7 +11,7 @@ import (
 	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/biz_ctx"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/config"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/fasthttp_client"
-	"github.com/baker-yuan/go-blog/common/util"
+	"github.com/baker-yuan/go-blog/go_blog/common/util"
 	"github.com/google/uuid"
 	"github.com/valyala/fasthttp"
 )

@@ -1,6 +1,6 @@
 package entity
 
-import pb "github.com/baker-yuan/go-blog/protocol/blog"
+import pb "github.com/baker-yuan/go-blog/go_blog/protocol/blog"
 
 // Category 文章分类表
 type Category struct {

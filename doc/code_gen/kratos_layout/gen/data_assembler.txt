@@ -28,7 +28,7 @@ func $!{tableInfo.name}POToEntity(db$!{tableInfo.name} *$!{tableInfo.name}) *biz
 }
 
 // $!{tableInfo.name}EntityToPO entity转po
-func $!{tableInfo.name}EntityToPO(role *biz.Role) *$!{tableInfo.name} {
+func $!{tableInfo.name}EntityToPO($!tool.firstLowerCase($!{tableInfo.name}) *biz.$!{tableInfo.name}) *$!{tableInfo.name} {
 	poRes := &$!{tableInfo.name}{
 #foreach($column in $tableInfo.fullColumn)
       $!tool.firstUpperCase($!{column.name}) : $!tool.firstLowerCase($!{tableInfo.name}) . $!tool.firstUpperCase($!{column.name}),

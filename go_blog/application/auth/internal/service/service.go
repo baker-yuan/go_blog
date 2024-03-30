@@ -4,7 +4,7 @@ package service
 
 import (
 	"github.com/baker-yuan/go-blog/application/auth/internal/biz"
-	pb "github.com/baker-yuan/go-blog/protocol/auth"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 	"github.com/google/wire"
 )
 
@@ -20,4 +20,5 @@ type AuthService struct {
 	menu     *biz.MenuUsecase
 	resource *biz.ResourceUseCase
 	role     *biz.RoleUseCase
+	treeNode *biz.TreeNodeUseCase
 }

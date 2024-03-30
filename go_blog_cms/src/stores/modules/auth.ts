@@ -34,6 +34,8 @@ export const useAuthStore = defineStore({
     // Get AuthMenuList
     async getAuthMenuList() {
       const { data } = await getAuthMenuListApi();
+      // 类型转换
+
       this.authMenuList = data;
     },
     // Set RouteName

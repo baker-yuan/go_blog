@@ -3,14 +3,14 @@ module github.com/baker-yuan/go-blog/application/blog/gateway/proxy
 go 1.19
 
 replace (
-	github.com/baker-yuan/go-blog/common => ./../../../common
-	github.com/baker-yuan/go-blog/protocol/auth => ./../../../protocol/auth
+	github.com/baker-yuan/go-blog/go_blog/common => ./../../../common
+	github.com/baker-yuan/go-blog/go_blog/protocol/auth => ./../../../protocol/auth
 	github.com/baker-yuan/go-blog/protocol/datasync => ./../../../protocol/datasync
 )
 
 require (
-	github.com/baker-yuan/go-blog/common v0.0.0-incompatible
-	github.com/baker-yuan/go-blog/protocol/auth v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/common v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/protocol/auth v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/protocol/datasync v0.0.0-incompatible
 	github.com/google/uuid v1.6.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0

@@ -24,6 +24,7 @@ func (s *server) setupAPI() {
 		return newMws
 	}
 
+	// 路由初始化
 	// routes
 	r := internal.SetUpRouter()
 

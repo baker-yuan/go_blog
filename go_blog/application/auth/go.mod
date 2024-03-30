@@ -3,13 +3,17 @@ module github.com/baker-yuan/go-blog/application/auth
 go 1.19
 
 replace (
-	github.com/baker-yuan/go-blog/common => ./../../common
-	github.com/baker-yuan/go-blog/protocol/auth => ./../../protocol/auth
+	github.com/baker-yuan/go-blog/go_blog/common => ./../../common
+	github.com/baker-yuan/go-blog/go_blog/protocol/auth => ./../../protocol/auth
+	github.com/baker-yuan/go-blog/go_blog/filters/httptrace => ./../../filters/httptrace
+	github.com/baker-yuan/go-blog/go_blog/retcode => ./../../retcode
 )
 
 require (
-	github.com/baker-yuan/go-blog/common v0.0.0-incompatible
-	github.com/baker-yuan/go-blog/protocol/auth v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/retcode v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/filters/httptrace v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/common v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/protocol/auth v0.0.0-incompatible
 	github.com/google/wire v0.5.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	go.uber.org/automaxprocs v1.5.3 // indirect
@@ -82,8 +86,8 @@ require (
 	github.com/spf13/cast v1.5.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.48.0 // indirect
-	go.opentelemetry.io/otel v1.13.0 // indirect
-	go.opentelemetry.io/otel/trace v1.13.0 // indirect
+	go.opentelemetry.io/otel v1.24.0 // indirect
+	go.opentelemetry.io/otel/trace v1.24.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.25.0 // indirect

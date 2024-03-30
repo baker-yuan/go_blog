@@ -28,6 +28,7 @@ func NewServer(options *Options) (*server, error) {
 }
 
 func (s *server) Start(errSig chan error) {
+	// 初始化服务 1、路由初始化 2、etcd客户端初始化
 	// initialize server
 	err := s.init()
 	if err != nil {
@@ -68,12 +69,14 @@ func (s *server) Stop() {
 }
 
 func (s *server) init() error {
+	// etcd初始化
 	log.Info("Initialize Manager API store")
 	err := s.setupStore()
 	if err != nil {
 		return err
 	}
 
+	// 路由初始化
 	log.Info("Initialize Manager API server")
 	s.setupAPI()
 

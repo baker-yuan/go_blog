@@ -1,12 +1,12 @@
-/* Menu */
+/* 菜单 */
 declare namespace Menu {
   interface MenuOptions {
-    path: string;
-    name: string;
-    component?: string | (() => Promise<unknown>);
-    redirect?: string;
-    meta: MetaProps;
-    children?: MenuOptions[];
+    path: string; // URL路径
+    name: string; // 名称
+    component?: string | (() => Promise<unknown>); // 组件路径
+    redirect?: string; //
+    meta: MetaProps; // 元数据
+    children?: MenuOptions[]; // 子节点
   }
   interface MetaProps {
     icon: string;

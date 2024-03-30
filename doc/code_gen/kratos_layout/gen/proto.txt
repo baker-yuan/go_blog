@@ -48,5 +48,5 @@ service PortalApi {
   }
   // $!{tableInfo.comment}详情
   rpc $!{tableInfo.name}Detail($!{tableInfo.name}DetailReq) returns ($!{tableInfo.name})  {
-    option(trpc.alias) = "/xxx/$!{tableInfo.name}Detail";
+    option(trpc.alias) = "/xxx/$!tool.firstLowerCase($!{tableInfo.name})Detail";
   }

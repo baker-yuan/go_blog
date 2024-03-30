@@ -87,7 +87,7 @@ var LoginApiServer_ServiceDesc = server.ServiceDesc{
 	HandlerType: ((*LoginApiService)(nil)),
 	Methods: []server.Method{
 		{
-			Name: "/user/login",
+			Name: "/user/login/byCaptcha",
 			Func: LoginApiService_Login_Handler,
 		},
 		{
@@ -167,7 +167,7 @@ var NewLoginApiClientProxy = func(opts ...client.Option) LoginApiClientProxy {
 func (c *LoginApiClientProxyImpl) Login(ctx context.Context, req *LoginReq, opts ...client.Option) (*LoginRsp, error) {
 	ctx, msg := codec.WithCloneMessage(ctx)
 	defer codec.PutBackMessage(msg)
-	msg.WithClientRPCName("/user/login")
+	msg.WithClientRPCName("/user/login/byCaptcha")
 	msg.WithCalleeServiceName(LoginApiServer_ServiceDesc.ServiceName)
 	msg.WithCalleeApp("")
 	msg.WithCalleeServer("")

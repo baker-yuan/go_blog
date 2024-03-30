@@ -1,4 +1,4 @@
-module github.com/baker-yuan/go-blog/protocol/datasync
+module github.com/baker-yuan/go-blog/go_blog/protocol/datasync
 
 go 1.18
 

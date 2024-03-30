@@ -1,4 +1,4 @@
-module github.com/baker-yuan/go-blog/protocol/auth
+module github.com/baker-yuan/go-blog/go_blog/protocol/auth
 
 go 1.18
 

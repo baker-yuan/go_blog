@@ -1,4 +1,4 @@
-module github.com/baker-yuan/go-blog/protocol/user
+module github.com/baker-yuan/go-blog/go_blog/protocol/user
 
 go 1.18
 

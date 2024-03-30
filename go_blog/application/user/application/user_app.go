@@ -7,9 +7,9 @@ import (
 	"github.com/baker-yuan/go-blog/application/user/domain/entity"
 	"github.com/baker-yuan/go-blog/application/user/domain/repository"
 	"github.com/baker-yuan/go-blog/application/user/interfaces/assembler"
-	"github.com/baker-yuan/go-blog/common/jwt"
-	"github.com/baker-yuan/go-blog/common/util"
-	pb "github.com/baker-yuan/go-blog/protocol/user"
+	"github.com/baker-yuan/go-blog/go_blog/common/jwt"
+	"github.com/baker-yuan/go-blog/go_blog/common/util"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/user"
 )
 
 type UserAppInterface interface {

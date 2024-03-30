@@ -81,7 +81,7 @@
     ]
    }
   },
-  "/user/login": {
+  "/user/login/byCaptcha": {
    "post": {
     "summary": "登录",
     "operationId": "Login2",

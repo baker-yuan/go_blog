@@ -12,7 +12,7 @@ import (
 )
 
 // ProviderSet is data providers.
-var ProviderSet = wire.NewSet(NewData, NewMenuRepo, NewResourceRepo, NewRoleRepo)
+var ProviderSet = wire.NewSet(NewData, NewMenuRepo, NewResourceRepo, NewRoleRepo, NewTreeNodeRepo)
 
 // Data 数据操作
 type Data struct {
@@ -37,9 +37,9 @@ func NewData() (*Data, error) {
 
 func Init(db *gorm.DB) error {
 	// 自动建表
-	//if err := InitSchema(db); err != nil {
-	//	return err
-	//}
+	if err := InitSchema(db); err != nil {
+		return err
+	}
 	// 全字段更新
 	if err := InitField(db); err != nil {
 		return err
@@ -71,25 +71,29 @@ func InitField(db *gorm.DB) error {
 // InitSchema 初始化
 func InitSchema(db *gorm.DB) error {
 	schemas := []tableSchema{
+		//{
+		//	TableName: "菜单资源表",
+		//	StructPtr: &Menu{},
+		//},
+		//{
+		//	TableName: "接口资源表",
+		//	StructPtr: &Resource{},
+		//},
+		//{
+		//	TableName: "角色表",
+		//	StructPtr: &Role{},
+		//},
+		//{
+		//	TableName: "角色关联的资源和目录表",
+		//	StructPtr: &RoleAuthority{},
+		//},
+		//{
+		//	TableName: "账号角色绑定表",
+		//	StructPtr: &UserRole{},
+		//},
 		{
-			TableName: "菜单资源表",
-			StructPtr: &Menu{},
-		},
-		{
-			TableName: "接口资源表",
-			StructPtr: &Resource{},
-		},
-		{
-			TableName: "角色表",
-			StructPtr: &Role{},
-		},
-		{
-			TableName: "角色关联的资源和目录表",
-			StructPtr: &RoleAuthority{},
-		},
-		{
-			TableName: "账号角色绑定表",
-			StructPtr: &UserRole{},
+			TableName: "树形结构表",
+			StructPtr: &TreeNode{},
 		},
 	}
 

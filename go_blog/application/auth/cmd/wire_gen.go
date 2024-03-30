@@ -10,15 +10,15 @@ import (
 	"github.com/baker-yuan/go-blog/application/auth/internal/biz"
 	"github.com/baker-yuan/go-blog/application/auth/internal/data"
 	"github.com/baker-yuan/go-blog/application/auth/internal/service"
-	"github.com/baker-yuan/go-blog/protocol/auth"
+	"github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 	"trpc.group/trpc-go/trpc-go/server"
 )
 
 import (
+	_ "github.com/baker-yuan/go-blog/go_blog/filters/httptrace"
 	_ "trpc.group/trpc-go/trpc-database/gorm"
 	_ "trpc.group/trpc-go/trpc-filter/debuglog"
 	_ "trpc.group/trpc-go/trpc-filter/recovery"
-	_ "trpc.group/trpc-go/trpc-filter/validation"
 	_ "trpc.group/trpc-go/trpc-naming-polarismesh"
 )
 
@@ -35,7 +35,9 @@ func wireApp(trpcServer *server.Server) (*App, error) {
 	menuUsecase := biz.NewMenuUsecase(commonUseCase, menuRepo)
 	resourceRepo := data.NewResourceRepo(dataData)
 	resourceUseCase := biz.NewResourceUseCase(commonUseCase, resourceRepo)
-	authService := service.NewAuthService(menuUsecase, resourceUseCase)
+	treeNodeRepo := data.NewTreeNodeRepo(dataData)
+	treeNodeUseCase := biz.NewTreeNodeUseCase(commonUseCase, treeNodeRepo)
+	authService := service.NewAuthService(menuUsecase, resourceUseCase, treeNodeUseCase)
 	app := newApp(trpcServer, authService, dataData)
 	return app, nil
 }

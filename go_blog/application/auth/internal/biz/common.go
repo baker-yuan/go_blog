@@ -3,7 +3,7 @@ package biz
 import (
 	"context"
 
-	pb "github.com/baker-yuan/go-blog/protocol/auth"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 )
 
 // CommonUseCase 通用service

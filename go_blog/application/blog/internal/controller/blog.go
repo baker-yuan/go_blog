@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/baker-yuan/go-blog/application/blog/internal/usecase"
-	pb "github.com/baker-yuan/go-blog/protocol/blog"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/blog"
 )
 
 // BlogServiceImpl 接口实现

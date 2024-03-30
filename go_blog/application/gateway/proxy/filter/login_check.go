@@ -3,7 +3,7 @@ package filter
 import (
 	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/biz_ctx"
 	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/config"
-	auth_pb "github.com/baker-yuan/go-blog/protocol/auth"
+	auth_pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 )
 
 // LoginCheck 登机校验

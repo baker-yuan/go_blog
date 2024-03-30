@@ -3,13 +3,13 @@ module github.com/baker-yuan/go-blog/application/blog/datasync
 go 1.19
 
 replace (
-	github.com/baker-yuan/go-blog/common => ./../../common
+	github.com/baker-yuan/go-blog/go_blog/common => ./../../common
 	github.com/baker-yuan/go-blog/protocol/datasync => ./../../protocol/datasync
 	github.com/siddontang/go-mysql => github.com/go-mysql-org/go-mysql v1.7.0
 )
 
 require (
-	github.com/baker-yuan/go-blog/common v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/common v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/protocol/datasync v0.0.0-incompatible
 	github.com/go-mysql-org/go-mysql v1.7.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0

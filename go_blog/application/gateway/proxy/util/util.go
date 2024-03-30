@@ -1,6 +1,6 @@
 package util
 
-import "github.com/baker-yuan/go-blog/common/jwt"
+import "github.com/baker-yuan/go-blog/go_blog/common/jwt"
 
 var (
 	JwtUtil *jwt.TokenValidator

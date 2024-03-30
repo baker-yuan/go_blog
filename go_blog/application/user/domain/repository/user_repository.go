@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/baker-yuan/go-blog/application/user/domain/entity"
-	pb "github.com/baker-yuan/go-blog/protocol/user"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/user"
 )
 
 type UserRepository interface {

@@ -36,3 +36,6 @@ bin/
 .vscode/
 .idea/
 *.swp
+
+logs/*.log
+output
