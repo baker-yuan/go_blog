@@ -11,16 +11,15 @@ import (
 // Resource 接口资源
 type Resource struct {
 	// 基本信息
-	ID       uint32
-	ParentID uint32
-	Name     string
-	Describe string
+	ID         uint32
+	TreeNodeID uint32
+	Name       string
+	Describe   string
 	//
-	ResourceType pb.ResourceResourceType
-	Status       pb.ResourceStatus
+	Status pb.ResourceStatus
 	// 路径定位
 	URL        string
-	HTTPMethod string
+	HTTPMethod pb.HttpMethod
 	// 权限校验
 	IsNeedLogin      pb.NeedLogin
 	IsNeedPermission pb.NeedPermission
@@ -28,10 +27,10 @@ type Resource struct {
 	Service string
 	Method  string
 	// 公共字段
-	CreateUser uint32
-	UpdateUser uint32
-	CreateTime uint32
-	UpdateTime uint32
+	CreateUserID uint32
+	UpdateUserID uint32
+	CreateTime   uint32
+	UpdateTime   uint32
 }
 
 // Resources 接口集合
@@ -115,9 +114,9 @@ func (c *ResourceUseCase) AddOrUpdateResource(ctx context.Context, req *pb.AddOr
 
 func (c *ResourceUseCase) addResource(ctx context.Context, userID uint32, req *pb.AddOrUpdateResourceReq) (uint32, error) {
 	resource := AddOrUpdateResourceReqToEntity(req)
-	resource.CreateUser = userID
+	resource.CreateUserID = userID
 	resource.CreateTime = uint32(time.Now().Unix())
-	resource.UpdateUser = userID
+	resource.UpdateUserID = userID
 	resource.UpdateTime = uint32(time.Now().Unix())
 
 	lastInsertID, err := c.repo.Save(ctx, resource)
@@ -136,9 +135,9 @@ func (c *ResourceUseCase) addResource(ctx context.Context, userID uint32, req *p
 
 func (c *ResourceUseCase) updateResource(ctx context.Context, dbResource *Resource, userID uint32, req *pb.AddOrUpdateResourceReq) (uint32, error) {
 	saveResource := AddOrUpdateResourceReqToEntity(req)
-	saveResource.CreateUser = dbResource.CreateUser
+	saveResource.CreateUserID = dbResource.CreateUserID
 	saveResource.CreateTime = dbResource.CreateTime
-	saveResource.UpdateUser = userID
+	saveResource.UpdateUserID = userID
 	saveResource.UpdateTime = uint32(time.Now().Unix())
 
 	if err := c.repo.UpdateByID(ctx, saveResource); err != nil {

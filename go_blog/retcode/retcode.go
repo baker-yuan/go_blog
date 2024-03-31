@@ -74,8 +74,6 @@ func FillResponse(ctx context.Context, r *http.Request, standardResp Response) [
 }
 
 // InitServerCodec
-// https://iwiki.woa.com/p/490796254
-// https://mk.woa.com/q/281362
 func InitServerCodec(skipRspHandlerMethods []string) {
 
 	skipRspHandlerMethodMap := util.NewFieldExtractor[string, string]().

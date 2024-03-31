@@ -55,6 +55,9 @@ message Menu {
   uint32 update_user = 11;        // 更新人id
   uint32 create_time = 12;        // 创建时间
   uint32 update_time = 13;        // 更新时间
+
+  // 查询补充字段
+  repeated Menu children = 100; // 子节点
 }
 
 
@@ -97,16 +100,16 @@ message DeleteMenuReq {
   uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
 }
 
-
-
-
-
-// ResourceType 资源类型枚举
-enum ResourceResourceType {
-  UNKNOWN_RESOURCE_TYPE = 0;  // 未知类型
-  DIRECTORY = 1;              // 目录
-  INTERFACE = 2;              // 接口
+// 菜单树
+message MenuTreeReq {
+  string name = 1 ; // 菜单名称
 }
+
+message MenuTreeRsp {
+  repeated Menu nodes = 1;
+}
+
+
 
 // Status 接口状态枚举
 enum ResourceStatus {
@@ -127,19 +130,28 @@ enum NeedPermission {
   PERMISSION_REQUIRED = 1;     // 需要权限校验
 }
 
+// http请求方式
+enum HttpMethod {
+  UNKNOWN = 0;
+  GET = 1;
+  POST = 2;
+  PUT = 3;
+  PATCH = 4;
+  DELETE = 5;
+}
+
 // 接口信息定义
 message Resource {
   // 基本信息
   uint32 id = 1;                  // ID
-  uint32 parent_id = 2;           // 父接口ID
+  uint32 tree_node_id = 2;        // 树节点ID
   string name = 3;                // 接口名称
   string describe = 4;            // 接口描述
   //
-  ResourceResourceType resource_type = 5; // 资源类型 1-目录 2-接口
   ResourceStatus status = 6;              // 接口状态 0-未发布 1-已发布 2-以下线
   // 路径定位
   string url = 7;                 // 接口URL
-  string http_method = 8;         // 请求方式
+  HttpMethod http_method = 8;  // 请求方式 1-get 2-post 3-put 4-patch 5-delete
   // 权限校验
   NeedLogin is_need_login = 9;         // 是否需要登录校验
   NeedPermission is_need_permission = 10;   // 是否需要权限校验
@@ -147,10 +159,13 @@ message Resource {
   string service = 11;            // API服务名
   string method = 12;             // API接口名
   // 公共字段
-  uint32 create_user = 13;        // 创建人id
-  uint32 update_user = 14;        // 更新人id
+  uint32 create_user_id = 13;        // 创建人id
+  uint32 update_user_id = 14;        // 更新人id
   uint32 create_time = 15;        // 创建时间
   uint32 update_time = 16;        // 更新时间
+  // 查询补充
+  string create_user = 100;        // 创建人
+  string update_user = 101;        // 更新人
 }
 
 // 接口搜索
@@ -174,22 +189,21 @@ message ResourceDetailReq {
 // 添加修改接口
 message AddOrUpdateResourceReq {
   // 基本信息
-  uint32 id = 1;                                                   // ID
-  uint32 parent_id = 2 [(validate.rules).uint32.gt = 0];           // 父接口ID
-  string name = 3 [(validate.rules).string.min_len = 1];           // 接口名称
-  string describe = 4 [(validate.rules).string.min_len = 1];       // 接口描述
+  uint32 id = 1; // ID
+  uint32 tree_node_id = 2; // 树节点ID
+  string name = 3 [(validate.rules).string.min_len = 1]; // 接口名称
+  string describe = 4; // 接口描述
   //
-  ResourceResourceType resource_type = 5 [(validate.rules).enum = {in: [1,2]}]; // 资源类型 1-目录 2-接口
-  ResourceStatus status = 6 [(validate.rules).enum = {in: [0,1,2]}];              // 接口状态 0-未发布 1-已发布 2-以下线
+  ResourceStatus status = 6 [(validate.rules).enum = {in: [0,1,2]}]; // 接口状态 0-未发布 1-已发布 2-以下线
   // 路径定位
-  string url = 7 [(validate.rules).string.min_len = 1];                 // 接口URL
-  string http_method = 8 [(validate.rules).string.min_len = 1];         // 请求方式
+  string url = 7 [(validate.rules).string.min_len = 1]; // 接口URL
+  HttpMethod http_method = 8 [(validate.rules).enum = {in: [1,2,3,4,5]}]; // 请求方式
   // 权限校验
-  NeedLogin is_need_login = 9;         // 是否需要登录校验
-  NeedPermission is_need_permission = 10;   // 是否需要权限校验
+  NeedLogin is_need_login = 9; // 是否需要登录校验
+  NeedPermission is_need_permission = 10; // 是否需要权限校验
   // 下游服务信息
-  string service = 11 [(validate.rules).string.min_len = 1];            // API服务名
-  string method = 12 [(validate.rules).string.min_len = 1];             // API接口名
+  string service = 11 [(validate.rules).string.min_len = 1]; // API服务名
+  string method = 12; // API接口名
 }
 
 // 删除接口
@@ -402,7 +416,10 @@ service AuthApi {
   rpc MenuDetail(MenuDetailReq) returns (Menu) {
     option(trpc.alias) = "/auth/admin/menuDetail";
   }
-
+  // 菜单树
+  rpc MenuTree(MenuTreeReq) returns (MenuTreeRsp) {
+    option(trpc.alias) = "/auth/admin/menuTree";
+  }
 
   // 接口搜索
   rpc SearchResource(SearchResourceReq) returns (SearchResourceRsp) {

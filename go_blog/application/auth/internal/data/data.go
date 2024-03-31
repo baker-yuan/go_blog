@@ -71,26 +71,26 @@ func InitField(db *gorm.DB) error {
 // InitSchema 初始化
 func InitSchema(db *gorm.DB) error {
 	schemas := []tableSchema{
-		//{
-		//	TableName: "菜单资源表",
-		//	StructPtr: &Menu{},
-		//},
-		//{
-		//	TableName: "接口资源表",
-		//	StructPtr: &Resource{},
-		//},
+		{
+			TableName: "菜单资源表",
+			StructPtr: &Menu{},
+		},
+		{
+			TableName: "接口资源表",
+			StructPtr: &Resource{},
+		},
 		//{
 		//	TableName: "角色表",
 		//	StructPtr: &Role{},
 		//},
-		//{
-		//	TableName: "角色关联的资源和目录表",
-		//	StructPtr: &RoleAuthority{},
-		//},
-		//{
-		//	TableName: "账号角色绑定表",
-		//	StructPtr: &UserRole{},
-		//},
+		{
+			TableName: "角色关联的资源和目录表",
+			StructPtr: &RoleAuthority{},
+		},
+		{
+			TableName: "账号角色绑定表",
+			StructPtr: &UserRole{},
+		},
 		{
 			TableName: "树形结构表",
 			StructPtr: &TreeNode{},

@@ -13,7 +13,7 @@ import (
 type Article struct {
 	// 基本数据
 	ID          uint32 `gorm:"column:id;type:int unsigned;primary_key;auto_increment;comment:主键"`
-	CategoryID  uint32 `gorm:"column:category_id;type:int(10);unsigned;not null;default:0;comment:文章分类表ID|biz_type表主键"`
+	CategoryID  uint32 `gorm:"column:category_id;type:int unsigned;not null;default:0;comment:文章分类表ID|biz_type表主键"`
 	Title       string `gorm:"column:title;type:varchar(255);not null;default:'';comment:文章标题"`
 	Description string `gorm:"column:description;type:varchar(300);not null;default:'';comment:文章简介，最多200字"`
 	Content     string `gorm:"column:content;type:mediumtext;not null;comment:文章内容"`

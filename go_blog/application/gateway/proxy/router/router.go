@@ -39,7 +39,7 @@ func LoadResourceList(ctx context.Context, cfg *config.Config) error {
 
 func doLoadResourceList(ctx context.Context, cfg *config.Config) error {
 	// 获取权限服务地址
-	instance, err := service.GetOneInstance(cfg.Global.Namespace, "trpc.blog.auth.BlogApiTrpc")
+	instance, err := service.GetOneInstance(cfg.Global.Namespace, "trpc.blog.auth.AuthApiTrpc")
 	if err != nil {
 		panic(err)
 	}

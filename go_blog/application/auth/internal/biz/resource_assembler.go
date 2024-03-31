@@ -6,13 +6,12 @@ import pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 func ResourceEntityToModel(resource *Resource) *pb.Resource {
 	modelRes := &pb.Resource{
 		// 基本信息
-		Id:       resource.ID,
-		ParentId: resource.ParentID,
-		Name:     resource.Name,
-		Describe: resource.Describe,
+		Id:         resource.ID,
+		TreeNodeId: resource.TreeNodeID,
+		Name:       resource.Name,
+		Describe:   resource.Describe,
 		//
-		ResourceType: resource.ResourceType,
-		Status:       resource.Status,
+		Status: resource.Status,
 		// 路径定位
 		Url:        resource.URL,
 		HttpMethod: resource.HTTPMethod,
@@ -23,10 +22,10 @@ func ResourceEntityToModel(resource *Resource) *pb.Resource {
 		Service: resource.Service,
 		Method:  resource.Method,
 		// 公共字段
-		CreateUser: resource.CreateUser,
-		UpdateUser: resource.UpdateUser,
-		CreateTime: resource.CreateTime,
-		UpdateTime: resource.UpdateTime,
+		CreateUserId: resource.CreateUserID,
+		UpdateUserId: resource.UpdateUserID,
+		CreateTime:   resource.CreateTime,
+		UpdateTime:   resource.UpdateTime,
 	}
 	return modelRes
 }
@@ -35,13 +34,12 @@ func ResourceEntityToModel(resource *Resource) *pb.Resource {
 func AddOrUpdateResourceReqToEntity(pbResource *pb.AddOrUpdateResourceReq) *Resource {
 	entityRes := &Resource{
 		// 基本信息
-		ID:       pbResource.Id,
-		ParentID: pbResource.ParentId,
-		Name:     pbResource.Name,
-		Describe: pbResource.Describe,
+		ID:         pbResource.Id,
+		TreeNodeID: pbResource.TreeNodeId,
+		Name:       pbResource.Name,
+		Describe:   pbResource.Describe,
 		//
-		ResourceType: pbResource.ResourceType,
-		Status:       pbResource.Status,
+		Status: pbResource.Status,
 		// 路径定位
 		URL:        pbResource.Url,
 		HTTPMethod: pbResource.HttpMethod,

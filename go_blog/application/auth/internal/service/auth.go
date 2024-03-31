@@ -53,6 +53,17 @@ func (s *AuthService) MenuDetail(ctx context.Context, req *pb.MenuDetailReq) (*p
 	return s.menu.MenuDetail(ctx, req)
 }
 
+// MenuTree 菜单树
+func (s *AuthService) MenuTree(ctx context.Context, req *pb.MenuTreeReq) (*pb.MenuTreeRsp, error) {
+	rsp := &pb.MenuTreeRsp{}
+	nodes, err := s.menu.MenuTree(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Nodes = nodes
+	return rsp, nil
+}
+
 // SearchResource 接口搜索
 func (s *AuthService) SearchResource(ctx context.Context, req *pb.SearchResourceReq) (*pb.SearchResourceRsp, error) {
 	rsp := &pb.SearchResourceRsp{}

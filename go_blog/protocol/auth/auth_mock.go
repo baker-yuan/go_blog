@@ -230,6 +230,21 @@ func (mr *MockAuthApiServiceMockRecorder) MenuDetail(ctx, req interface{}) *gomo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MenuDetail", reflect.TypeOf((*MockAuthApiService)(nil).MenuDetail), ctx, req)
 }
 
+// MenuTree mocks base method.
+func (m *MockAuthApiService) MenuTree(ctx context.Context, req *MenuTreeReq) (*MenuTreeRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "MenuTree", ctx, req)
+	ret0, _ := ret[0].(*MenuTreeRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// MenuTree indicates an expected call of MenuTree.
+func (mr *MockAuthApiServiceMockRecorder) MenuTree(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MenuTree", reflect.TypeOf((*MockAuthApiService)(nil).MenuTree), ctx, req)
+}
+
 // ResourceDetail mocks base method.
 func (m *MockAuthApiService) ResourceDetail(ctx context.Context, req *ResourceDetailReq) (*Resource, error) {
 	m.ctrl.T.Helper()
@@ -661,6 +676,26 @@ func (mr *MockAuthApiClientProxyMockRecorder) MenuDetail(ctx, req interface{}, o
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MenuDetail", reflect.TypeOf((*MockAuthApiClientProxy)(nil).MenuDetail), varargs...)
+}
+
+// MenuTree mocks base method.
+func (m *MockAuthApiClientProxy) MenuTree(ctx context.Context, req *MenuTreeReq, opts ...client.Option) (*MenuTreeRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "MenuTree", varargs...)
+	ret0, _ := ret[0].(*MenuTreeRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// MenuTree indicates an expected call of MenuTree.
+func (mr *MockAuthApiClientProxyMockRecorder) MenuTree(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MenuTree", reflect.TypeOf((*MockAuthApiClientProxy)(nil).MenuTree), varargs...)
 }
 
 // ResourceDetail mocks base method.

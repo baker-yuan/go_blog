@@ -11,8 +11,8 @@ import (
 
 // SearchValue 搜索值
 type SearchValue struct {
-	Value     string `json:"value"`     // 值
-	Condition string `json:"condition"` // 条件
+	Value     interface{} `json:"value"`     // 值
+	Condition string      `json:"condition"` // 条件
 }
 
 var (
@@ -70,9 +70,9 @@ func BuildSearch(ctx context.Context, strSearch string, gormDB *gorm.DB, changeV
 		case NOT_IN:
 			gormDB = gormDB.Where(fmt.Sprintf("`%s` not in ?", k), v.Value)
 		case LIKE:
-			gormDB = gormDB.Where(fmt.Sprintf("`%s` like ?", k), "%"+v.Value+"%")
+			gormDB = gormDB.Where(fmt.Sprintf("`%s` like ?", k), "%"+v.Value.(string)+"%")
 		case NOT_LIKE:
-			gormDB = gormDB.Where(fmt.Sprintf("`%s` not like ?", k), "%"+v.Value+"%")
+			gormDB = gormDB.Where(fmt.Sprintf("`%s` not like ?", k), "%"+v.Value.(string)+"%")
 		default:
 			gormDB = gormDB.Where(fmt.Sprintf("`%s` = ?", k), v.Value)
 		}

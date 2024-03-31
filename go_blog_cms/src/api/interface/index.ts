@@ -88,3 +88,77 @@ export namespace User {
     children?: ResDepartment[];
   }
 }
+
+// 树形结构
+export namespace TreeNode {
+  export interface Model {
+    id: string;
+    name: string;
+    parentId: string;
+    bizType: string;
+    children?: Model[];
+  }
+}
+
+// 接口资源管理模块
+export namespace Resource {
+  // 接口状态枚举
+  export enum ResourceStatus {
+    UNPUBLISHED = 0, // 未发布
+    PUBLISHED = 1, // 已发布
+    OFFLINE = 2 // 以下线
+  }
+
+  // 定义是否需要登录校验的枚举
+  export enum NeedLogin {
+    LOGIN_NOT_REQUIRED = 0, // 不需要登录校验
+    LOGIN_REQUIRED = 1 // 需要登录校验
+  }
+
+  // 定义是否需要权限校验的枚举
+  export enum NeedPermission {
+    PERMISSION_NOT_REQUIRED = 0, // 不需要权限校验
+    PERMISSION_REQUIRED = 1 // 需要权限校验
+  }
+
+  // http请求方式
+  export enum HttpMethod {
+    UNKNOWN = 0,
+    GET = 1,
+    POST = 2,
+    PUT = 3,
+    PATCH = 4,
+    DELETE = 5
+  }
+
+  // 接口资源模型
+  export interface ResourceModel {
+    // 基本信息
+    id: number; // ID
+    treeNodeId: number; // 树节点ID
+    name: string; // 接口名称
+    describe: string; // 接口描述
+    //
+    status: ResourceStatus; // 接口状态
+    // 路径定位
+    url: string; // 接口URL（包含路径变量）
+    httpMethod: string; // 请求方式
+    // 权限校验
+    isNeedLogin: NeedLogin; // 是否需要登录校验
+    isNeedPermission: NeedPermission; // 是否需要权限校验
+    // 下游服务信息
+    service: string; // API服务名
+    method: string; // API接口名
+    // 公共字段
+    createUserId: string; // 创建人id
+    updateUserId: string; // 更新人id
+    createTime: number; // 插入时间
+    updateTime: number; // 修改时间
+    // 查询补充
+    createUser: string; // 创建人
+    updateUser: string; // 更新人
+  }
+
+  // 分页查询接口资源表
+  export interface ReqResourceListParams extends ReqPage {}
+}

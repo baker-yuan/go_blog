@@ -45,6 +45,9 @@ type MenuRepo interface {
 	DeleteByID(ctx context.Context, id uint32) error
 	// SearchMenu 菜单搜索
 	SearchMenu(ctx context.Context, req *pb.SearchMenuReq) (Menus, uint32, error)
+
+	// GetMenuByName 根据名称查询菜单
+	GetMenuByName(ctx context.Context, name string) (Menus, error)
 }
 
 // MenuUsecase 菜单业务实现
@@ -162,4 +165,37 @@ func (c *MenuUsecase) DeleteMenu(ctx context.Context, req *pb.DeleteMenuReq) err
 		"删除菜单",
 	)
 	return nil
+}
+
+// MenuTree 菜单树
+func (c *MenuUsecase) MenuTree(ctx context.Context, req *pb.MenuTreeReq) ([]*pb.Menu, error) {
+	menus, err := c.repo.GetMenuByName(ctx, req.GetName())
+	if err != nil {
+		return nil, err
+	}
+	res := make([]*pb.Menu, 0)
+	for _, treeNode := range menus {
+		res = append(res, MenuEntityToModel(treeNode))
+	}
+
+	return c.buildTree(res), nil
+}
+
+// BuildTreeByBizType 根据业务类型从平面列表构建树形结构。
+func (c *MenuUsecase) buildTree(nodes []*pb.Menu) []*pb.Menu {
+	idMap := make(map[uint32]*pb.Menu)
+	for _, node := range nodes {
+		idMap[node.Id] = node
+	}
+	var rootNodes []*pb.Menu
+	for _, node := range nodes {
+		if node.ParentId == 0 {
+			rootNodes = append(rootNodes, node)
+			continue
+		}
+		if parent, ok := idMap[node.ParentId]; ok {
+			parent.Children = append(parent.Children, node)
+		}
+	}
+	return rootNodes
 }

@@ -63,8 +63,17 @@
       "name": "http_method",
       "in": "query",
       "required": false,
-      "type": "string",
-      "description": "请求方式"
+      "type": "integer",
+      "format": "int32",
+      "description": "请求方式 * 0 - UNKNOWN - \n * 1 - GET - \n * 2 - POST - \n * 3 - PUT - \n * 4 - PATCH - \n * 5 - DELETE - \n",
+      "enum": [
+       0,
+       1,
+       2,
+       3,
+       4,
+       5
+      ]
      },
      {
       "name": "id",
@@ -113,27 +122,6 @@
       "description": "接口名称"
      },
      {
-      "name": "parent_id",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "父接口ID"
-     },
-     {
-      "name": "resource_type",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "int32",
-      "description": "资源类型 1-目录 2-接口 * 0 - UNKNOWN_RESOURCE_TYPE - 未知类型\n * 1 - DIRECTORY - 目录\n * 2 - INTERFACE - 接口\n",
-      "enum": [
-       0,
-       1,
-       2
-      ]
-     },
-     {
       "name": "service",
       "in": "query",
       "required": false,
@@ -152,6 +140,14 @@
        1,
        2
       ]
+     },
+     {
+      "name": "tree_node_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "树节点ID"
      },
      {
       "name": "url",
@@ -492,6 +488,32 @@
       "type": "integer",
       "format": "uint32",
       "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/auth/admin/menuTree": {
+   "post": {
+    "summary": "菜单树",
+    "operationId": "MenuTree",
+    "responses": {
+     "200": {
+      "description": "MenuTreeRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.MenuTreeRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "菜单名称"
      }
     ],
     "tags": [
@@ -1050,8 +1072,17 @@
       "name": "http_method",
       "in": "query",
       "required": false,
-      "type": "string",
-      "description": "请求方式"
+      "type": "integer",
+      "format": "int32",
+      "description": "请求方式 * 0 - UNKNOWN - \n * 1 - GET - \n * 2 - POST - \n * 3 - PUT - \n * 4 - PATCH - \n * 5 - DELETE - \n",
+      "enum": [
+       0,
+       1,
+       2,
+       3,
+       4,
+       5
+      ]
      },
      {
       "name": "id",
@@ -1100,27 +1131,6 @@
       "description": "接口名称"
      },
      {
-      "name": "parent_id",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "父接口ID"
-     },
-     {
-      "name": "resource_type",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "int32",
-      "description": "资源类型 1-目录 2-接口 * 0 - UNKNOWN_RESOURCE_TYPE - 未知类型\n * 1 - DIRECTORY - 目录\n * 2 - INTERFACE - 接口\n",
-      "enum": [
-       0,
-       1,
-       2
-      ]
-     },
-     {
       "name": "service",
       "in": "query",
       "required": false,
@@ -1139,6 +1149,14 @@
        1,
        2
       ]
+     },
+     {
+      "name": "tree_node_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "树节点ID"
      },
      {
       "name": "url",
@@ -1497,6 +1515,32 @@
       "type": "integer",
       "format": "uint32",
       "description": "编号"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.auth.AuthApi/MenuTree": {
+   "post": {
+    "summary": "菜单树",
+    "operationId": "MenuTree2",
+    "responses": {
+     "200": {
+      "description": "MenuTreeRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.MenuTreeRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "菜单名称"
      }
     ],
     "tags": [
@@ -1958,6 +2002,14 @@
   "go_blog.auth.Menu": {
    "type": "object",
    "properties": {
+    "children": {
+     "title": "children",
+     "type": "array",
+     "description": " 查询补充字段\n 子节点\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.auth.Menu"
+     }
+    },
     "component": {
      "title": "component",
      "type": "string",
@@ -2034,6 +2086,20 @@
    "title": "go_blog.auth.Menu",
    "description": "菜单资源信息定义"
   },
+  "go_blog.auth.MenuTreeRsp": {
+   "type": "object",
+   "properties": {
+    "nodes": {
+     "title": "nodes",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/go_blog.auth.Menu"
+     }
+    }
+   },
+   "title": "go_blog.auth.MenuTreeRsp",
+   "description": "MenuTreeRsp"
+  },
   "go_blog.auth.Resource": {
    "type": "object",
    "properties": {
@@ -2045,6 +2111,11 @@
     },
     "create_user": {
      "title": "create_user",
+     "type": "string",
+     "description": "查询补充\n创建人"
+    },
+    "create_user_id": {
+     "title": "create_user_id",
      "type": "integer",
      "format": "uint32",
      "description": "公共字段\n创建人id"
@@ -2056,8 +2127,17 @@
     },
     "http_method": {
      "title": "http_method",
-     "type": "string",
-     "description": "请求方式"
+     "type": "integer",
+     "format": "int32",
+     "description": "请求方式 1-get 2-post 3-put 4-patch 5-delete * 0 - UNKNOWN - \n * 1 - GET - \n * 2 - POST - \n * 3 - PUT - \n * 4 - PATCH - \n * 5 - DELETE - \n",
+     "enum": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ]
     },
     "id": {
      "title": "id",
@@ -2095,23 +2175,6 @@
      "type": "string",
      "description": "接口名称"
     },
-    "parent_id": {
-     "title": "parent_id",
-     "type": "integer",
-     "format": "uint32",
-     "description": "父接口ID"
-    },
-    "resource_type": {
-     "title": "resource_type",
-     "type": "integer",
-     "format": "int32",
-     "description": "资源类型 1-目录 2-接口 * 0 - UNKNOWN_RESOURCE_TYPE - 未知类型\n * 1 - DIRECTORY - 目录\n * 2 - INTERFACE - 接口\n",
-     "enum": [
-      0,
-      1,
-      2
-     ]
-    },
     "service": {
      "title": "service",
      "type": "string",
@@ -2128,6 +2191,12 @@
       2
      ]
     },
+    "tree_node_id": {
+     "title": "tree_node_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "树节点ID"
+    },
     "update_time": {
      "title": "update_time",
      "type": "integer",
@@ -2136,6 +2205,11 @@
     },
     "update_user": {
      "title": "update_user",
+     "type": "string",
+     "description": "更新人"
+    },
+    "update_user_id": {
+     "title": "update_user_id",
      "type": "integer",
      "format": "uint32",
      "description": "更新人id"

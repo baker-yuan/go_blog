@@ -18,3 +18,10 @@ Content-Type: application/json
   "bizType": 1
 }
 
+### 菜单树
+POST http://localhost:8849/auth/admin/menuTree
+Content-Type: application/json
+
+{
+
+}

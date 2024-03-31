@@ -172,11 +172,11 @@ func (c *TreeNodeUseCase) GetTreeByBizType(ctx context.Context, req *pb.GetTreeB
 		res = append(res, TreeNodeEntityToModel(treeNode))
 	}
 
-	return c.buildTreeByBizType(res), nil
+	return c.buildTree(res), nil
 }
 
 // BuildTreeByBizType 根据业务类型从平面列表构建树形结构。
-func (c *TreeNodeUseCase) buildTreeByBizType(nodes []*pb.TreeNode) []*pb.TreeNode {
+func (c *TreeNodeUseCase) buildTree(nodes []*pb.TreeNode) []*pb.TreeNode {
 	idMap := make(map[uint32]*pb.TreeNode)
 	for _, node := range nodes {
 		idMap[node.Id] = node

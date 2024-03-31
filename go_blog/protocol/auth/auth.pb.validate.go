@@ -283,6 +283,40 @@ func (m *Menu) validate(all bool) error {
 
 	// no validation rules for UpdateTime
 
+	for idx, item := range m.GetChildren() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, MenuValidationError{
+						field:  fmt.Sprintf("Children[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, MenuValidationError{
+						field:  fmt.Sprintf("Children[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return MenuValidationError{
+					field:  fmt.Sprintf("Children[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return MenuMultiError(errors)
 	}
@@ -1025,6 +1059,240 @@ var _ interface {
 	ErrorName() string
 } = DeleteMenuReqValidationError{}
 
+// Validate checks the field values on MenuTreeReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *MenuTreeReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on MenuTreeReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in MenuTreeReqMultiError, or
+// nil if none found.
+func (m *MenuTreeReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *MenuTreeReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Name
+
+	if len(errors) > 0 {
+		return MenuTreeReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// MenuTreeReqMultiError is an error wrapping multiple validation errors
+// returned by MenuTreeReq.ValidateAll() if the designated constraints aren't met.
+type MenuTreeReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MenuTreeReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MenuTreeReqMultiError) AllErrors() []error { return m }
+
+// MenuTreeReqValidationError is the validation error returned by
+// MenuTreeReq.Validate if the designated constraints aren't met.
+type MenuTreeReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MenuTreeReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MenuTreeReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MenuTreeReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MenuTreeReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MenuTreeReqValidationError) ErrorName() string { return "MenuTreeReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MenuTreeReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMenuTreeReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MenuTreeReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MenuTreeReqValidationError{}
+
+// Validate checks the field values on MenuTreeRsp with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *MenuTreeRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on MenuTreeRsp with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in MenuTreeRspMultiError, or
+// nil if none found.
+func (m *MenuTreeRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *MenuTreeRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetNodes() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, MenuTreeRspValidationError{
+						field:  fmt.Sprintf("Nodes[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, MenuTreeRspValidationError{
+						field:  fmt.Sprintf("Nodes[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return MenuTreeRspValidationError{
+					field:  fmt.Sprintf("Nodes[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return MenuTreeRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// MenuTreeRspMultiError is an error wrapping multiple validation errors
+// returned by MenuTreeRsp.ValidateAll() if the designated constraints aren't met.
+type MenuTreeRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MenuTreeRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MenuTreeRspMultiError) AllErrors() []error { return m }
+
+// MenuTreeRspValidationError is the validation error returned by
+// MenuTreeRsp.Validate if the designated constraints aren't met.
+type MenuTreeRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MenuTreeRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MenuTreeRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MenuTreeRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MenuTreeRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MenuTreeRspValidationError) ErrorName() string { return "MenuTreeRspValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MenuTreeRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMenuTreeRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MenuTreeRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MenuTreeRspValidationError{}
+
 // Validate checks the field values on Resource with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -1049,13 +1317,11 @@ func (m *Resource) validate(all bool) error {
 
 	// no validation rules for Id
 
-	// no validation rules for ParentId
+	// no validation rules for TreeNodeId
 
 	// no validation rules for Name
 
 	// no validation rules for Describe
-
-	// no validation rules for ResourceType
 
 	// no validation rules for Status
 
@@ -1071,13 +1337,17 @@ func (m *Resource) validate(all bool) error {
 
 	// no validation rules for Method
 
-	// no validation rules for CreateUser
+	// no validation rules for CreateUserId
 
-	// no validation rules for UpdateUser
+	// no validation rules for UpdateUserId
 
 	// no validation rules for CreateTime
 
 	// no validation rules for UpdateTime
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
 
 	if len(errors) > 0 {
 		return ResourceMultiError(errors)
@@ -1557,16 +1827,7 @@ func (m *AddOrUpdateResourceReq) validate(all bool) error {
 
 	// no validation rules for Id
 
-	if m.GetParentId() <= 0 {
-		err := AddOrUpdateResourceReqValidationError{
-			field:  "ParentId",
-			reason: "value must be greater than 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for TreeNodeId
 
 	if utf8.RuneCountInString(m.GetName()) < 1 {
 		err := AddOrUpdateResourceReqValidationError{
@@ -1579,27 +1840,7 @@ func (m *AddOrUpdateResourceReq) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetDescribe()) < 1 {
-		err := AddOrUpdateResourceReqValidationError{
-			field:  "Describe",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if _, ok := _AddOrUpdateResourceReq_ResourceType_InLookup[m.GetResourceType()]; !ok {
-		err := AddOrUpdateResourceReqValidationError{
-			field:  "ResourceType",
-			reason: "value must be in list [DIRECTORY INTERFACE]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Describe
 
 	if _, ok := _AddOrUpdateResourceReq_Status_InLookup[m.GetStatus()]; !ok {
 		err := AddOrUpdateResourceReqValidationError{
@@ -1623,10 +1864,10 @@ func (m *AddOrUpdateResourceReq) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetHttpMethod()) < 1 {
+	if _, ok := _AddOrUpdateResourceReq_HttpMethod_InLookup[m.GetHttpMethod()]; !ok {
 		err := AddOrUpdateResourceReqValidationError{
 			field:  "HttpMethod",
-			reason: "value length must be at least 1 runes",
+			reason: "value must be in list [GET POST PUT PATCH DELETE]",
 		}
 		if !all {
 			return err
@@ -1649,16 +1890,7 @@ func (m *AddOrUpdateResourceReq) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetMethod()) < 1 {
-		err := AddOrUpdateResourceReqValidationError{
-			field:  "Method",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Method
 
 	if len(errors) > 0 {
 		return AddOrUpdateResourceReqMultiError(errors)
@@ -1740,15 +1972,18 @@ var _ interface {
 	ErrorName() string
 } = AddOrUpdateResourceReqValidationError{}
 
-var _AddOrUpdateResourceReq_ResourceType_InLookup = map[ResourceResourceType]struct{}{
-	1: {},
-	2: {},
-}
-
 var _AddOrUpdateResourceReq_Status_InLookup = map[ResourceStatus]struct{}{
 	0: {},
 	1: {},
 	2: {},
+}
+
+var _AddOrUpdateResourceReq_HttpMethod_InLookup = map[HttpMethod]struct{}{
+	1: {},
+	2: {},
+	3: {},
+	4: {},
+	5: {},
 }
 
 // Validate checks the field values on DeleteResourceReq with the rules defined

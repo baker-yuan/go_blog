@@ -19,6 +19,7 @@ import (
 	_ "trpc.group/trpc-go/trpc-database/gorm"
 	_ "trpc.group/trpc-go/trpc-filter/debuglog"
 	_ "trpc.group/trpc-go/trpc-filter/recovery"
+	_ "trpc.group/trpc-go/trpc-filter/validation"
 	_ "trpc.group/trpc-go/trpc-naming-polarismesh"
 )
 
@@ -60,6 +61,8 @@ func newApp(trpcServer *server.Server, serviceImpl *service.AuthService, data2 *
 
 func (app *App) Run() error {
 	auth.RegisterAuthApiService(app.trpcServer, app.serviceImpl)
-	data.Init(app.data.GetDB())
+	if err := data.Init(app.data.GetDB()); err != nil {
+		return err
+	}
 	return app.trpcServer.Serve()
 }

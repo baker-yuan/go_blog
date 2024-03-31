@@ -3,6 +3,7 @@ package data
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/baker-yuan/go-blog/application/auth/internal/biz"
 	"github.com/baker-yuan/go-blog/go_blog/common/db"
@@ -34,8 +35,25 @@ type Menu struct {
 
 // TableName 设置 AuthMenu 结构体对应的数据库表名
 func (m Menu) TableName() string {
-	return "baker_auth_menu"
+	return MenuTbName
 }
+
+var (
+	MenuTbName          = "baker_auth_menu"
+	MenuFieldID         = "id"
+	MenuFieldName       = "name"
+	MenuFieldDescribe   = "describe"
+	MenuFieldPath       = "path"
+	MenuFieldComponent  = "component"
+	MenuFieldIsHidden   = "is_hidden"
+	MenuFieldSortValue  = "sort_value"
+	MenuFieldIcon       = "icon"
+	MenuFieldParentID   = "parent_id"
+	MenuFieldCreateUser = "create_user"
+	MenuFieldUpdateUser = "update_user"
+	MenuFieldCreateTime = "create_time"
+	MenuFieldUpdateTime = "update_time"
+)
 
 // menuRepo 菜单
 type menuRepo struct {
@@ -146,4 +164,17 @@ func (r *menuRepo) SearchMenu(ctx context.Context, req *pb.SearchMenuReq) (biz.M
 		return nil, 0, err
 	}
 	return MenuPOsToEntity(res), uint32(pageTotal), nil
+}
+
+// GetMenuByName 根据名称查询菜单
+func (r *menuRepo) GetMenuByName(ctx context.Context, name string) (biz.Menus, error) {
+	menus := make([]*Menu, 0)
+	tx := r.GenericDao.DB.WithContext(ctx)
+	if len(name) != 0 {
+		tx = tx.Where(fmt.Sprintf("%s like ?", MenuFieldName), "%"+name+"%")
+	}
+	if err := tx.Find(&menus).Error; err != nil {
+		return nil, err
+	}
+	return MenuPOsToEntity(menus), nil
 }

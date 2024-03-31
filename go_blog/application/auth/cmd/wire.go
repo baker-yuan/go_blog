@@ -30,7 +30,9 @@ func newApp(trpcServer *trpc_srv.Server, serviceImpl *service.AuthService, data 
 
 func (app *App) Run() error {
 	pb.RegisterAuthApiService(app.trpcServer, app.serviceImpl)
-	data.Init(app.data.GetDB())
+	if err := data.Init(app.data.GetDB()); err != nil {
+		return err
+	}
 	return app.trpcServer.Serve()
 }
 

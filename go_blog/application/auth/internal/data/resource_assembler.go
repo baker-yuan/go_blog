@@ -16,13 +16,12 @@ func ResourcePOsToEntity(dbResources []*Resource) []*biz.Resource {
 func ResourcePOToEntity(dbResource *Resource) *biz.Resource {
 	res := &biz.Resource{
 		// 基本信息
-		ID:       dbResource.ID,
-		ParentID: dbResource.ParentID,
-		Name:     dbResource.Name,
-		Describe: dbResource.Describe,
+		ID:         dbResource.ID,
+		TreeNodeID: dbResource.TreeNodeID,
+		Name:       dbResource.Name,
+		Describe:   dbResource.Describe,
 		//
-		ResourceType: dbResource.ResourceType,
-		Status:       dbResource.Status,
+		Status: dbResource.Status,
 		// 路径定位
 		URL:        dbResource.URL,
 		HTTPMethod: dbResource.HTTPMethod,
@@ -33,10 +32,10 @@ func ResourcePOToEntity(dbResource *Resource) *biz.Resource {
 		Service: dbResource.Service,
 		Method:  dbResource.Method,
 		// 公共字段
-		CreateUser: dbResource.CreateUser,
-		UpdateUser: dbResource.UpdateUser,
-		CreateTime: uint32(dbResource.CreateTime),
-		UpdateTime: uint32(dbResource.UpdateTime),
+		CreateUserID: dbResource.CreateUserID,
+		UpdateUserID: dbResource.UpdateUserID,
+		CreateTime:   uint32(dbResource.CreateTime),
+		UpdateTime:   uint32(dbResource.UpdateTime),
 	}
 	return res
 }
@@ -44,13 +43,12 @@ func ResourcePOToEntity(dbResource *Resource) *biz.Resource {
 func ResourceEntityToPO(resource *biz.Resource) *Resource {
 	res := &Resource{
 		// 基本信息
-		ID:       resource.ID,
-		ParentID: resource.ParentID,
-		Name:     resource.Name,
-		Describe: resource.Describe,
+		ID:         resource.ID,
+		TreeNodeID: resource.TreeNodeID,
+		Name:       resource.Name,
+		Describe:   resource.Describe,
 		//
-		ResourceType: resource.ResourceType,
-		Status:       resource.Status,
+		Status: resource.Status,
 		// 路径定位
 		URL:        resource.URL,
 		HTTPMethod: resource.HTTPMethod,
@@ -61,10 +59,10 @@ func ResourceEntityToPO(resource *biz.Resource) *Resource {
 		Service: resource.Service,
 		Method:  resource.Method,
 		// 公共字段
-		CreateUser: resource.CreateUser,
-		UpdateUser: resource.UpdateUser,
-		CreateTime: db.Timestamp(resource.CreateTime),
-		UpdateTime: db.Timestamp(resource.UpdateTime),
+		CreateUserID: resource.CreateUserID,
+		UpdateUserID: resource.UpdateUserID,
+		CreateTime:   db.Timestamp(resource.CreateTime),
+		UpdateTime:   db.Timestamp(resource.UpdateTime),
 	}
 	return res
 }

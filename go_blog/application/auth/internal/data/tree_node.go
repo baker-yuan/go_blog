@@ -14,7 +14,7 @@ import (
 // TreeNode 树形结构
 type TreeNode struct {
 	ID       uint32             `gorm:"primary_key;column:id;type:int unsigned auto_increment;comment:节点ID"`
-	ParentID uint32             `gorm:"column:parent_id;type:int(10);unsigned;not null;default:0;comment:父节点ID"`
+	ParentID uint32             `gorm:"column:parent_id;type:int unsigned;not null;default:0;comment:父节点ID"`
 	Name     string             `gorm:"column:name;type:varchar(20);not null;default:'';comment:节点名称"`
 	BizType  pb.TreeNodeBizType `gorm:"column:biz_type;type:tinyint(4);unsigned;not null;default:0;comment:业务类型"`
 	// 公共字段

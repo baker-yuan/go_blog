@@ -9,8 +9,8 @@ import (
 
 // BaseTime 基础的时间字段，每个dao结构体都应该嵌套这个字段
 type BaseTime struct {
-	CreatedAt uint32 `gorm:"column:created_at;type:int(10);unsigned;not null;default:0;comment:创建时间"` // 使用时间戳秒数填充创建时间
-	UpdatedAt uint32 `gorm:"column:updated_at;type:int(10);unsigned;not null;default:0;comment:修改时间"` // 使用时间戳秒数填充修改时间
+	CreatedAt uint32 `gorm:"column:created_at;type:int unsigned;not null;default:0;comment:创建时间"` // 使用时间戳秒数填充创建时间
+	UpdatedAt uint32 `gorm:"column:updated_at;type:int unsigned;not null;default:0;comment:修改时间"` // 使用时间戳秒数填充修改时间
 }
 
 // BeforeCreate gorm创建之前回调

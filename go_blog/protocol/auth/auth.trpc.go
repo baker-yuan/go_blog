@@ -27,6 +27,8 @@ type AuthApiService interface {
 	DeleteMenu(ctx context.Context, req *DeleteMenuReq) (*EmptyRsp, error)
 	// MenuDetail 菜单详情
 	MenuDetail(ctx context.Context, req *MenuDetailReq) (*Menu, error)
+	// MenuTree 菜单树
+	MenuTree(ctx context.Context, req *MenuTreeReq) (*MenuTreeRsp, error)
 	// SearchResource 接口搜索
 	SearchResource(ctx context.Context, req *SearchResourceReq) (*SearchResourceRsp, error)
 	// AddOrUpdateResource 添加修改接口
@@ -129,6 +131,24 @@ func AuthApiService_MenuDetail_Handler(svr interface{}, ctx context.Context, f s
 	}
 	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
 		return svr.(AuthApiService).MenuDetail(ctx, reqbody.(*MenuDetailReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func AuthApiService_MenuTree_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &MenuTreeReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AuthApiService).MenuTree(ctx, reqbody.(*MenuTreeReq))
 	}
 
 	var rsp interface{}
@@ -503,6 +523,10 @@ var AuthApiServer_ServiceDesc = server.ServiceDesc{
 			Func: AuthApiService_MenuDetail_Handler,
 		},
 		{
+			Name: "/auth/admin/menuTree",
+			Func: AuthApiService_MenuTree_Handler,
+		},
+		{
 			Name: "/auth/admin/searchResource",
 			Func: AuthApiService_SearchResource_Handler,
 		},
@@ -593,6 +617,10 @@ var AuthApiServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/go_blog.auth.AuthApi/MenuDetail",
 			Func: AuthApiService_MenuDetail_Handler,
+		},
+		{
+			Name: "/go_blog.auth.AuthApi/MenuTree",
+			Func: AuthApiService_MenuTree_Handler,
 		},
 		{
 			Name: "/go_blog.auth.AuthApi/SearchResource",
@@ -702,6 +730,11 @@ func (s *UnimplementedAuthApi) DeleteMenu(ctx context.Context, req *DeleteMenuRe
 // MenuDetail 菜单详情
 func (s *UnimplementedAuthApi) MenuDetail(ctx context.Context, req *MenuDetailReq) (*Menu, error) {
 	return nil, errors.New("rpc MenuDetail of service AuthApi is not implemented")
+}
+
+// MenuTree 菜单树
+func (s *UnimplementedAuthApi) MenuTree(ctx context.Context, req *MenuTreeReq) (*MenuTreeRsp, error) {
+	return nil, errors.New("rpc MenuTree of service AuthApi is not implemented")
 }
 
 // SearchResource 接口搜索
@@ -815,6 +848,8 @@ type AuthApiClientProxy interface {
 	DeleteMenu(ctx context.Context, req *DeleteMenuReq, opts ...client.Option) (rsp *EmptyRsp, err error)
 	// MenuDetail 菜单详情
 	MenuDetail(ctx context.Context, req *MenuDetailReq, opts ...client.Option) (rsp *Menu, err error)
+	// MenuTree 菜单树
+	MenuTree(ctx context.Context, req *MenuTreeReq, opts ...client.Option) (rsp *MenuTreeRsp, err error)
 	// SearchResource 接口搜索
 	SearchResource(ctx context.Context, req *SearchResourceReq, opts ...client.Option) (rsp *SearchResourceRsp, err error)
 	// AddOrUpdateResource 添加修改接口
@@ -938,6 +973,26 @@ func (c *AuthApiClientProxyImpl) MenuDetail(ctx context.Context, req *MenuDetail
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &Menu{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AuthApiClientProxyImpl) MenuTree(ctx context.Context, req *MenuTreeReq, opts ...client.Option) (*MenuTreeRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/auth/admin/menuTree")
+	msg.WithCalleeServiceName(AuthApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AuthApi")
+	msg.WithCalleeMethod("MenuTree")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &MenuTreeRsp{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}
