@@ -1,6 +1,6 @@
 <template>
   <div class="main-box">
-    <TreeFilter multiple label="name" :request-api="getResourceTree" @change="changeTreeFilter" />
+    <TreeFilter multiple label="name" :request-api="getResourceTree" @change="changeTreeFilter" :expand-all="false" />
     <div class="table-box">
       <ProTable
         ref="proTable"
@@ -13,7 +13,7 @@
       >
         <!-- 表格 header 按钮 -->
         <template #tableHeader>
-          <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')">新增接口</el-button>
+          <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')">新增</el-button>
         </template>
         <!-- 接口状态 -->
         <template #status="scope">
@@ -86,6 +86,7 @@ const changeTreeFilter = (val: string[]) => {
   treeFilterValues.treeNodeId = val;
   // 重置列表页面pageNum
   proTable.value!.pageable.pageNum = 1;
+  proTable.value?.getTableList();
 };
 
 // ProTable 实例
@@ -93,7 +94,6 @@ const proTable = ref<ProTableInstance>();
 
 // 表格配置项
 const columns = reactive<ColumnProps<Resource.ResourceModel>[]>([
-  { type: "selection", fixed: "left", width: 70 },
   {
     prop: "name",
     label: "接口名称",
@@ -118,6 +118,11 @@ const columns = reactive<ColumnProps<Resource.ResourceModel>[]>([
     showOverflowTooltip: false
   },
   {
+    prop: "treeNodePath",
+    label: "路径",
+    width: 300
+  },
+  {
     prop: "httpMethod",
     label: "请求方式",
     width: 100,
@@ -134,20 +139,19 @@ const columns = reactive<ColumnProps<Resource.ResourceModel>[]>([
   {
     prop: "method",
     label: "API接口名",
-    width: 120,
+    width: 250,
     showOverflowTooltip: false
   },
   {
     prop: "describe",
     label: "接口描述",
     showOverflowTooltip: false,
-    width: 150,
-    search: { el: "input" }
+    width: 150
   },
   { prop: "createUser", label: "创建人", width: 120 },
   { prop: "updateUser", label: "更新人", width: 120 },
-  { prop: "createTime", label: "创建时间", width: 120 },
-  { prop: "updateTime", label: "修改时间", width: 120 },
+  { prop: "createTime", label: "创建时间", width: 180 },
+  { prop: "updateTime", label: "修改时间", width: 180 },
   { prop: "operation", label: "操作", fixed: "right", width: 170 }
 ]);
 

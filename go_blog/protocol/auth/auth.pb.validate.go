@@ -275,13 +275,17 @@ func (m *Menu) validate(all bool) error {
 
 	// no validation rules for IsHidden
 
-	// no validation rules for CreateUser
+	// no validation rules for CreateUserId
 
-	// no validation rules for UpdateUser
+	// no validation rules for UpdateUserId
 
 	// no validation rules for CreateTime
 
 	// no validation rules for UpdateTime
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
 
 	for idx, item := range m.GetChildren() {
 		_, _ = idx, item
@@ -540,7 +544,7 @@ func (m *SearchMenuRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Total
+	// no validation rules for PageTotal
 
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
@@ -789,16 +793,7 @@ func (m *AddOrUpdateMenuReq) validate(all bool) error {
 
 	// no validation rules for Id
 
-	if m.GetParentId() <= 0 {
-		err := AddOrUpdateMenuReqValidationError{
-			field:  "ParentId",
-			reason: "value must be greater than 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for ParentId
 
 	if utf8.RuneCountInString(m.GetName()) < 1 {
 		err := AddOrUpdateMenuReqValidationError{
@@ -822,16 +817,7 @@ func (m *AddOrUpdateMenuReq) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetDescribe()) < 1 {
-		err := AddOrUpdateMenuReqValidationError{
-			field:  "Describe",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Describe
 
 	if m.GetSortValue() <= 0 {
 		err := AddOrUpdateMenuReqValidationError{
@@ -855,16 +841,7 @@ func (m *AddOrUpdateMenuReq) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetComponent()) < 1 {
-		err := AddOrUpdateMenuReqValidationError{
-			field:  "Component",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Component
 
 	// no validation rules for IsHidden
 
@@ -1059,22 +1036,22 @@ var _ interface {
 	ErrorName() string
 } = DeleteMenuReqValidationError{}
 
-// Validate checks the field values on MenuTreeReq with the rules defined in
+// Validate checks the field values on GetMenuTreeReq with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *MenuTreeReq) Validate() error {
+func (m *GetMenuTreeReq) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on MenuTreeReq with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in MenuTreeReqMultiError, or
-// nil if none found.
-func (m *MenuTreeReq) ValidateAll() error {
+// ValidateAll checks the field values on GetMenuTreeReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in GetMenuTreeReqMultiError,
+// or nil if none found.
+func (m *GetMenuTreeReq) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *MenuTreeReq) validate(all bool) error {
+func (m *GetMenuTreeReq) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1083,19 +1060,24 @@ func (m *MenuTreeReq) validate(all bool) error {
 
 	// no validation rules for Name
 
+	// no validation rules for PageNum
+
+	// no validation rules for PageSize
+
 	if len(errors) > 0 {
-		return MenuTreeReqMultiError(errors)
+		return GetMenuTreeReqMultiError(errors)
 	}
 
 	return nil
 }
 
-// MenuTreeReqMultiError is an error wrapping multiple validation errors
-// returned by MenuTreeReq.ValidateAll() if the designated constraints aren't met.
-type MenuTreeReqMultiError []error
+// GetMenuTreeReqMultiError is an error wrapping multiple validation errors
+// returned by GetMenuTreeReq.ValidateAll() if the designated constraints
+// aren't met.
+type GetMenuTreeReqMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m MenuTreeReqMultiError) Error() string {
+func (m GetMenuTreeReqMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1104,11 +1086,11 @@ func (m MenuTreeReqMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m MenuTreeReqMultiError) AllErrors() []error { return m }
+func (m GetMenuTreeReqMultiError) AllErrors() []error { return m }
 
-// MenuTreeReqValidationError is the validation error returned by
-// MenuTreeReq.Validate if the designated constraints aren't met.
-type MenuTreeReqValidationError struct {
+// GetMenuTreeReqValidationError is the validation error returned by
+// GetMenuTreeReq.Validate if the designated constraints aren't met.
+type GetMenuTreeReqValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1116,22 +1098,22 @@ type MenuTreeReqValidationError struct {
 }
 
 // Field function returns field value.
-func (e MenuTreeReqValidationError) Field() string { return e.field }
+func (e GetMenuTreeReqValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e MenuTreeReqValidationError) Reason() string { return e.reason }
+func (e GetMenuTreeReqValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e MenuTreeReqValidationError) Cause() error { return e.cause }
+func (e GetMenuTreeReqValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e MenuTreeReqValidationError) Key() bool { return e.key }
+func (e GetMenuTreeReqValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e MenuTreeReqValidationError) ErrorName() string { return "MenuTreeReqValidationError" }
+func (e GetMenuTreeReqValidationError) ErrorName() string { return "GetMenuTreeReqValidationError" }
 
 // Error satisfies the builtin error interface
-func (e MenuTreeReqValidationError) Error() string {
+func (e GetMenuTreeReqValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1143,14 +1125,14 @@ func (e MenuTreeReqValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sMenuTreeReq.%s: %s%s",
+		"invalid %sGetMenuTreeReq.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = MenuTreeReqValidationError{}
+var _ error = GetMenuTreeReqValidationError{}
 
 var _ interface {
 	Field() string
@@ -1158,24 +1140,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = MenuTreeReqValidationError{}
+} = GetMenuTreeReqValidationError{}
 
-// Validate checks the field values on MenuTreeRsp with the rules defined in
+// Validate checks the field values on GetMenuTreeRsp with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *MenuTreeRsp) Validate() error {
+func (m *GetMenuTreeRsp) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on MenuTreeRsp with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in MenuTreeRspMultiError, or
-// nil if none found.
-func (m *MenuTreeRsp) ValidateAll() error {
+// ValidateAll checks the field values on GetMenuTreeRsp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in GetMenuTreeRspMultiError,
+// or nil if none found.
+func (m *GetMenuTreeRsp) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *MenuTreeRsp) validate(all bool) error {
+func (m *GetMenuTreeRsp) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1189,7 +1171,7 @@ func (m *MenuTreeRsp) validate(all bool) error {
 			switch v := interface{}(item).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, MenuTreeRspValidationError{
+					errors = append(errors, GetMenuTreeRspValidationError{
 						field:  fmt.Sprintf("Nodes[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -1197,7 +1179,7 @@ func (m *MenuTreeRsp) validate(all bool) error {
 				}
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
-					errors = append(errors, MenuTreeRspValidationError{
+					errors = append(errors, GetMenuTreeRspValidationError{
 						field:  fmt.Sprintf("Nodes[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -1206,7 +1188,7 @@ func (m *MenuTreeRsp) validate(all bool) error {
 			}
 		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return MenuTreeRspValidationError{
+				return GetMenuTreeRspValidationError{
 					field:  fmt.Sprintf("Nodes[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1216,19 +1198,22 @@ func (m *MenuTreeRsp) validate(all bool) error {
 
 	}
 
+	// no validation rules for PageTotal
+
 	if len(errors) > 0 {
-		return MenuTreeRspMultiError(errors)
+		return GetMenuTreeRspMultiError(errors)
 	}
 
 	return nil
 }
 
-// MenuTreeRspMultiError is an error wrapping multiple validation errors
-// returned by MenuTreeRsp.ValidateAll() if the designated constraints aren't met.
-type MenuTreeRspMultiError []error
+// GetMenuTreeRspMultiError is an error wrapping multiple validation errors
+// returned by GetMenuTreeRsp.ValidateAll() if the designated constraints
+// aren't met.
+type GetMenuTreeRspMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m MenuTreeRspMultiError) Error() string {
+func (m GetMenuTreeRspMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1237,11 +1222,11 @@ func (m MenuTreeRspMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m MenuTreeRspMultiError) AllErrors() []error { return m }
+func (m GetMenuTreeRspMultiError) AllErrors() []error { return m }
 
-// MenuTreeRspValidationError is the validation error returned by
-// MenuTreeRsp.Validate if the designated constraints aren't met.
-type MenuTreeRspValidationError struct {
+// GetMenuTreeRspValidationError is the validation error returned by
+// GetMenuTreeRsp.Validate if the designated constraints aren't met.
+type GetMenuTreeRspValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1249,22 +1234,22 @@ type MenuTreeRspValidationError struct {
 }
 
 // Field function returns field value.
-func (e MenuTreeRspValidationError) Field() string { return e.field }
+func (e GetMenuTreeRspValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e MenuTreeRspValidationError) Reason() string { return e.reason }
+func (e GetMenuTreeRspValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e MenuTreeRspValidationError) Cause() error { return e.cause }
+func (e GetMenuTreeRspValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e MenuTreeRspValidationError) Key() bool { return e.key }
+func (e GetMenuTreeRspValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e MenuTreeRspValidationError) ErrorName() string { return "MenuTreeRspValidationError" }
+func (e GetMenuTreeRspValidationError) ErrorName() string { return "GetMenuTreeRspValidationError" }
 
 // Error satisfies the builtin error interface
-func (e MenuTreeRspValidationError) Error() string {
+func (e GetMenuTreeRspValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1276,14 +1261,14 @@ func (e MenuTreeRspValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sMenuTreeRsp.%s: %s%s",
+		"invalid %sGetMenuTreeRsp.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = MenuTreeRspValidationError{}
+var _ error = GetMenuTreeRspValidationError{}
 
 var _ interface {
 	Field() string
@@ -1291,7 +1276,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = MenuTreeRspValidationError{}
+} = GetMenuTreeRspValidationError{}
 
 // Validate checks the field values on Resource with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
@@ -1348,6 +1333,8 @@ func (m *Resource) validate(all bool) error {
 	// no validation rules for CreateUser
 
 	// no validation rules for UpdateUser
+
+	// no validation rules for TreeNodePath
 
 	if len(errors) > 0 {
 		return ResourceMultiError(errors)
@@ -1574,7 +1561,7 @@ func (m *SearchResourceRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Total
+	// no validation rules for PageTotal
 
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
@@ -2599,7 +2586,7 @@ func (m *SearchRoleRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Total
+	// no validation rules for PageTotal
 
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
@@ -4432,7 +4419,7 @@ func (m *SearchTreeNodeRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Total
+	// no validation rules for PageTotal
 
 	for idx, item := range m.GetData() {
 		_, _ = idx, item

@@ -21,5 +21,5 @@ find ./user -type f ! -name '*.proto' -exec rm -f {} +
 trpc create --protofile=user/user.proto --validate=true --rpconly --alias --swagger -o user
 trpc create --protofile=user/login.proto --validate=true --rpconly --alias --swagger -o user
 
-find ./datasync -type f ! -name 'datasync.proto' -exec rm -f {} +
-trpc create --protofile=datasync/datasync.proto --validate=true --rpconly --alias -o datasync
+#find ./datasync -type f ! -name 'datasync.proto' -exec rm -f {} +
+#trpc create --protofile=datasync/datasync.proto --validate=true --rpconly --alias -o datasync

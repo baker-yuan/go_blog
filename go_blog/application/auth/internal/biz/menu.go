@@ -23,13 +23,22 @@ type Menu struct {
 	// 状态
 	IsHidden bool
 	// 公共字段
-	CreateUser uint32
-	UpdateUser uint32
-	CreateTime uint32
-	UpdateTime uint32
+	CreateUserID uint32
+	UpdateUserID uint32
+	CreateTime   uint32
+	UpdateTime   uint32
 }
 
 type Menus []*Menu
+
+// GetIDs 获取id集合
+func (m Menus) GetIDs() []uint32 {
+	ids := make([]uint32, 0)
+	for _, item := range m {
+		ids = append(ids, item.ID)
+	}
+	return ids
+}
 
 // MenuRepo 菜单
 type MenuRepo interface {
@@ -46,8 +55,10 @@ type MenuRepo interface {
 	// SearchMenu 菜单搜索
 	SearchMenu(ctx context.Context, req *pb.SearchMenuReq) (Menus, uint32, error)
 
-	// GetMenuByName 根据名称查询菜单
-	GetMenuByName(ctx context.Context, name string) (Menus, error)
+	// GetMenuTree 查询菜单树
+	GetMenuTree(ctx context.Context, req *pb.GetMenuTreeReq) (Menus, uint32, error)
+	// GetSubMenu 补充子节点
+	GetSubMenu(ctx context.Context, parentIDs []uint32) (Menus, error)
 }
 
 // MenuUsecase 菜单业务实现
@@ -109,9 +120,9 @@ func (c *MenuUsecase) AddOrUpdateMenu(ctx context.Context, req *pb.AddOrUpdateMe
 
 func (c *MenuUsecase) addMenu(ctx context.Context, userID uint32, req *pb.AddOrUpdateMenuReq) (uint32, error) {
 	menu := AddOrUpdateMenuReqToEntity(req)
-	menu.CreateUser = userID
+	menu.CreateUserID = userID
 	menu.CreateTime = uint32(time.Now().Unix())
-	menu.UpdateUser = userID
+	menu.UpdateUserID = userID
 	menu.UpdateTime = uint32(time.Now().Unix())
 
 	lastInsertID, err := c.repo.Save(ctx, menu)
@@ -130,9 +141,9 @@ func (c *MenuUsecase) addMenu(ctx context.Context, userID uint32, req *pb.AddOrU
 
 func (c *MenuUsecase) updateMenu(ctx context.Context, dbMenu *Menu, userID uint32, req *pb.AddOrUpdateMenuReq) (uint32, error) {
 	saveMenu := AddOrUpdateMenuReqToEntity(req)
-	saveMenu.CreateUser = dbMenu.CreateUser
+	saveMenu.CreateUserID = dbMenu.CreateUserID
 	saveMenu.CreateTime = dbMenu.CreateTime
-	saveMenu.UpdateUser = userID
+	saveMenu.UpdateUserID = userID
 	saveMenu.UpdateTime = uint32(time.Now().Unix())
 
 	if err := c.repo.UpdateByID(ctx, saveMenu); err != nil {
@@ -167,18 +178,26 @@ func (c *MenuUsecase) DeleteMenu(ctx context.Context, req *pb.DeleteMenuReq) err
 	return nil
 }
 
-// MenuTree 菜单树
-func (c *MenuUsecase) MenuTree(ctx context.Context, req *pb.MenuTreeReq) ([]*pb.Menu, error) {
-	menus, err := c.repo.GetMenuByName(ctx, req.GetName())
+// GetMenuTree 菜单树
+func (c *MenuUsecase) GetMenuTree(ctx context.Context, req *pb.GetMenuTreeReq) ([]*pb.Menu, uint32, error) {
+	menus, pageTotal, err := c.repo.GetMenuTree(ctx, req)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
+
+	// 补充子节点
+	subMenus, err := c.repo.GetSubMenu(ctx, menus.GetIDs())
+	if err != nil {
+		return nil, 0, err
+	}
+	menus = append(menus, subMenus...)
+
 	res := make([]*pb.Menu, 0)
 	for _, treeNode := range menus {
 		res = append(res, MenuEntityToModel(treeNode))
 	}
 
-	return c.buildTree(res), nil
+	return c.buildTree(res), pageTotal, nil
 }
 
 // BuildTreeByBizType 根据业务类型从平面列表构建树形结构。

@@ -27,10 +27,10 @@ type Menu struct {
 	// 状态
 	IsHidden db.BoolBit `gorm:"column:is_hidden;type:bit(1);not null;default:b'0';comment:是否隐藏"`
 	// 公共字段
-	CreateUser uint32       `gorm:"column:create_user;type:int unsigned;not null;default:0;comment:创建人id"`
-	UpdateUser uint32       `gorm:"column:update_user;type:int unsigned;not null;default:0;comment:更新人id"`
-	CreateTime db.Timestamp `gorm:"column:create_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:创建时间"`
-	UpdateTime db.Timestamp `gorm:"column:update_time;type:timestamp;not null;default:CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;comment:修改时间"`
+	CreateUserID uint32       `gorm:"column:create_user_id;type:int unsigned;not null;default:0;comment:创建人id"`
+	UpdateUserID uint32       `gorm:"column:update_user_id;type:int unsigned;not null;default:0;comment:更新人id"`
+	CreateTime   db.Timestamp `gorm:"column:create_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:插入时间"`
+	UpdateTime   db.Timestamp `gorm:"column:update_time;type:timestamp;not null;default:CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;comment:修改时间"`
 }
 
 // TableName 设置 AuthMenu 结构体对应的数据库表名
@@ -166,15 +166,80 @@ func (r *menuRepo) SearchMenu(ctx context.Context, req *pb.SearchMenuReq) (biz.M
 	return MenuPOsToEntity(res), uint32(pageTotal), nil
 }
 
-// GetMenuByName 根据名称查询菜单
-func (r *menuRepo) GetMenuByName(ctx context.Context, name string) (biz.Menus, error) {
-	menus := make([]*Menu, 0)
+// GetMenuTree 查询菜单树
+func (r *menuRepo) GetMenuTree(ctx context.Context, req *pb.GetMenuTreeReq) (biz.Menus, uint32, error) {
+	var (
+		menus     []*Menu
+		pageTotal int64
+	)
 	tx := r.GenericDao.DB.WithContext(ctx)
-	if len(name) != 0 {
-		tx = tx.Where(fmt.Sprintf("%s like ?", MenuFieldName), "%"+name+"%")
+	if len(req.GetName()) != 0 {
+		tx = tx.Where(fmt.Sprintf("%s like ?", MenuFieldName), "%"+req.GetName()+"%")
 	}
-	if err := tx.Find(&menus).Error; err != nil {
+	// 对一级目录翻页
+	tx = tx.Where(MenuFieldParentID, 0)
+	if req.GetPageNum() > 0 && req.GetPageSize() > 0 {
+		tx = tx.Offset(int((req.GetPageNum() - 1) * req.GetPageSize())).
+			Limit(int(req.GetPageSize())).
+			Order(fmt.Sprintf("%s asc", MenuFieldSortValue)).
+			Find(&menus).
+			Offset(-1).
+			Limit(-1).
+			Count(&pageTotal)
+	} else {
+		tx = tx.
+			Order(fmt.Sprintf("%s asc", MenuFieldSortValue)).
+			Find(&menus).
+			Count(&pageTotal)
+	}
+
+	if err := tx.Error; err != nil {
+		return nil, 0, err
+	}
+	return MenuPOsToEntity(menus), 0, nil
+}
+
+// GetSubMenu 补充子节点
+func (r *menuRepo) GetSubMenu(ctx context.Context, parentIDs []uint32) (biz.Menus, error) {
+	var subMenus []*Menu
+	// 递归查询子菜单
+	err := r.findSubMenus(ctx, parentIDs, &subMenus)
+	if err != nil {
 		return nil, err
 	}
-	return MenuPOsToEntity(menus), nil
+	return MenuPOsToEntity(subMenus), err
+}
+
+// findSubMenus 是一个递归辅助函数，用于查找和累积子菜单
+func (r *menuRepo) findSubMenus(ctx context.Context, parentIDs []uint32, subMenus *[]*Menu) error {
+	// 根据父ID查询子菜单
+	children, err := r.getMenuByParentIDs(ctx, parentIDs)
+	if err != nil {
+		return err
+	}
+	// 如果没有子菜单，递归结束
+	if len(children) == 0 {
+		return nil
+	}
+	// 将子菜单添加到结果列表
+	*subMenus = append(*subMenus, children...)
+
+	// 为下一层递归准备新的父 ID 列表
+	var nextParentIDs []uint32
+	for _, child := range children {
+		nextParentIDs = append(nextParentIDs, child.ID)
+	}
+	// 递归查询下一层子菜单
+	return r.findSubMenus(ctx, nextParentIDs, subMenus)
+}
+
+// getMenuByParentIDs 根据父节点ID查找
+func (r *menuRepo) getMenuByParentIDs(ctx context.Context, parentIDs []uint32) ([]*Menu, error) {
+	var res []*Menu
+	tx := r.GenericDao.DB.WithContext(ctx)
+	tx = tx.Where(fmt.Sprintf("%s in ?", MenuFieldParentID), parentIDs)
+	if err := tx.Find(&res).Error; err != nil {
+		return nil, err
+	}
+	return res, nil
 }

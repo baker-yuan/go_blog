@@ -1,9 +1,22 @@
 package biz
 
-import pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
+import (
+	"strings"
+
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
+)
+
+// ResourceEntityListToModel entity转pb
+func ResourceEntityListToModel(resourceList []*Resource, treeNodeMap map[uint32][]*pb.TreeNode) []*pb.Resource {
+	res := make([]*pb.Resource, 0)
+	for _, item := range resourceList {
+		res = append(res, ResourceEntityToModel(item, treeNodeMap))
+	}
+	return res
+}
 
 // ResourceEntityToModel entity转pb
-func ResourceEntityToModel(resource *Resource) *pb.Resource {
+func ResourceEntityToModel(resource *Resource, treeNodeMap map[uint32][]*pb.TreeNode) *pb.Resource {
 	modelRes := &pb.Resource{
 		// 基本信息
 		Id:         resource.ID,
@@ -26,6 +39,13 @@ func ResourceEntityToModel(resource *Resource) *pb.Resource {
 		UpdateUserId: resource.UpdateUserID,
 		CreateTime:   resource.CreateTime,
 		UpdateTime:   resource.UpdateTime,
+	}
+	if node, exist := treeNodeMap[resource.TreeNodeID]; exist {
+		treeNodePath := make([]string, 0)
+		for i := len(node) - 1; i >= 0; i-- {
+			treeNodePath = append(treeNodePath, node[i].Name)
+		}
+		modelRes.TreeNodePath = strings.Join(treeNodePath, "/")
 	}
 	return modelRes
 }

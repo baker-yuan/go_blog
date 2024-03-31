@@ -39,6 +39,91 @@
     ]
    }
   },
+  "/auth/admin/addOrUpdateMenu": {
+   "post": {
+    "summary": "添加修改菜单",
+    "operationId": "AddOrUpdateMenu",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "component",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "对应路由组件component"
+     },
+     {
+      "name": "describe",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "功能描述"
+     },
+     {
+      "name": "icon",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "菜单图标"
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "基本信息\nID"
+     },
+     {
+      "name": "is_hidden",
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "状态\n是否隐藏"
+     },
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "菜单名称"
+     },
+     {
+      "name": "parent_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "父级菜单id"
+     },
+     {
+      "name": "path",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "前端\n对应路由path"
+     },
+     {
+      "name": "sort_value",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "排序"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/auth/admin/addOrUpdateResource": {
    "post": {
     "summary": "添加修改接口",
@@ -379,6 +464,48 @@
     ]
    }
   },
+  "/auth/admin/getMenuTree": {
+   "post": {
+    "summary": "菜单树",
+    "operationId": "GetMenuTree",
+    "responses": {
+     "200": {
+      "description": "GetMenuTreeRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.GetMenuTreeRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "菜单名称"
+     },
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/auth/admin/getTreeByBizType": {
    "post": {
     "summary": "获取指定业务类型的树形结构",
@@ -488,32 +615,6 @@
       "type": "integer",
       "format": "uint32",
       "description": "编号"
-     }
-    ],
-    "tags": [
-     "authapi.trpc"
-    ]
-   }
-  },
-  "/auth/admin/menuTree": {
-   "post": {
-    "summary": "菜单树",
-    "operationId": "MenuTree",
-    "responses": {
-     "200": {
-      "description": "MenuTreeRsp",
-      "schema": {
-       "$ref": "#/definitions/go_blog.auth.MenuTreeRsp"
-      }
-     }
-    },
-    "parameters": [
-     {
-      "name": "name",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "菜单名称"
      }
     ],
     "tags": [
@@ -814,91 +915,6 @@
       "type": "integer",
       "format": "uint32",
       "description": "编号"
-     }
-    ],
-    "tags": [
-     "authapi.trpc"
-    ]
-   }
-  },
-  "/auth/admin/updateMenu": {
-   "post": {
-    "summary": "添加修改菜单",
-    "operationId": "AddOrUpdateMenu",
-    "responses": {
-     "200": {
-      "description": "添加修改资源返回值",
-      "schema": {
-       "$ref": "#/definitions/go_blog.auth.AddOrUpdateRsp"
-      }
-     }
-    },
-    "parameters": [
-     {
-      "name": "component",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "对应路由组件component"
-     },
-     {
-      "name": "describe",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "功能描述"
-     },
-     {
-      "name": "icon",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "菜单图标"
-     },
-     {
-      "name": "id",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "基本信息\nID"
-     },
-     {
-      "name": "is_hidden",
-      "in": "query",
-      "required": false,
-      "type": "boolean",
-      "description": "状态\n是否隐藏"
-     },
-     {
-      "name": "name",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "菜单名称"
-     },
-     {
-      "name": "parent_id",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "父级菜单id"
-     },
-     {
-      "name": "path",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "前端\n对应路由path"
-     },
-     {
-      "name": "sort_value",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "排序"
      }
     ],
     "tags": [
@@ -1406,6 +1422,48 @@
     ]
    }
   },
+  "/go_blog.auth.AuthApi/GetMenuTree": {
+   "post": {
+    "summary": "菜单树",
+    "operationId": "GetMenuTree2",
+    "responses": {
+     "200": {
+      "description": "GetMenuTreeRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.auth.GetMenuTreeRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "菜单名称"
+     },
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     }
+    ],
+    "tags": [
+     "authapi.trpc"
+    ]
+   }
+  },
   "/go_blog.auth.AuthApi/GetTreeByBizType": {
    "post": {
     "summary": "获取指定业务类型的树形结构",
@@ -1515,32 +1573,6 @@
       "type": "integer",
       "format": "uint32",
       "description": "编号"
-     }
-    ],
-    "tags": [
-     "authapi.trpc"
-    ]
-   }
-  },
-  "/go_blog.auth.AuthApi/MenuTree": {
-   "post": {
-    "summary": "菜单树",
-    "operationId": "MenuTree2",
-    "responses": {
-     "200": {
-      "description": "MenuTreeRsp",
-      "schema": {
-       "$ref": "#/definitions/go_blog.auth.MenuTreeRsp"
-      }
-     }
-    },
-    "parameters": [
-     {
-      "name": "name",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "菜单名称"
      }
     ],
     "tags": [
@@ -1949,6 +1981,25 @@
    "title": "go_blog.auth.GetEffectiveResourceRsp",
    "description": "GetEffectiveResourceRsp"
   },
+  "go_blog.auth.GetMenuTreeRsp": {
+   "type": "object",
+   "properties": {
+    "nodes": {
+     "title": "nodes",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/go_blog.auth.Menu"
+     }
+    },
+    "page_total": {
+     "title": "page_total",
+     "type": "integer",
+     "format": "uint32"
+    }
+   },
+   "title": "go_blog.auth.GetMenuTreeRsp",
+   "description": "GetMenuTreeRsp"
+  },
   "go_blog.auth.GetTreeByBizTypeRsp": {
    "type": "object",
    "properties": {
@@ -2005,7 +2056,7 @@
     "children": {
      "title": "children",
      "type": "array",
-     "description": " 查询补充字段\n 子节点\n",
+     "description": " 子节点\n",
      "items": {
       "$ref": "#/definitions/go_blog.auth.Menu"
      }
@@ -2023,6 +2074,11 @@
     },
     "create_user": {
      "title": "create_user",
+     "type": "string",
+     "description": "查询补充字段\n创建人id"
+    },
+    "create_user_id": {
+     "title": "create_user_id",
      "type": "integer",
      "format": "uint32",
      "description": "公共字段\n创建人id"
@@ -2078,6 +2134,11 @@
     },
     "update_user": {
      "title": "update_user",
+     "type": "string",
+     "description": "更新人id"
+    },
+    "update_user_id": {
+     "title": "update_user_id",
      "type": "integer",
      "format": "uint32",
      "description": "更新人id"
@@ -2085,20 +2146,6 @@
    },
    "title": "go_blog.auth.Menu",
    "description": "菜单资源信息定义"
-  },
-  "go_blog.auth.MenuTreeRsp": {
-   "type": "object",
-   "properties": {
-    "nodes": {
-     "title": "nodes",
-     "type": "array",
-     "items": {
-      "$ref": "#/definitions/go_blog.auth.Menu"
-     }
-    }
-   },
-   "title": "go_blog.auth.MenuTreeRsp",
-   "description": "MenuTreeRsp"
   },
   "go_blog.auth.Resource": {
    "type": "object",
@@ -2197,6 +2244,11 @@
      "format": "uint32",
      "description": "树节点ID"
     },
+    "tree_node_path": {
+     "title": "tree_node_path",
+     "type": "string",
+     "description": "树节点路径"
+    },
     "update_time": {
      "title": "update_time",
      "type": "integer",
@@ -2291,8 +2343,8 @@
       "$ref": "#/definitions/go_blog.auth.Menu"
      }
     },
-    "total": {
-     "title": "total",
+    "page_total": {
+     "title": "page_total",
      "type": "integer",
      "format": "uint32",
      "description": "分页查询"
@@ -2312,8 +2364,8 @@
       "$ref": "#/definitions/go_blog.auth.Resource"
      }
     },
-    "total": {
-     "title": "total",
+    "page_total": {
+     "title": "page_total",
      "type": "integer",
      "format": "uint32",
      "description": "分页查询"
@@ -2333,8 +2385,8 @@
       "$ref": "#/definitions/go_blog.auth.Role"
      }
     },
-    "total": {
-     "title": "total",
+    "page_total": {
+     "title": "page_total",
      "type": "integer",
      "format": "uint32",
      "description": "分页查询"
@@ -2354,8 +2406,8 @@
       "$ref": "#/definitions/go_blog.auth.TreeNode"
      }
     },
-    "total": {
-     "title": "total",
+    "page_total": {
+     "title": "page_total",
      "type": "integer",
      "format": "uint32",
      "description": "分页查询"

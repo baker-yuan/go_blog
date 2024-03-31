@@ -24,7 +24,7 @@ func (s *AuthService) SearchMenu(ctx context.Context, req *pb.SearchMenuReq) (*p
 		return nil, err
 	}
 	rsp.Data = menus
-	rsp.Total = pageTotal
+	rsp.PageTotal = pageTotal
 	return rsp, nil
 }
 
@@ -53,14 +53,15 @@ func (s *AuthService) MenuDetail(ctx context.Context, req *pb.MenuDetailReq) (*p
 	return s.menu.MenuDetail(ctx, req)
 }
 
-// MenuTree 菜单树
-func (s *AuthService) MenuTree(ctx context.Context, req *pb.MenuTreeReq) (*pb.MenuTreeRsp, error) {
-	rsp := &pb.MenuTreeRsp{}
-	nodes, err := s.menu.MenuTree(ctx, req)
+// GetMenuTree 菜单树
+func (s *AuthService) GetMenuTree(ctx context.Context, req *pb.GetMenuTreeReq) (*pb.GetMenuTreeRsp, error) {
+	rsp := &pb.GetMenuTreeRsp{}
+	nodes, pageTotal, err := s.menu.GetMenuTree(ctx, req)
 	if err != nil {
 		return nil, err
 	}
 	rsp.Nodes = nodes
+	rsp.PageTotal = pageTotal
 	return rsp, nil
 }
 
@@ -72,7 +73,7 @@ func (s *AuthService) SearchResource(ctx context.Context, req *pb.SearchResource
 		return nil, err
 	}
 	rsp.Data = resources
-	rsp.Total = pageTotal
+	rsp.PageTotal = pageTotal
 	return rsp, nil
 }
 
@@ -121,7 +122,7 @@ func (s *AuthService) SearchRole(ctx context.Context, req *pb.SearchRoleReq) (*p
 		return nil, err
 	}
 	rsp.Data = roles
-	rsp.Total = pageTotal
+	rsp.PageTotal = pageTotal
 	return rsp, nil
 }
 
@@ -188,7 +189,7 @@ func (s *AuthService) SearchTreeNode(ctx context.Context, req *pb.SearchTreeNode
 		return nil, err
 	}
 	rsp.Data = treeNodes
-	rsp.Total = pageTotal
+	rsp.PageTotal = pageTotal
 	return rsp, nil
 }
 

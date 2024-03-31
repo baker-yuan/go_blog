@@ -51,13 +51,15 @@ message Menu {
   // 状态
   bool is_hidden = 9;             // 是否隐藏
   // 公共字段
-  uint32 create_user = 10;        // 创建人id
-  uint32 update_user = 11;        // 更新人id
+  uint32 create_user_id = 10;     // 创建人id
+  uint32 update_user_id = 11;     // 更新人id
   uint32 create_time = 12;        // 创建时间
   uint32 update_time = 13;        // 更新时间
 
   // 查询补充字段
-  repeated Menu children = 100; // 子节点
+  string create_user = 100;        // 创建人id
+  string update_user = 101;        // 更新人id
+  repeated Menu children = 200; // 子节点
 }
 
 
@@ -70,7 +72,7 @@ message SearchMenuReq {
 }
 
 message SearchMenuRsp {
-  uint32 total = 1; // 分页查询
+  uint32 page_total = 1; // 分页查询
   repeated Menu data = 2; // 菜单集合
 }
 
@@ -83,14 +85,14 @@ message MenuDetailReq {
 message AddOrUpdateMenuReq {
   // 基本信息
   uint32 id = 1;                                                        // ID
-  uint32 parent_id = 2 [(validate.rules).uint32.gt = 0];                // 父级菜单id
+  uint32 parent_id = 2;                // 父级菜单id
   string name = 3 [(validate.rules).string.min_len = 1];                // 菜单名称
   string icon = 4 [(validate.rules).string.min_len = 1];                // 菜单图标
-  string describe = 5 [(validate.rules).string.min_len = 1];            // 功能描述
+  string describe = 5;            // 功能描述
   uint32 sort_value = 6 [(validate.rules).uint32.gt = 0];               // 排序
   // 前端
   string path = 7 [(validate.rules).string.min_len = 1];                // 对应路由path
-  string component = 8 [(validate.rules).string.min_len = 1];           // 对应路由组件component
+  string component = 8;           // 对应路由组件component
   // 状态
   bool is_hidden = 9;                                                    // 是否隐藏
 }
@@ -101,12 +103,17 @@ message DeleteMenuReq {
 }
 
 // 菜单树
-message MenuTreeReq {
+message GetMenuTreeReq {
   string name = 1 ; // 菜单名称
+
+  uint32 page_num = 100; // 分页查询
+  uint32 page_size = 101; // 分页查询
 }
 
-message MenuTreeRsp {
+message GetMenuTreeRsp {
   repeated Menu nodes = 1;
+
+  uint32 page_total = 10;
 }
 
 
@@ -166,6 +173,7 @@ message Resource {
   // 查询补充
   string create_user = 100;        // 创建人
   string update_user = 101;        // 更新人
+  string tree_node_path = 102;     // 树节点路径
 }
 
 // 接口搜索
@@ -177,7 +185,7 @@ message SearchResourceReq {
 }
 
 message SearchResourceRsp {
-  uint32 total = 1; // 分页查询
+  uint32 page_total = 1; // 分页查询
   repeated Resource data = 2; // 接口集合
 }
 
@@ -245,7 +253,7 @@ message SearchRoleReq {
 }
 
 message SearchRoleRsp {
-  uint32 total = 1; // 分页查询
+  uint32 page_total = 1; // 分页查询
   repeated Role data = 2; // 角色集合
 }
 
@@ -366,7 +374,7 @@ message SearchTreeNodeReq {
 }
 
 message SearchTreeNodeRsp {
-  uint32 total = 1; // 分页查询
+  uint32 page_total = 1; // 分页查询
   repeated TreeNode data = 2; // 树形结构表集合
 }
 
@@ -406,7 +414,7 @@ service AuthApi {
   }
   // 添加修改菜单
   rpc AddOrUpdateMenu(AddOrUpdateMenuReq) returns (AddOrUpdateRsp) {
-    option(trpc.alias) = "/auth/admin/updateMenu";
+    option(trpc.alias) = "/auth/admin/addOrUpdateMenu";
   }
   // 删除菜单
   rpc DeleteMenu(DeleteMenuReq) returns (EmptyRsp) {
@@ -417,8 +425,8 @@ service AuthApi {
     option(trpc.alias) = "/auth/admin/menuDetail";
   }
   // 菜单树
-  rpc MenuTree(MenuTreeReq) returns (MenuTreeRsp) {
-    option(trpc.alias) = "/auth/admin/menuTree";
+  rpc GetMenuTree(GetMenuTreeReq) returns (GetMenuTreeRsp) {
+    option(trpc.alias) = "/auth/admin/getMenuTree";
   }
 
   // 接口搜索

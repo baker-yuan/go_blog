@@ -3,6 +3,7 @@ import { UserSrv } from "@/api/config/servicePort";
 import authMenuList from "@/assets/json/authMenuList.json";
 import authButtonList from "@/assets/json/authButtonList.json";
 import http from "@/api";
+import { AuthSrv } from "@/api/config/servicePort";
 
 /**
  * @name 登录模块
@@ -18,7 +19,7 @@ export const loginApi = (params: Login.ReqLoginForm) => {
 
 // 获取菜单列表
 export const getAuthMenuListApi = () => {
-  //return http.get<Menu.MenuOptions[]>(AuthSrv + `/admin/menuTree`, {}, { loading: false });
+  return http.get<Menu.MenuOptions[]>(AuthSrv + `/admin/getMenuTree`, {}, { loading: false });
   // 如果想让菜单变为本地数据，注释上一行代码，并引入本地 authMenuList.json 数据
   return authMenuList;
 };

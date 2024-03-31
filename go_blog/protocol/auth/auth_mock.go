@@ -170,6 +170,21 @@ func (mr *MockAuthApiServiceMockRecorder) GetEffectiveResource(ctx, req interfac
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEffectiveResource", reflect.TypeOf((*MockAuthApiService)(nil).GetEffectiveResource), ctx, req)
 }
 
+// GetMenuTree mocks base method.
+func (m *MockAuthApiService) GetMenuTree(ctx context.Context, req *GetMenuTreeReq) (*GetMenuTreeRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetMenuTree", ctx, req)
+	ret0, _ := ret[0].(*GetMenuTreeRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetMenuTree indicates an expected call of GetMenuTree.
+func (mr *MockAuthApiServiceMockRecorder) GetMenuTree(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMenuTree", reflect.TypeOf((*MockAuthApiService)(nil).GetMenuTree), ctx, req)
+}
+
 // GetTreeByBizType mocks base method.
 func (m *MockAuthApiService) GetTreeByBizType(ctx context.Context, req *GetTreeByBizTypeReq) (*GetTreeByBizTypeRsp, error) {
 	m.ctrl.T.Helper()
@@ -228,21 +243,6 @@ func (m *MockAuthApiService) MenuDetail(ctx context.Context, req *MenuDetailReq)
 func (mr *MockAuthApiServiceMockRecorder) MenuDetail(ctx, req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MenuDetail", reflect.TypeOf((*MockAuthApiService)(nil).MenuDetail), ctx, req)
-}
-
-// MenuTree mocks base method.
-func (m *MockAuthApiService) MenuTree(ctx context.Context, req *MenuTreeReq) (*MenuTreeRsp, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "MenuTree", ctx, req)
-	ret0, _ := ret[0].(*MenuTreeRsp)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// MenuTree indicates an expected call of MenuTree.
-func (mr *MockAuthApiServiceMockRecorder) MenuTree(ctx, req interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MenuTree", reflect.TypeOf((*MockAuthApiService)(nil).MenuTree), ctx, req)
 }
 
 // ResourceDetail mocks base method.
@@ -598,6 +598,26 @@ func (mr *MockAuthApiClientProxyMockRecorder) GetEffectiveResource(ctx, req inte
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEffectiveResource", reflect.TypeOf((*MockAuthApiClientProxy)(nil).GetEffectiveResource), varargs...)
 }
 
+// GetMenuTree mocks base method.
+func (m *MockAuthApiClientProxy) GetMenuTree(ctx context.Context, req *GetMenuTreeReq, opts ...client.Option) (*GetMenuTreeRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetMenuTree", varargs...)
+	ret0, _ := ret[0].(*GetMenuTreeRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetMenuTree indicates an expected call of GetMenuTree.
+func (mr *MockAuthApiClientProxyMockRecorder) GetMenuTree(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMenuTree", reflect.TypeOf((*MockAuthApiClientProxy)(nil).GetMenuTree), varargs...)
+}
+
 // GetTreeByBizType mocks base method.
 func (m *MockAuthApiClientProxy) GetTreeByBizType(ctx context.Context, req *GetTreeByBizTypeReq, opts ...client.Option) (*GetTreeByBizTypeRsp, error) {
 	m.ctrl.T.Helper()
@@ -676,26 +696,6 @@ func (mr *MockAuthApiClientProxyMockRecorder) MenuDetail(ctx, req interface{}, o
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MenuDetail", reflect.TypeOf((*MockAuthApiClientProxy)(nil).MenuDetail), varargs...)
-}
-
-// MenuTree mocks base method.
-func (m *MockAuthApiClientProxy) MenuTree(ctx context.Context, req *MenuTreeReq, opts ...client.Option) (*MenuTreeRsp, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, req}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "MenuTree", varargs...)
-	ret0, _ := ret[0].(*MenuTreeRsp)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// MenuTree indicates an expected call of MenuTree.
-func (mr *MockAuthApiClientProxyMockRecorder) MenuTree(ctx, req interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, req}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MenuTree", reflect.TypeOf((*MockAuthApiClientProxy)(nil).MenuTree), varargs...)
 }
 
 // ResourceDetail mocks base method.

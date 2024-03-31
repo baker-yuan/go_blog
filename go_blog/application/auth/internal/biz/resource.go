@@ -76,7 +76,7 @@ func (c *ResourceUseCase) ResourceDetail(ctx context.Context, req *pb.ResourceDe
 	if err != nil {
 		return nil, err
 	}
-	pbResource := ResourceEntityToModel(resource)
+	pbResource := ResourceEntityToModel(resource, nil)
 	return pbResource, nil
 }
 
@@ -86,10 +86,12 @@ func (c *ResourceUseCase) SearchResource(ctx context.Context, req *pb.SearchReso
 	if err != nil {
 		return nil, 0, err
 	}
-	data := make([]*pb.Resource, 0)
-	for _, resource := range resources {
-		data = append(data, ResourceEntityToModel(resource))
+	// 查询目录树 key=根节点 value=根结点往上找的集合
+	treeNodeMap, err := c.GetReversalTreeMap(ctx, pb.TreeNodeBizType_RESOURCE)
+	if err != nil {
+		return nil, 0, err
 	}
+	data := ResourceEntityListToModel(resources, treeNodeMap)
 	return data, total, nil
 }
 
@@ -182,7 +184,7 @@ func (c *ResourceUseCase) GetEffectiveResource(ctx context.Context,
 	}
 	data := make([]*pb.Resource, 0)
 	for _, resource := range resources {
-		data = append(data, ResourceEntityToModel(resource))
+		data = append(data, ResourceEntityToModel(resource, nil))
 	}
 	return data, nil
 }

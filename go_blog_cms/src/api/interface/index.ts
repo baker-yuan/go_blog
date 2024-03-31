@@ -100,7 +100,7 @@ export namespace TreeNode {
   }
 }
 
-// 接口资源管理模块
+// 接口资源
 export namespace Resource {
   // 接口状态枚举
   export enum ResourceStatus {
@@ -157,8 +157,37 @@ export namespace Resource {
     // 查询补充
     createUser: string; // 创建人
     updateUser: string; // 更新人
+    treeNodePath: string; // 目录树路径
   }
 
   // 分页查询接口资源表
-  export interface ReqResourceListParams extends ReqPage {}
+  export interface ReqResourceListParams extends ReqPage {
+    name?: string; // 接口名称
+  }
+}
+
+// 菜单资源
+export namespace Menu {
+  // 菜单资源表模型
+  export interface Model {
+    // 基本信息
+    id: number; // 菜单id
+    parentId: number; // 父级菜单id
+    name: string; // 菜单名称
+    icon: string; // 菜单图标
+    describe: string; // 功能描述
+    sortValue: number; // 排序
+    // 前端
+    path: string; // 对应路由path
+    component: string; // 对应路由组件component
+    // 状态
+    isHidden: boolean; // 是否隐藏
+    // 公共字段
+    createUserId: number; // 创建人id
+    updateUserId: number; // 更新人id
+    createTime: string; // 插入时间
+    updateTime: string; // 修改时间
+  }
+  // 分页查询菜单资源表
+  export interface ReqMenuListParams extends ReqPage {}
 }

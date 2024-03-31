@@ -1,5 +1,5 @@
 <template>
-  <el-drawer v-model="drawerVisible" :destroy-on-close="true" size="450px" :title="`${drawerProps.title}接口资源表`">
+  <el-drawer v-model="drawerVisible" :destroy-on-close="true" size="600px" :title="`${drawerProps.title}接口资源表`">
     <el-form
       ref="ruleFormRef"
       label-width="100px"
@@ -14,6 +14,15 @@
       </el-form-item>
       <el-form-item label="接口描述" prop="describe">
         <el-input v-model="drawerProps.row!.describe" type="textarea" placeholder="请填写接口描述" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="目录" prop="treeNodeId">
+        <el-cascader
+          style="width: 100%"
+          v-model="selectedValue"
+          :options="treeNodeOptions"
+          :props="{ value: 'id', label: 'name' }"
+          @change="handleTreeNodeIdChange"
+        ></el-cascader>
       </el-form-item>
       <el-form-item label="接口URL" prop="url">
         <el-input v-model="drawerProps.row!.url" placeholder="请填写接口URL" clearable></el-input>
@@ -62,6 +71,7 @@ import { ref, reactive } from "vue";
 import { ElMessage, FormInstance } from "element-plus";
 import { Resource } from "@/api/interface";
 import { httpMethodOption } from "@/views/auth/resource/index";
+import { getResourceTree } from "@/api/modules/tree_node";
 const rules = reactive({
   name: [{ required: true, message: "请填写接口名称" }]
 });
@@ -83,10 +93,33 @@ const drawerProps = ref<DrawerProps>({
   row: {}
 });
 
+// 数节点下拉框
+const treeNodeOptions = reactive([]);
+
 // 接收父组件传过来的参数
 const acceptParams = (params: DrawerProps) => {
   drawerProps.value = params;
   drawerVisible.value = true;
+
+  // 加载树节点
+  getResourceTree().then(value => {
+    // 清空现有的数组内容
+    treeNodeOptions.splice(0, treeNodeOptions.length);
+    // 添加新的数据到数组
+    treeNodeOptions.push(...value.data);
+  });
+};
+
+// 存储选中的值
+const selectedValue = ref([]);
+
+// 当treeNodeId级联选择器的值发生变化时调用的方法
+const handleTreeNodeIdChange = (value: string[]) => {
+  if (value.length > 0) {
+    drawerProps.value.row.treeNodeId = value[value.length - 1];
+  } else {
+    drawerProps.value.row.treeNodeId = 0;
+  }
 };
 
 // 提交数据（新增/编辑）
