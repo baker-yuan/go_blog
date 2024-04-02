@@ -238,8 +238,8 @@ message Role {
   //
   bool is_enable = 5;             // 是否启用
   // 公共字段
-  uint32 create_user = 6;         // 创建人id
-  uint32 update_user = 7;         // 更新人id
+  uint32 create_user_id = 6;      // 创建人id
+  uint32 update_user_id = 7;      // 更新人id
   uint32 create_time = 8;         // 创建时间
   uint32 update_time = 9;         // 更新时间
 }
@@ -278,17 +278,25 @@ message DeleteRoleReq {
   uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
 }
 
-
+// 权限类型 1-菜单 2-资源
+enum AuthorityType {
+  UNSPECIFIED = 0;
+  MENU = 1; // 菜单
+  RESOURCE = 2; // 资源
+}
 
 // RoleAuthority 角色关联的资源和目录
 message RoleAuthority {
   uint32 id = 1;                   // ID
   uint32 authority_id = 2;         // 权限id
-  string authority_type = 3;       // 权限类型 MENU-菜单 RESOURCE-资源
+  AuthorityType authority_type = 3;// 权限类型 1-菜单 2-资源
   uint32 role_id = 4;              // 角色id
 
-  uint32 create_user = 5;          // 创建人ID
+  uint32 create_user_id = 5;       // 创建人ID
   uint32 create_time = 6;          // 插入时间
+
+  // 查询补充
+  string create_user = 100;        // 创建人
 }
 
 
@@ -299,8 +307,11 @@ message UserRole {
   uint32 role_id = 2;     // 角色ID
   uint32 user_id = 3;     // 用户ID
 
-  uint32 create_user = 4; // 创建人ID
-  uint32 create_time = 5; // 插入时间
+  uint32 create_user_id = 4; // 创建人ID
+  uint32 create_time = 5;    // 插入时间
+
+  // 查询补充
+  string create_user = 100;        // 创建人
 }
 
 
@@ -343,7 +354,7 @@ message GetUserResourceRsp {
 // 业务类型
 enum TreeNodeBizType {
   UNKNOWN_BIZ_TYPE = 0; // 未知
-  RESOURCE = 1; // 接口资源
+  RESOURCE_NODE = 1; // 接口资源
 }
 
 // 树节点定义
@@ -355,8 +366,8 @@ message TreeNode {
   repeated TreeNode children = 5; // 子节点列表
 
   // 公共字段
-  uint32 create_user = 100;        // 创建人id
-  uint32 update_user = 101;        // 更新人id
+  uint32 create_user_id = 100;     // 创建人id
+  uint32 update_user_id = 101;     // 更新人id
   uint32 create_time = 102;        // 创建时间
   uint32 update_time = 103;        // 更新时间
 }

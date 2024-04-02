@@ -73,7 +73,7 @@ func FillResponse(ctx context.Context, r *http.Request, standardResp Response) [
 	return byteRes
 }
 
-// InitServerCodec
+// InitServerCodec 1、自定义错误处理 2、统一返回值
 func InitServerCodec(skipRspHandlerMethods []string) {
 
 	skipRspHandlerMethodMap := util.NewFieldExtractor[string, string]().

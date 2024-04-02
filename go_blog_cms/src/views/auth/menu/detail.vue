@@ -1,5 +1,5 @@
 <template>
-  <el-drawer v-model="drawerVisible" :destroy-on-close="true" size="450px" :title="`${drawerProps.title}菜单资源表`">
+  <el-drawer v-model="drawerVisible" :destroy-on-close="true" size="500px" :title="`${drawerProps.title}菜单资源表`">
     <el-form
       ref="ruleFormRef"
       label-width="100px"
@@ -9,6 +9,18 @@
       :model="drawerProps.row"
       :hide-required-asterisk="drawerProps.isView"
     >
+      <el-form-item label="父菜单ID" prop="parentId">
+        <el-cascader
+          style="width: 100%"
+          v-model="selectedParentIdValue"
+          :options="parentIdOptions"
+          :props="{ value: 'id', label: 'name', checkStrictly: true }"
+          filterable
+          @change="handleParentIdChange"
+          clearable
+        >
+        </el-cascader>
+      </el-form-item>
       <el-form-item label="菜单名称" prop="name">
         <el-input v-model="drawerProps.row!.name" placeholder="请填写菜单名称" clearable></el-input>
       </el-form-item>
@@ -43,8 +55,13 @@ import { ref, reactive } from "vue";
 import { ElMessage, FormInstance } from "element-plus";
 import { Menu } from "@/api/interface";
 import SelectIcon from "@/components/SelectIcon/index.vue";
+import { getMenuOption } from "@/api/modules/menu";
 
-const rules = reactive({});
+const rules = reactive({
+  name: [{ required: true, message: "请填写菜单名称" }],
+  path: [{ required: true, message: "请填写访问路径" }],
+  component: [{ required: true, message: "请填写组件路径" }]
+});
 
 interface DrawerProps {
   title: string; // 标题
@@ -67,6 +84,30 @@ const drawerProps = ref<DrawerProps>({
 const acceptParams = (params: DrawerProps) => {
   drawerProps.value = params;
   drawerVisible.value = true;
+
+  selectedParentIdValue.value = params.row?.parentId;
+  // 加载树节点
+  getMenuOption().then(value => {
+    // 清空现有的数组内容
+    parentIdOptions.splice(0, parentIdOptions.length);
+    // 添加新的数据到数组
+    parentIdOptions.push(...value.data);
+  });
+};
+
+// 存储选中的值
+const selectedParentIdValue = ref(0);
+
+// 父节点下拉框
+const parentIdOptions = reactive([]);
+
+// 当parentId级联选择器的值发生变化时调用的方法
+const handleParentIdChange = (value: string[]) => {
+  if (value.length > 0) {
+    drawerProps.value.row.parentId = value[value.length - 1];
+  } else {
+    drawerProps.value.row.parentId = 0;
+  }
 };
 
 // 提交数据（新增/编辑）

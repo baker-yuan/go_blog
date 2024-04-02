@@ -2355,9 +2355,9 @@ func (m *Role) validate(all bool) error {
 
 	// no validation rules for IsEnable
 
-	// no validation rules for CreateUser
+	// no validation rules for CreateUserId
 
-	// no validation rules for UpdateUser
+	// no validation rules for UpdateUserId
 
 	// no validation rules for CreateTime
 
@@ -3091,9 +3091,11 @@ func (m *RoleAuthority) validate(all bool) error {
 
 	// no validation rules for RoleId
 
-	// no validation rules for CreateUser
+	// no validation rules for CreateUserId
 
 	// no validation rules for CreateTime
+
+	// no validation rules for CreateUser
 
 	if len(errors) > 0 {
 		return RoleAuthorityMultiError(errors)
@@ -3201,9 +3203,11 @@ func (m *UserRole) validate(all bool) error {
 
 	// no validation rules for UserId
 
-	// no validation rules for CreateUser
+	// no validation rules for CreateUserId
 
 	// no validation rules for CreateTime
+
+	// no validation rules for CreateUser
 
 	if len(errors) > 0 {
 		return UserRoleMultiError(errors)
@@ -4186,9 +4190,9 @@ func (m *TreeNode) validate(all bool) error {
 
 	}
 
-	// no validation rules for CreateUser
+	// no validation rules for CreateUserId
 
-	// no validation rules for UpdateUser
+	// no validation rules for UpdateUserId
 
 	// no validation rules for CreateTime
 
@@ -4688,7 +4692,7 @@ func (m *AddOrUpdateTreeNodeReq) validate(all bool) error {
 	if _, ok := _AddOrUpdateTreeNodeReq_BizType_InLookup[m.GetBizType()]; !ok {
 		err := AddOrUpdateTreeNodeReqValidationError{
 			field:  "BizType",
-			reason: "value must be in list [RESOURCE]",
+			reason: "value must be in list [RESOURCE_NODE]",
 		}
 		if !all {
 			return err
@@ -4918,7 +4922,7 @@ func (m *GetTreeByBizTypeReq) validate(all bool) error {
 	if _, ok := _GetTreeByBizTypeReq_BizType_InLookup[m.GetBizType()]; !ok {
 		err := GetTreeByBizTypeReqValidationError{
 			field:  "BizType",
-			reason: "value must be in list [RESOURCE]",
+			reason: "value must be in list [RESOURCE_NODE]",
 		}
 		if !all {
 			return err

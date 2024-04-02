@@ -321,7 +321,7 @@
       "required": false,
       "type": "integer",
       "format": "int32",
-      "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE - 接口资源\n",
+      "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE_NODE - 接口资源\n",
       "enum": [
        0,
        1
@@ -525,7 +525,7 @@
       "required": false,
       "type": "integer",
       "format": "int32",
-      "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE - 接口资源\n",
+      "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE_NODE - 接口资源\n",
       "enum": [
        0,
        1
@@ -1261,7 +1261,7 @@
       "required": false,
       "type": "integer",
       "format": "int32",
-      "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE - 接口资源\n",
+      "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE_NODE - 接口资源\n",
       "enum": [
        0,
        1
@@ -1483,7 +1483,7 @@
       "required": false,
       "type": "integer",
       "format": "int32",
-      "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE - 接口资源\n",
+      "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE_NODE - 接口资源\n",
       "enum": [
        0,
        1
@@ -2289,8 +2289,8 @@
      "format": "uint32",
      "description": "创建时间"
     },
-    "create_user": {
-     "title": "create_user",
+    "create_user_id": {
+     "title": "create_user_id",
      "type": "integer",
      "format": "uint32",
      "description": "公共字段\n创建人id"
@@ -2322,8 +2322,8 @@
      "format": "uint32",
      "description": "更新时间"
     },
-    "update_user": {
-     "title": "update_user",
+    "update_user_id": {
+     "title": "update_user_id",
      "type": "integer",
      "format": "uint32",
      "description": "更新人id"
@@ -2423,7 +2423,7 @@
      "title": "biz_type",
      "type": "integer",
      "format": "int32",
-     "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE - 接口资源\n",
+     "description": "业务类型 * 0 - UNKNOWN_BIZ_TYPE - 未知\n * 1 - RESOURCE_NODE - 接口资源\n",
      "enum": [
       0,
       1
@@ -2443,8 +2443,8 @@
      "format": "uint32",
      "description": "创建时间"
     },
-    "create_user": {
-     "title": "create_user",
+    "create_user_id": {
+     "title": "create_user_id",
      "type": "integer",
      "format": "uint32",
      "description": "公共字段\n创建人id"
@@ -2472,8 +2472,8 @@
      "format": "uint32",
      "description": "更新时间"
     },
-    "update_user": {
-     "title": "update_user",
+    "update_user_id": {
+     "title": "update_user_id",
      "type": "integer",
      "format": "uint32",
      "description": "更新人id"

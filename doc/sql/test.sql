@@ -24,6 +24,10 @@ values  (1, 0, 'baker-blog-user', 1),
         (501, 500, '用户评论模块', 1),
         (520, 500, '评论管理', 1);
 
+
+select id, tree_node_id, name, `describe`, status, url, http_method, is_need_login, is_need_permission, service, method
+from baker_auth_resource;
+
 truncate table go_blog_test.baker_auth_resource;
 insert into go_blog_test.baker_auth_resource (id, tree_node_id, name, describe, status, url, http_method, is_need_login, is_need_permission, service, method)
 values  (1, 2, '图形验证码登陆', '图形验证码登陆', 1, '/user/login/byCaptcha', 2, 0, 0, 'trpc.blog.user.UserApiHttp', '/go_blog.user.LoginApi/Login'),

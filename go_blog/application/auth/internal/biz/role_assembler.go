@@ -7,15 +7,15 @@ import (
 // RoleEntityToModel entity转pb
 func RoleEntityToModel(role *Role) *pb.Role {
 	modelRes := &pb.Role{
-		Id:         role.ID,
-		Name:       role.Name,
-		Code:       role.Code,
-		Describe:   role.Describe,
-		IsEnable:   role.IsEnable,
-		CreateUser: role.CreateUser,
-		UpdateUser: role.UpdateUser,
-		CreateTime: role.CreateTime,
-		UpdateTime: role.UpdateTime,
+		Id:           role.ID,
+		Name:         role.Name,
+		Code:         role.Code,
+		Describe:     role.Describe,
+		IsEnable:     role.IsEnable,
+		CreateUserId: role.CreateUserID,
+		UpdateUserId: role.UpdateUserID,
+		CreateTime:   role.CreateTime,
+		UpdateTime:   role.UpdateTime,
 	}
 	return modelRes
 }

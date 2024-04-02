@@ -86,8 +86,8 @@ func (c *ResourceUseCase) SearchResource(ctx context.Context, req *pb.SearchReso
 	if err != nil {
 		return nil, 0, err
 	}
-	// 查询目录树 key=根节点 value=根结点往上找的集合
-	treeNodeMap, err := c.GetReversalTreeMap(ctx, pb.TreeNodeBizType_RESOURCE)
+	// 查询接口关联的目录树 key=根节点 value=根结点往上找的集合
+	treeNodeMap, err := c.GetReversalTreeMap(ctx, pb.TreeNodeBizType_RESOURCE_NODE)
 	if err != nil {
 		return nil, 0, err
 	}

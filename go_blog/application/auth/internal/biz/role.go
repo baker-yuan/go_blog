@@ -18,10 +18,10 @@ type Role struct {
 	//
 	IsEnable bool
 	// 公共字段
-	CreateUser uint32
-	UpdateUser uint32
-	CreateTime uint32
-	UpdateTime uint32
+	CreateUserID uint32
+	UpdateUserID uint32
+	CreateTime   uint32
+	UpdateTime   uint32
 }
 
 type Roles []*Role
@@ -101,9 +101,9 @@ func (c *RoleUseCase) AddOrUpdateRole(ctx context.Context, req *pb.AddOrUpdateRo
 
 func (c *RoleUseCase) addRole(ctx context.Context, userID uint32, req *pb.AddOrUpdateRoleReq) (uint32, error) {
 	role := AddOrUpdateRoleReqToEntity(req)
-	role.CreateUser = userID
+	role.CreateUserID = userID
 	role.CreateTime = uint32(time.Now().Unix())
-	role.UpdateUser = userID
+	role.UpdateUserID = userID
 	role.UpdateTime = uint32(time.Now().Unix())
 
 	lastInsertID, err := c.repo.Save(ctx, role)
@@ -122,9 +122,9 @@ func (c *RoleUseCase) addRole(ctx context.Context, userID uint32, req *pb.AddOrU
 
 func (c *RoleUseCase) updateRole(ctx context.Context, dbRole *Role, userID uint32, req *pb.AddOrUpdateRoleReq) (uint32, error) {
 	saveRole := AddOrUpdateRoleReqToEntity(req)
-	saveRole.CreateUser = dbRole.CreateUser
+	saveRole.CreateUserID = dbRole.CreateUserID
 	saveRole.CreateTime = dbRole.CreateTime
-	saveRole.UpdateUser = userID
+	saveRole.UpdateUserID = userID
 	saveRole.UpdateTime = uint32(time.Now().Unix())
 
 	if err := c.repo.UpdateByID(ctx, saveRole); err != nil {

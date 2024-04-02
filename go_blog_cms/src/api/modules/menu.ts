@@ -45,3 +45,19 @@ export const getMenuTree = (params: Menu.ReqMenuListParams) => {
   }
   return http.post<Menu.Model[]>(AuthSrv + `/admin/getMenuTree`, params);
 };
+
+// 菜单树
+export const getMenuOption = () => {
+  let params = {
+    pageSize: 100000,
+    pageNum: 1
+  };
+  return http.post<Menu.Model[]>(AuthSrv + `/admin/getMenuTree`, params).then(response => {
+    let data = response.data.nodes;
+    return {
+      code: response.code,
+      message: response.message,
+      data: data
+    };
+  });
+};

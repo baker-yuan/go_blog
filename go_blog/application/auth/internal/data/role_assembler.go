@@ -17,15 +17,15 @@ func RolePOsToEntity(dbRoles []*Role) []*biz.Role {
 // RolePOToEntity po转entity
 func RolePOToEntity(dbRole *Role) *biz.Role {
 	poRes := &biz.Role{
-		ID:         dbRole.ID,
-		Name:       dbRole.Name,
-		Code:       dbRole.Code,
-		Describe:   dbRole.Describe,
-		IsEnable:   bool(dbRole.IsEnable),
-		CreateUser: dbRole.CreateUser,
-		UpdateUser: dbRole.UpdateUser,
-		CreateTime: uint32(dbRole.CreateTime),
-		UpdateTime: uint32(dbRole.UpdateTime),
+		ID:           dbRole.ID,
+		Name:         dbRole.Name,
+		Code:         dbRole.Code,
+		Describe:     dbRole.Describe,
+		IsEnable:     bool(dbRole.IsEnable),
+		CreateUserID: dbRole.CreateUserID,
+		UpdateUserID: dbRole.UpdateUserID,
+		CreateTime:   uint32(dbRole.CreateTime),
+		UpdateTime:   uint32(dbRole.UpdateTime),
 	}
 	return poRes
 }
@@ -33,15 +33,15 @@ func RolePOToEntity(dbRole *Role) *biz.Role {
 // RoleEntityToPO entity转po
 func RoleEntityToPO(role *biz.Role) *Role {
 	poRes := &Role{
-		ID:         role.ID,
-		Name:       role.Name,
-		Code:       role.Code,
-		Describe:   role.Describe,
-		IsEnable:   db.BoolBit(role.IsEnable),
-		CreateUser: role.CreateUser,
-		UpdateUser: role.UpdateUser,
-		CreateTime: db.Timestamp(role.CreateTime),
-		UpdateTime: db.Timestamp(role.UpdateTime),
+		ID:           role.ID,
+		Name:         role.Name,
+		Code:         role.Code,
+		Describe:     role.Describe,
+		IsEnable:     db.BoolBit(role.IsEnable),
+		CreateUserID: role.CreateUserID,
+		UpdateUserID: role.UpdateUserID,
+		CreateTime:   db.Timestamp(role.CreateTime),
+		UpdateTime:   db.Timestamp(role.UpdateTime),
 	}
 	return poRes
 }

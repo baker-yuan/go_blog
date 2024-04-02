@@ -8,11 +8,17 @@ import (
 )
 
 // NewAuthService 权限
-func NewAuthService(menu *biz.MenuUsecase, resource *biz.ResourceUseCase, treeNode *biz.TreeNodeUseCase) *AuthService {
+func NewAuthService(
+	menu *biz.MenuUsecase,
+	resource *biz.ResourceUseCase,
+	treeNode *biz.TreeNodeUseCase,
+	role *biz.RoleUseCase,
+) *AuthService {
 	return &AuthService{
 		menu:     menu,
 		resource: resource,
 		treeNode: treeNode,
+		role:     role,
 	}
 }
 

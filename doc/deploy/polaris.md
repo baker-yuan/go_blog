@@ -28,5 +28,6 @@ https://github.com/polarismesh/polaris/releases/download/v1.18.0/polaris-server-
 ```
 
 ```
-/Users/yuanyu/software/polaris-server-release_v1.18.0.darwin.arm64/polaris-server start
+cd /Users/yuanyu/software/polaris-server-release_v1.18.0.darwin.arm64
+polaris-server start
 ```

@@ -105,7 +105,7 @@ const columns = reactive<ColumnProps<Menu.Model>[]>([
   { prop: "updateUser", label: "更新人", width: 120 },
   { prop: "createTime", label: "创建时间", width: 180, showOverflowTooltip: false },
   { prop: "updateTime", label: "修改时间", width: 180, showOverflowTooltip: false },
-  { prop: "operation", label: "操作", fixed: "right", width: 170 }
+  { prop: "operation", label: "操作", fixed: "right", width: 150 }
 ]);
 
 // 如果表格需要初始化请求参数，直接定义传给 ProTable (之后每次请求都会自动带上该参数，此参数更改之后也会一直带上，改变此参数会自动刷新表格数据)
@@ -154,10 +154,16 @@ const handleIsHiddenChange = (row: Menu.Model) => {
 // 打开 drawer(新增、查看、编辑)
 const drawerRef = ref<InstanceType<typeof MenuDrawer> | null>(null);
 const openDrawer = (title: string, row: Partial<Menu.Model> = {}) => {
+  let r = { ...row };
+  // if (title === "新增") {
+  //   r = {
+  //     parentId: row.id
+  //   };
+  // }
   const params = {
     title,
     isView: title === "查看",
-    row: { ...row },
+    row: r,
     api: title === "新增" ? createMenuApi : title === "编辑" ? updateMenuApi : undefined,
     getTableList: proTable.value?.getTableList
   };

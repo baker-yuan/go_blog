@@ -104,6 +104,13 @@ const columns = reactive<ColumnProps<Resource.ResourceModel>[]>([
     search: { el: "input" }
   },
   {
+    prop: "treeNodePath",
+    label: "路径",
+    align: "left", // 设置列内容左对齐
+    headerAlign: "left", // 设置列标题左对齐
+    width: 300
+  },
+  {
     prop: "status",
     label: "是否生效",
     width: 120,
@@ -116,11 +123,6 @@ const columns = reactive<ColumnProps<Resource.ResourceModel>[]>([
     headerAlign: "left", // 设置列标题左对齐
     width: 300,
     showOverflowTooltip: false
-  },
-  {
-    prop: "treeNodePath",
-    label: "路径",
-    width: 300
   },
   {
     prop: "httpMethod",

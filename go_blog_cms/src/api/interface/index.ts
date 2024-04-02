@@ -187,7 +187,35 @@ export namespace Menu {
     updateUserId: number; // 更新人id
     createTime: string; // 插入时间
     updateTime: string; // 修改时间
+    // 查询补充
+    createUser: string; // 创建人
+    updateUser: string; // 更新人
   }
   // 分页查询菜单资源表
   export interface ReqMenuListParams extends ReqPage {}
+}
+
+// 角色管理模块
+export namespace Role {
+  // 角色表模型
+  export interface Model {
+    // 基本信息
+    id: number;
+    name: string;
+    code: string;
+    describe: string;
+    // 是否启用
+    isEnable: boolean;
+    // 公共字段
+    createUserId: number;
+    updateUserId: number;
+    createTime: number;
+    updateTime: number;
+    // 查询补充
+    createUser: string; // 创建人
+    updateUser: string; // 更新人
+  }
+
+  // 分页查询角色表
+  export interface ReqRoleListParams extends ReqPage {}
 }

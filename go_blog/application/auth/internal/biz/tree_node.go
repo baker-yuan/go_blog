@@ -16,10 +16,10 @@ type TreeNode struct {
 	BizType  pb.TreeNodeBizType // 业务类型
 	Children []*TreeNode
 	// 公共字段
-	CreateUser uint32
-	UpdateUser uint32
-	CreateTime uint32
-	UpdateTime uint32
+	CreateUserID uint32
+	UpdateUserID uint32
+	CreateTime   uint32
+	UpdateTime   uint32
 }
 
 type TreeNodes []*TreeNode
@@ -102,9 +102,9 @@ func (c *TreeNodeUseCase) AddOrUpdateTreeNode(ctx context.Context, req *pb.AddOr
 
 func (c *TreeNodeUseCase) addTreeNode(ctx context.Context, userID uint32, req *pb.AddOrUpdateTreeNodeReq) (uint32, error) {
 	treeNode := AddOrUpdateTreeNodeReqToEntity(req)
-	treeNode.CreateUser = userID
+	treeNode.CreateUserID = userID
 	treeNode.CreateTime = uint32(time.Now().Unix())
-	treeNode.UpdateUser = userID
+	treeNode.UpdateUserID = userID
 	treeNode.UpdateTime = uint32(time.Now().Unix())
 
 	lastInsertID, err := c.repo.Save(ctx, treeNode)
@@ -123,9 +123,9 @@ func (c *TreeNodeUseCase) addTreeNode(ctx context.Context, userID uint32, req *p
 
 func (c *TreeNodeUseCase) updateTreeNode(ctx context.Context, dbTreeNode *TreeNode, userID uint32, req *pb.AddOrUpdateTreeNodeReq) (uint32, error) {
 	saveTreeNode := AddOrUpdateTreeNodeReqToEntity(req)
-	saveTreeNode.CreateUser = dbTreeNode.CreateUser
+	saveTreeNode.CreateUserID = dbTreeNode.CreateUserID
 	saveTreeNode.CreateTime = dbTreeNode.CreateTime
-	saveTreeNode.UpdateUser = userID
+	saveTreeNode.UpdateUserID = userID
 	saveTreeNode.UpdateTime = uint32(time.Now().Unix())
 
 	if err := c.repo.UpdateByID(ctx, saveTreeNode); err != nil {
