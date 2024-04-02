@@ -119,11 +119,11 @@ func (s *GenericStore) Get(_ context.Context, key string) (interface{}, error) {
 
 // ListInput 列表查询条件
 type ListInput struct {
-	Predicate  func(obj interface{}) bool        // 条件
-	Format     func(obj interface{}) interface{} //
+	Predicate  func(obj interface{}) bool        // 过滤条件
+	Format     func(obj interface{}) interface{} // 格式化，补充数据
 	PageSize   int                               // 页码
-	PageNumber int                               // 页面大小 start from 1
-	Less       func(i, j interface{}) bool       //
+	PageNumber int                               // 页面大小(从1开始)
+	Less       func(i, j interface{}) bool       // 列表排序，默认defLessFunc
 }
 
 // ListOutput 列表查询返回

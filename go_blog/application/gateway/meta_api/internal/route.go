@@ -33,11 +33,13 @@ import (
 )
 
 func SetUpRouter() *gin.Engine {
+
 	if conf.ENV == conf.EnvLOCAL || conf.ENV == conf.EnvDEV {
 		gin.SetMode(gin.DebugMode)
 	} else {
 		gin.SetMode(gin.ReleaseMode)
 	}
+
 	r := gin.New()
 	logger := log.GetLogger(log.AccessLog)
 	// security
@@ -84,6 +86,7 @@ func SetUpRouter() *gin.Engine {
 		if err != nil {
 			panic(err)
 		}
+		// 绑定路由
 		h.ApplyRoute(r)
 	}
 

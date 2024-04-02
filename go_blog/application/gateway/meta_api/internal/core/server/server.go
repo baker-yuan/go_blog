@@ -36,9 +36,11 @@ func (s *server) Start(errSig chan error) {
 		return
 	}
 
+	// 控制台打印启动信息
 	// print server info to stdout
 	s.printInfo()
 
+	// 开始监听http请求
 	// start HTTP server
 	log.Infof("The Manager API is listening on %s", s.server.Addr)
 	go func() {
@@ -49,6 +51,7 @@ func (s *server) Start(errSig chan error) {
 		}
 	}()
 
+	// 开始监听https请求
 	// start HTTPs server
 	if conf.SSLCert != "" && conf.SSLKey != "" {
 		go func() {

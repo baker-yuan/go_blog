@@ -9,7 +9,7 @@ The Dashboard contains both `manager-api` and `web` parts, so you need to start 
 
 ## Prerequisites
 
-Before development, refer to this [guide](./install.md) to install dependencies.
+Before development, refer to this [guide](install.md) to install dependencies.
 
 ## Clone the project
 
@@ -39,9 +39,9 @@ $ make api-run
 $ make api-stop
 ```
 
-4. Please refer to the [FAQ](./FAQ.md) about the problem of displaying exception in the dashboard after adding custom plugins or modifying plugin's schema.
+4. Please refer to the [FAQ](FAQ.md) about the problem of displaying exception in the dashboard after adding custom plugins or modifying plugin's schema.
 
-5. If writing an back end E2E test, please refer to the [Back End E2E Writing Guide](./back-end-tests.md)
+5. If writing an back end E2E test, please refer to the [Back End E2E Writing Guide](back-end-tests.md)
 
 ### web
 
@@ -75,4 +75,4 @@ $ yarn start
 
 > If there is an error about gyp during yarn install, please ignore it and go ahead!
 
-4. If writing an front end E2E test, please refer to the [Front End E2E Writing Guide](./front-end-e2e.md)
+4. If writing an front end E2E test, please refer to the [Front End E2E Writing Guide](front-end-e2e.md)

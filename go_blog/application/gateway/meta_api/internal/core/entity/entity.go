@@ -14,14 +14,18 @@ type BaseInfo struct {
 	UpdateTime int64       `json:"update_time,omitempty"` // 更新时间
 }
 
+// GetBaseInfo 获取公共属性
 func (info *BaseInfo) GetBaseInfo() *BaseInfo {
 	return info
 }
 
+// Creating 初始化公共属性
 func (info *BaseInfo) Creating() {
 	if info.ID == nil {
+		// ID为nil设置一个分布式ID
 		info.ID = utils.GetFlakeUidStr()
 	} else {
+		// 确保ID是string类型的
 		// convert to string if it's not
 		if reflect.TypeOf(info.ID).String() != "string" {
 			info.ID = utils.InterfaceToString(info.ID)
@@ -31,12 +35,14 @@ func (info *BaseInfo) Creating() {
 	info.UpdateTime = time.Now().Unix()
 }
 
+// Updating 修改公共属性
 func (info *BaseInfo) Updating(storedInfo *BaseInfo) {
 	info.ID = storedInfo.ID
 	info.CreateTime = storedInfo.CreateTime
 	info.UpdateTime = time.Now().Unix()
 }
 
+// KeyCompat 比较公共属性里面的ID是否一样
 func (info *BaseInfo) KeyCompat(key string) {
 	if info.ID == nil && key != "" {
 		info.ID = key
@@ -48,27 +54,25 @@ type Status uint8
 
 // swagger:model 路由
 type Route struct {
-	BaseInfo
+	BaseInfo // 公共属性
 	// 基本信息
 	Name            string            `json:"name"`                       // 路由名称
 	Labels          map[string]string `json:"labels,omitempty"`           // 标签(为路由增加自定义标签，可用于路由分组。)
 	Desc            string            `json:"desc,omitempty"`             // 路由描述信息
-	ServiceID       interface{}       `json:"service_id,omitempty"`       // 需要绑定的 Service id
+	ServiceID       interface{}       `json:"service_id,omitempty"`       // 需要绑定的服务ID(Service#ID)
 	EnableWebsocket bool              `json:"enable_websocket,omitempty"` // 允许WebSocket
 	Status          Status            `json:"status"`                     // 发布状态
 
 	// 匹配条件
-	Host        string   `json:"host,omitempty"`         // 域名(路由匹配的域名列表。支持泛域名，如：*.test.com)
-	Hosts       []string `json:"hosts,omitempty"`        //
-	URI         string   `json:"uri,omitempty"`          // 路径(HTTP 请求路径，如 /foo/index.html，支持请求路径前缀 /foo/*。/* 代表所有路径)
-	Uris        []string `json:"uris,omitempty"`         //
-	RemoteAddr  string   `json:"remote_addr,omitempty"`  // 客户端地址(客户端与服务器握手时 IP，即客户端 IP，例如：192.168.1.101，192.168.1.0/24，::1，fe80::1，fe80::1/64)
-	RemoteAddrs []string `json:"remote_addrs,omitempty"` //
-	Methods     []string `json:"methods,omitempty"`      // HTTP 方法
-	Priority    int      `json:"priority,omitempty"`     // 优先级
-
-	// 高级匹配条件
-	Vars []interface{} `json:"vars,omitempty"` //
+	Host        string        `json:"host,omitempty"`         // 域名(路由匹配的域名列表。支持泛域名，如：*.test.com)
+	Hosts       []string      `json:"hosts,omitempty"`        //
+	URI         string        `json:"uri,omitempty"`          // 路径(HTTP 请求路径，如 /foo/index.html，支持请求路径前缀 /foo/*。/* 代表所有路径)
+	Uris        []string      `json:"uris,omitempty"`         //
+	RemoteAddr  string        `json:"remote_addr,omitempty"`  // 客户端地址(客户端与服务器握手时 IP，即客户端 IP，例如：192.168.1.101，192.168.1.0/24，::1，fe80::1，fe80::1/64)
+	RemoteAddrs []string      `json:"remote_addrs,omitempty"` //
+	Methods     []string      `json:"methods,omitempty"`      // HTTP方法
+	Priority    int           `json:"priority,omitempty"`     // 优先级
+	Vars        []interface{} `json:"vars,omitempty"`         // 高级匹配条件
 
 	// 插件
 	Plugins        map[string]interface{} `json:"plugins,omitempty"`          //
@@ -178,7 +182,7 @@ type UpstreamDef struct {
 	DiscoveryType string                 `json:"discovery_type,omitempty"` // 上游类型 节点、服务发现
 	ServiceName   string                 `json:"service_name,omitempty"`   //
 	DiscoveryArgs map[string]string      `json:"discovery_args,omitempty"` //
-	Nodes         interface{}            `json:"nodes,omitempty"`          //
+	Nodes         interface{}            `json:"nodes,omitempty"`          // 目标节点Node
 	Retries       *int                   `json:"retries,omitempty"`        // 重试次数(重试机制将请求发到下一个上游节点。值为 0 表示禁用重试机制，留空表示使用可用后端节点的数量。)
 	RetryTimeout  TimeoutValue           `json:"retry_timeout,omitempty"`  // 重试超时时间(限制是否继续重试的时间，若之前的请求和重试请求花费太多时间就不再继续重试。0 代表不启用重试超时机制。)
 	Scheme        string                 `json:"scheme,omitempty"`         // 协议
@@ -289,15 +293,15 @@ type ServerInfo struct {
 
 // swagger:model GlobalPlugins
 type PluginConfig struct {
-	BaseInfo
-	Desc    string                 `json:"desc,omitempty"`
-	Plugins map[string]interface{} `json:"plugins"`
-	Labels  map[string]string      `json:"labels,omitempty"`
+	BaseInfo                        // 公共属性
+	Desc     string                 `json:"desc,omitempty"`
+	Plugins  map[string]interface{} `json:"plugins"`
+	Labels   map[string]string      `json:"labels,omitempty"`
 }
 
 // swagger:model Proto文件
 type Proto struct {
-	BaseInfo        //
+	BaseInfo        // 公共属性
 	Desc     string `json:"desc,omitempty"` // 描述
 	Content  string `json:"content"`        // 内容
 }
@@ -306,7 +310,7 @@ type Proto struct {
 // https://apisix.apache.org/blog/2022/07/29/release-apache-apisix-2.15/#allow-collection-of-metrics-on-stream-route
 // https://blog.csdn.net/weixin_44917045/article/details/131835341
 type StreamRoute struct {
-	BaseInfo
+	BaseInfo                          // 公共属性
 	Desc       string                 `json:"desc,omitempty"`        // 描述信息，用于描述这个StreamRoute的用途或其他信息。
 	RemoteAddr string                 `json:"remote_addr,omitempty"` // 远程地址，用于匹配客户端的IP地址或CIDR范围。
 	ServerAddr string                 `json:"server_addr,omitempty"` // 服务器地址，用于指定APISIX监听的地址。

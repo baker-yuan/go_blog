@@ -42,6 +42,7 @@ func mapKV2Node(key string, val float64) (*Node, error) {
 	return node, nil
 }
 
+// NodesFormat 格式化目标节点
 func NodesFormat(obj interface{}) interface{} {
 	nodes := make([]*Node, 0)
 	switch objType := obj.(type) {

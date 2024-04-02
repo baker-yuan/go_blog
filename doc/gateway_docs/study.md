@@ -4,7 +4,7 @@
 
 # 📊 数据
 
-![etcd-data](./assets/images/etcd-data.png)
+![etcd-data](assets/images/etcd-data.png)
 
 
 
