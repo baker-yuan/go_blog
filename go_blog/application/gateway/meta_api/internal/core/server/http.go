@@ -28,7 +28,7 @@ func (s *server) setupAPI() {
 	// routes
 	r := internal.SetUpRouter()
 
-	// HTTP
+	// 设置HTTP服务
 	addr := net.JoinHostPort(conf.ServerHost, strconv.Itoa(conf.ServerPort))
 	s.server = &http.Server{
 		Addr:         addr,
@@ -37,7 +37,7 @@ func (s *server) setupAPI() {
 		WriteTimeout: time.Duration(5000) * time.Millisecond,
 	}
 
-	// HTTPS
+	// 设置HTTPS服务
 	if conf.SSLCert != "" && conf.SSLKey != "" {
 		addrSSL := net.JoinHostPort(conf.SSLHost, strconv.Itoa(conf.SSLPort))
 		s.serverSSL = &http.Server{

@@ -101,6 +101,7 @@ func (h *Handler) Patch(c droplet.Context) (interface{}, error) {
 	return ret, nil
 }
 
+// GetInput 获取路由详情
 type GetInput struct {
 	ID string `auto_read:"id,path" validate:"required"`
 }
@@ -159,14 +160,16 @@ func (h *Handler) Get(c droplet.Context) (interface{}, error) {
 	if err != nil {
 		return &data.SpecCodeResponse{StatusCode: http.StatusNotFound}, err
 	}
-
-	// format respond
 	route := r.(*entity.Route)
+
+	// 补充script
+	// format respond
 	script, _ := h.scriptStore.Get(c.Context(), input.ID)
 	if script != nil {
 		route.Script = script.(*entity.Script).Script
 	}
 
+	// 补充上游
 	// format
 	if route.Upstream != nil && route.Upstream.Nodes != nil {
 		route.Upstream.Nodes = entity.NodesFormat(route.Upstream.Nodes)
@@ -208,39 +211,34 @@ func (h *Handler) List(c droplet.Context) (interface{}, error) {
 	}
 
 	ret, err := h.routeStore.List(c.Context(), store.ListInput{
+		// 数据过滤
 		Predicate: func(obj interface{}) bool {
 			if input.Name != "" && !strings.Contains(obj.(*entity.Route).Name, input.Name) {
 				return false
 			}
-
 			if input.URI != "" && !uriContains(obj.(*entity.Route), input.URI) {
 				return false
 			}
-
 			if input.Label != "" && !utils.LabelContains(obj.(*entity.Route).Labels, labelMap) {
 				return false
 			}
-
 			if input.Status != "" && strconv.Itoa(int(obj.(*entity.Route).Status)) != input.Status {
 				return false
 			}
-
 			if input.Host != "" && !strings.Contains(obj.(*entity.Route).Host, input.Host) {
 				return false
 			}
-
 			if input.Desc != "" && !strings.Contains(obj.(*entity.Route).Desc, input.Desc) {
 				return false
 			}
-
 			if obj != nil && obj.(*entity.Route) != nil && obj.(*entity.Route).ID != nil && input.ID != "" {
 				if !strings.Contains(utils.InterfaceToString(obj.(*entity.Route).ID), input.ID) {
 					return false // IDs do not match, so object should not be included in the filtered result
 				}
 			}
-
 			return true
 		},
+		// 格式化
 		Format: func(obj interface{}) interface{} {
 			route := obj.(*entity.Route)
 			if route.Upstream != nil && route.Upstream.Nodes != nil {
@@ -248,6 +246,7 @@ func (h *Handler) List(c droplet.Context) (interface{}, error) {
 			}
 			return route
 		},
+		// 分页
 		PageSize:   input.PageSize,
 		PageNumber: input.PageNumber,
 	})
@@ -261,6 +260,7 @@ func (h *Handler) List(c droplet.Context) (interface{}, error) {
 	for i, item := range ret.Rows {
 		route = item.(*entity.Route)
 		id := utils.InterfaceToString(route.ID)
+		// 获取script
 		script, _ := h.scriptStore.Get(c.Context(), id)
 		if script != nil {
 			route.Script = script.(*entity.Script).Script

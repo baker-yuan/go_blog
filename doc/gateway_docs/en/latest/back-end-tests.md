@@ -23,7 +23,7 @@ This document provides the details of setting up the environment for running the
 
 1. To run back end E2E test, please start the `manager-api`, `apisix`, `etcd` and `upstream-node` at first.
 
-2. To start the `manager-api` project locally, please refer to [develop](./develop.md) web section.
+2. To start the `manager-api` project locally, please refer to [develop](develop.md) web section.
 
 3. To start the etcd locally, please refer to [etcd start](https://apisix.apache.org/docs/apisix/install-dependencies/) web section.
 
