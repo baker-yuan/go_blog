@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/baker-yuan/go-blog/application/auth/internal/biz"
+	"github.com/baker-yuan/go-blog/go_blog/common/util"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 )
 
@@ -13,12 +14,14 @@ func NewAuthService(
 	resource *biz.ResourceUseCase,
 	treeNode *biz.TreeNodeUseCase,
 	role *biz.RoleUseCase,
+	userRoleAuthority *biz.UserRoleAuthorityUseCase,
 ) *AuthService {
 	return &AuthService{
-		menu:     menu,
-		resource: resource,
-		treeNode: treeNode,
-		role:     role,
+		menu:              menu,
+		resource:          resource,
+		treeNode:          treeNode,
+		role:              role,
+		userRoleAuthority: userRoleAuthority,
 	}
 }
 
@@ -159,32 +162,71 @@ func (s *AuthService) DeleteRole(ctx context.Context, req *pb.DeleteRoleReq) (*p
 
 // RoleBindMenu 角色绑定菜单权限
 func (s *AuthService) RoleBindMenu(ctx context.Context, req *pb.RoleBindMenuReq) (*pb.EmptyRsp, error) {
-	//TODO implement me
-	panic("implement me")
+	userID, err := util.SessionUtils.GetLoginUserID(ctx)
+	if err != nil {
+		return nil, err
+	}
+	rsp := &pb.EmptyRsp{}
+	if err := s.userRoleAuthority.RoleBindMenu(ctx, userID, req); err != nil {
+		return nil, err
+	}
+	return rsp, nil
 }
 
 // RoleBindResource 角色绑定资源权限
 func (s *AuthService) RoleBindResource(ctx context.Context, req *pb.RoleBindResourceReq) (*pb.EmptyRsp, error) {
-	//TODO implement me
-	panic("implement me")
+	userID, err := util.SessionUtils.GetLoginUserID(ctx)
+	if err != nil {
+		return nil, err
+	}
+	rsp := &pb.EmptyRsp{}
+	if err := s.userRoleAuthority.RoleBindResource(ctx, userID, req); err != nil {
+		return nil, err
+	}
+	return rsp, nil
 }
 
 // UserBindRole 用户绑定角色
 func (s *AuthService) UserBindRole(ctx context.Context, req *pb.UserBindRoleReq) (*pb.EmptyRsp, error) {
-	//TODO implement me
-	panic("implement me")
+	userID, err := util.SessionUtils.GetLoginUserID(ctx)
+	if err != nil {
+		return nil, err
+	}
+	rsp := &pb.EmptyRsp{}
+	if err := s.userRoleAuthority.UserBindRole(ctx, userID, req); err != nil {
+		return nil, err
+	}
+	return rsp, nil
 }
 
 // GetUserRole 获取用户绑定的角色
 func (s *AuthService) GetUserRole(ctx context.Context, req *pb.GetUserRoleReq) (*pb.GetUserRoleRsp, error) {
-	//TODO implement me
-	panic("implement me")
+	userID, err := util.SessionUtils.GetLoginUserID(ctx)
+	if err != nil {
+		return nil, err
+	}
+	rsp := &pb.GetUserRoleRsp{}
+	roles, err := s.userRoleAuthority.GetUserRole(ctx, userID, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Data = roles
+	return rsp, nil
 }
 
 // GetUserResource 获取用户关联的接口权限
 func (s *AuthService) GetUserResource(ctx context.Context, req *pb.GetUserResourceReq) (*pb.GetUserResourceRsp, error) {
-	//TODO implement me
-	panic("implement me")
+	userID, err := util.SessionUtils.GetLoginUserID(ctx)
+	if err != nil {
+		return nil, err
+	}
+	rsp := &pb.GetUserResourceRsp{}
+	ids, err := s.userRoleAuthority.GetUserResource(ctx, userID, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Ids = ids
+	return rsp, nil
 }
 
 // SearchTreeNode 查询树形结构表

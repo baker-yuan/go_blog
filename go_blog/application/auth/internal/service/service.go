@@ -17,8 +17,9 @@ var _ pb.AuthApiService = (*AuthService)(nil)
 type AuthService struct {
 	pb.UnimplementedAuthApi
 
-	menu     *biz.MenuUsecase
-	resource *biz.ResourceUseCase
-	role     *biz.RoleUseCase
-	treeNode *biz.TreeNodeUseCase
+	menu              *biz.MenuUsecase
+	resource          *biz.ResourceUseCase
+	role              *biz.RoleUseCase
+	treeNode          *biz.TreeNodeUseCase
+	userRoleAuthority *biz.UserRoleAuthorityUseCase
 }

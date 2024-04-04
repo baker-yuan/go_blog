@@ -72,7 +72,7 @@ func (r *ArticleRepo) UpdateByID(ctx context.Context, article *entity.Article) e
 	if article.ID == 0 {
 		return errors.New("illegal argument article exist")
 	}
-	return r.GenericDao.DB.WithContext(ctx).Select(updateArticleField).Updates(article).Error
+	return r.GenericDao.GetDB(ctx).Select(updateArticleField).Updates(article).Error
 }
 
 // DeleteByID 根据ID删除文章
@@ -89,7 +89,7 @@ func (r *ArticleRepo) SearchArticle(ctx context.Context, req *pb.SearchArticleRe
 	tx, err := db.BuildSearch(
 		ctx,
 		req.GetSearch(),
-		r.GenericDao.DB.WithContext(ctx),
+		r.GenericDao.GetDB(ctx),
 		func(search map[string]*db.SearchValue) {
 
 		},

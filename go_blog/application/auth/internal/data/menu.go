@@ -63,9 +63,7 @@ type menuRepo struct {
 // NewMenuRepo 菜单
 func NewMenuRepo(data *Data) biz.MenuRepo {
 	return &menuRepo{
-		GenericDao: &db.GenericDao[Menu, uint32]{
-			DB: data.GetDB(),
-		},
+		GenericDao: db.NewGenericDao[Menu, uint32](data.GetDB()),
 	}
 }
 
@@ -132,7 +130,7 @@ func (r *menuRepo) UpdateByID(ctx context.Context, menu *biz.Menu) error {
 		return errors.New("illegal argument menu exist")
 	}
 	dbMenu := MenuEntityToPO(menu)
-	return r.GenericDao.DB.WithContext(ctx).Select(updateMenuField).Updates(dbMenu).Error
+	return r.GenericDao.GetDB(ctx).Select(updateMenuField).Updates(dbMenu).Error
 }
 
 // DeleteByID 根据ID删除菜单
@@ -149,7 +147,7 @@ func (r *menuRepo) SearchMenu(ctx context.Context, req *pb.SearchMenuReq) (biz.M
 	tx, err := db.BuildSearch(
 		ctx,
 		req.GetSearch(),
-		r.GenericDao.DB.WithContext(ctx),
+		r.GenericDao.GetDB(ctx),
 		func(search map[string]*db.SearchValue) {
 
 		},
@@ -172,7 +170,7 @@ func (r *menuRepo) GetMenuTree(ctx context.Context, req *pb.GetMenuTreeReq) (biz
 		menus     []*Menu
 		pageTotal int64
 	)
-	tx := r.GenericDao.DB.WithContext(ctx)
+	tx := r.GenericDao.GetDB(ctx)
 	if len(req.GetName()) != 0 {
 		tx = tx.Where(fmt.Sprintf("%s like ?", MenuFieldName), "%"+req.GetName()+"%")
 	}
@@ -236,7 +234,7 @@ func (r *menuRepo) findSubMenus(ctx context.Context, parentIDs []uint32, subMenu
 // getMenuByParentIDs 根据父节点ID查找
 func (r *menuRepo) getMenuByParentIDs(ctx context.Context, parentIDs []uint32) ([]*Menu, error) {
 	var res []*Menu
-	tx := r.GenericDao.DB.WithContext(ctx)
+	tx := r.GenericDao.GetDB(ctx)
 	tx = tx.Where(fmt.Sprintf("%s in ?", MenuFieldParentID), parentIDs)
 	if err := tx.Find(&res).Error; err != nil {
 		return nil, err

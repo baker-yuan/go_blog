@@ -74,9 +74,7 @@ var _ repository.UserRepository = &UserRepo{}
 
 func NewUserRepository(gormDB *gorm.DB) *UserRepo {
 	return &UserRepo{
-		GenericDao: &db.GenericDao[User, uint32]{
-			DB: gormDB,
-		},
+		GenericDao: db.NewGenericDao[User, uint32](gormDB),
 	}
 }
 
@@ -147,7 +145,7 @@ func (r *UserRepo) UpdateByID(ctx context.Context, user *entity.User) error {
 		return errors.New("illegal argument user exist")
 	}
 	dbUser := UserEntityToPo(user)
-	return r.GenericDao.DB.WithContext(ctx).Select(updateUserField).Updates(dbUser).Error
+	return r.GenericDao.GetDB(ctx).Select(updateUserField).Updates(dbUser).Error
 }
 
 // SearchUser 用户搜索
@@ -159,7 +157,7 @@ func (r *UserRepo) SearchUser(ctx context.Context, req *pb.SearchUserReq) (entit
 	tx, err := db.BuildSearch(
 		ctx,
 		req.GetSearch(),
-		r.GenericDao.DB.WithContext(ctx),
+		r.GenericDao.GetDB(ctx),
 		func(search map[string]*db.SearchValue) {
 
 		},
@@ -179,7 +177,7 @@ func (r *UserRepo) SearchUser(ctx context.Context, req *pb.SearchUserReq) (entit
 // GetUserByEmailAndPassword 通过用户名查找用户，并且验证密码
 func (r *UserRepo) GetUserByEmailAndPassword(ctx context.Context, username string, password string) (*entity.User, error) {
 	// 查询用户
-	tx := r.GenericDao.DB.WithContext(ctx).
+	tx := r.GenericDao.GetDB(ctx).
 		Where(UserFieldUsername, username)
 	data := &User{}
 	if err := tx.Find(&data).Error; err != nil {

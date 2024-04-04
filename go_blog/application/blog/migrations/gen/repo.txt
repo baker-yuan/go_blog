@@ -75,7 +75,7 @@ func (r $!{tableInfo.name}Repo) Update(ctx context.Context, $!tool.firstLowerCas
 	if $!tool.firstLowerCase($!{tableInfo.name}) .ID == 0 {
 		return errors.New("illegal argument $!tool.firstLowerCase($!{tableInfo.name}) exist")
 	}
-	return r.GenericDao.DB.WithContext(ctx).Select(update$!{tableInfo.name}Field).Updates($!tool.firstLowerCase($!{tableInfo.name})).Error
+	return r.GenericDao.GetDB(ctx).Select(update$!{tableInfo.name}Field).Updates($!tool.firstLowerCase($!{tableInfo.name})).Error
 }
 
 // GetByID 根据主键ID查询$!{tableInfo.comment}
@@ -91,7 +91,7 @@ func (r $!{tableInfo.name}Repo) GetByDBOption(ctx context.Context, pageNum uint3
 		offset    = (pageNum - 1) * pageSize
 	)
 
-	session := r.GenericDao.DB.WithContext(ctx)
+	session := r.GenericDao.GetDB(ctx)
 	for _, opt := range opts {
 		session = opt(session)
 	}

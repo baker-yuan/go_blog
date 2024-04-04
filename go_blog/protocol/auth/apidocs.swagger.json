@@ -2017,6 +2017,18 @@
   },
   "go_blog.auth.GetUserResourceRsp": {
    "type": "object",
+   "properties": {
+    "ids": {
+     "title": "ids",
+     "type": "array",
+     "format": "uint32",
+     "description": "资源id集合",
+     "items": {
+      "type": "integer",
+      "format": "uint32"
+     }
+    }
+   },
    "title": "go_blog.auth.GetUserResourceRsp",
    "description": "GetUserResourceRsp"
   },
@@ -2026,29 +2038,35 @@
     "data": {
      "title": "data",
      "type": "array",
+     "description": " 用户绑定的角色\n",
      "items": {
-      "$ref": "#/definitions/go_blog.auth.GetUserRoleRsp.DataEntry"
+      "$ref": "#/definitions/go_blog.auth.GetUserRoleRsp.Item"
      }
     }
    },
    "title": "go_blog.auth.GetUserRoleRsp",
    "description": "GetUserRoleRsp"
   },
-  "go_blog.auth.GetUserRoleRsp.DataEntry": {
+  "go_blog.auth.GetUserRoleRsp.Item": {
    "type": "object",
    "properties": {
-    "key": {
-     "title": "key",
+    "user_id": {
+     "title": "user_id",
      "type": "integer",
-     "format": "uint32"
+     "format": "uint32",
+     "description": "用户ID"
     },
-    "value": {
-     "title": "value",
-     "$ref": "#/definitions/go_blog.auth.Role"
+    "user_role": {
+     "title": "user_role",
+     "type": "array",
+     "description": " 角色集合\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.auth.UserRole"
+     }
     }
    },
-   "title": "go_blog.auth.GetUserRoleRsp.DataEntry",
-   "description": "DataEntry"
+   "title": "go_blog.auth.GetUserRoleRsp.Item",
+   "description": "Item"
   },
   "go_blog.auth.Menu": {
    "type": "object",
@@ -2481,6 +2499,48 @@
    },
    "title": "go_blog.auth.TreeNode",
    "description": "树节点定义"
+  },
+  "go_blog.auth.UserRole": {
+   "type": "object",
+   "properties": {
+    "create_time": {
+     "title": "create_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "插入时间"
+    },
+    "create_user": {
+     "title": "create_user",
+     "type": "string",
+     "description": "查询补充\n创建人"
+    },
+    "create_user_id": {
+     "title": "create_user_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "创建人ID"
+    },
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "ID"
+    },
+    "role_id": {
+     "title": "role_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "角色ID"
+    },
+    "user_id": {
+     "title": "user_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "用户ID"
+    }
+   },
+   "title": "go_blog.auth.UserRole",
+   "description": "UserRole 账号角色关联"
   }
  }
 }

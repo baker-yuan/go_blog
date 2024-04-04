@@ -45,9 +45,7 @@ type treeNodeRepo struct {
 // NewTreeNodeRepo 创建
 func NewTreeNodeRepo(data *Data) biz.TreeNodeRepo {
 	return &treeNodeRepo{
-		GenericDao: &db.GenericDao[TreeNode, uint32]{
-			DB: data.GetDB(),
-		},
+		GenericDao: db.NewGenericDao[TreeNode, uint32](data.GetDB()),
 	}
 }
 
@@ -114,7 +112,7 @@ func (r *treeNodeRepo) UpdateByID(ctx context.Context, treeNode *biz.TreeNode) e
 		return errors.New("illegal argument treeNode exist")
 	}
 	dbTreeNode := TreeNodeEntityToPO(treeNode)
-	return r.GenericDao.DB.WithContext(ctx).Select(updateTreeNodeField).Updates(dbTreeNode).Error
+	return r.GenericDao.GetDB(ctx).Select(updateTreeNodeField).Updates(dbTreeNode).Error
 }
 
 // DeleteByID 根据ID删除树形结构表
@@ -131,7 +129,7 @@ func (r *treeNodeRepo) SearchTreeNode(ctx context.Context, req *pb.SearchTreeNod
 	tx, err := db.BuildSearch(
 		ctx,
 		req.GetSearch(),
-		r.GenericDao.DB.WithContext(ctx),
+		r.GenericDao.GetDB(ctx),
 		func(search map[string]*db.SearchValue) {
 
 		},
@@ -151,7 +149,7 @@ func (r *treeNodeRepo) SearchTreeNode(ctx context.Context, req *pb.SearchTreeNod
 // GetTreeByBizType 根据业务类型查询数
 func (r *treeNodeRepo) GetTreeByBizType(ctx context.Context, bizType pb.TreeNodeBizType) (biz.TreeNodes, error) {
 	treeNodes := make([]*TreeNode, 0)
-	tx := r.GenericDao.DB.WithContext(ctx)
+	tx := r.GenericDao.GetDB(ctx)
 	tx = tx.Where(TreeNodeFieldBizType, bizType)
 	if err := tx.Find(&treeNodes).Error; err != nil {
 		return nil, err

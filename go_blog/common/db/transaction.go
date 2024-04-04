@@ -48,3 +48,12 @@ func Transaction(ctx context.Context, fn func(ctx context.Context) error) error 
 func GetTransactionDB(ctx context.Context) (*gorm.DB, error) {
 	return defaultTx.GetDbToCtx(ctx)
 }
+
+// GetTransactionDBNoErr 获取PutDbToCtx存入的tx
+func GetTransactionDBNoErr(ctx context.Context, defaultDB *gorm.DB) *gorm.DB {
+	tx, err := defaultTx.GetDbToCtx(ctx)
+	if err != nil {
+		return defaultDB
+	}
+	return tx
+}

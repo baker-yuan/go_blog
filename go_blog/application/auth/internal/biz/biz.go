@@ -10,4 +10,5 @@ var ProviderSet = wire.NewSet(
 	NewResourceUseCase,
 	NewRoleUseCase,
 	NewTreeNodeUseCase,
+	NewUserRoleAuthorityUseCase,
 )

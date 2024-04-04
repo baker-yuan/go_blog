@@ -86,7 +86,7 @@ func (r *CategoryRepo) UpdateByID(ctx context.Context, category *entity.Category
 	if category.ID == 0 {
 		return errors.New("illegal argument category exist")
 	}
-	return r.GenericDao.DB.WithContext(ctx).Select(updateCategoryField).Updates(category).Error
+	return r.GenericDao.GetDB(ctx).Select(updateCategoryField).Updates(category).Error
 }
 
 // DeleteByID 根据ID删除文章分类
@@ -103,7 +103,7 @@ func (r *CategoryRepo) SearchCategory(ctx context.Context, req *pb.SearchCategor
 	tx, err := db.BuildSearch(
 		ctx,
 		req.GetSearch(),
-		r.GenericDao.DB.WithContext(ctx),
+		r.GenericDao.GetDB(ctx),
 		func(search map[string]*db.SearchValue) {
 
 		},

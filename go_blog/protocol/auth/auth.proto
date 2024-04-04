@@ -339,7 +339,11 @@ message GetUserRoleReq {
 }
 
 message GetUserRoleRsp {
-  map<uint32, Role> data = 1; // 用户绑定的角色 key=用户ID value=角色集合
+  message Item {
+     uint32 user_id = 1; // 用户ID
+     repeated UserRole user_role = 2; // 角色集合
+  }
+  repeated Item data = 1; // 用户绑定的角色
 }
 
 // 用户关联的接口权限
@@ -347,7 +351,7 @@ message GetUserResourceReq {
   uint32 user_id = 1 [(validate.rules).uint32.gt = 0]; // 用户ID
 }
 message GetUserResourceRsp {
-
+  repeated uint32 ids = 1; // 资源id集合
 }
 
 

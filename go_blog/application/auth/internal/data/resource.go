@@ -78,9 +78,7 @@ var _ biz.ResourceRepo = &resourceRepo{}
 // NewResourceRepo 创建
 func NewResourceRepo(data *Data) biz.ResourceRepo {
 	return &resourceRepo{
-		GenericDao: &db.GenericDao[Resource, uint32]{
-			DB: data.GetDB(),
-		},
+		GenericDao: db.NewGenericDao[Resource, uint32](data.GetDB()),
 	}
 }
 
@@ -146,7 +144,7 @@ func (r resourceRepo) UpdateByID(ctx context.Context, resource *biz.Resource) er
 		return errors.New("illegal argument menu exist")
 	}
 	dbResource := ResourceEntityToPO(resource)
-	return r.GenericDao.DB.WithContext(ctx).Select(updateResourceField).Updates(dbResource).Error
+	return r.GenericDao.GetDB(ctx).Select(updateResourceField).Updates(dbResource).Error
 }
 
 // DeleteByID 根据ID删除接口
@@ -163,7 +161,7 @@ func (r resourceRepo) SearchResource(ctx context.Context, req *pb.SearchResource
 	tx, err := db.BuildSearch(
 		ctx,
 		req.GetSearch(),
-		r.GenericDao.DB.WithContext(ctx),
+		r.GenericDao.GetDB(ctx),
 		func(search map[string]*db.SearchValue) {
 
 		},
@@ -183,7 +181,7 @@ func (r resourceRepo) SearchResource(ctx context.Context, req *pb.SearchResource
 // GetEffectiveResource 获取有效状态下的接口
 func (r resourceRepo) GetEffectiveResource(ctx context.Context, req *pb.GetEffectiveResourceReq) (biz.Resources, error) {
 	res := make([]*Resource, 0)
-	tx := r.GenericDao.DB.WithContext(ctx)
+	tx := r.GenericDao.GetDB(ctx)
 	tx = tx.Where(ResourceFieldStatus, pb.ResourceStatus_PUBLISHED)
 	if err := tx.Find(&res).Error; err != nil {
 		return nil, err

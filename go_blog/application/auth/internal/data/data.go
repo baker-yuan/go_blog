@@ -18,6 +18,7 @@ var ProviderSet = wire.NewSet(
 	NewResourceRepo,
 	NewRoleRepo,
 	NewTreeNodeRepo,
+	NewUserRoleAuthorityRepo,
 )
 
 // Data 数据操作
@@ -90,12 +91,12 @@ func InitSchema(db *gorm.DB) error {
 		//	StructPtr: &Role{},
 		//},
 		{
-			TableName: "角色关联的资源和目录表",
-			StructPtr: &RoleAuthority{},
-		},
-		{
 			TableName: "账号角色绑定表",
 			StructPtr: &UserRole{},
+		},
+		{
+			TableName: "角色关联的资源和目录表",
+			StructPtr: &RoleAuthority{},
 		},
 		{
 			TableName: "树形结构表",

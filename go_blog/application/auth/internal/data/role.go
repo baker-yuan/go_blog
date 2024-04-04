@@ -53,9 +53,7 @@ type roleRepo struct {
 // NewRoleRepo 创建
 func NewRoleRepo(data *Data) biz.RoleRepo {
 	return &roleRepo{
-		GenericDao: &db.GenericDao[Role, uint32]{
-			DB: data.GetDB(),
-		},
+		GenericDao: db.NewGenericDao[Role, uint32](data.GetDB()),
 	}
 }
 
@@ -122,7 +120,7 @@ func (r *roleRepo) UpdateByID(ctx context.Context, role *biz.Role) error {
 		return errors.New("illegal argument role exist")
 	}
 	dbRole := RoleEntityToPO(role)
-	return r.GenericDao.DB.WithContext(ctx).Select(updateRoleField).Updates(dbRole).Error
+	return r.GenericDao.GetDB(ctx).Select(updateRoleField).Updates(dbRole).Error
 }
 
 // DeleteByID 根据ID删除角色
@@ -139,7 +137,7 @@ func (r *roleRepo) SearchRole(ctx context.Context, req *pb.SearchRoleReq) (biz.R
 	tx, err := db.BuildSearch(
 		ctx,
 		req.GetSearch(),
-		r.GenericDao.DB.WithContext(ctx),
+		r.GenericDao.GetDB(ctx),
 		func(search map[string]*db.SearchValue) {
 
 		},

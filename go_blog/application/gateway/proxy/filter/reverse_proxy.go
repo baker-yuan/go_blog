@@ -21,7 +21,7 @@ func ForwardHandler(bizCtx biz_ctx.IBizContext, cfg *config.Config) {
 		return
 	}
 
-	httpCtx.Proxy().URI().SetPath(resource.Url)
+	httpCtx.Proxy().URI().SetPath(resource.Method)
 	httpCtx.Proxy().URI().SetHost(instance)
 	httpCtx.Proxy().Header().SetHeader("Content-Type", "application/json")
 

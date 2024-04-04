@@ -105,7 +105,7 @@ func (r *$!tool.firstLowerCase($!{tableInfo.name})Repo) UpdateByID(ctx context.C
 		return errors.New("illegal argument $!tool.firstLowerCase($!{tableInfo.name}) exist")
 	}
 	db$!{tableInfo.name} := $!{tableInfo.name}EntityToPO($!tool.firstLowerCase($!{tableInfo.name}))
-	return r.GenericDao.DB.WithContext(ctx).Select(update$!{tableInfo.name}Field).Updates(db$!{tableInfo.name}).Error
+	return r.GenericDao.GetDB(ctx).Select(update$!{tableInfo.name}Field).Updates(db$!{tableInfo.name}).Error
 }
 
 // DeleteByID 根据ID删除$!{tableInfo.comment}
@@ -122,7 +122,7 @@ func (r *$!tool.firstLowerCase($!{tableInfo.name})Repo) Search$!{tableInfo.name}
 	tx, err := db.BuildSearch(
 		ctx,
 		req.GetSearch(),
-		r.GenericDao.DB.WithContext(ctx),
+		r.GenericDao.GetDB(ctx),
 		func(search map[string]*db.SearchValue) {
 
 		},

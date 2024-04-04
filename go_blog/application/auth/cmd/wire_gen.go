@@ -40,7 +40,9 @@ func wireApp(trpcServer *server.Server) (*App, error) {
 	treeNodeUseCase := biz.NewTreeNodeUseCase(commonUseCase, treeNodeRepo)
 	roleRepo := data.NewRoleRepo(dataData)
 	roleUseCase := biz.NewRoleUseCase(commonUseCase, roleRepo)
-	authService := service.NewAuthService(menuUsecase, resourceUseCase, treeNodeUseCase, roleUseCase)
+	userRoleAuthorityRepo := data.NewUserRoleAuthorityRepo(dataData)
+	userRoleAuthorityUseCase := biz.NewUserRoleAuthorityUseCase(commonUseCase, userRoleAuthorityRepo)
+	authService := service.NewAuthService(menuUsecase, resourceUseCase, treeNodeUseCase, roleUseCase, userRoleAuthorityUseCase)
 	app := newApp(trpcServer, authService, dataData)
 	return app, nil
 }
