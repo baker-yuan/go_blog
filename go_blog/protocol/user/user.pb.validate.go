@@ -277,17 +277,25 @@ func (m *User) validate(all bool) error {
 
 	// no validation rules for WebSite
 
+	// no validation rules for Status
+
 	// no validation rules for LoginType
 
 	// no validation rules for UnionId
 
-	// no validation rules for Status
-
 	// no validation rules for IsDeleted
+
+	// no validation rules for CreateUserId
+
+	// no validation rules for UpdateUserId
 
 	// no validation rules for CreateTime
 
 	// no validation rules for UpdateTime
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
 
 	if len(errors) > 0 {
 		return UserMultiError(errors)
@@ -765,10 +773,6 @@ func (m *AddOrUpdateUserReq) validate(all bool) error {
 
 	// no validation rules for Password
 
-	// no validation rules for Salt
-
-	// no validation rules for UserType
-
 	// no validation rules for Email
 
 	// no validation rules for Nickname
@@ -779,13 +783,7 @@ func (m *AddOrUpdateUserReq) validate(all bool) error {
 
 	// no validation rules for WebSite
 
-	// no validation rules for LoginType
-
-	// no validation rules for UnionId
-
 	// no validation rules for Status
-
-	// no validation rules for IsDeleted
 
 	if len(errors) > 0 {
 		return AddOrUpdateUserReqMultiError(errors)
@@ -977,3 +975,203 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeleteUserReqValidationError{}
+
+// Validate checks the field values on UidToNameReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *UidToNameReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UidToNameReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in UidToNameReqMultiError, or
+// nil if none found.
+func (m *UidToNameReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UidToNameReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return UidToNameReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// UidToNameReqMultiError is an error wrapping multiple validation errors
+// returned by UidToNameReq.ValidateAll() if the designated constraints aren't met.
+type UidToNameReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UidToNameReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UidToNameReqMultiError) AllErrors() []error { return m }
+
+// UidToNameReqValidationError is the validation error returned by
+// UidToNameReq.Validate if the designated constraints aren't met.
+type UidToNameReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UidToNameReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UidToNameReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UidToNameReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UidToNameReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UidToNameReqValidationError) ErrorName() string { return "UidToNameReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e UidToNameReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUidToNameReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UidToNameReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UidToNameReqValidationError{}
+
+// Validate checks the field values on UidToNameRsp with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *UidToNameRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UidToNameRsp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in UidToNameRspMultiError, or
+// nil if none found.
+func (m *UidToNameRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UidToNameRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for UidToNameMap
+
+	if len(errors) > 0 {
+		return UidToNameRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// UidToNameRspMultiError is an error wrapping multiple validation errors
+// returned by UidToNameRsp.ValidateAll() if the designated constraints aren't met.
+type UidToNameRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UidToNameRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UidToNameRspMultiError) AllErrors() []error { return m }
+
+// UidToNameRspValidationError is the validation error returned by
+// UidToNameRsp.Validate if the designated constraints aren't met.
+type UidToNameRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UidToNameRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UidToNameRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UidToNameRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UidToNameRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UidToNameRspValidationError) ErrorName() string { return "UidToNameRspValidationError" }
+
+// Error satisfies the builtin error interface
+func (e UidToNameRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUidToNameRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UidToNameRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UidToNameRspValidationError{}

@@ -3,9 +3,9 @@ package main
 import (
 	"context"
 
-	"github.com/baker-yuan/go-blog/application/blog/datasync/config"
-	"github.com/baker-yuan/go-blog/application/blog/datasync/consumer"
-	"github.com/baker-yuan/go-blog/application/blog/datasync/go_mysql"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/datasync/config"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/datasync/consumer"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/datasync/go_mysql"
 )
 
 func main() {

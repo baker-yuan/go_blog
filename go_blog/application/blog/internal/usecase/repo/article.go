@@ -3,8 +3,9 @@ package repo
 import (
 	"context"
 	"errors"
+	"fmt"
 
-	"github.com/baker-yuan/go-blog/application/blog/internal/entity"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/entity"
 	"github.com/baker-yuan/go-blog/go_blog/common/db"
 	"github.com/baker-yuan/go-blog/go_blog/common/util"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/blog"
@@ -94,6 +95,7 @@ func (r *ArticleRepo) SearchArticle(ctx context.Context, req *pb.SearchArticleRe
 
 		},
 	)
+	tx = tx.Order(fmt.Sprintf("%s desc", entity.ArticleFieldID))
 	if err != nil {
 		return nil, 0, err
 	}

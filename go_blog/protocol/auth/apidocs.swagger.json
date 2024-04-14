@@ -2307,6 +2307,11 @@
      "format": "uint32",
      "description": "创建时间"
     },
+    "create_user": {
+     "title": "create_user",
+     "type": "string",
+     "description": "查询补充\n创建人"
+    },
     "create_user_id": {
      "title": "create_user_id",
      "type": "integer",
@@ -2316,7 +2321,7 @@
     "describe": {
      "title": "describe",
      "type": "string",
-     "description": "功能描述"
+     "description": "描述"
     },
     "id": {
      "title": "id",
@@ -2339,6 +2344,11 @@
      "type": "integer",
      "format": "uint32",
      "description": "更新时间"
+    },
+    "update_user": {
+     "title": "update_user",
+     "type": "string",
+     "description": "更新人"
     },
     "update_user_id": {
      "title": "update_user_id",

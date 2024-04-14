@@ -3,10 +3,11 @@ package main
 import (
 	"log"
 
-	"github.com/baker-yuan/go-blog/application/blog/config"
-	"github.com/baker-yuan/go-blog/application/blog/internal/app"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/config"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/app"
 	"trpc.group/trpc-go/trpc-go"
 
+	_ "github.com/baker-yuan/go-blog/go_blog/filters/httptrace"
 	_ "trpc.group/trpc-go/trpc-filter/debuglog"
 	_ "trpc.group/trpc-go/trpc-filter/recovery"
 	_ "trpc.group/trpc-go/trpc-filter/validation"

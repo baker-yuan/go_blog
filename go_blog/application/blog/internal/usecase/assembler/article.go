@@ -1,7 +1,7 @@
 package assembler
 
 import (
-	"github.com/baker-yuan/go-blog/application/blog/internal/entity"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/entity"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/blog"
 )
 
@@ -31,9 +31,11 @@ func ArticleEntityToModel(article *entity.Article) *pb.Article {
 		IsAppreciation:   bool(article.IsAppreciation),
 		IsCommentEnabled: bool(article.IsCommentEnabled),
 		// 公共字段
-		IsDeleted:  bool(article.IsDeleted),
-		CreateTime: uint32(article.CreateTime),
-		UpdateTime: uint32(article.UpdateTime),
+		IsDeleted:    bool(article.IsDeleted),
+		CreateUserId: article.CreateUserID,
+		UpdateUserId: article.UpdateUserID,
+		CreateTime:   uint32(article.CreateTime),
+		UpdateTime:   uint32(article.UpdateTime),
 	}
 	return modelRes
 }

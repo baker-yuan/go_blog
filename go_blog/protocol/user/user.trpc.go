@@ -27,6 +27,8 @@ type UserApiService interface {
 	DeleteUser(ctx context.Context, req *DeleteUserReq) (*EmptyRsp, error)
 	// UserDetail 用户详情
 	UserDetail(ctx context.Context, req *UserDetailReq) (*User, error)
+	// UidToName 通过用户id获取用户名
+	UidToName(ctx context.Context, req *UidToNameReq) (*UidToNameRsp, error)
 }
 
 func UserApiService_SearchUser_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -101,6 +103,24 @@ func UserApiService_UserDetail_Handler(svr interface{}, ctx context.Context, f s
 	return rsp, nil
 }
 
+func UserApiService_UidToName_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &UidToNameReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(UserApiService).UidToName(ctx, reqbody.(*UidToNameReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 // UserApiServer_ServiceDesc descriptor for server.RegisterService.
 var UserApiServer_ServiceDesc = server.ServiceDesc{
 	ServiceName: "go_blog.user.UserApi",
@@ -111,7 +131,7 @@ var UserApiServer_ServiceDesc = server.ServiceDesc{
 			Func: UserApiService_SearchUser_Handler,
 		},
 		{
-			Name: "/user/admin/updateUser",
+			Name: "/user/admin/addOrUpdateUser",
 			Func: UserApiService_AddOrUpdateUser_Handler,
 		},
 		{
@@ -121,6 +141,10 @@ var UserApiServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/user/admin/userDetail",
 			Func: UserApiService_UserDetail_Handler,
+		},
+		{
+			Name: "/user/admin/uidToNameReq",
+			Func: UserApiService_UidToName_Handler,
 		},
 		{
 			Name: "/go_blog.user.UserApi/SearchUser",
@@ -137,6 +161,10 @@ var UserApiServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/go_blog.user.UserApi/UserDetail",
 			Func: UserApiService_UserDetail_Handler,
+		},
+		{
+			Name: "/go_blog.user.UserApi/UidToName",
+			Func: UserApiService_UidToName_Handler,
 		},
 	},
 }
@@ -172,6 +200,11 @@ func (s *UnimplementedUserApi) UserDetail(ctx context.Context, req *UserDetailRe
 	return nil, errors.New("rpc UserDetail of service UserApi is not implemented")
 }
 
+// UidToName 通过用户id获取用户名
+func (s *UnimplementedUserApi) UidToName(ctx context.Context, req *UidToNameReq) (*UidToNameRsp, error) {
+	return nil, errors.New("rpc UidToName of service UserApi is not implemented")
+}
+
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
 
 // END ======================================= Server Service Definition ======================================= END
@@ -188,6 +221,8 @@ type UserApiClientProxy interface {
 	DeleteUser(ctx context.Context, req *DeleteUserReq, opts ...client.Option) (rsp *EmptyRsp, err error)
 	// UserDetail 用户详情
 	UserDetail(ctx context.Context, req *UserDetailReq, opts ...client.Option) (rsp *User, err error)
+	// UidToName 通过用户id获取用户名
+	UidToName(ctx context.Context, req *UidToNameReq, opts ...client.Option) (rsp *UidToNameRsp, err error)
 }
 
 type UserApiClientProxyImpl struct {
@@ -222,7 +257,7 @@ func (c *UserApiClientProxyImpl) SearchUser(ctx context.Context, req *SearchUser
 func (c *UserApiClientProxyImpl) AddOrUpdateUser(ctx context.Context, req *AddOrUpdateUserReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
 	ctx, msg := codec.WithCloneMessage(ctx)
 	defer codec.PutBackMessage(msg)
-	msg.WithClientRPCName("/user/admin/updateUser")
+	msg.WithClientRPCName("/user/admin/addOrUpdateUser")
 	msg.WithCalleeServiceName(UserApiServer_ServiceDesc.ServiceName)
 	msg.WithCalleeApp("")
 	msg.WithCalleeServer("")
@@ -273,6 +308,26 @@ func (c *UserApiClientProxyImpl) UserDetail(ctx context.Context, req *UserDetail
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &User{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *UserApiClientProxyImpl) UidToName(ctx context.Context, req *UidToNameReq, opts ...client.Option) (*UidToNameRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/user/admin/uidToNameReq")
+	msg.WithCalleeServiceName(UserApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("UserApi")
+	msg.WithCalleeMethod("UidToName")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &UidToNameRsp{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}

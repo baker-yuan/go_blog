@@ -3,7 +3,7 @@ package tool
 import (
 	"testing"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/utils"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/utils"
 	"github.com/shiningrush/droplet"
 	"github.com/stretchr/testify/assert"
 )

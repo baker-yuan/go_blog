@@ -45,49 +45,49 @@ export namespace Login {
 }
 
 // 用户管理模块
-export namespace User {
-  export interface ReqUserParams extends ReqPage {
-    username: string;
-    gender: number;
-    idCard: string;
-    email: string;
-    address: string;
-    createTime: string[];
-    status: number;
-  }
-  export interface ResUserList {
-    id: string;
-    username: string;
-    gender: number;
-    user: { detail: { age: number } };
-    idCard: string;
-    email: string;
-    address: string;
-    createTime: string;
-    status: number;
-    avatar: string;
-    photo: any[];
-    children?: ResUserList[];
-  }
-  export interface ResStatus {
-    userLabel: string;
-    userValue: number;
-  }
-  export interface ResGender {
-    genderLabel: string;
-    genderValue: number;
-  }
-  export interface ResDepartment {
-    id: string;
-    name: string;
-    children?: ResDepartment[];
-  }
-  export interface ResRole {
-    id: string;
-    name: string;
-    children?: ResDepartment[];
-  }
-}
+// export namespace User {
+//   export interface ReqUserParams extends ReqPage {
+//     username: string;
+//     gender: number;
+//     idCard: string;
+//     email: string;
+//     address: string;
+//     createTime: string[];
+//     status: number;
+//   }
+//   export interface ResUserList {
+//     id: string;
+//     username: string;
+//     gender: number;
+//     user: { detail: { age: number } };
+//     idCard: string;
+//     email: string;
+//     address: string;
+//     createTime: string;
+//     status: number;
+//     avatar: string;
+//     photo: any[];
+//     children?: ResUserList[];
+//   }
+//   export interface ResStatus {
+//     userLabel: string;
+//     userValue: number;
+//   }
+//   export interface ResGender {
+//     genderLabel: string;
+//     genderValue: number;
+//   }
+//   export interface ResDepartment {
+//     id: string;
+//     name: string;
+//     children?: ResDepartment[];
+//   }
+//   export interface ResRole {
+//     id: string;
+//     name: string;
+//     children?: ResDepartment[];
+//   }
+// }
 
 // 树形结构
 export namespace TreeNode {
@@ -218,4 +218,135 @@ export namespace Role {
 
   // 分页查询角色表
   export interface ReqRoleListParams extends ReqPage {}
+}
+
+// 用户管理模块
+export namespace User {
+  // 用户状态枚举
+  export enum UserStatus {
+    USER_STATUS_NORMAL = 0, // 正常
+    USER_STATUS_DISABLED = 1 // 禁用
+  }
+  // 用户类型
+  export const UserTypeAdmin: string = "ADMIN";
+  export const UserTypeUser: string = "USER";
+
+  // 用户模型
+  export interface Model {
+    // 账号信息
+    uid: number; // 主键
+    username: string; // 用户名(唯一)
+    password: string; // 登录密码
+    salt: string; // 盐
+    userType: "ADMIN" | "USER"; // 用户类型 ADMIN-管理员 USER-普通用户
+    // 基本信息
+    email: string; // 邮箱号
+    nickname: string; // 昵称
+    avatar: string; // 头像地址
+    intro: string; // 用户简介
+    webSite: string; // 个人网站
+    // 状态
+    status: UserStatus; // 状态 0-正常 1-禁用
+    // 三方登录
+    loginType: number; // 登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博
+    unionId: string; // 用户唯一标识（第三方网站）
+    // 公共字段
+    isDeleted: boolean; // 是否注销
+    createUserId: number; // 创建人
+    updateUserId: number; // 修改人
+    createTime: number; // 创建时间
+    updateTime: number; // 修改时间
+  }
+
+  // 分页查询用户
+  export interface ReqUserListParams extends ReqPage {}
+}
+
+// 文章表管理模块
+export namespace Article {
+  // 文章表模型
+  export interface Model {
+    // 基本数据
+    id: number; // 主键
+    categoryID: number; // 文章分类表ID|biz_type表主键
+    title: string; // 文章标题
+    description: string; // 文章简介，最多200字
+    content: string; // 文章内容
+    coverImage: string; // 文章封面图片
+    originalURL: string; // 原文链接
+    //
+    password: string; // 密码保护
+    // 辅助
+    words: number; // 文章字数
+    readTime: number; // 文章阅读时长(分钟)
+    // 类型描述
+    type: ArticleType; // 文章类型 1-原创 2-转载 3-翻译
+    status: ArticleStatus; // 文章状态 0-草稿 1-已发布
+    format: ArticleFormat; // 文章格式 1-markdown 2-富文本
+    visibility: ArticleVisibility; // 文章可见性 1-公开 2-私密 3-密码保护
+
+    // 标志
+    isTop: boolean; // 置顶开关
+    isRecommend: boolean; // 推荐开关
+    isAppreciation: boolean; // 赞赏开关
+    isCommentEnabled: boolean; // 评论开关
+
+    // 公共字段
+    isDeleted: boolean; // 是否删除
+    createUserId: number;
+    updateUserId: number;
+    createTime: number;
+    updateTime: number;
+    // 查询补充
+    createUser: string; // 创建人
+    updateUser: string; // 更新人
+  }
+
+  // 分页查询文章表
+  export interface ReqArticleListParams extends ReqPage {}
+}
+
+// 文章标签管理模块
+export namespace Tag {
+  // 文章标签模型
+  export interface Model {
+    id: number; // 主键
+    name: string; // 标签名
+    description: string; // 标签描述
+    color: string; // 标签颜色
+    // 公共字段
+    createUserId: number;
+    updateUserId: number;
+    createTime: number;
+    updateTime: number;
+    // 查询补充
+    createUser: string; // 创建人
+    updateUser: string; // 更新人
+  }
+
+  // 分页查询文章标签
+  export interface ReqTagListParams extends ReqPage {}
+}
+
+// 文章分类管理模块
+export namespace Category {
+  // 文章分类模型
+  export interface Model {
+    id: number; // 主键
+    name: string; // 文章类型名
+    description: string; // 类型介绍
+    sort: number; // 排序
+    available: CategoryStatus; // 是否可用 0-不可用 1-可用
+    // 公共字段
+    createUserId: number;
+    updateUserId: number;
+    createTime: number;
+    updateTime: number;
+    // 查询补充
+    createUser: string; // 创建人
+    updateUser: string; // 更新人
+  }
+
+  // 分页查询文章分类
+  export interface ReqCategoryListParams extends ReqPage {}
 }

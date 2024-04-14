@@ -3,7 +3,7 @@ package interfaces
 import (
 	"context"
 
-	"github.com/baker-yuan/go-blog/application/user/application"
+	"github.com/baker-yuan/go-blog/go_blog/application/user/application"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/user"
 )
 
@@ -57,4 +57,15 @@ func (s *Users) DeleteUser(ctx context.Context, req *pb.DeleteUserReq) (*pb.Empt
 // UserDetail 用户详情
 func (s *Users) UserDetail(ctx context.Context, req *pb.UserDetailReq) (*pb.User, error) {
 	return s.us.UserDetail(ctx, req)
+}
+
+// UidToName 通过用户id获取用户名
+func (s *Users) UidToName(ctx context.Context, req *pb.UidToNameReq) (*pb.UidToNameRsp, error) {
+	res := &pb.UidToNameRsp{}
+	uidToNameMap, err := s.us.UidToName(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	res.UidToNameMap = uidToNameMap
+	return res, nil
 }

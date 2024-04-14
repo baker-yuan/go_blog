@@ -1,8 +1,8 @@
 package assembler
 
 import (
-	pb "github.com/baker-yuan/go-blog/protocol/template"
-	"github.com/baker-yuan/go-blog/template/go_clean_template/internal/entity"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/template"
+	"github.com/baker-yuan/go-blog/go_blog/template/go_clean_template/internal/entity"
 	"google.golang.org/protobuf/proto"
 )
 

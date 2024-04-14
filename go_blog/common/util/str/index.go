@@ -2,7 +2,9 @@ package str
 
 import (
 	"encoding/json"
+	"math/rand"
 	"strings"
+	"time"
 )
 
 // StrUtils 字符串处理
@@ -70,4 +72,16 @@ func (c StrUtils) SplitString(s string, separators ...rune) []string {
 		return false
 	}
 	return removeRepeatAndBlank(strings.FieldsFunc(s, separatorFunc))
+}
+
+// RandomString 生成指定长度的随机字符串
+func (c StrUtils) RandomString(length int) string {
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	rand.Seed(time.Now().UnixNano())
+
+	b := make([]byte, length)
+	for i := range b {
+		b[i] = charset[rand.Intn(len(charset))]
+	}
+	return string(b)
 }

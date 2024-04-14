@@ -5,8 +5,8 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/core/entity"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/core/store"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/core/entity"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/core/store"
 	"github.com/shiningrush/droplet"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

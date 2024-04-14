@@ -2363,6 +2363,10 @@ func (m *Role) validate(all bool) error {
 
 	// no validation rules for UpdateTime
 
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
+
 	if len(errors) > 0 {
 		return RoleMultiError(errors)
 	}

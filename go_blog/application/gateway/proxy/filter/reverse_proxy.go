@@ -3,10 +3,10 @@ package filter
 import (
 	"time"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/biz_ctx"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/biz_ctx/http"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/config"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/service"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/biz_ctx"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/biz_ctx/http"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/config"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/service"
 	auth_pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 )
 
@@ -24,6 +24,8 @@ func ForwardHandler(bizCtx biz_ctx.IBizContext, cfg *config.Config) {
 	httpCtx.Proxy().URI().SetPath(resource.Method)
 	httpCtx.Proxy().URI().SetHost(instance)
 	httpCtx.Proxy().Header().SetHeader("Content-Type", "application/json")
+	//httpCtx.Proxy().Header().SetHeader("X-Galileo-Trace-Id", "application/json")
+	//httpCtx.Proxy().Header().SetHeader("X-Galileo-Trace-Id", "application/json")
 
 	httpCtx.SendTo("http", service.NewInstance(instance), 3*time.Minute)
 

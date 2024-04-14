@@ -3,8 +3,8 @@
 package service
 
 import (
-	pb "github.com/baker-yuan/go-blog/application/blog/api/blog/v1"
-	"github.com/baker-yuan/go-blog/application/blog/internal/biz"
+	pb "github.com/baker-yuan/go-blog/go_blog/application/blog/api/blog/v1"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/biz"
 	"github.com/google/wire"
 )
 

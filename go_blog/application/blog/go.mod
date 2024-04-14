@@ -1,11 +1,14 @@
-module github.com/baker-yuan/go-blog/application/blog
+module github.com/baker-yuan/go-blog/go_blog/application/blog
 
 go 1.19
 
 require (
 	github.com/baker-yuan/go-blog/go_blog/common v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/filters/httptrace v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/go_blog/protocol/blog v0.0.0-incompatible
-	gorm.io/gorm v1.25.7
+	github.com/baker-yuan/go-blog/go_blog/protocol/user v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/retcode v0.0.0-incompatible
+	gorm.io/gorm v1.25.9
 	trpc.group/trpc-go/trpc-database/gorm v1.0.0
 	trpc.group/trpc-go/trpc-filter/debuglog v1.0.0
 	trpc.group/trpc-go/trpc-filter/recovery v1.0.0
@@ -16,7 +19,10 @@ require (
 
 replace (
 	github.com/baker-yuan/go-blog/go_blog/common => ./../../common
+	github.com/baker-yuan/go-blog/go_blog/filters/httptrace => ./../../filters/httptrace
 	github.com/baker-yuan/go-blog/go_blog/protocol/blog => ./../../protocol/blog
+	github.com/baker-yuan/go-blog/go_blog/protocol/user => ./../../protocol/user
+	github.com/baker-yuan/go-blog/go_blog/retcode => ./../../retcode
 )
 
 require (

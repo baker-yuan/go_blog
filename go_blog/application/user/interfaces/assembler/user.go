@@ -1,13 +1,21 @@
 package assembler
 
 import (
-	"github.com/baker-yuan/go-blog/application/user/domain/entity"
-	"github.com/baker-yuan/go-blog/go_blog/common/db"
+	"github.com/baker-yuan/go-blog/go_blog/application/user/domain/entity"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/user"
 )
 
+// UserEntityListToModel entity转pb
+func UserEntityListToModel(users []*entity.User, uidToNameMap map[uint32]string) []*pb.User {
+	res := make([]*pb.User, 0)
+	for _, user := range users {
+		res = append(res, UserEntityToModel(user, uidToNameMap))
+	}
+	return res
+}
+
 // UserEntityToModel entity转pb
-func UserEntityToModel(user *entity.User) *pb.User {
+func UserEntityToModel(user *entity.User, uidToNameMap map[uint32]string) *pb.User {
 	modelRes := &pb.User{
 		// 账号信息
 		Uid:      user.UID,
@@ -28,9 +36,14 @@ func UserEntityToModel(user *entity.User) *pb.User {
 		Status:    user.Status,
 		IsDeleted: bool(user.IsDeleted),
 		// 公共字段
-		CreateTime: user.CreateTime,
-		UpdateTime: user.UpdateTime,
+		CreateUserId: user.CreateUserID,
+		UpdateUserId: user.UpdateUserID,
+		CreateTime:   user.CreateTime,
+		UpdateTime:   user.UpdateTime,
+		// 查询补充
 	}
+	modelRes.CreateUser = uidToNameMap[user.CreateUserID]
+	modelRes.UpdateUser = uidToNameMap[user.UpdateUserID]
 	return modelRes
 }
 
@@ -41,20 +54,14 @@ func AddOrUpdateUserReqToEntity(pbUser *pb.AddOrUpdateUserReq) *entity.User {
 		UID:      pbUser.Uid,
 		Username: pbUser.Username,
 		Password: pbUser.Password,
-		Salt:     pbUser.Salt,
-		UserType: pbUser.UserType,
 		// 基本信息
 		Email:    pbUser.Email,
 		Nickname: pbUser.Nickname,
 		Avatar:   pbUser.Avatar,
 		Intro:    pbUser.Intro,
 		WebSite:  pbUser.WebSite,
-		// 三方登录
-		LoginType: pbUser.LoginType,
-		UnionID:   pbUser.UnionId,
 		// 状态
-		Status:    pbUser.Status,
-		IsDeleted: db.BoolBit(pbUser.IsDeleted),
+		Status: pbUser.Status,
 	}
 	return entityRes
 }

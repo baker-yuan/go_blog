@@ -14,6 +14,7 @@ func TestGeneratePassword(t *testing.T) {
 	if err != nil {
 		t.Errorf("Failed to generate password: %v", err)
 	}
+	fmt.Println(hashedPassword)
 
 	err = VerifyPassword(hashedPassword, password)
 	if err != nil {

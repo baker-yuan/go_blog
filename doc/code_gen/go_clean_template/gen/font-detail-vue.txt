@@ -33,7 +33,7 @@ const rules = reactive({});
 interface DrawerProps {
   title: string; // 标题
   isView: boolean; // 是否查看
-  row: Partial<$!{tableInfo.name}.$!{tableInfo.name}Model>; // 数据
+  row: Partial<$!{tableInfo.name}.Model>; // 数据
   api?: (params: any) => Promise<any>; // 提交api
   getTableList?: () => void; // 刷新列表
 }

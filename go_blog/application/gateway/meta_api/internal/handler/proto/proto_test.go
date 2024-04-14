@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/core/entity"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/core/entity"
 	"github.com/stretchr/testify/assert"
 )
 

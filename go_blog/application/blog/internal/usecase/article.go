@@ -3,8 +3,8 @@ package usecase
 import (
 	"context"
 
-	"github.com/baker-yuan/go-blog/application/blog/internal/entity"
-	"github.com/baker-yuan/go-blog/application/blog/internal/usecase/assembler"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/entity"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/usecase/assembler"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/blog"
 )
 

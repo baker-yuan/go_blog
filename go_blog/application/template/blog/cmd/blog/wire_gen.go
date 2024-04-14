@@ -7,18 +7,26 @@
 package main
 
 import (
-	"github.com/baker-yuan/go-blog/application/blog/api/blog/v1"
-	"github.com/baker-yuan/go-blog/application/blog/internal/biz"
-	"github.com/baker-yuan/go-blog/application/blog/internal/data"
-	"github.com/baker-yuan/go-blog/application/blog/internal/service"
+	api "github.com/baker-yuan/go-blog/go_blog/application/blog/api/blog/v1"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/biz"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/data"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/service"
 	"trpc.group/trpc-go/trpc-go/server"
-)
 
-import (
+	api "github.com/baker-yuan/go-blog/go_blog/application/blog/api/blog/v1"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/biz"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/data"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/service"
+	"trpc.group/trpc-go/trpc-go/server"
+
 	_ "trpc.group/trpc-go/trpc-database/gorm"
+
 	_ "trpc.group/trpc-go/trpc-filter/debuglog"
+
 	_ "trpc.group/trpc-go/trpc-filter/recovery"
+
 	_ "trpc.group/trpc-go/trpc-filter/validation"
+
 	_ "trpc.group/trpc-go/trpc-naming-polarismesh"
 )
 

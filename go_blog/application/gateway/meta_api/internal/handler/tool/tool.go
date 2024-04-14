@@ -1,8 +1,8 @@
 package tool
 
 import (
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/handler"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/utils"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/handler"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/shiningrush/droplet"
 	wgin "github.com/shiningrush/droplet/wrapper/gin"

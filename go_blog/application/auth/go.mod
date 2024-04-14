@@ -1,4 +1,4 @@
-module github.com/baker-yuan/go-blog/application/auth
+module github.com/baker-yuan/go-blog/go_blog/application/auth
 
 go 1.19
 

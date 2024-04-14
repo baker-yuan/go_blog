@@ -9,8 +9,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/baker-yuan/go-blog/application/user/domain/entity"
-	"github.com/baker-yuan/go-blog/application/user/infrastructure/auth"
+	"github.com/baker-yuan/go-blog/go_blog/application/user/domain/entity"
+	"github.com/baker-yuan/go-blog/go_blog/application/user/infrastructure/auth"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )

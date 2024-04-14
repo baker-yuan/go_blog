@@ -1,4 +1,4 @@
-module github.com/baker-yuan/go-blog/protocol/template
+module github.com/baker-yuan/go-blog/go_blog/protocol/template
 
 go 1.18
 

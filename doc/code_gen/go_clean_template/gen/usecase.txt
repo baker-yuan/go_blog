@@ -69,10 +69,10 @@ func (c *$!{tableInfo.name}UseCase) AddOrUpdate$!{tableInfo.name}(ctx context.Co
 
 func (c *$!{tableInfo.name}UseCase) add$!{tableInfo.name}(ctx context.Context, userID uint32, req *pb.AddOrUpdate$!{tableInfo.name}Req) (uint32, error) {
 	$!tool.firstLowerCase($!{tableInfo.name}) := assembler.AddOrUpdate$!{tableInfo.name}ReqToEntity(req)
-	$!tool.firstLowerCase($!{tableInfo.name}) .CreateUser = userID
-	$!tool.firstLowerCase($!{tableInfo.name}) .CreateTime = entity.Timestamp(uint32(time.Now().Unix()))
-	$!tool.firstLowerCase($!{tableInfo.name}) .UpdateUser = userID
-	$!tool.firstLowerCase($!{tableInfo.name}) .UpdateTime = entity.Timestamp(uint32(time.Now().Unix()))
+	$!tool.firstLowerCase($!{tableInfo.name}) .CreateUserID = userID
+	$!tool.firstLowerCase($!{tableInfo.name}) .CreateTime = db.Timestamp(time.Now().Unix())
+	$!tool.firstLowerCase($!{tableInfo.name}) .UpdateUserID = userID
+	$!tool.firstLowerCase($!{tableInfo.name}) .UpdateTime = db.Timestamp(time.Now().Unix())
 
 	lastInsertID, err := c.repo.Save(ctx, $!tool.firstLowerCase($!{tableInfo.name}))
 	if err != nil {
@@ -90,10 +90,10 @@ func (c *$!{tableInfo.name}UseCase) add$!{tableInfo.name}(ctx context.Context, u
 
 func (c *$!{tableInfo.name}UseCase) update$!{tableInfo.name}(ctx context.Context, db$!{tableInfo.name} *entity.$!{tableInfo.name}, userID uint32, req *pb.AddOrUpdate$!{tableInfo.name}Req) (uint32, error) {
 	save$!{tableInfo.name} := assembler.AddOrUpdate$!{tableInfo.name}ReqToEntity(req)
-    save$!{tableInfo.name}.CreateUser = db$!{tableInfo.name}.CreateUser
+    save$!{tableInfo.name}.CreateUserID = db$!{tableInfo.name}.CreateUserID
     save$!{tableInfo.name}.CreateTime = db$!{tableInfo.name}.CreateTime
-    save$!{tableInfo.name}.UpdateUser = userID
-    save$!{tableInfo.name}.UpdateTime = entity.Timestamp(uint32(time.Now().Unix()))
+    save$!{tableInfo.name}.UpdateUserID = userID
+    save$!{tableInfo.name}.UpdateTime = db.Timestamp(time.Now().Unix())
 
 	if err := c.repo.UpdateByID(ctx, save$!{tableInfo.name}); err != nil {
 		return 0, err

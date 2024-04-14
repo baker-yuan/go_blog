@@ -35,6 +35,14 @@ type BlogApiService interface {
 	DeleteCategory(ctx context.Context, req *DeleteCategoryReq) (*EmptyRsp, error)
 	// CategoryDetail 文章分类详情
 	CategoryDetail(ctx context.Context, req *CategoryDetailReq) (*Category, error)
+	// SearchTag 文章标签搜索
+	SearchTag(ctx context.Context, req *SearchTagReq) (*SearchTagRsp, error)
+	// AddOrUpdateTag 添加修改文章标签
+	AddOrUpdateTag(ctx context.Context, req *AddOrUpdateTagReq) (*AddOrUpdateRsp, error)
+	// DeleteTag 删除文章标签
+	DeleteTag(ctx context.Context, req *DeleteTagReq) (*EmptyRsp, error)
+	// TagDetail 文章标签详情
+	TagDetail(ctx context.Context, req *TagDetailReq) (*Tag, error)
 }
 
 func BlogApiService_SearchArticle_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -181,6 +189,78 @@ func BlogApiService_CategoryDetail_Handler(svr interface{}, ctx context.Context,
 	return rsp, nil
 }
 
+func BlogApiService_SearchTag_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &SearchTagReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).SearchTag(ctx, reqbody.(*SearchTagReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_AddOrUpdateTag_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &AddOrUpdateTagReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).AddOrUpdateTag(ctx, reqbody.(*AddOrUpdateTagReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_DeleteTag_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &DeleteTagReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).DeleteTag(ctx, reqbody.(*DeleteTagReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_TagDetail_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &TagDetailReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).TagDetail(ctx, reqbody.(*TagDetailReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 // BlogApiServer_ServiceDesc descriptor for server.RegisterService.
 var BlogApiServer_ServiceDesc = server.ServiceDesc{
 	ServiceName: "go_blog.blog.BlogApi",
@@ -191,7 +271,7 @@ var BlogApiServer_ServiceDesc = server.ServiceDesc{
 			Func: BlogApiService_SearchArticle_Handler,
 		},
 		{
-			Name: "/blog/admin/updateArticle",
+			Name: "/blog/admin/addOrUpdateArticle",
 			Func: BlogApiService_AddOrUpdateArticle_Handler,
 		},
 		{
@@ -217,6 +297,22 @@ var BlogApiServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/blog/admin/CategoryDetail",
 			Func: BlogApiService_CategoryDetail_Handler,
+		},
+		{
+			Name: "/blog/admin/searchTag",
+			Func: BlogApiService_SearchTag_Handler,
+		},
+		{
+			Name: "/blog/admin/addOrUpdateTag",
+			Func: BlogApiService_AddOrUpdateTag_Handler,
+		},
+		{
+			Name: "/blog/admin/deleteTag",
+			Func: BlogApiService_DeleteTag_Handler,
+		},
+		{
+			Name: "/blog/admin/TagDetail",
+			Func: BlogApiService_TagDetail_Handler,
 		},
 		{
 			Name: "/go_blog.blog.BlogApi/SearchArticle",
@@ -249,6 +345,22 @@ var BlogApiServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/go_blog.blog.BlogApi/CategoryDetail",
 			Func: BlogApiService_CategoryDetail_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/SearchTag",
+			Func: BlogApiService_SearchTag_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/AddOrUpdateTag",
+			Func: BlogApiService_AddOrUpdateTag_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/DeleteTag",
+			Func: BlogApiService_DeleteTag_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/TagDetail",
+			Func: BlogApiService_TagDetail_Handler,
 		},
 	},
 }
@@ -304,6 +416,26 @@ func (s *UnimplementedBlogApi) CategoryDetail(ctx context.Context, req *Category
 	return nil, errors.New("rpc CategoryDetail of service BlogApi is not implemented")
 }
 
+// SearchTag 文章标签搜索
+func (s *UnimplementedBlogApi) SearchTag(ctx context.Context, req *SearchTagReq) (*SearchTagRsp, error) {
+	return nil, errors.New("rpc SearchTag of service BlogApi is not implemented")
+}
+
+// AddOrUpdateTag 添加修改文章标签
+func (s *UnimplementedBlogApi) AddOrUpdateTag(ctx context.Context, req *AddOrUpdateTagReq) (*AddOrUpdateRsp, error) {
+	return nil, errors.New("rpc AddOrUpdateTag of service BlogApi is not implemented")
+}
+
+// DeleteTag 删除文章标签
+func (s *UnimplementedBlogApi) DeleteTag(ctx context.Context, req *DeleteTagReq) (*EmptyRsp, error) {
+	return nil, errors.New("rpc DeleteTag of service BlogApi is not implemented")
+}
+
+// TagDetail 文章标签详情
+func (s *UnimplementedBlogApi) TagDetail(ctx context.Context, req *TagDetailReq) (*Tag, error) {
+	return nil, errors.New("rpc TagDetail of service BlogApi is not implemented")
+}
+
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
 
 // END ======================================= Server Service Definition ======================================= END
@@ -328,6 +460,14 @@ type BlogApiClientProxy interface {
 	DeleteCategory(ctx context.Context, req *DeleteCategoryReq, opts ...client.Option) (rsp *EmptyRsp, err error)
 	// CategoryDetail 文章分类详情
 	CategoryDetail(ctx context.Context, req *CategoryDetailReq, opts ...client.Option) (rsp *Category, err error)
+	// SearchTag 文章标签搜索
+	SearchTag(ctx context.Context, req *SearchTagReq, opts ...client.Option) (rsp *SearchTagRsp, err error)
+	// AddOrUpdateTag 添加修改文章标签
+	AddOrUpdateTag(ctx context.Context, req *AddOrUpdateTagReq, opts ...client.Option) (rsp *AddOrUpdateRsp, err error)
+	// DeleteTag 删除文章标签
+	DeleteTag(ctx context.Context, req *DeleteTagReq, opts ...client.Option) (rsp *EmptyRsp, err error)
+	// TagDetail 文章标签详情
+	TagDetail(ctx context.Context, req *TagDetailReq, opts ...client.Option) (rsp *Tag, err error)
 }
 
 type BlogApiClientProxyImpl struct {
@@ -362,7 +502,7 @@ func (c *BlogApiClientProxyImpl) SearchArticle(ctx context.Context, req *SearchA
 func (c *BlogApiClientProxyImpl) AddOrUpdateArticle(ctx context.Context, req *AddOrUpdateArticleReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
 	ctx, msg := codec.WithCloneMessage(ctx)
 	defer codec.PutBackMessage(msg)
-	msg.WithClientRPCName("/blog/admin/updateArticle")
+	msg.WithClientRPCName("/blog/admin/addOrUpdateArticle")
 	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
 	msg.WithCalleeApp("")
 	msg.WithCalleeServer("")
@@ -493,6 +633,86 @@ func (c *BlogApiClientProxyImpl) CategoryDetail(ctx context.Context, req *Catego
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &Category{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) SearchTag(ctx context.Context, req *SearchTagReq, opts ...client.Option) (*SearchTagRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/searchTag")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("SearchTag")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &SearchTagRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) AddOrUpdateTag(ctx context.Context, req *AddOrUpdateTagReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/addOrUpdateTag")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("AddOrUpdateTag")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &AddOrUpdateRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) DeleteTag(ctx context.Context, req *DeleteTagReq, opts ...client.Option) (*EmptyRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/deleteTag")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("DeleteTag")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &EmptyRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) TagDetail(ctx context.Context, req *TagDetailReq, opts ...client.Option) (*Tag, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/TagDetail")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("TagDetail")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &Tag{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}

@@ -1,6 +1,6 @@
 package loader
 
-import "github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/core/entity"
+import "github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/core/entity"
 
 // DataSets are intermediate structures used to handle
 // import and export data with APISIX entities.

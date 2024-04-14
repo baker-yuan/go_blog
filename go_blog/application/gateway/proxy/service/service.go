@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/biz_ctx"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/biz_ctx"
 	"github.com/polarismesh/polaris-go"
 )
 
@@ -26,6 +26,14 @@ func GetOneInstance(namespace string, service string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
+	// todo
+	getAll := &polaris.GetServicesRequest{}
+	getAll.Namespace = namespace
+	allInstances, err := consumer.GetServices(getAll)
+	fmt.Println(err)
+	allInstances = allInstances
+
 	return fmt.Sprintf("%s:%d", oneInstResp.GetInstance().GetHost(), oneInstResp.GetInstance().GetPort()), nil
 }
 

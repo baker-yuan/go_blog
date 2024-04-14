@@ -6,10 +6,10 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/core/migrate"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/handler"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/log"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/utils/consts"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/core/migrate"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/handler"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/log"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/utils/consts"
 	"github.com/gin-gonic/gin"
 	"github.com/shiningrush/droplet/data"
 )

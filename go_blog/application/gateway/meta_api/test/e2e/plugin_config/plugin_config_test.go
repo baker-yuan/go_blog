@@ -3,7 +3,7 @@ package plugin_config_test
 import (
 	"net/http"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/test/e2e/base"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/test/e2e/base"
 	. "github.com/onsi/ginkgo/v2"
 )
 

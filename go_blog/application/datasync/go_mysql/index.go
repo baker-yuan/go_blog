@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/baker-yuan/go-blog/application/blog/datasync/config"
-	"github.com/baker-yuan/go-blog/application/blog/datasync/consumer"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/datasync/config"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/datasync/consumer"
 	"github.com/baker-yuan/go-blog/go_blog/common/util"
-	pb "github.com/baker-yuan/go-blog/protocol/datasync"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/datasync"
 	"github.com/go-mysql-org/go-mysql/canal"
 	"github.com/go-mysql-org/go-mysql/client"
 	"github.com/go-mysql-org/go-mysql/mysql"

@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/conf"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/log"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/conf"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/log"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 )

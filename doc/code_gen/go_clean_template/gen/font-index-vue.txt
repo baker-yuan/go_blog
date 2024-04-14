@@ -16,8 +16,8 @@ $!{define.vm}
       :border="false"
     >
       <!-- 表格 header 按钮 -->
-      <template #tableHeader="scope">
-        <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')">新增$!{tableInfo.comment}</el-button>
+      <template #tableHeader>
+        <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')">新增</el-button>
       </template>
 
       <!-- 表格操作 -->
@@ -37,20 +37,20 @@ import { $!{tableInfo.name} } from "@/api/interface";
 import { ref, reactive } from "vue";
 import { useHandleData } from "@/hooks/useHandleData";
 TODO
-import $!{tableInfo.name}Drawer from "@/views/pms/brand/detail.vue";
+import $!{tableInfo.name}Drawer from "@/views/article/article/list/detail.vue";
 import { CirclePlus, Delete, EditPen } from "@element-plus/icons-vue";
 import {
   create$!{tableInfo.name}Api,
   update$!{tableInfo.name}Api,
   delete$!{tableInfo.name}Api,
   get$!{tableInfo.name}sApi
-} from "@/api/modules/TODO";
+} from "@/api/modules/$!{tableInfo.name}.ts";
 
 // ProTable 实例
 const proTable = ref<ProTableInstance>();
 
 // 表格配置项
-const columns = reactive<ColumnProps<$!{tableInfo.name}.$!{tableInfo.name}Model>[]>([
+const columns = reactive<ColumnProps<$!{tableInfo.name}.Model>[]>([
   { type: "selection", fixed: "left", width: 70 },
   { prop: "operation", label: "操作", fixed: "right", width: 170 }
 ]);
@@ -84,14 +84,14 @@ const sortTable = ({ newIndex, oldIndex }: { newIndex?: number; oldIndex?: numbe
 };
 
 // 删除$!{tableInfo.comment}
-const delete$!{tableInfo.name} = async (row: $!{tableInfo.name}.$!{tableInfo.name}Model) => {
+const delete$!{tableInfo.name} = async (row: $!{tableInfo.name}.Model) => {
   await useHandleData(delete$!{tableInfo.name}Api, row.id, `删除【${row.name}】$!{tableInfo.comment}`);
   proTable.value?.getTableList();
 };
 
 // 打开 drawer(新增、查看、编辑)
 const drawerRef = ref<InstanceType<typeof $!{tableInfo.name}Drawer> | null>(null);
-const openDrawer = (title: string, row: Partial<$!{tableInfo.name}.$!{tableInfo.name}Model> = {}) => {
+const openDrawer = (title: string, row: Partial<$!{tableInfo.name}.Model> = {}) => {
   const params = {
     title,
     isView: title === "查看",

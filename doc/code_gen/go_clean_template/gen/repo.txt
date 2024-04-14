@@ -15,9 +15,7 @@ type $!{tableInfo.name}Repo struct {
 // New$!{tableInfo.name}Repo 创建
 func New$!{tableInfo.name}Repo(gormDB *gorm.DB) *$!{tableInfo.name}Repo {
 	return &$!{tableInfo.name}Repo{
-		GenericDao: &db.GenericDao[entity.$!{tableInfo.name}, uint32]{
-			DB: gormDB,
-		},
+	    GenericDao: db.NewGenericDao[entity.$!{tableInfo.name}, uint32](gormDB),
 	}
 }
 

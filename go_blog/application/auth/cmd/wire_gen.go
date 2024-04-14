@@ -7,14 +7,12 @@
 package main
 
 import (
-	"github.com/baker-yuan/go-blog/application/auth/internal/biz"
-	"github.com/baker-yuan/go-blog/application/auth/internal/data"
-	"github.com/baker-yuan/go-blog/application/auth/internal/service"
+	"github.com/baker-yuan/go-blog/go_blog/application/auth/internal/biz"
+	"github.com/baker-yuan/go-blog/go_blog/application/auth/internal/data"
+	"github.com/baker-yuan/go-blog/go_blog/application/auth/internal/service"
 	"github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 	"trpc.group/trpc-go/trpc-go/server"
-)
 
-import (
 	_ "github.com/baker-yuan/go-blog/go_blog/filters/httptrace"
 	_ "trpc.group/trpc-go/trpc-database/gorm"
 	_ "trpc.group/trpc-go/trpc-filter/debuglog"

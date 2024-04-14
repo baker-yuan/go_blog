@@ -1,7 +1,7 @@
 package data
 
 import (
-	"github.com/baker-yuan/go-blog/application/auth/internal/biz"
+	"github.com/baker-yuan/go-blog/go_blog/application/auth/internal/biz"
 	"github.com/baker-yuan/go-blog/go_blog/common/db"
 )
 

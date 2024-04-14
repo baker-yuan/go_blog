@@ -41,28 +41,28 @@ server:
     # 数据校验
     - validation
   service:
-    - name: trpc.blog.blog.BlogApiHttp
+    - name: trpc.blog.http.BlogApi
       # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
-      address: 127.0.0.1:8000
+      address: 127.0.0.1:8100
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
       protocol: http
       # 选填，service 处理请求的超时时间 单位 毫秒
       timeout: 2000
-      # 选填，使用哪个注册中心 polaris
-      registry: polaris
-    - name: trpc.blog.blog.BlogApiTrpc
+      # 选填，使用哪个注册中心 polarismesh
+      registry: polarismesh
+    - name: trpc.blog.trpc.BlogApi
       # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
-      address: 127.0.0.1:8001
+      address: 127.0.0.1:8201
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
       protocol: trpc
       # 选填，service 处理请求的超时时间 单位 毫秒
       timeout: 2000
-      # 选填，使用哪个注册中心 polaris
-      registry: polaris
+      # 选填，使用哪个注册中心 polarismesh
+      registry: polarismesh
 
 # 插件配置
 plugins:
@@ -98,7 +98,7 @@ plugins:
       # 北极星服务的地址 ip1:port1,ip2:port2
       address_list: 127.0.0.1:8091
       # 是否进行服务自注册, 默认为 false
-      register_self: false
+      register_self: true
       # 北极星日志目录
       log_dir: /usr/local/trpc/polarismesh/log
       # 服务缓存持久化目录，按照服务维度将数据持久化到磁盘
@@ -107,12 +107,12 @@ plugins:
       protocol: grpc
       # 需要进行注册的各服务信息
       service:
-        - name: trpc.blog.blog.BlogApiHttp
+        - name: trpc.blog.http.BlogApi
           # 该服务需要注册的命名空间
           namespace: Production
           # 前往北极星控制台进行申请或查看
           token: xxx
-        - name: trpc.blog.blog.BlogApiTrpc
+        - name: trpc.blog.trpc.BlogApi
           namespace: Production
           token: xxx
   # 针对 trpc 框架服务发现的配置
@@ -147,3 +147,8 @@ client:
     # mysql
     - name: trpc.mysql.blog.template
       target: dsn://root:123456@tcp(127.0.0.1:3306)/baker_blog_blog?charset=utf8mb4&parseTime=True
+    # 请求用户服务配置
+    - callee: go_blog.user.UserApi
+      target: polarismesh://trpc.blog.user.UserApiTrpc
+      timeout: 1000
+      disable_servicerouter: false

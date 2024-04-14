@@ -1,4 +1,4 @@
-module github.com/baker-yuan/go-blog/application/blog
+module github.com/baker-yuan/go-blog/go_blog/application/blog
 
 go 1.19
 

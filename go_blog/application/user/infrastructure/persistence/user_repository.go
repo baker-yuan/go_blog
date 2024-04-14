@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 
-	"github.com/baker-yuan/go-blog/application/user/domain/entity"
-	"github.com/baker-yuan/go-blog/application/user/domain/repository"
-	"github.com/baker-yuan/go-blog/application/user/infrastructure/security"
+	"github.com/baker-yuan/go-blog/go_blog/application/user/domain/entity"
+	"github.com/baker-yuan/go-blog/go_blog/application/user/domain/repository"
+	"github.com/baker-yuan/go-blog/go_blog/application/user/infrastructure/security"
 	"github.com/baker-yuan/go-blog/go_blog/common/db"
 	"github.com/baker-yuan/go-blog/go_blog/common/util"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/user"
@@ -28,40 +28,51 @@ type User struct {
 	Intro    string `gorm:"column:intro;type:varchar(255);not null;default:'';comment:用户简介"`
 	WebSite  string `gorm:"column:web_site;type:varchar(255);not null;default:'';comment:个人网站"`
 	// 状态
-	Status uint8 `gorm:"column:status;type:tinyint unsigned;not null;default:0;comment:状态 0-正常 1-禁用"`
+	Status pb.UserStatus `gorm:"column:status;type:tinyint unsigned;not null;default:0;comment:状态 0-正常 1-禁用"`
 	// 三方登录
-	LoginType uint8  `gorm:"column:login_type;type:tinyint unsigned;not null;default:0;comment:登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博"`
-	UnionID   string `gorm:"column:union_id;type:varchar(50);not null;default:'';comment:用户唯一标识（第三方网站）"`
+	LoginType pb.LoginType `gorm:"column:login_type;type:tinyint unsigned;not null;default:0;comment:登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博"`
+	UnionID   string       `gorm:"column:union_id;type:varchar(50);not null;default:'';comment:用户唯一标识（第三方网站）"`
+	// 逻辑删除
+	IsDeleted db.BoolBit `gorm:"column:is_deleted;type:bit(1);not null;default:b'0';comment:是否注销"`
 	// 公共字段
-	IsDeleted    db.BoolBit   `gorm:"column:is_deleted;type:bit(1);not null;default:b'0';comment:是否注销"`
-	CreateUserID string       `gorm:"column:create_user_id;type:int(10) unsigned;not null;default:0;comment:创建人"`
-	UpdateUserID string       `gorm:"column:update_user_id;type:int(10) unsigned;not null;default:0;comment:修改人"`
-	CreateTime   db.Timestamp `gorm:"column:create_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:创建时间"`
+	CreateUserID uint32       `gorm:"column:create_user_id;type:int unsigned;not null;default:0;comment:创建人id"`
+	UpdateUserID uint32       `gorm:"column:update_user_id;type:int unsigned;not null;default:0;comment:更新人id"`
+	CreateTime   db.Timestamp `gorm:"column:create_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:插入时间"`
 	UpdateTime   db.Timestamp `gorm:"column:update_time;type:timestamp;not null;default:CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;comment:修改时间"`
 }
 
 var (
-	UserTbName          = "blog_user"
-	UserFieldUid        = "uid"
-	UserFieldUsername   = "username"
-	UserFieldPassword   = "password"
-	UserFieldEmail      = "email"
-	UserFieldSalt       = "salt"
-	UserFieldNickname   = "nickname"
-	UserFieldAvatar     = "avatar"
-	UserFieldIntro      = "intro"
-	UserFieldWebSite    = "web_site"
-	UserFieldUserType   = "user_type"
-	UserFieldLoginType  = "login_type"
-	UserFieldStatus     = "status"
-	UserFieldIsDeleted  = "is_deleted"
+	UserTbName        = "blog_user"
+	UserFieldUid      = "uid"
+	UserFieldUsername = "username"
+	UserFieldPassword = "password"
+	UserFieldSalt     = "salt"
+	UserFieldUserType = "user_type"
+	// 基本信息
+	UserFieldEmail    = "email"
+	UserFieldNickname = "nickname"
+	UserFieldAvatar   = "avatar"
+	UserFieldIntro    = "intro"
+	UserFieldWebSite  = "web_site"
+	// 状态
+	UserFieldStatus = "status"
+	// 逻辑删除
+	UserFieldIsDeleted = "is_deleted"
+	// 三方登录
+	UserFieldLoginType = "login_type"
+	UserFieldUnionID   = "union_id"
+	// 公共字段
 	UserFieldCreateTime = "create_time"
 	UserFieldUpdateTime = "update_time"
-	UserFieldUnionId    = "union_id"
+
+	UserTypeAdmin = "ADMIN"
+	UserTypeUser  = "USER"
+
+	SaltValueLength = 20 // 盐长度
 )
 
 // TableName 设置 User 结构体对应的数据库表名
-func (User) TableName() string {
+func (*User) TableName() string {
 	return UserTbName
 }
 
@@ -85,14 +96,20 @@ func init() {
 var (
 	// 全字段修改User那些字段不修改
 	notUpdateUserField = []string{
-		"created_at",
+		UserFieldUserType,
+
+		UserFieldLoginType,
+		UserFieldUnionID,
+
+		UserFieldIsDeleted,
+		UserFieldCreateTime,
 	}
 	updateUserField []string
 )
 
 // InitUserField 全字段修改
 func initUserField(db *gorm.DB) error {
-	columnTypes, err := db.Migrator().ColumnTypes(&entity.User{})
+	columnTypes, err := db.Migrator().ColumnTypes(&User{})
 	if err != nil {
 		return err
 	}
@@ -114,7 +131,7 @@ func (r *UserRepo) GetUserByID(ctx context.Context, id uint32) (*entity.User, er
 }
 
 // GetUserByIDs 根据用户id集合查询用户
-func (r *UserRepo) GetUserByIDs(ctx context.Context, ids []uint32) (entity.Users, error) {
+func (r *UserRepo) GetUserByIDs(ctx context.Context, ids ...uint32) (entity.Users, error) {
 	dbUsers, err := r.GenericDao.GetByIDs(ctx, ids)
 	if err != nil {
 		return nil, err
@@ -127,31 +144,63 @@ func (r *UserRepo) DeleteByID(ctx context.Context, id uint32) error {
 	return r.GenericDao.DeleteByID(ctx, id)
 }
 
-// Save 保存用户
-func (r *UserRepo) Save(ctx context.Context, user *entity.User) (uint32, error) {
+// SaveAdmin 保存用户
+func (r *UserRepo) SaveAdmin(ctx context.Context, user *entity.User) (uint32, error) {
 	if user.UID > 0 {
 		return 0, errors.New("illegal argument user id exist")
 	}
 	dbUser := UserEntityToPo(user)
+	// 用户类型固定是管理员
+	dbUser.UserType = UserTypeAdmin
+	// 设置密码+盐
+	if err := r.setPasswordAndSalt(ctx, dbUser); err != nil {
+		return 0, err
+	}
+	// 保存
 	if err := r.GenericDao.Create(ctx, dbUser); err != nil {
 		return 0, err
 	}
 	return dbUser.UID, nil
 }
 
-// UpdateByID 根据ID修改用户
-func (r *UserRepo) UpdateByID(ctx context.Context, user *entity.User) error {
+// UpdateAdminByID 根据ID修改用户
+func (r *UserRepo) UpdateAdminByID(ctx context.Context, user *entity.User) error {
 	if user.UID == 0 {
 		return errors.New("illegal argument user exist")
 	}
 	dbUser := UserEntityToPo(user)
-	return r.GenericDao.GetDB(ctx).Select(updateUserField).Updates(dbUser).Error
+	//if dbUser.UserType != UserTypeAdmin {
+	//	return errors.New("userType not support")
+	//}
+	// 设置密码+盐
+	if err := r.setPasswordAndSalt(ctx, dbUser); err != nil {
+		return err
+	}
+	return r.GenericDao.GetDB(ctx).
+		Select(updateUserField).
+		Where(UserFieldUid, user.UID).
+		Updates(dbUser).
+		Error
+}
+
+// setPasswordAndSalt 设置密码+盐
+func (r *UserRepo) setPasswordAndSalt(ctx context.Context, user *User) error {
+	// 密码加密存储
+	if len(user.Salt) == 0 {
+		user.Salt = util.StrUtils.RandomString(SaltValueLength)
+	}
+	password, err := security.GeneratePassword(user.Salt)
+	if err != nil {
+		return err
+	}
+	user.Password = password
+	return nil
 }
 
 // SearchUser 用户搜索
 func (r *UserRepo) SearchUser(ctx context.Context, req *pb.SearchUserReq) (entity.Users, uint32, error) {
 	var (
-		res       []*entity.User
+		res       []*User
 		pageTotal int64
 	)
 	tx, err := db.BuildSearch(
@@ -171,7 +220,7 @@ func (r *UserRepo) SearchUser(ctx context.Context, req *pb.SearchUserReq) (entit
 	if err := tx.Error; err != nil {
 		return nil, 0, err
 	}
-	return res, uint32(pageTotal), nil
+	return UserPOsToEntity(res), uint32(pageTotal), nil
 }
 
 // GetUserByEmailAndPassword 通过用户名查找用户，并且验证密码

@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/utils"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/utils"
 )
 
 // BaseInfo 公共属性

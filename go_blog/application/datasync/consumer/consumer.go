@@ -3,7 +3,7 @@ package consumer
 import (
 	"context"
 
-	pb "github.com/baker-yuan/go-blog/protocol/datasync"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/datasync"
 	"trpc.group/trpc-go/trpc-go/client"
 )
 

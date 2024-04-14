@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/baker-yuan/go-blog/application/auth/internal/biz"
+	"github.com/baker-yuan/go-blog/go_blog/application/auth/internal/biz"
 	"github.com/baker-yuan/go-blog/go_blog/common/db"
 	"github.com/baker-yuan/go-blog/go_blog/common/util"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
@@ -15,9 +15,9 @@ import (
 type Role struct {
 	// 基本信息
 	ID       uint32 `gorm:"primary_key;column:id;type:int unsigned auto_increment;comment:ID"`
-	Name     string `gorm:"uniqueIndex:uk_name;column:name;type:varchar(30);not null;default:'';comment:角色名称"`
-	Code     string `gorm:"uniqueIndex:uk_code;column:code;type:varchar(20);not null;default:'';comment:角色编码"`
-	Describe string `gorm:"column:describe;type:varchar(100);not null;default:'';comment:功能描述"`
+	Name     string `gorm:"uniqueIndex:uk_name;column:name;type:varchar(30);not null;default:'';comment:名称"`
+	Code     string `gorm:"uniqueIndex:uk_code;column:code;type:varchar(20);not null;default:'';comment:编码"`
+	Describe string `gorm:"column:describe;type:varchar(100);not null;default:'';comment:描述"`
 	//
 	IsEnable db.BoolBit `gorm:"column:is_enable;type:bit(1);not null;default:b'1';comment:是否启用"`
 	// 公共字段

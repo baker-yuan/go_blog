@@ -1,10 +1,10 @@
 package server
 
 import (
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/conf"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/core/storage"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/core/store"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/log"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/conf"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/core/storage"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/core/store"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/log"
 )
 
 func (s *server) setupStore() error {

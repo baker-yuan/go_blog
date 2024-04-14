@@ -3,8 +3,8 @@ package filter
 import (
 	"log"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/biz_ctx"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/config"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/biz_ctx"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/config"
 )
 
 // RequestLog 日志记录

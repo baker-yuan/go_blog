@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"os"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/conf"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/conf"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

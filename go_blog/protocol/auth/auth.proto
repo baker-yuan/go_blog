@@ -234,7 +234,7 @@ message Role {
   uint32 id = 1;                  // ID
   string name = 2;                // 角色名称
   string code = 3;                // 角色编码
-  string describe = 4;            // 功能描述
+  string describe = 4;            // 描述
   //
   bool is_enable = 5;             // 是否启用
   // 公共字段
@@ -242,6 +242,9 @@ message Role {
   uint32 update_user_id = 7;      // 更新人id
   uint32 create_time = 8;         // 创建时间
   uint32 update_time = 9;         // 更新时间
+  // 查询补充
+  string create_user = 100;        // 创建人
+  string update_user = 101;        // 更新人
 }
 
 // 角色搜索

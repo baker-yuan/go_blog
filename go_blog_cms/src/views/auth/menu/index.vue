@@ -101,8 +101,8 @@ const columns = reactive<ColumnProps<Menu.Model>[]>([
     label: "隐藏",
     width: 200
   },
-  { prop: "createUser", label: "创建人", width: 120 },
-  { prop: "updateUser", label: "更新人", width: 120 },
+  { prop: "createUser", label: "创建人", width: 120, showOverflowTooltip: false },
+  { prop: "updateUser", label: "更新人", width: 120, showOverflowTooltip: false },
   { prop: "createTime", label: "创建时间", width: 180, showOverflowTooltip: false },
   { prop: "updateTime", label: "修改时间", width: 180, showOverflowTooltip: false },
   { prop: "operation", label: "操作", fixed: "right", width: 150 }

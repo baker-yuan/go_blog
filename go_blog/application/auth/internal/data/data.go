@@ -118,7 +118,7 @@ func autoMigrate(db *gorm.DB, schemas []tableSchema) error {
 		if err := db.
 			Set("gorm:table_options", fmt.Sprintf("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='%s'", schema.TableName)).
 			AutoMigrate(schema.StructPtr); err != nil {
-			log.Errorf("#autoMigrate fail schema:%+v", schema, err)
+			log.Errorf("#autoMigrate fail schema:%+v, err: %+v", schema, err)
 			return err
 		}
 	}

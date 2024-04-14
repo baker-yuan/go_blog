@@ -150,10 +150,10 @@ const columns = reactive<ColumnProps<Resource.ResourceModel>[]>([
     showOverflowTooltip: false,
     width: 150
   },
-  { prop: "createUser", label: "创建人", width: 120 },
-  { prop: "updateUser", label: "更新人", width: 120 },
-  { prop: "createTime", label: "创建时间", width: 180 },
-  { prop: "updateTime", label: "修改时间", width: 180 },
+  { prop: "createUser", label: "创建人", width: 120, showOverflowTooltip: false },
+  { prop: "updateUser", label: "更新人", width: 120, showOverflowTooltip: false },
+  { prop: "createTime", label: "创建时间", width: 180, showOverflowTooltip: false },
+  { prop: "updateTime", label: "修改时间", width: 180, showOverflowTooltip: false },
   { prop: "operation", label: "操作", fixed: "right", width: 170 }
 ]);
 

@@ -3,7 +3,7 @@ package interfaces
 import (
 	"context"
 
-	"github.com/baker-yuan/go-blog/application/user/application"
+	"github.com/baker-yuan/go-blog/go_blog/application/user/application"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/user"
 )
 

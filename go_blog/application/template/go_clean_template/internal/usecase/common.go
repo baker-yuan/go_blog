@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 
-	pb "github.com/baker-yuan/go-blog/protocol/template"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/template"
 )
 
 // CommonUseCase 通用service

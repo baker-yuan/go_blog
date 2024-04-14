@@ -3,8 +3,8 @@ package usecase
 import (
 	"context"
 
-	pb "github.com/baker-yuan/go-blog/protocol/template"
-	"github.com/baker-yuan/go-blog/template/go_clean_template/internal/usecase/assembler"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/template"
+	"github.com/baker-yuan/go-blog/go_blog/template/go_clean_template/internal/usecase/assembler"
 )
 
 // FriendLinkUseCase 友链管理

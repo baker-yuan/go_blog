@@ -6,11 +6,11 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/config"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/http_proxy"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/router"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/service"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/util"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/config"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/http_proxy"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/router"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/service"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/util"
 )
 
 func main() {

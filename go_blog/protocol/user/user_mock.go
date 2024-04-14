@@ -80,6 +80,21 @@ func (mr *MockUserApiServiceMockRecorder) SearchUser(ctx, req interface{}) *gomo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchUser", reflect.TypeOf((*MockUserApiService)(nil).SearchUser), ctx, req)
 }
 
+// UidToName mocks base method.
+func (m *MockUserApiService) UidToName(ctx context.Context, req *UidToNameReq) (*UidToNameRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UidToName", ctx, req)
+	ret0, _ := ret[0].(*UidToNameRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UidToName indicates an expected call of UidToName.
+func (mr *MockUserApiServiceMockRecorder) UidToName(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UidToName", reflect.TypeOf((*MockUserApiService)(nil).UidToName), ctx, req)
+}
+
 // UserDetail mocks base method.
 func (m *MockUserApiService) UserDetail(ctx context.Context, req *UserDetailReq) (*User, error) {
 	m.ctrl.T.Helper()
@@ -176,6 +191,26 @@ func (mr *MockUserApiClientProxyMockRecorder) SearchUser(ctx, req interface{}, o
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchUser", reflect.TypeOf((*MockUserApiClientProxy)(nil).SearchUser), varargs...)
+}
+
+// UidToName mocks base method.
+func (m *MockUserApiClientProxy) UidToName(ctx context.Context, req *UidToNameReq, opts ...client.Option) (*UidToNameRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UidToName", varargs...)
+	ret0, _ := ret[0].(*UidToNameRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UidToName indicates an expected call of UidToName.
+func (mr *MockUserApiClientProxyMockRecorder) UidToName(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UidToName", reflect.TypeOf((*MockUserApiClientProxy)(nil).UidToName), varargs...)
 }
 
 // UserDetail mocks base method.

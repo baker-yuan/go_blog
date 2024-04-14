@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/conf"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/log"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/utils"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/utils/runtime"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/conf"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/log"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/utils"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/utils/runtime"
 	"go.etcd.io/etcd/client/pkg/v3/transport"
 	clientv3 "go.etcd.io/etcd/client/v3"
 )

@@ -6,12 +6,12 @@ import (
 	"io"
 	"time"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/biz_ctx"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/biz_ctx/http"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/config"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/service"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/biz_ctx"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/biz_ctx/http"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/config"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/service"
 	auth_pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
-	datasync_pb "github.com/baker-yuan/go-blog/protocol/datasync"
+	datasync_pb "github.com/baker-yuan/go-blog/go_blog/protocol/datasync"
 	"trpc.group/trpc-go/trpc-go/client"
 	"trpc.group/trpc-go/trpc-go/log"
 )

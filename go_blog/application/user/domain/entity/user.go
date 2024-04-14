@@ -2,6 +2,7 @@ package entity
 
 import (
 	"github.com/baker-yuan/go-blog/go_blog/common/db"
+	"github.com/baker-yuan/go-blog/go_blog/common/util"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/user"
 )
 
@@ -37,3 +38,21 @@ func (u *User) Delete() {
 }
 
 type Users []*User
+
+// GetUidToNameNap kye=uid value=用户名
+func (u Users) GetUidToNameNap() map[uint32]string {
+	res := make(map[uint32]string)
+	for _, item := range u {
+		res[item.UID] = item.Username
+	}
+	return res
+}
+
+func (u Users) GetOperatorUserID() []uint32 {
+	res := make([]uint32, 0)
+	for _, item := range u {
+		res = append(res, item.CreateUserID)
+		res = append(res, item.UpdateUserID)
+	}
+	return util.NewSliceUtils[uint32]().SliceUnique(res)
+}

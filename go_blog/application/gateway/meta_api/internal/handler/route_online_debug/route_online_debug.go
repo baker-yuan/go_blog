@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/handler"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/handler"
 	"github.com/gin-gonic/gin"
 	"github.com/shiningrush/droplet"
 	"github.com/shiningrush/droplet/data"

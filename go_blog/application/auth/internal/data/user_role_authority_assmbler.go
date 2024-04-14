@@ -1,6 +1,6 @@
 package data
 
-import "github.com/baker-yuan/go-blog/application/auth/internal/biz"
+import "github.com/baker-yuan/go-blog/go_blog/application/auth/internal/biz"
 
 // RoleAuthorityEntityListToPO entity转po
 func RoleAuthorityEntityListToPO(roleAuthorityList []*biz.RoleAuthority) []*RoleAuthority {

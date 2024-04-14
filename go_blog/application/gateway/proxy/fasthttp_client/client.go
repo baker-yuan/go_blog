@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/biz_ctx"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/biz_ctx"
 	"github.com/valyala/fasthttp"
 )
 

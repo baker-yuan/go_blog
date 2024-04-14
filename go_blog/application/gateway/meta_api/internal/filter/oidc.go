@@ -3,8 +3,8 @@ package filter
 import (
 	"net/http"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/conf"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/log"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/conf"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/log"
 	"github.com/coreos/go-oidc/v3/oidc"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2"

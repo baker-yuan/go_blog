@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/baker-yuan/go-blog/template/go_clean_template/config"
-	"github.com/baker-yuan/go-blog/template/go_clean_template/internal/app"
+	"github.com/baker-yuan/go-blog/go_blog/template/go_clean_template/config"
+	"github.com/baker-yuan/go-blog/go_blog/template/go_clean_template/internal/app"
 	"trpc.group/trpc-go/trpc-go"
 
 	_ "trpc.group/trpc-go/trpc-filter/debuglog"

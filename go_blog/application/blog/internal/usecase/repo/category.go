@@ -3,8 +3,9 @@ package repo
 import (
 	"context"
 	"errors"
+	"fmt"
 
-	"github.com/baker-yuan/go-blog/application/blog/internal/entity"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/entity"
 	"github.com/baker-yuan/go-blog/go_blog/common/db"
 	"github.com/baker-yuan/go-blog/go_blog/common/util"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/blog"
@@ -19,9 +20,7 @@ type CategoryRepo struct {
 // NewCategoryRepo 创建
 func NewCategoryRepo(gormDB *gorm.DB) *CategoryRepo {
 	return &CategoryRepo{
-		GenericDao: &db.GenericDao[entity.Category, uint32]{
-			DB: gormDB,
-		},
+		GenericDao: db.NewGenericDao[entity.Category, uint32](gormDB),
 	}
 }
 
@@ -32,8 +31,8 @@ func init() {
 var (
 	// 全字段修改Category那些字段不修改
 	notUpdateCategoryField = []string{
-		"created_at",
-		"create_time",
+		entity.CategoryFieldCreateUserID,
+		entity.CategoryFieldCreateTime,
 	}
 	updateCategoryField []string
 )
@@ -111,6 +110,7 @@ func (r *CategoryRepo) SearchCategory(ctx context.Context, req *pb.SearchCategor
 	if err != nil {
 		return nil, 0, err
 	}
+	tx = tx.Order(fmt.Sprintf("%s asc", entity.CategoryFieldSort))
 	tx = tx.Offset(int((req.GetPageNum() - 1) * req.GetPageSize())).
 		Limit(int(req.GetPageSize())).Find(&res).
 		Offset(-1).Limit(-1).Count(&pageTotal)

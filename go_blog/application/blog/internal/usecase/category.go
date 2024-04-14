@@ -4,8 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/baker-yuan/go-blog/application/blog/internal/entity"
-	"github.com/baker-yuan/go-blog/application/blog/internal/usecase/assembler"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/entity"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/usecase/assembler"
+	"github.com/baker-yuan/go-blog/go_blog/common/db"
 	"github.com/baker-yuan/go-blog/go_blog/common/util"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/blog"
 )
@@ -33,7 +34,12 @@ func (c *CategoryUseCase) CategoryDetail(ctx context.Context, req *pb.CategoryDe
 	if err != nil {
 		return nil, err
 	}
-	pbCategory := assembler.CategoryEntityToModel(category)
+	// 补充操作人信息
+	uidToNameMap, err := c.UidToName(ctx, category.CreateUserID, category.UpdateUserID)
+	if err != nil {
+		return nil, err
+	}
+	pbCategory := assembler.CategoryEntityToModel(category, uidToNameMap)
 	return pbCategory, nil
 }
 
@@ -43,11 +49,13 @@ func (c *CategoryUseCase) SearchCategory(ctx context.Context, req *pb.SearchCate
 	if err != nil {
 		return nil, 0, err
 	}
-	data := make([]*pb.Category, 0)
-	for _, category := range categoryList {
-		data = append(data, assembler.CategoryEntityToModel(category))
+
+	// 补充操作人信息
+	uidToNameMap, err := c.UidToName(ctx, categoryList.GetOperatorUserID()...)
+	if err != nil {
+		return nil, 0, err
 	}
-	return data, total, nil
+	return assembler.CategoryEntityListToModel(categoryList, uidToNameMap), total, nil
 }
 
 // AddOrUpdateCategory 添加修改文章分类
@@ -69,10 +77,10 @@ func (c *CategoryUseCase) AddOrUpdateCategory(ctx context.Context, req *pb.AddOr
 
 func (c *CategoryUseCase) addCategory(ctx context.Context, userID uint32, req *pb.AddOrUpdateCategoryReq) (uint32, error) {
 	category := assembler.AddOrUpdateCategoryReqToEntity(req)
-	category.CreateUser = userID
-	category.CreateTime = entity.Timestamp(uint32(time.Now().Unix()))
-	category.UpdateUser = userID
-	category.UpdateTime = entity.Timestamp(uint32(time.Now().Unix()))
+	category.CreateUserID = userID
+	category.CreateTime = db.Timestamp(uint32(time.Now().Unix()))
+	category.UpdateUserID = userID
+	category.UpdateTime = db.Timestamp(uint32(time.Now().Unix()))
 
 	lastInsertID, err := c.repo.Save(ctx, category)
 	if err != nil {
@@ -90,10 +98,10 @@ func (c *CategoryUseCase) addCategory(ctx context.Context, userID uint32, req *p
 
 func (c *CategoryUseCase) updateCategory(ctx context.Context, dbCategory *entity.Category, userID uint32, req *pb.AddOrUpdateCategoryReq) (uint32, error) {
 	saveCategory := assembler.AddOrUpdateCategoryReqToEntity(req)
-	saveCategory.CreateUser = dbCategory.CreateUser
+	saveCategory.CreateUserID = dbCategory.CreateUserID
 	saveCategory.CreateTime = dbCategory.CreateTime
-	saveCategory.UpdateUser = userID
-	saveCategory.UpdateTime = entity.Timestamp(uint32(time.Now().Unix()))
+	saveCategory.UpdateUserID = userID
+	saveCategory.UpdateTime = db.Timestamp(uint32(time.Now().Unix()))
 
 	if err := c.repo.UpdateByID(ctx, saveCategory); err != nil {
 		return 0, err

@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/test/e2e/base"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/test/e2e/base"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )

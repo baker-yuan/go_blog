@@ -1,9 +1,9 @@
 package filter
 
 import (
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/biz_ctx"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/config"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/router"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/biz_ctx"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/config"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/router"
 )
 
 // MatchResource 匹配资源

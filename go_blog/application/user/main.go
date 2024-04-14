@@ -4,10 +4,10 @@ import (
 	"context"
 	"log"
 
-	"github.com/baker-yuan/go-blog/application/user/application"
-	"github.com/baker-yuan/go-blog/application/user/infrastructure/config"
-	"github.com/baker-yuan/go-blog/application/user/infrastructure/persistence"
-	"github.com/baker-yuan/go-blog/application/user/interfaces"
+	"github.com/baker-yuan/go-blog/go_blog/application/user/application"
+	"github.com/baker-yuan/go-blog/go_blog/application/user/infrastructure/config"
+	"github.com/baker-yuan/go-blog/go_blog/application/user/infrastructure/persistence"
+	"github.com/baker-yuan/go-blog/go_blog/application/user/interfaces"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/user"
 	"github.com/baker-yuan/go-blog/go_blog/retcode"
 	"trpc.group/trpc-go/trpc-go"
@@ -47,6 +47,9 @@ func main() {
 	}
 	defer repository.Close()
 	if err := repository.AutoMigrate(); err != nil {
+		panic(err)
+	}
+	if err := repository.InitField(); err != nil {
 		panic(err)
 	}
 

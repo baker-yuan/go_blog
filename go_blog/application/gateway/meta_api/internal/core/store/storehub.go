@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/conf"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/core/entity"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/log"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/utils"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/conf"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/core/entity"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/log"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/utils"
 )
 
 type HubKey string

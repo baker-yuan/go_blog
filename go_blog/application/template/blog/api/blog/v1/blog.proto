@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package go_blog.blog;
 
-option  go_package ="github.com/baker-yuan/go-blog/application/blog/api";
+option  go_package ="github.com/baker-yuan/go-blog/go_blog/application/blog/api";
 
 import "validate/validate.proto";
 

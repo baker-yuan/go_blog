@@ -65,6 +65,21 @@ func (mr *MockBlogApiServiceMockRecorder) AddOrUpdateCategory(ctx, req interface
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateCategory", reflect.TypeOf((*MockBlogApiService)(nil).AddOrUpdateCategory), ctx, req)
 }
 
+// AddOrUpdateTag mocks base method.
+func (m *MockBlogApiService) AddOrUpdateTag(ctx context.Context, req *AddOrUpdateTagReq) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddOrUpdateTag", ctx, req)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateTag indicates an expected call of AddOrUpdateTag.
+func (mr *MockBlogApiServiceMockRecorder) AddOrUpdateTag(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateTag", reflect.TypeOf((*MockBlogApiService)(nil).AddOrUpdateTag), ctx, req)
+}
+
 // ArticleDetail mocks base method.
 func (m *MockBlogApiService) ArticleDetail(ctx context.Context, req *ArticleDetailReq) (*Article, error) {
 	m.ctrl.T.Helper()
@@ -125,6 +140,21 @@ func (mr *MockBlogApiServiceMockRecorder) DeleteCategory(ctx, req interface{}) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCategory", reflect.TypeOf((*MockBlogApiService)(nil).DeleteCategory), ctx, req)
 }
 
+// DeleteTag mocks base method.
+func (m *MockBlogApiService) DeleteTag(ctx context.Context, req *DeleteTagReq) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteTag", ctx, req)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteTag indicates an expected call of DeleteTag.
+func (mr *MockBlogApiServiceMockRecorder) DeleteTag(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTag", reflect.TypeOf((*MockBlogApiService)(nil).DeleteTag), ctx, req)
+}
+
 // SearchArticle mocks base method.
 func (m *MockBlogApiService) SearchArticle(ctx context.Context, req *SearchArticleReq) (*SearchArticleRsp, error) {
 	m.ctrl.T.Helper()
@@ -153,6 +183,36 @@ func (m *MockBlogApiService) SearchCategory(ctx context.Context, req *SearchCate
 func (mr *MockBlogApiServiceMockRecorder) SearchCategory(ctx, req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchCategory", reflect.TypeOf((*MockBlogApiService)(nil).SearchCategory), ctx, req)
+}
+
+// SearchTag mocks base method.
+func (m *MockBlogApiService) SearchTag(ctx context.Context, req *SearchTagReq) (*SearchTagRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SearchTag", ctx, req)
+	ret0, _ := ret[0].(*SearchTagRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchTag indicates an expected call of SearchTag.
+func (mr *MockBlogApiServiceMockRecorder) SearchTag(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchTag", reflect.TypeOf((*MockBlogApiService)(nil).SearchTag), ctx, req)
+}
+
+// TagDetail mocks base method.
+func (m *MockBlogApiService) TagDetail(ctx context.Context, req *TagDetailReq) (*Tag, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "TagDetail", ctx, req)
+	ret0, _ := ret[0].(*Tag)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// TagDetail indicates an expected call of TagDetail.
+func (mr *MockBlogApiServiceMockRecorder) TagDetail(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TagDetail", reflect.TypeOf((*MockBlogApiService)(nil).TagDetail), ctx, req)
 }
 
 // MockBlogApiClientProxy is a mock of BlogApiClientProxy interface.
@@ -216,6 +276,26 @@ func (mr *MockBlogApiClientProxyMockRecorder) AddOrUpdateCategory(ctx, req inter
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateCategory", reflect.TypeOf((*MockBlogApiClientProxy)(nil).AddOrUpdateCategory), varargs...)
+}
+
+// AddOrUpdateTag mocks base method.
+func (m *MockBlogApiClientProxy) AddOrUpdateTag(ctx context.Context, req *AddOrUpdateTagReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AddOrUpdateTag", varargs...)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateTag indicates an expected call of AddOrUpdateTag.
+func (mr *MockBlogApiClientProxyMockRecorder) AddOrUpdateTag(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateTag", reflect.TypeOf((*MockBlogApiClientProxy)(nil).AddOrUpdateTag), varargs...)
 }
 
 // ArticleDetail mocks base method.
@@ -298,6 +378,26 @@ func (mr *MockBlogApiClientProxyMockRecorder) DeleteCategory(ctx, req interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCategory", reflect.TypeOf((*MockBlogApiClientProxy)(nil).DeleteCategory), varargs...)
 }
 
+// DeleteTag mocks base method.
+func (m *MockBlogApiClientProxy) DeleteTag(ctx context.Context, req *DeleteTagReq, opts ...client.Option) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteTag", varargs...)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteTag indicates an expected call of DeleteTag.
+func (mr *MockBlogApiClientProxyMockRecorder) DeleteTag(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTag", reflect.TypeOf((*MockBlogApiClientProxy)(nil).DeleteTag), varargs...)
+}
+
 // SearchArticle mocks base method.
 func (m *MockBlogApiClientProxy) SearchArticle(ctx context.Context, req *SearchArticleReq, opts ...client.Option) (*SearchArticleRsp, error) {
 	m.ctrl.T.Helper()
@@ -336,4 +436,44 @@ func (mr *MockBlogApiClientProxyMockRecorder) SearchCategory(ctx, req interface{
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchCategory", reflect.TypeOf((*MockBlogApiClientProxy)(nil).SearchCategory), varargs...)
+}
+
+// SearchTag mocks base method.
+func (m *MockBlogApiClientProxy) SearchTag(ctx context.Context, req *SearchTagReq, opts ...client.Option) (*SearchTagRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SearchTag", varargs...)
+	ret0, _ := ret[0].(*SearchTagRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchTag indicates an expected call of SearchTag.
+func (mr *MockBlogApiClientProxyMockRecorder) SearchTag(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchTag", reflect.TypeOf((*MockBlogApiClientProxy)(nil).SearchTag), varargs...)
+}
+
+// TagDetail mocks base method.
+func (m *MockBlogApiClientProxy) TagDetail(ctx context.Context, req *TagDetailReq, opts ...client.Option) (*Tag, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "TagDetail", varargs...)
+	ret0, _ := ret[0].(*Tag)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// TagDetail indicates an expected call of TagDetail.
+func (mr *MockBlogApiClientProxyMockRecorder) TagDetail(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TagDetail", reflect.TypeOf((*MockBlogApiClientProxy)(nil).TagDetail), varargs...)
 }

@@ -3,7 +3,7 @@ package controller
 import (
 	"context"
 
-	"github.com/baker-yuan/go-blog/application/blog/internal/usecase"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/usecase"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/blog"
 )
 
@@ -11,16 +11,22 @@ import (
 type BlogServiceImpl struct {
 	article  usecase.IArticleUseCase
 	category usecase.ICategoryUseCase
+	tag      usecase.ITagUseCase
 }
+
+// 强制BlogServiceImpl实现pb.BlogApiService
+var _ pb.BlogApiService = &BlogServiceImpl{}
 
 // NewBlogServiceImpl 创建接口实现
 func NewBlogServiceImpl(
 	articleUseCase usecase.IArticleUseCase,
 	categoryUseCase usecase.ICategoryUseCase,
+	tag usecase.ITagUseCase,
 ) pb.BlogApiService {
 	return &BlogServiceImpl{
 		article:  articleUseCase,
 		category: categoryUseCase,
+		tag:      tag,
 	}
 }
 
@@ -93,6 +99,43 @@ func (m *BlogServiceImpl) AddOrUpdateCategory(ctx context.Context, req *pb.AddOr
 func (m *BlogServiceImpl) DeleteCategory(ctx context.Context, req *pb.DeleteCategoryReq) (*pb.EmptyRsp, error) {
 	rsp := &pb.EmptyRsp{}
 	if err := m.category.DeleteCategory(ctx, req); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+// SearchTag 查询文章标签
+func (m *BlogServiceImpl) SearchTag(ctx context.Context, req *pb.SearchTagReq) (*pb.SearchTagRsp, error) {
+	rsp := &pb.SearchTagRsp{}
+	tags, pageTotal, err := m.tag.SearchTag(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Data = tags
+	rsp.Total = pageTotal
+	return rsp, nil
+}
+
+// TagDetail 文章标签详情
+func (m *BlogServiceImpl) TagDetail(ctx context.Context, req *pb.TagDetailReq) (*pb.Tag, error) {
+	return m.tag.TagDetail(ctx, req)
+}
+
+// AddOrUpdateTag 添加修改文章标签
+func (m *BlogServiceImpl) AddOrUpdateTag(ctx context.Context, req *pb.AddOrUpdateTagReq) (*pb.AddOrUpdateRsp, error) {
+	rsp := &pb.AddOrUpdateRsp{}
+	id, err := m.tag.AddOrUpdateTag(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Id = id
+	return rsp, nil
+}
+
+// DeleteTag 删除文章标签
+func (m *BlogServiceImpl) DeleteTag(ctx context.Context, req *pb.DeleteTagReq) (*pb.EmptyRsp, error) {
+	rsp := &pb.EmptyRsp{}
+	if err := m.tag.DeleteTag(ctx, req); err != nil {
 		return nil, err
 	}
 	return rsp, nil

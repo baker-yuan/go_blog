@@ -50,20 +50,26 @@ message User {
   string salt = 5;                 // 盐
   string user_type = 10;           // 用户类型 ADMIN-管理员 USER-普通用户
   // 基本信息
-  string email = 4;                // 邮箱号
-  string nickname = 6;             // 昵称
-  string avatar = 7;               // 头像地址
-  string intro = 8;                // 用户简介
-  string web_site = 9;             // 个人网站
-  // 三方登录
-  LoginType login_type = 11;       // 登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博
-  string union_id = 16;            // 用户唯一标识（第三方网站）
+  string email = 100;                // 邮箱号
+  string nickname = 101;             // 昵称
+  string avatar = 102;               // 头像地址
+  string intro = 103;                // 用户简介
+  string web_site = 104;             // 个人网站
   // 状态
-  UserStatus status = 12;          // 状态 0-正常 1-禁用
-  bool is_deleted = 13;            // 是否注销
+  UserStatus status = 200;          // 状态 0-正常 1-禁用
+  // 三方登录
+  LoginType login_type = 300;       // 登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博
+  string union_id = 301;            // 用户唯一标识（第三方网站）
+  // 逻辑删除
+  bool is_deleted = 400;            // 是否注销
   // 公共字段
-  uint32 create_time = 14;         // 创建时间
-  uint32 update_time = 15;         // 修改时间
+  uint32 create_user_id = 501;      // 创建人id
+  uint32 update_user_id = 502;      // 更新人id
+  uint32 create_time = 503;         // 创建时间
+  uint32 update_time = 504;         // 更新时间
+  // 查询补充
+  string create_user = 1000;        // 创建人
+  string update_user = 1001;        // 更新人
 }
 
 
@@ -86,31 +92,33 @@ message UserDetailReq {
   uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
 }
 
-// 添加修改用户
+// 添加修改用户(管理员)
 message AddOrUpdateUserReq {
   // 账号信息
   uint32 uid = 1;                  // 主键
   string username = 2;             // 用户名
   string password = 3;             // 登录密码
-  string salt = 5;                 // 盐
-  string user_type = 10;           // 用户类型 ADMIN-管理员 USER-普通用户
   // 基本信息
-  string email = 4;                // 邮箱号
-  string nickname = 6;             // 昵称
-  string avatar = 7;               // 头像地址
-  string intro = 8;                // 用户简介
-  string web_site = 9;             // 个人网站
-  // 三方登录
-  LoginType login_type = 11;       // 登录方式 1-用户名 2-GitHub 3-码云 4-QQ 5-微博
-  string union_id = 16;            // 用户唯一标识（第三方网站）
+  string email = 200;                // 邮箱号
+  string nickname = 201;             // 昵称
+  string avatar = 202;               // 头像地址
+  string intro = 203;                // 用户简介
+  string web_site = 204;             // 个人网站
   // 状态
   UserStatus status = 12;          // 状态 0-正常 1-禁用
-  bool is_deleted = 13;            // 是否注销
 }
 
 // 删除用户
 message DeleteUserReq {
   uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 通过用户id获取用户名
+message UidToNameReq {
+repeated uint32 user_ids = 1; // 用户id集合
+}
+message UidToNameRsp {
+  map<uint32, string> uid_to_name_map = 1; // key=用户ID value=用户名
 }
 
 // 用户api
@@ -121,7 +129,7 @@ service UserApi {
   }
   // 添加修改用户
   rpc AddOrUpdateUser (AddOrUpdateUserReq) returns (AddOrUpdateRsp) {
-    option(trpc.alias) = "/user/admin/updateUser";
+    option(trpc.alias) = "/user/admin/addOrUpdateUser";
   }
   // 删除用户
   rpc DeleteUser (DeleteUserReq) returns (EmptyRsp) {
@@ -131,4 +139,10 @@ service UserApi {
   rpc UserDetail (UserDetailReq) returns (User) {
     option(trpc.alias) = "/user/admin/userDetail";
   }
+
+  // 通过用户id获取用户名
+  rpc UidToName (UidToNameReq) returns (UidToNameRsp) {
+    option(trpc.alias) = "/user/admin/uidToNameReq";
+  }
+
 }

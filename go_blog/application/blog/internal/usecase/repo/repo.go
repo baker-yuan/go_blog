@@ -3,16 +3,16 @@ package repo
 import (
 	"fmt"
 
-	"github.com/baker-yuan/go-blog/application/blog/internal/entity"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/entity"
 	"gorm.io/gorm"
 	"trpc.group/trpc-go/trpc-go/log"
 )
 
 func Init(db *gorm.DB) error {
 	// 自动建表
-	//if err := InitSchema(db); err != nil {
-	//	return err
-	//}
+	if err := InitSchema(db); err != nil {
+		return err
+	}
 	// 全字段更新
 	if err := InitField(db); err != nil {
 		return err
@@ -48,34 +48,34 @@ func InitSchema(db *gorm.DB) error {
 			TableName: "文章表",
 			StructPtr: &entity.Article{},
 		},
-		{
-			TableName: "文章标签表",
-			StructPtr: &entity.Tag{},
-		},
-		{
-			TableName: "文章标签关联表",
-			StructPtr: &entity.ArticleTag{},
-		},
-		{
-			TableName: "文章分类表",
-			StructPtr: &entity.Category{},
-		},
-		{
-			TableName: "页面表",
-			StructPtr: &entity.Page{},
-		},
-		{
-			TableName: "动态表",
-			StructPtr: &entity.Moment{},
-		},
-		{
-			TableName: "友链表",
-			StructPtr: &entity.FriendLink{},
-		},
-		{
-			TableName: "网站配置",
-			StructPtr: &entity.Config{},
-		},
+		//{
+		//	TableName: "文章标签表",
+		//	StructPtr: &entity.Tag{},
+		//},
+		//{
+		//	TableName: "文章标签关联表",
+		//	StructPtr: &entity.ArticleTag{},
+		//},
+		//{
+		//	TableName: "文章分类表",
+		//	StructPtr: &entity.Category{},
+		//},
+		//{
+		//	TableName: "页面表",
+		//	StructPtr: &entity.Page{},
+		//},
+		//{
+		//	TableName: "动态表",
+		//	StructPtr: &entity.Moment{},
+		//},
+		//{
+		//	TableName: "友链表",
+		//	StructPtr: &entity.FriendLink{},
+		//},
+		//{
+		//	TableName: "网站配置",
+		//	StructPtr: &entity.Config{},
+		//},
 	}
 
 	return autoMigrate(db, schemas)
@@ -92,7 +92,7 @@ func autoMigrate(db *gorm.DB, schemas []tableSchema) error {
 		if err := db.
 			Set("gorm:table_options", fmt.Sprintf("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='%s'", schema.TableName)).
 			AutoMigrate(schema.StructPtr); err != nil {
-			log.Errorf("#autoMigrate fail schema:%+v", schema, err)
+			log.Errorf("#autoMigrate fail schema:%+v, err: %+v", schema, err)
 			return err
 		}
 	}

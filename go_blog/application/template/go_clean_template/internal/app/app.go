@@ -2,11 +2,11 @@
 package app
 
 import (
-	pb "github.com/baker-yuan/go-blog/protocol/template"
-	"github.com/baker-yuan/go-blog/template/go_clean_template/config"
-	"github.com/baker-yuan/go-blog/template/go_clean_template/internal/controller"
-	"github.com/baker-yuan/go-blog/template/go_clean_template/internal/usecase"
-	"github.com/baker-yuan/go-blog/template/go_clean_template/internal/usecase/repo"
+	pb "github.com/baker-yuan/go-blog/go_blog/protocol/template"
+	"github.com/baker-yuan/go-blog/go_blog/template/go_clean_template/config"
+	"github.com/baker-yuan/go-blog/go_blog/template/go_clean_template/internal/controller"
+	"github.com/baker-yuan/go-blog/go_blog/template/go_clean_template/internal/usecase"
+	"github.com/baker-yuan/go-blog/go_blog/template/go_clean_template/internal/usecase/repo"
 	"trpc.group/trpc-go/trpc-database/gorm"
 	"trpc.group/trpc-go/trpc-go/log"
 	"trpc.group/trpc-go/trpc-go/server"

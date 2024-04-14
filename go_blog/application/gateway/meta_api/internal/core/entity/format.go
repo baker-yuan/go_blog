@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/log"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/log"
 )
 
 func mapKV2Node(key string, val float64) (*Node, error) {

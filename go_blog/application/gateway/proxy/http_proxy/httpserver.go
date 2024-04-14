@@ -3,9 +3,9 @@ package http_proxy
 import (
 	"context"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/biz_ctx/http"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/config"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/proxy/filter"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/biz_ctx/http"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/config"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/filter"
 	"github.com/valyala/fasthttp"
 	"trpc.group/trpc-go/trpc-go/log"
 )
@@ -33,6 +33,7 @@ func HttpServerRun(ctx context.Context, cfg *config.Config) {
 				filter.Recovery,
 				filter.RequestLog,
 				filter.MatchResource,
+				filter.LoginCheck,
 			)(filter.ForwardHandler)
 			handler(bizCtx, cfg)
 		},

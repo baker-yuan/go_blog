@@ -1,4 +1,4 @@
-module github.com/baker-yuan/go-blog/application/blog/gateway/meta_api
+module github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api
 
 go 1.19
 

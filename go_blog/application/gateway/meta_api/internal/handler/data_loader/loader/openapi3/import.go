@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/core/entity"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/handler/data_loader/loader"
-	"github.com/baker-yuan/go-blog/application/blog/gateway/meta_api/internal/utils/consts"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/core/entity"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/handler/data_loader/loader"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/meta_api/internal/utils/consts"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/pkg/errors"
 )

@@ -295,9 +295,17 @@ func (m *Article) validate(all bool) error {
 
 	// no validation rules for IsDeleted
 
+	// no validation rules for CreateUserId
+
+	// no validation rules for UpdateUserId
+
 	// no validation rules for CreateTime
 
 	// no validation rules for UpdateTime
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
 
 	if len(errors) > 0 {
 		return ArticleMultiError(errors)
@@ -1115,9 +1123,17 @@ func (m *Tag) validate(all bool) error {
 
 	// no validation rules for Color
 
+	// no validation rules for CreateUserId
+
+	// no validation rules for UpdateUserId
+
 	// no validation rules for CreateTime
 
 	// no validation rules for UpdateTime
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
 
 	if len(errors) > 0 {
 		return TagMultiError(errors)
@@ -1196,6 +1212,612 @@ var _ interface {
 	ErrorName() string
 } = TagValidationError{}
 
+// Validate checks the field values on SearchTagReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *SearchTagReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchTagReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in SearchTagReqMultiError, or
+// nil if none found.
+func (m *SearchTagReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchTagReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Search
+
+	if m.GetPageNum() <= 0 {
+		err := SearchTagReqValidationError{
+			field:  "PageNum",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetPageSize() <= 0 {
+		err := SearchTagReqValidationError{
+			field:  "PageSize",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return SearchTagReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchTagReqMultiError is an error wrapping multiple validation errors
+// returned by SearchTagReq.ValidateAll() if the designated constraints aren't met.
+type SearchTagReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchTagReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchTagReqMultiError) AllErrors() []error { return m }
+
+// SearchTagReqValidationError is the validation error returned by
+// SearchTagReq.Validate if the designated constraints aren't met.
+type SearchTagReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchTagReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchTagReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchTagReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchTagReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchTagReqValidationError) ErrorName() string { return "SearchTagReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SearchTagReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchTagReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchTagReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchTagReqValidationError{}
+
+// Validate checks the field values on SearchTagRsp with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *SearchTagRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchTagRsp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in SearchTagRspMultiError, or
+// nil if none found.
+func (m *SearchTagRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchTagRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Total
+
+	for idx, item := range m.GetData() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, SearchTagRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, SearchTagRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SearchTagRspValidationError{
+					field:  fmt.Sprintf("Data[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return SearchTagRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchTagRspMultiError is an error wrapping multiple validation errors
+// returned by SearchTagRsp.ValidateAll() if the designated constraints aren't met.
+type SearchTagRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchTagRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchTagRspMultiError) AllErrors() []error { return m }
+
+// SearchTagRspValidationError is the validation error returned by
+// SearchTagRsp.Validate if the designated constraints aren't met.
+type SearchTagRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchTagRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchTagRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchTagRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchTagRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchTagRspValidationError) ErrorName() string { return "SearchTagRspValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SearchTagRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchTagRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchTagRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchTagRspValidationError{}
+
+// Validate checks the field values on TagDetailReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *TagDetailReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TagDetailReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in TagDetailReqMultiError, or
+// nil if none found.
+func (m *TagDetailReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TagDetailReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := TagDetailReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return TagDetailReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// TagDetailReqMultiError is an error wrapping multiple validation errors
+// returned by TagDetailReq.ValidateAll() if the designated constraints aren't met.
+type TagDetailReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TagDetailReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TagDetailReqMultiError) AllErrors() []error { return m }
+
+// TagDetailReqValidationError is the validation error returned by
+// TagDetailReq.Validate if the designated constraints aren't met.
+type TagDetailReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TagDetailReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TagDetailReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TagDetailReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TagDetailReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TagDetailReqValidationError) ErrorName() string { return "TagDetailReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TagDetailReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTagDetailReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TagDetailReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TagDetailReqValidationError{}
+
+// Validate checks the field values on AddOrUpdateTagReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *AddOrUpdateTagReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddOrUpdateTagReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddOrUpdateTagReqMultiError, or nil if none found.
+func (m *AddOrUpdateTagReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddOrUpdateTagReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		err := AddOrUpdateTagReqValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Description
+
+	if utf8.RuneCountInString(m.GetColor()) < 1 {
+		err := AddOrUpdateTagReqValidationError{
+			field:  "Color",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return AddOrUpdateTagReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddOrUpdateTagReqMultiError is an error wrapping multiple validation errors
+// returned by AddOrUpdateTagReq.ValidateAll() if the designated constraints
+// aren't met.
+type AddOrUpdateTagReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddOrUpdateTagReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddOrUpdateTagReqMultiError) AllErrors() []error { return m }
+
+// AddOrUpdateTagReqValidationError is the validation error returned by
+// AddOrUpdateTagReq.Validate if the designated constraints aren't met.
+type AddOrUpdateTagReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddOrUpdateTagReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddOrUpdateTagReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddOrUpdateTagReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddOrUpdateTagReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddOrUpdateTagReqValidationError) ErrorName() string {
+	return "AddOrUpdateTagReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddOrUpdateTagReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddOrUpdateTagReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddOrUpdateTagReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddOrUpdateTagReqValidationError{}
+
+// Validate checks the field values on DeleteTagReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *DeleteTagReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteTagReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in DeleteTagReqMultiError, or
+// nil if none found.
+func (m *DeleteTagReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteTagReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := DeleteTagReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DeleteTagReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeleteTagReqMultiError is an error wrapping multiple validation errors
+// returned by DeleteTagReq.ValidateAll() if the designated constraints aren't met.
+type DeleteTagReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteTagReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteTagReqMultiError) AllErrors() []error { return m }
+
+// DeleteTagReqValidationError is the validation error returned by
+// DeleteTagReq.Validate if the designated constraints aren't met.
+type DeleteTagReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteTagReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteTagReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteTagReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteTagReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteTagReqValidationError) ErrorName() string { return "DeleteTagReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DeleteTagReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteTagReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteTagReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteTagReqValidationError{}
+
 // Validate checks the field values on Page with the rules defined in the proto
 // definition for this message. If any rules are violated, the first error
 // encountered is returned, or nil if there are no violations.
@@ -1225,9 +1847,17 @@ func (m *Page) validate(all bool) error {
 
 	// no validation rules for PageCover
 
+	// no validation rules for CreateUserId
+
+	// no validation rules for UpdateUserId
+
 	// no validation rules for CreateTime
 
 	// no validation rules for UpdateTime
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
 
 	if len(errors) > 0 {
 		return PageMultiError(errors)
@@ -1337,9 +1967,17 @@ func (m *Moment) validate(all bool) error {
 
 	// no validation rules for IsDeleted
 
+	// no validation rules for CreateUserId
+
+	// no validation rules for UpdateUserId
+
 	// no validation rules for CreateTime
 
 	// no validation rules for UpdateTime
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
 
 	if len(errors) > 0 {
 		return MomentMultiError(errors)
@@ -1456,9 +2094,17 @@ func (m *FriendLink) validate(all bool) error {
 
 	// no validation rules for IsDeleted
 
+	// no validation rules for CreateUserId
+
+	// no validation rules for UpdateUserId
+
 	// no validation rules for CreateTime
 
 	// no validation rules for UpdateTime
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
 
 	if len(errors) > 0 {
 		return FriendLinkMultiError(errors)
@@ -1566,9 +2212,17 @@ func (m *Config) validate(all bool) error {
 
 	// no validation rules for Config
 
+	// no validation rules for CreateUserId
+
+	// no validation rules for UpdateUserId
+
 	// no validation rules for CreateTime
 
 	// no validation rules for UpdateTime
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
 
 	if len(errors) > 0 {
 		return ConfigMultiError(errors)
@@ -1679,9 +2333,17 @@ func (m *Category) validate(all bool) error {
 
 	// no validation rules for Available
 
+	// no validation rules for CreateUserId
+
+	// no validation rules for UpdateUserId
+
 	// no validation rules for CreateTime
 
 	// no validation rules for UpdateTime
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
 
 	if len(errors) > 0 {
 		return CategoryMultiError(errors)
@@ -2159,16 +2821,7 @@ func (m *AddOrUpdateCategoryReq) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetId() <= 0 {
-		err := AddOrUpdateCategoryReqValidationError{
-			field:  "Id",
-			reason: "value must be greater than 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Id
 
 	if utf8.RuneCountInString(m.GetName()) < 1 {
 		err := AddOrUpdateCategoryReqValidationError{

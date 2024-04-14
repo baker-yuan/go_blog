@@ -6,10 +6,10 @@
 package main
 
 import (
-	pb "github.com/baker-yuan/go-blog/application/blog/api/blog/v1"
-	"github.com/baker-yuan/go-blog/application/blog/internal/biz"
-	"github.com/baker-yuan/go-blog/application/blog/internal/data"
-	"github.com/baker-yuan/go-blog/application/blog/internal/service"
+	pb "github.com/baker-yuan/go-blog/go_blog/application/blog/api/blog/v1"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/biz"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/data"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/service"
 	"github.com/google/wire"
 	trpc_srv "trpc.group/trpc-go/trpc-go/server"
 )

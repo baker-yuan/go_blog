@@ -4,7 +4,7 @@ package usecase
 import (
 	"context"
 
-	"github.com/baker-yuan/go-blog/application/blog/internal/entity"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/internal/entity"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/blog"
 )
 
@@ -16,6 +16,8 @@ type (
 			resourceID uint32, resourceType pb.ResourceType,
 			changeBefore interface{}, changeAfter interface{},
 			notes string)
+		// UidToName 根据用户ID获取用户名称
+		UidToName(ctx context.Context, userIDs ...uint32) (map[uint32]string, error)
 	}
 )
 
@@ -76,5 +78,36 @@ type (
 		DeleteByID(ctx context.Context, id uint32) error
 		// SearchCategory 文章分类搜索
 		SearchCategory(ctx context.Context, req *pb.SearchCategoryReq) (entity.CategoryList, uint32, error)
+	}
+)
+
+// Tag 文章标签
+type (
+	// ITagUseCase 业务逻辑
+	ITagUseCase interface {
+		// SearchTag 查询文章标签
+		SearchTag(ctx context.Context, req *pb.SearchTagReq) ([]*pb.Tag, uint32, error)
+		// TagDetail 文章标签详情
+		TagDetail(ctx context.Context, req *pb.TagDetailReq) (*pb.Tag, error)
+		// AddOrUpdateTag 添加修改文章标签
+		AddOrUpdateTag(ctx context.Context, req *pb.AddOrUpdateTagReq) (uint32, error)
+		// DeleteTag 删除文章标签
+		DeleteTag(ctx context.Context, req *pb.DeleteTagReq) error
+	}
+
+	// ITagRepo 数据存储操作
+	ITagRepo interface {
+		// GetTagByID 根据文章标签id集合查询文章标签
+		GetTagByID(ctx context.Context, id uint32) (*entity.Tag, error)
+		// GetTagByIDs 根据文章标签id集合查询文章标签
+		GetTagByIDs(ctx context.Context, ids []uint32) (entity.Tags, error)
+		// Save 保存文章标签
+		Save(ctx context.Context, tag *entity.Tag) (uint32, error)
+		// UpdateByID 根据ID修改文章标签
+		UpdateByID(ctx context.Context, tag *entity.Tag) error
+		// DeleteByID 根据ID删除文章标签
+		DeleteByID(ctx context.Context, id uint32) error
+		// SearchTag 文章标签搜索
+		SearchTag(ctx context.Context, req *pb.SearchTagReq) (entity.Tags, uint32, error)
 	}
 )

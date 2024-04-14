@@ -6,7 +6,7 @@ import (
 	"errors"
 	"time"
 
-	pb "github.com/baker-yuan/go-blog/application/blog/api/blog/v1"
+	pb "github.com/baker-yuan/go-blog/go_blog/application/blog/api/blog/v1"
 )
 
 // Article 文章表
