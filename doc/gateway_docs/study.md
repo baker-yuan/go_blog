@@ -1,3 +1,11 @@
+```text
+https://github.com/apache/apisix-dashboard/blob/master/docs/en/latest/develop.md
+
+https://apisix-dashboard.apiseven.com/
+Username: admin
+Password: admin
+```
+
 # 📖 名词解释
 
 

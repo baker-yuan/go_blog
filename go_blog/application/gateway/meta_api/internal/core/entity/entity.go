@@ -49,44 +49,30 @@ func (info *BaseInfo) KeyCompat(key string) {
 	}
 }
 
-// Status 发布状态
-type Status uint8
+// swagger:model PluginConfig
+//
+// 在很多情况下，我们在不同的路由中会使用相同的插件规则，此时就可以通过 Plugin Config 来设置这些规则。Plugin Config 属于一组通用插件配置的抽象。
+// plugins 的配置可以通过 Admin API /apisix/admin/plugin_configs 进行单独配置，在路由中使用 plugin_config_id 与之进行关联。
+// 对于同一个插件的配置，只能有一个是有效的，优先级为 Consumer > Route > Plugin Config > Service。
+//
+// https://apisix.apache.org/zh/docs/apisix/terminology/plugin-config/
+type PluginConfig struct {
+	BaseInfo                        // 公共属性
+	Desc     string                 `json:"desc,omitempty"`
+	Plugins  map[string]interface{} `json:"plugins"`
+	Labels   map[string]string      `json:"labels,omitempty"`
+}
 
-// swagger:model 路由
-type Route struct {
-	BaseInfo // 公共属性
-	// 基本信息
-	Name            string            `json:"name"`                       // 路由名称
-	Labels          map[string]string `json:"labels,omitempty"`           // 标签(为路由增加自定义标签，可用于路由分组。)
-	Desc            string            `json:"desc,omitempty"`             // 路由描述信息
-	ServiceID       interface{}       `json:"service_id,omitempty"`       // 需要绑定的服务ID(Service#ID)
-	EnableWebsocket bool              `json:"enable_websocket,omitempty"` // 允许WebSocket
-	Status          Status            `json:"status"`                     // 发布状态
-
-	// 匹配条件
-	Host        string        `json:"host,omitempty"`         // 域名(路由匹配的域名列表。支持泛域名，如：*.test.com)
-	Hosts       []string      `json:"hosts,omitempty"`        //
-	URI         string        `json:"uri,omitempty"`          // 路径(HTTP 请求路径，如 /foo/index.html，支持请求路径前缀 /foo/*。/* 代表所有路径)
-	Uris        []string      `json:"uris,omitempty"`         //
-	RemoteAddr  string        `json:"remote_addr,omitempty"`  // 客户端地址(客户端与服务器握手时 IP，即客户端 IP，例如：192.168.1.101，192.168.1.0/24，::1，fe80::1，fe80::1/64)
-	RemoteAddrs []string      `json:"remote_addrs,omitempty"` //
-	Methods     []string      `json:"methods,omitempty"`      // HTTP方法
-	Priority    int           `json:"priority,omitempty"`     // 优先级
-	Vars        []interface{} `json:"vars,omitempty"`         // 高级匹配条件
-
-	// 插件
-	Plugins        map[string]interface{} `json:"plugins,omitempty"`          //
-	PluginConfigID interface{}            `json:"plugin_config_id,omitempty"` //
-
-	// 上游
-	Upstream   *UpstreamDef `json:"upstream,omitempty"`    // 手动填写
-	UpstreamID interface{}  `json:"upstream_id,omitempty"` // 选择的上游ID
-
-	// 其他
-	FilterFunc      string      `json:"filter_func,omitempty"`      //
-	Script          interface{} `json:"script,omitempty"`           //
-	ScriptID        interface{} `json:"script_id,omitempty"`        // For debug and optimization(cache), currently same as Route's ID
-	ServiceProtocol string      `json:"service_protocol,omitempty"` //
+// swagger:model 全局插件
+//
+// Plugin 配置可直接绑定在 Route 上，也可以被绑定在 Service 或 Consumer 上。
+// 如果你需要一个能作用于所有请求的 Plugin，可以通过 Global Rules 启用一个全局的插件配置。
+// 全局规则相对于 Route、Service、Plugin Config、Consumer 中的插件配置，Global Rules 中的插件总是优先执行。
+//
+// https://apisix.apache.org/zh/docs/apisix/terminology/global-rule/
+type GlobalPlugins struct {
+	BaseInfo
+	Plugins map[string]interface{} `json:"plugins"`
 }
 
 // --- structures for upstream start  ---
@@ -174,33 +160,51 @@ type UpstreamKeepalivePool struct {
 	Size        int           `json:"size"`                   // 请求数量
 }
 
-// UpstreamDef 上游服务
-type UpstreamDef struct {
-	Name          string                 `json:"name,omitempty"`           // 名称
-	Desc          string                 `json:"desc,omitempty"`           // 描述
-	Type          string                 `json:"type,omitempty"`           // 负载均衡算法
-	DiscoveryType string                 `json:"discovery_type,omitempty"` // 上游类型 节点、服务发现
-	ServiceName   string                 `json:"service_name,omitempty"`   //
-	DiscoveryArgs map[string]string      `json:"discovery_args,omitempty"` //
-	Nodes         interface{}            `json:"nodes,omitempty"`          // 目标节点Node
-	Retries       *int                   `json:"retries,omitempty"`        // 重试次数(重试机制将请求发到下一个上游节点。值为 0 表示禁用重试机制，留空表示使用可用后端节点的数量。)
-	RetryTimeout  TimeoutValue           `json:"retry_timeout,omitempty"`  // 重试超时时间(限制是否继续重试的时间，若之前的请求和重试请求花费太多时间就不再继续重试。0 代表不启用重试超时机制。)
-	Scheme        string                 `json:"scheme,omitempty"`         // 协议
-	Timeout       *Timeout               `json:"timeout,omitempty"`        // 超时
-	KeepalivePool *UpstreamKeepalivePool `json:"keepalive_pool,omitempty"` // 连接池
-	Checks        interface{}            `json:"checks,omitempty"`         // 健康检查
-	HashOn        string                 `json:"hash_on,omitempty"`        //
-	Key           string                 `json:"key,omitempty"`            //
-	PassHost      string                 `json:"pass_host,omitempty"`      //
-	UpstreamHost  string                 `json:"upstream_host,omitempty"`  //
-	Labels        map[string]string      `json:"labels,omitempty"`         //
-	TLS           *UpstreamTLS           `json:"tls,omitempty"`            //
-}
-
 // swagger:model 上游
+// Upstream（也称之为上游）是对虚拟主机抽象，即应用层服务或节点的抽象。你可以通过 Upstream 对象对多个服务节点按照配置规则进行负载均衡。
+// 上游的地址信息可以直接配置到路由（或服务）中。
+//
+// https://apisix.apache.org/zh/docs/apisix/terminology/upstream/
 type Upstream struct {
 	BaseInfo
 	UpstreamDef
+}
+
+// UpstreamDef 上游服务
+type UpstreamDef struct {
+	// 基本信息
+	Name   string            `json:"name,omitempty"`   // 名称
+	Desc   string            `json:"desc,omitempty"`   // 描述
+	Labels map[string]string `json:"labels,omitempty"` // 标签
+	// 负载均衡
+	// 带权轮询（Round Robin）
+	// 一致性哈希（CHash）
+	// 指数加权移动平均法（EWMA）
+	// 最小连接数（least_conn）
+	Type string `json:"type,omitempty"` // 负载均衡算法
+	// 服务发现
+	DiscoveryType string            `json:"discovery_type,omitempty"` // 上游类型 节点、服务发现
+	DiscoveryArgs map[string]string `json:"discovery_args,omitempty"` // 服务发现-服务发现类型
+	ServiceName   string            `json:"service_name,omitempty"`   // 服务发现-服务名称
+	Nodes         interface{}       `json:"nodes,omitempty"`          // 节点-目标节点Node
+	// Host请求头
+	// pass 保持与客户端请求一致的主机名
+	// node 使用目标节点列表中的主机名或IP
+	PassHost string `json:"pass_host,omitempty"` // Host请求头
+	//
+	Retries      *int         `json:"retries,omitempty"`       // 重试次数(重试机制将请求发到下一个上游节点。值为 0 表示禁用重试机制，留空表示使用可用后端节点的数量。)
+	RetryTimeout TimeoutValue `json:"retry_timeout,omitempty"` // 重试超时时间(限制是否继续重试的时间，若之前的请求和重试请求花费太多时间就不再继续重试。0 代表不启用重试超时机制。)
+	Scheme       string       `json:"scheme,omitempty"`        // 协议
+	Timeout      *Timeout     `json:"timeout,omitempty"`       // 超时
+	// 连接池
+	KeepalivePool *UpstreamKeepalivePool `json:"keepalive_pool,omitempty"` // 连接池
+	// 健康检查
+	Checks interface{} `json:"checks,omitempty"` // 健康检查
+	// 其他
+	HashOn       string       `json:"hash_on,omitempty"`       //
+	Key          string       `json:"key,omitempty"`           //
+	UpstreamHost string       `json:"upstream_host,omitempty"` //
+	TLS          *UpstreamTLS `json:"tls,omitempty"`           //
 }
 
 type UpstreamNameResponse struct {
@@ -218,12 +222,75 @@ func (upstream *Upstream) Parse2NameResponse() (*UpstreamNameResponse, error) {
 
 // --- structures for upstream end  ---
 
+// swagger:model 服务
+type Service struct {
+	// 基本信息
+	BaseInfo
+	Name   string            `json:"name,omitempty"`   // 名称
+	Desc   string            `json:"desc,omitempty"`   // 描述
+	Hosts  []string          `json:"hosts,omitempty"`  // 域名(路由匹配的域名列表。支持泛域名，如：*.test.com)
+	Labels map[string]string `json:"labels,omitempty"` // 标签
+	// 上游信息
+	Upstream   *UpstreamDef `json:"upstream,omitempty"`    // 直接录入上游
+	UpstreamID interface{}  `json:"upstream_id,omitempty"` // 选择的上游ID
+	// 插件
+	Plugins map[string]interface{} `json:"plugins,omitempty"` // 插件
+	//
+	EnableWebsocket bool `json:"enable_websocket,omitempty"` //
+	// 其他
+	Script string `json:"script,omitempty"` // 脚本
+}
+
+// Status 发布状态
+type Status uint8
+
+// swagger:model 路由
+type Route struct {
+	BaseInfo // 公共属性
+	// 基本信息
+	Name            string            `json:"name"`                       // 路由名称
+	Labels          map[string]string `json:"labels,omitempty"`           // 标签(为路由增加自定义标签，可用于路由分组。)
+	Desc            string            `json:"desc,omitempty"`             // 路由描述信息
+	ServiceID       interface{}       `json:"service_id,omitempty"`       // 需要绑定的服务ID(Service#ID)
+	EnableWebsocket bool              `json:"enable_websocket,omitempty"` // 允许WebSocket
+	Status          Status            `json:"status"`                     // 发布状态
+
+	// 匹配条件
+	Host        string        `json:"host,omitempty"`         // 域名(路由匹配的域名列表。支持泛域名，如：*.test.com)
+	Hosts       []string      `json:"hosts,omitempty"`        //
+	URI         string        `json:"uri,omitempty"`          // 路径(HTTP 请求路径，如 /foo/index.html，支持请求路径前缀 /foo/*。/* 代表所有路径)
+	Uris        []string      `json:"uris,omitempty"`         //
+	RemoteAddr  string        `json:"remote_addr,omitempty"`  // 客户端地址(客户端与服务器握手时 IP，即客户端 IP，例如：192.168.1.101，192.168.1.0/24，::1，fe80::1，fe80::1/64)
+	RemoteAddrs []string      `json:"remote_addrs,omitempty"` //
+	Methods     []string      `json:"methods,omitempty"`      // HTTP方法
+	Priority    int           `json:"priority,omitempty"`     // 优先级
+	Vars        []interface{} `json:"vars,omitempty"`         // 高级匹配条件
+
+	// 插件
+	Plugins        map[string]interface{} `json:"plugins,omitempty"`          // 路由直接绑定插件
+	PluginConfigID interface{}            `json:"plugin_config_id,omitempty"` // 一组通用插件配置，插件配置共用 PluginConfig
+
+	// 上游
+	Upstream   *UpstreamDef `json:"upstream,omitempty"`    // 路由直接绑定上游
+	UpstreamID interface{}  `json:"upstream_id,omitempty"` // 选择的上游ID
+
+	// 其他
+	ServiceProtocol string      `json:"service_protocol,omitempty"` //
+	Script          interface{} `json:"script,omitempty"`           //
+	ScriptID        interface{} `json:"script_id,omitempty"`        // For debug and optimization(cache), currently same as Route's ID
+	FilterFunc      string      `json:"filter_func,omitempty"`      //
+}
+
 // swagger:model Consumer
+// Consumer 是某类服务的消费者，需要与用户认证配合才可以使用。当不同的消费者请求同一个 API 时，APISIX 会根据当前请求的用户信息，对应不同的 Plugin 或 Upstream 配置。如果 Route、Service、Consumer 和 Plugin Config 都绑定了相同的插件，只有消费者的插件配置会生效。插件配置的优先级由高到低的顺序是：Consumer > Route > Plugin Config > Service。
+// 对于 API 网关而言，一般情况可以通过请求域名、客户端 IP 地址等字段识别到某类请求方，然后进行插件过滤并转发请求到指定上游。但有时候该方式达不到用户需求，因此 APISIX 支持了 Consumer 对象。
+//
+// https://apisix.apache.org/zh/docs/apisix/terminology/consumer/
 type Consumer struct {
 	Username   string                 `json:"username"`              // 名称
 	Desc       string                 `json:"desc,omitempty"`        // 描述
 	Plugins    map[string]interface{} `json:"plugins,omitempty"`     // 插件
-	Labels     map[string]string      `json:"labels,omitempty"`      //
+	Labels     map[string]string      `json:"labels,omitempty"`      // 标签
 	CreateTime int64                  `json:"create_time,omitempty"` // 创建时间
 	UpdateTime int64                  `json:"update_time,omitempty"` // 更新时间
 }
@@ -250,20 +317,18 @@ type SSL struct {
 	Client        *SSLClient        `json:"client,omitempty"`
 }
 
-// swagger:model 服务
-type Service struct {
-	BaseInfo
-	Name            string                 `json:"name,omitempty"`             // 名称
-	Desc            string                 `json:"desc,omitempty"`             // 描述
-	Hosts           []string               `json:"hosts,omitempty"`            // 域名(路由匹配的域名列表。支持泛域名，如：*.test.com)
-	Upstream        *UpstreamDef           `json:"upstream,omitempty"`         // 直接录入上游
-	UpstreamID      interface{}            `json:"upstream_id,omitempty"`      // 选择的上游ID
-	Plugins         map[string]interface{} `json:"plugins,omitempty"`          // 插件
-	Script          string                 `json:"script,omitempty"`           //
-	Labels          map[string]string      `json:"labels,omitempty"`           //
-	EnableWebsocket bool                   `json:"enable_websocket,omitempty"` //
-}
-
+// Script 表示将在 HTTP 请求/响应生命周期期间执行的脚本。
+// Script 配置需要绑定在路由上。
+// Script 与 Plugin 不兼容，并且 Script 优先执行 Script，这意味着配置 Script 后，Route 上配置的 Plugin 将不被执行。
+// 理论上，在 Script 中可以编写任意 Lua 代码，你也可以直接调用已有的插件以复用已有的代码。
+// Script 也有执行阶段概念，支持 access、header_filter、body_filter 和 log 阶段。系统会在相应阶段中自动执行 Script 脚本中对应阶段的代码。
+//
+//	{
+//	   ...
+//	   "script": "local _M = {} \n function _M.access(api_ctx) \n ngx.log(ngx.INFO,\"hit access phase\") \n end \nreturn _M"
+//	}
+//
+// https://apisix.apache.org/zh/docs/apisix/terminology/script/
 type Script struct {
 	ID     string      `json:"id"`
 	Script interface{} `json:"script,omitempty"`
@@ -275,28 +340,17 @@ type RequestValidation struct {
 	Properties interface{} `json:"properties,omitempty"`
 }
 
-// swagger:model 全局插件
-type GlobalPlugins struct {
-	BaseInfo
-	Plugins map[string]interface{} `json:"plugins"`
-}
-
+// ServerInfo server-info插件可以定期将服务基本信息上报至 etcd。
+//
+// https://apisix.apache.org/zh/docs/apisix/plugins/server-info/
 type ServerInfo struct {
-	BaseInfo
-	LastReportTime int64  `json:"last_report_time,omitempty"`
-	UpTime         int64  `json:"up_time,omitempty"`
-	BootTime       int64  `json:"boot_time,omitempty"`
-	EtcdVersion    string `json:"etcd_version,omitempty"`
-	Hostname       string `json:"hostname,omitempty"`
-	Version        string `json:"version,omitempty"`
-}
-
-// swagger:model GlobalPlugins
-type PluginConfig struct {
-	BaseInfo                        // 公共属性
-	Desc     string                 `json:"desc,omitempty"`
-	Plugins  map[string]interface{} `json:"plugins"`
-	Labels   map[string]string      `json:"labels,omitempty"`
+	BaseInfo              // BaseInfo#ID APISIX服务实例id。
+	LastReportTime int64  `json:"last_report_time,omitempty"` //
+	UpTime         int64  `json:"up_time,omitempty"`          //
+	BootTime       int64  `json:"boot_time,omitempty"`        // APISIX 服务实例的启动时间（UNIX 时间戳），如果对 APISIX 进行热更新操作，该值将被重置。普通的 reload 操作不会影响该值。
+	EtcdVersion    string `json:"etcd_version,omitempty"`     // etcd 集群的版本信息，如果 APISIX 和 etcd 集群之间存在网络分区，该值将设置为 "unknown"。
+	Hostname       string `json:"hostname,omitempty"`         // 部署 APISIX 的主机或 Pod 的主机名信息。
+	Version        string `json:"version,omitempty"`          // APISIX 版本信息。
 }
 
 // swagger:model Proto文件
