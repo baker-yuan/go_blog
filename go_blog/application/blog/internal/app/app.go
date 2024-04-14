@@ -23,18 +23,28 @@ func Run(trpcServer *server.Server, cfg *config.Config) {
 	}
 
 	var (
-		articleRepo  = repo.NewArticleRepo(gormDB)
-		categoryRepo = repo.NewCategoryRepo(gormDB)
-		tagRepo      = repo.NewTagRepo(gormDB)
+		articleRepo    = repo.NewArticleRepo(gormDB)
+		categoryRepo   = repo.NewCategoryRepo(gormDB)
+		tagRepo        = repo.NewTagRepo(gormDB)
+		friendLinkRepo = repo.NewFriendLinkRepo(gormDB)
+		pageRepo       = repo.NewPageRepo(gormDB)
 	)
 	var (
-		commonUseCase   = usecase.NewCommonUseCase()
-		articleUseCase  = usecase.NewArticleUseCase(commonUseCase, articleRepo)
-		categoryUseCase = usecase.NewCategoryUseCase(commonUseCase, categoryRepo)
-		tagUseCase      = usecase.NewTagUseCase(commonUseCase, tagRepo)
+		commonUseCase     = usecase.NewCommonUseCase()
+		articleUseCase    = usecase.NewArticleUseCase(commonUseCase, articleRepo)
+		categoryUseCase   = usecase.NewCategoryUseCase(commonUseCase, categoryRepo)
+		tagUseCase        = usecase.NewTagUseCase(commonUseCase, tagRepo)
+		friendLinkUseCase = usecase.NewFriendLinkUseCase(commonUseCase, friendLinkRepo)
+		pageUseCase       = usecase.NewPageUseCase(commonUseCase, pageRepo)
 	)
 	var (
-		blogService = controller.NewBlogServiceImpl(articleUseCase, categoryUseCase, tagUseCase)
+		blogService = controller.NewBlogServiceImpl(
+			articleUseCase,
+			categoryUseCase,
+			tagUseCase,
+			friendLinkUseCase,
+			pageUseCase,
+		)
 	)
 
 	// 注册服务

@@ -60,18 +60,18 @@ func InitSchema(db *gorm.DB) error {
 		//	TableName: "文章分类表",
 		//	StructPtr: &entity.Category{},
 		//},
-		//{
-		//	TableName: "页面表",
-		//	StructPtr: &entity.Page{},
-		//},
+		{
+			TableName: "页面表",
+			StructPtr: &entity.Page{},
+		},
 		//{
 		//	TableName: "动态表",
 		//	StructPtr: &entity.Moment{},
 		//},
-		//{
-		//	TableName: "友链表",
-		//	StructPtr: &entity.FriendLink{},
-		//},
+		{
+			TableName: "友链表",
+			StructPtr: &entity.FriendLink{},
+		},
 		//{
 		//	TableName: "网站配置",
 		//	StructPtr: &entity.Config{},

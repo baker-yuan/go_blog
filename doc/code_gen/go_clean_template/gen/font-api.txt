@@ -25,7 +25,7 @@ export const get$!{tableInfo.name}sApi = (params: $!{tableInfo.name}.Req$!{table
 
 // 根据id获取$!{tableInfo.comment}
 export const get$!{tableInfo.name}Api = (id: number) => {
-  return http.post<$!{tableInfo.name}.Model>(BlogSrv + `/admin/$!{tableInfo.name}Detail`, {
+  return http.post<$!{tableInfo.name}.Model>(BlogSrv + `/admin/$!tool.firstLowerCase($!{tableInfo.name})Detail`, {
     id: id
   });
 };

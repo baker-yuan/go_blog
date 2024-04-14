@@ -16,3 +16,15 @@ var (
     $!{tableInfo.name}Field$!tool.firstUpperCase($!{column.name})  = "$!tool.hump2Underline($!{column.name})"
 #end
 )
+
+type $!{tableInfo.name}s []*$!{tableInfo.name}
+
+// GetOperatorUserID 获取操作人ID
+func (l $!{tableInfo.name}s) GetOperatorUserID() []uint32 {
+	res := make([]uint32, 0)
+	for _, item := range l {
+		res = append(res, item.CreateUserID)
+		res = append(res, item.UpdateUserID)
+	}
+	return util.NewSliceUtils[uint32]().SliceUnique(res)
+}

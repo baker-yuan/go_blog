@@ -350,3 +350,58 @@ export namespace Category {
   // 分页查询文章分类
   export interface ReqCategoryListParams extends ReqPage {}
 }
+
+// 友链表管理模块
+export namespace FriendLink {
+  // 友链状态
+  export enum FriendLinkStatus {
+    STATUS_UNKNOWN = 0, // 未知状态
+    STATUS_PUBLISHED = 1, // 已发布
+    STATUS_OFFLINE = 2 // 以下线
+  }
+
+  // 友链表模型
+  export interface Model {
+    id: number; // 主键
+    linkName: string; // 链接名
+    linkAvatar: string; // 链接头像
+    linkAddress: string; // 链接地址
+    linkIntro: string; // 链接介绍
+    status: FriendLinkStatus; // 友链状态 1-已发布 2-以下线
+    sort: number; // 友链排序
+    isDeleted: boolean; // 是否删除
+    // 公共字段
+    createUserId: number;
+    updateUserId: number;
+    createTime: number;
+    updateTime: number;
+    // 查询补充
+    createUser: string; // 创建人
+    updateUser: string; // 更新人
+  }
+
+  // 分页查询友链表
+  export interface ReqFriendLinkListParams extends ReqPage {}
+}
+
+// 页面管理模块
+export namespace Page {
+  // 页面模型
+  export interface Model {
+    id: number; // 页面id
+    pageName: string; // 页面名
+    pageLabel: string; // 页面标签
+    pageCover: string; // 页面封面
+    // 公共字段
+    createUserId: number;
+    updateUserId: number;
+    createTime: number;
+    updateTime: number;
+    // 查询补充
+    createUser: string; // 创建人
+    updateUser: string; // 更新人
+  }
+
+  // 分页查询页面
+  export interface ReqPageListParams extends ReqPage {}
+}

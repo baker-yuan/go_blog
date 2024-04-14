@@ -32,7 +32,12 @@ func (c *$!{tableInfo.name}UseCase) $!{tableInfo.name}Detail(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pb$!{tableInfo.name} := assembler.$!{tableInfo.name}EntityToModel($!tool.firstLowerCase($!{tableInfo.name}))
+    // 补充操作人信息
+    uidToNameMap, err := c.UidToName(ctx, $!tool.firstLowerCase($!{tableInfo.name}) .CreateUserID, $!tool.firstLowerCase($!{tableInfo.name}) .UpdateUserID)
+    if err != nil {
+        return nil, err
+    }
+    pb$!{tableInfo.name} := assembler.$!{tableInfo.name}EntityToModel($!tool.firstLowerCase($!{tableInfo.name}), uidToNameMap)
 	return pb$!{tableInfo.name}, nil
 }
 
@@ -42,11 +47,13 @@ func (c *$!{tableInfo.name}UseCase) Search$!{tableInfo.name}(ctx context.Context
 	if err != nil {
 		return nil, 0, err
 	}
-	data := make([]*pb.$!{tableInfo.name}, 0)
-	for _, $!tool.firstLowerCase($!{tableInfo.name}) := range $!tool.firstLowerCase($!{tableInfo.name})s {
-		data = append(data, assembler.$!{tableInfo.name}EntityToModel($!tool.firstLowerCase($!{tableInfo.name})))
+
+	// 补充操作人信息
+	uidToNameMap, err := c.UidToName(ctx, $!tool.firstLowerCase($!{tableInfo.name})s .GetOperatorUserID()...)
+	if err != nil {
+		return nil, 0, err
 	}
-	return data, total, nil
+	return assembler.$!{tableInfo.name}EntityListToModel($!tool.firstLowerCase($!{tableInfo.name})s, uidToNameMap), total, nil
 }
 
 

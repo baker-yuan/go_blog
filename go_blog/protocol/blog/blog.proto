@@ -32,6 +32,8 @@ enum ResourceType {
   TB_ARTICLE = 1; // 文章
   TB_CATEGORY = 2; // 文章
   TB_Tag = 3; // 标签
+  TB_FRIEND_LINK = 4; // 友链
+  TB_PAGE = 5; // 页面
 }
 
 
@@ -223,7 +225,36 @@ message Page {
   string update_user = 2001;        // 更新人id
 }
 
+// 页面搜索
+message SearchPageReq {
+  string search = 1; // 查询条件 {a:?,b:?}
 
+  uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+}
+
+message SearchPageRsp {
+  uint32 total = 1; // 分页查询
+  repeated Page data = 2; // 页面集合
+}
+
+// 页面详情
+message PageDetailReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 添加修改页面
+message AddOrUpdatePageReq {
+  uint32 id = 1;          // 页面id
+  string page_name = 2 [(validate.rules).string.min_len = 1];   // 页面名
+  string page_label = 3 [(validate.rules).string.min_len = 1];  // 页面标签
+  string page_cover = 4 [(validate.rules).string.min_len = 1];  // 页面封面
+}
+
+// 删除页面
+message DeletePageReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
 
 // 动态信息定义
 message Moment {
@@ -267,6 +298,40 @@ message FriendLink {
   // 查询补充字段
   string create_user = 2000;        // 创建人id
   string update_user = 2001;        // 更新人id
+}
+
+// 友链表搜索
+message SearchFriendLinkReq {
+  string search = 1; // 查询条件 {a:?,b:?}
+
+  uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+}
+
+message SearchFriendLinkRsp {
+  uint32 total = 1; // 分页查询
+  repeated FriendLink data = 2; // 友链表集合
+}
+
+// 友链表详情
+message FriendLinkDetailReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 添加修改友链表
+message AddOrUpdateFriendLinkReq {
+  uint32 id = 1;                  // 主键
+  string link_name = 2 [(validate.rules).string.min_len = 1];           // 链接名
+  string link_avatar = 3 [(validate.rules).string.min_len = 1];         // 链接头像
+  string link_address = 4 [(validate.rules).string.min_len = 1];        // 链接地址
+  string link_intro = 5 [(validate.rules).string.min_len = 1];          // 链接介绍
+  FriendLinkStatus status = 6 [(validate.rules).enum = {in: [1,2]}];    // 友链状态 1-已发布 2-以下线
+  uint32 sort = 7 [(validate.rules).uint32.gt = 0];                // 友链排序
+}
+
+// 删除友链表
+message DeleteFriendLinkReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
 }
 
 // Config 网站配置信息定义
@@ -357,6 +422,12 @@ message ArticleTag {
   uint32 update_time = 5; // 更新时间
 }
 
+
+
+
+
+
+
 // 博客api
 service BlogApi {
   // 文章搜索
@@ -408,8 +479,44 @@ service BlogApi {
   }
   // 文章标签详情
   rpc TagDetail(TagDetailReq) returns (Tag)  {
-    option(trpc.alias) = "/blog/admin/TagDetail";
+    option(trpc.alias) = "/blog/admin/tagDetail";
   }
+
+
+  // 友链表搜索
+  rpc SearchFriendLink(SearchFriendLinkReq) returns (SearchFriendLinkRsp) {
+    option(trpc.alias) = "/blog/admin/searchFriendLink";
+  }
+  // 添加修改友链表
+  rpc AddOrUpdateFriendLink(AddOrUpdateFriendLinkReq) returns (AddOrUpdateRsp) {
+    option(trpc.alias) = "/blog/admin/addOrUpdateFriendLink";
+  }
+  // 删除友链表
+  rpc DeleteFriendLink(DeleteFriendLinkReq) returns (EmptyRsp)  {
+    option(trpc.alias) = "/blog/admin/deleteFriendLink";
+  }
+  // 友链表详情
+  rpc FriendLinkDetail(FriendLinkDetailReq) returns (FriendLink)  {
+    option(trpc.alias) = "/blog/admin/friendLinkDetail";
+  }
+
+  // 页面搜索
+  rpc SearchPage(SearchPageReq) returns (SearchPageRsp) {
+    option(trpc.alias) = "/blog/admin/searchPage";
+  }
+  // 添加修改页面
+  rpc AddOrUpdatePage(AddOrUpdatePageReq) returns (AddOrUpdateRsp) {
+    option(trpc.alias) = "/blog/admin/addOrUpdatePage";
+  }
+  // 删除页面
+  rpc DeletePage(DeletePageReq) returns (EmptyRsp)  {
+    option(trpc.alias) = "/blog/admin/deletePage";
+  }
+  // 页面详情
+  rpc PageDetail(PageDetailReq) returns (Page)  {
+    option(trpc.alias) = "/blog/admin/pageDetail";
+  }
+
 
 
 }

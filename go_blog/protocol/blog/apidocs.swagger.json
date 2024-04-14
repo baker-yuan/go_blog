@@ -39,33 +39,6 @@
     ]
    }
   },
-  "/blog/admin/TagDetail": {
-   "post": {
-    "summary": "文章标签详情",
-    "operationId": "TagDetail",
-    "responses": {
-     "200": {
-      "description": "Tag 文章标签",
-      "schema": {
-       "$ref": "#/definitions/go_blog.blog.Tag"
-      }
-     }
-    },
-    "parameters": [
-     {
-      "name": "id",
-      "in": "query",
-      "required": false,
-      "type": "integer",
-      "format": "uint32",
-      "description": "编号"
-     }
-    ],
-    "tags": [
-     "blogapi.trpc"
-    ]
-   }
-  },
   "/blog/admin/addOrUpdateArticle": {
    "post": {
     "summary": "添加修改文章",
@@ -285,6 +258,130 @@
     ]
    }
   },
+  "/blog/admin/addOrUpdateFriendLink": {
+   "post": {
+    "summary": "添加修改友链表",
+    "operationId": "AddOrUpdateFriendLink",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "主键"
+     },
+     {
+      "name": "link_address",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "链接地址"
+     },
+     {
+      "name": "link_avatar",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "链接头像"
+     },
+     {
+      "name": "link_intro",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "链接介绍"
+     },
+     {
+      "name": "link_name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "链接名"
+     },
+     {
+      "name": "sort",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "友链排序"
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "友链状态 1-已发布 2-以下线 * 0 - FL_STATUS_UNKNOWN - 未知状态\n * 1 - FL_STATUS_PUBLISHED - 已发布\n * 2 - FL_STATUS_OFFLINE - 以下线\n",
+      "enum": [
+       0,
+       1,
+       2
+      ]
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/blog/admin/addOrUpdatePage": {
+   "post": {
+    "summary": "添加修改页面",
+    "operationId": "AddOrUpdatePage",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "页面id"
+     },
+     {
+      "name": "page_cover",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "页面封面"
+     },
+     {
+      "name": "page_label",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "页面标签"
+     },
+     {
+      "name": "page_name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "页面名"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
   "/blog/admin/addOrUpdateTag": {
    "post": {
     "summary": "添加修改文章标签",
@@ -414,6 +511,60 @@
     ]
    }
   },
+  "/blog/admin/deleteFriendLink": {
+   "post": {
+    "summary": "删除友链表",
+    "operationId": "DeleteFriendLink",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/blog/admin/deletePage": {
+   "post": {
+    "summary": "删除页面",
+    "operationId": "DeletePage",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
   "/blog/admin/deleteTag": {
    "post": {
     "summary": "删除文章标签",
@@ -423,6 +574,60 @@
       "description": "空响应",
       "schema": {
        "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/blog/admin/friendLinkDetail": {
+   "post": {
+    "summary": "友链表详情",
+    "operationId": "FriendLinkDetail",
+    "responses": {
+     "200": {
+      "description": "FriendLink 友链信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.FriendLink"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/blog/admin/pageDetail": {
+   "post": {
+    "summary": "页面详情",
+    "operationId": "PageDetail",
+    "responses": {
+     "200": {
+      "description": "页面信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.Page"
       }
      }
     },
@@ -525,6 +730,90 @@
     ]
    }
   },
+  "/blog/admin/searchFriendLink": {
+   "post": {
+    "summary": "友链表搜索",
+    "operationId": "SearchFriendLink",
+    "responses": {
+     "200": {
+      "description": "SearchFriendLinkRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.SearchFriendLinkRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/blog/admin/searchPage": {
+   "post": {
+    "summary": "页面搜索",
+    "operationId": "SearchPage",
+    "responses": {
+     "200": {
+      "description": "SearchPageRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.SearchPageRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
   "/blog/admin/searchTag": {
    "post": {
     "summary": "文章标签搜索",
@@ -560,6 +849,33 @@
       "required": false,
       "type": "string",
       "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/blog/admin/tagDetail": {
+   "post": {
+    "summary": "文章标签详情",
+    "operationId": "TagDetail",
+    "responses": {
+     "200": {
+      "description": "Tag 文章标签",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.Tag"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
      }
     ],
     "tags": [
@@ -786,6 +1102,130 @@
     ]
    }
   },
+  "/go_blog.blog.BlogApi/AddOrUpdateFriendLink": {
+   "post": {
+    "summary": "添加修改友链表",
+    "operationId": "AddOrUpdateFriendLink2",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "主键"
+     },
+     {
+      "name": "link_address",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "链接地址"
+     },
+     {
+      "name": "link_avatar",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "链接头像"
+     },
+     {
+      "name": "link_intro",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "链接介绍"
+     },
+     {
+      "name": "link_name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "链接名"
+     },
+     {
+      "name": "sort",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "友链排序"
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "友链状态 1-已发布 2-以下线 * 0 - FL_STATUS_UNKNOWN - 未知状态\n * 1 - FL_STATUS_PUBLISHED - 已发布\n * 2 - FL_STATUS_OFFLINE - 以下线\n",
+      "enum": [
+       0,
+       1,
+       2
+      ]
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/AddOrUpdatePage": {
+   "post": {
+    "summary": "添加修改页面",
+    "operationId": "AddOrUpdatePage2",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "页面id"
+     },
+     {
+      "name": "page_cover",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "页面封面"
+     },
+     {
+      "name": "page_label",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "页面标签"
+     },
+     {
+      "name": "page_name",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "页面名"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
   "/go_blog.blog.BlogApi/AddOrUpdateTag": {
    "post": {
     "summary": "添加修改文章标签",
@@ -942,6 +1382,60 @@
     ]
    }
   },
+  "/go_blog.blog.BlogApi/DeleteFriendLink": {
+   "post": {
+    "summary": "删除友链表",
+    "operationId": "DeleteFriendLink2",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/DeletePage": {
+   "post": {
+    "summary": "删除页面",
+    "operationId": "DeletePage2",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
   "/go_blog.blog.BlogApi/DeleteTag": {
    "post": {
     "summary": "删除文章标签",
@@ -951,6 +1445,60 @@
       "description": "空响应",
       "schema": {
        "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/FriendLinkDetail": {
+   "post": {
+    "summary": "友链表详情",
+    "operationId": "FriendLinkDetail2",
+    "responses": {
+     "200": {
+      "description": "FriendLink 友链信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.FriendLink"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/PageDetail": {
+   "post": {
+    "summary": "页面详情",
+    "operationId": "PageDetail2",
+    "responses": {
+     "200": {
+      "description": "页面信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.Page"
       }
      }
     },
@@ -1020,6 +1568,90 @@
       "description": "SearchCategoryRsp",
       "schema": {
        "$ref": "#/definitions/go_blog.blog.SearchCategoryRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/SearchFriendLink": {
+   "post": {
+    "summary": "友链表搜索",
+    "operationId": "SearchFriendLink2",
+    "responses": {
+     "200": {
+      "description": "SearchFriendLinkRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.SearchFriendLinkRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/SearchPage": {
+   "post": {
+    "summary": "页面搜索",
+    "operationId": "SearchPage2",
+    "responses": {
+     "200": {
+      "description": "SearchPageRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.SearchPageRsp"
       }
      }
     },
@@ -1380,6 +2012,157 @@
    "title": "go_blog.blog.EmptyRsp",
    "description": "空响应"
   },
+  "go_blog.blog.FriendLink": {
+   "type": "object",
+   "properties": {
+    "create_time": {
+     "title": "create_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "创建时间"
+    },
+    "create_user": {
+     "title": "create_user",
+     "type": "string",
+     "description": "查询补充字段\n创建人id"
+    },
+    "create_user_id": {
+     "title": "create_user_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "公共字段\n创建人id"
+    },
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "主键"
+    },
+    "is_deleted": {
+     "title": "is_deleted",
+     "type": "boolean",
+     "description": "是否删除"
+    },
+    "link_address": {
+     "title": "link_address",
+     "type": "string",
+     "description": "链接地址"
+    },
+    "link_avatar": {
+     "title": "link_avatar",
+     "type": "string",
+     "description": "链接头像"
+    },
+    "link_intro": {
+     "title": "link_intro",
+     "type": "string",
+     "description": "链接介绍"
+    },
+    "link_name": {
+     "title": "link_name",
+     "type": "string",
+     "description": "链接名"
+    },
+    "sort": {
+     "title": "sort",
+     "type": "integer",
+     "format": "uint32",
+     "description": "友链排序"
+    },
+    "status": {
+     "title": "status",
+     "type": "integer",
+     "format": "int32",
+     "description": "友链状态 1-已发布 2-以下线 * 0 - FL_STATUS_UNKNOWN - 未知状态\n * 1 - FL_STATUS_PUBLISHED - 已发布\n * 2 - FL_STATUS_OFFLINE - 以下线\n",
+     "enum": [
+      0,
+      1,
+      2
+     ]
+    },
+    "update_time": {
+     "title": "update_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新时间"
+    },
+    "update_user": {
+     "title": "update_user",
+     "type": "string",
+     "description": "更新人id"
+    },
+    "update_user_id": {
+     "title": "update_user_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新人id"
+    }
+   },
+   "title": "go_blog.blog.FriendLink",
+   "description": "FriendLink 友链信息定义"
+  },
+  "go_blog.blog.Page": {
+   "type": "object",
+   "properties": {
+    "create_time": {
+     "title": "create_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "创建时间"
+    },
+    "create_user": {
+     "title": "create_user",
+     "type": "string",
+     "description": "查询补充字段\n创建人id"
+    },
+    "create_user_id": {
+     "title": "create_user_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "公共字段\n创建人id"
+    },
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "页面id"
+    },
+    "page_cover": {
+     "title": "page_cover",
+     "type": "string",
+     "description": "页面封面"
+    },
+    "page_label": {
+     "title": "page_label",
+     "type": "string",
+     "description": "页面标签"
+    },
+    "page_name": {
+     "title": "page_name",
+     "type": "string",
+     "description": "页面名"
+    },
+    "update_time": {
+     "title": "update_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新时间"
+    },
+    "update_user": {
+     "title": "update_user",
+     "type": "string",
+     "description": "更新人id"
+    },
+    "update_user_id": {
+     "title": "update_user_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新人id"
+    }
+   },
+   "title": "go_blog.blog.Page",
+   "description": "页面信息定义"
+  },
   "go_blog.blog.SearchArticleRsp": {
    "type": "object",
    "properties": {
@@ -1421,6 +2204,48 @@
    },
    "title": "go_blog.blog.SearchCategoryRsp",
    "description": "SearchCategoryRsp"
+  },
+  "go_blog.blog.SearchFriendLinkRsp": {
+   "type": "object",
+   "properties": {
+    "data": {
+     "title": "data",
+     "type": "array",
+     "description": " 友链表集合\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.blog.FriendLink"
+     }
+    },
+    "total": {
+     "title": "total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    }
+   },
+   "title": "go_blog.blog.SearchFriendLinkRsp",
+   "description": "SearchFriendLinkRsp"
+  },
+  "go_blog.blog.SearchPageRsp": {
+   "type": "object",
+   "properties": {
+    "data": {
+     "title": "data",
+     "type": "array",
+     "description": " 页面集合\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.blog.Page"
+     }
+    },
+    "total": {
+     "title": "total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    }
+   },
+   "title": "go_blog.blog.SearchPageRsp",
+   "description": "SearchPageRsp"
   },
   "go_blog.blog.SearchTagRsp": {
    "type": "object",

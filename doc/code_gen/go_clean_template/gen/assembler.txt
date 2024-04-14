@@ -7,15 +7,24 @@ $!{define.vm}
 
 package assembler
 
-
+// $!{tableInfo.name}EntityListToModel entity转pb
+func $!{tableInfo.name}EntityListToModel($!tool.firstLowerCase($!{tableInfo.name})List []*entity.$!{tableInfo.name}, uidToNameMap map[uint32]string) []*pb.$!{tableInfo.name} {
+	res := make([]*pb.$!{tableInfo.name}, 0)
+	for _, $!tool.firstLowerCase($!{tableInfo.name}) := range $!tool.firstLowerCase($!{tableInfo.name})List {
+		res = append(res, $!{tableInfo.name}EntityToModel($!tool.firstLowerCase($!{tableInfo.name}), uidToNameMap))
+	}
+	return res
+}
 
 // $!{tableInfo.name}EntityToModel entity转pb
-func $!{tableInfo.name}EntityToModel($!tool.firstLowerCase($!{tableInfo.name}) *entity.$!{tableInfo.name}) *pb.$!{tableInfo.name} {
+func $!{tableInfo.name}EntityToModel($!tool.firstLowerCase($!{tableInfo.name}) *entity.$!{tableInfo.name}, uidToNameMap map[uint32]string) *pb.$!{tableInfo.name} {
 	modelRes := &pb.$!{tableInfo.name}{
 #foreach($column in $tableInfo.fullColumn)
       $!tool.firstUpperCase($!{column.name}) : $!tool.firstLowerCase($!{tableInfo.name}) . $!tool.firstUpperCase($!{column.name}),
 #end
 	}
+	modelRes.CreateUser = uidToNameMap[$!tool.firstLowerCase($!{tableInfo.name}).CreateUserID]
+    modelRes.UpdateUser = uidToNameMap[$!tool.firstLowerCase($!{tableInfo.name}).UpdateUserID]
 	return modelRes
 }
 

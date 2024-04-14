@@ -15,7 +15,7 @@
       </template>
       <!-- 图标 -->
       <template #icon="scope">
-        <el-button type="text" size="medium" :icon="scope.row.icon" />
+        <el-button style="font-size: 18px" type="text" :icon="scope.row.icon" />
       </template>
       <!-- 隐藏 -->
       <template #isHidden="scope">

@@ -1,0 +1,61 @@
+syntax = "proto3";
+package go_blog.exterior;
+option  go_package ="github.com/baker-yuan/go-blog/go_blog/protocol/exterior";
+
+import "validate/validate.proto";
+import "trpc/proto/trpc_options.proto";
+import "trpc/swagger/swagger.proto";
+
+
+
+// OSS文件上传记录信息定义
+message OssUploadRecord {
+  uint32 id = 1;          // 主键
+  uint32 uid = 2;         // 用户ID
+  string patch = 3;       // 文件路径
+  string mode = 4;        // 模块
+  OssType os_type = 5;     // OSS厂商
+  OssStatus status = 6;      // 状态
+  // 公共字段
+  uint32 create_user_id = 1000;     // 创建人id
+  uint32 update_user_id = 1001;     // 更新人id
+  uint32 create_time = 1002;        // 创建时间
+  uint32 update_time = 1003;        // 更新时间
+  // 查询补充字段
+  string create_user = 2000;        // 创建人id
+  string update_user = 2001;        // 更新人id
+}
+
+// OSS厂商枚举
+enum OssType {
+  UNKNOWN = 0; // 未知
+  ALI_YUN = 1;  // 阿里云
+}
+
+// 上传状态枚举
+enum OssStatus {
+  UNPROCESSED = 0; // 未处理
+  SUCCESS = 1;     // 上传成功
+  FAILURE = 2;     // 上传失败
+}
+
+// OSS文件上传记录搜索
+message SearchOssUploadRecordReq {
+  string search = 1; // 查询条件 {a:?,b:?}
+
+  uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+}
+
+message SearchOssUploadRecordRsp {
+  uint32 total = 1; // 分页查询
+  repeated OssUploadRecord data = 2; // OSS文件上传记录集合
+}
+
+// oss文件上传
+service OssApi {
+  // OSS文件上传记录搜索
+  rpc SearchOssUploadRecord(SearchOssUploadRecordReq) returns (SearchOssUploadRecordRsp) {
+    option(trpc.alias) = "/auth/admin/searchOssUploadRecord";
+  }
+}

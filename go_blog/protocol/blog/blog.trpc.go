@@ -43,6 +43,22 @@ type BlogApiService interface {
 	DeleteTag(ctx context.Context, req *DeleteTagReq) (*EmptyRsp, error)
 	// TagDetail 文章标签详情
 	TagDetail(ctx context.Context, req *TagDetailReq) (*Tag, error)
+	// SearchFriendLink 友链表搜索
+	SearchFriendLink(ctx context.Context, req *SearchFriendLinkReq) (*SearchFriendLinkRsp, error)
+	// AddOrUpdateFriendLink 添加修改友链表
+	AddOrUpdateFriendLink(ctx context.Context, req *AddOrUpdateFriendLinkReq) (*AddOrUpdateRsp, error)
+	// DeleteFriendLink 删除友链表
+	DeleteFriendLink(ctx context.Context, req *DeleteFriendLinkReq) (*EmptyRsp, error)
+	// FriendLinkDetail 友链表详情
+	FriendLinkDetail(ctx context.Context, req *FriendLinkDetailReq) (*FriendLink, error)
+	// SearchPage 页面搜索
+	SearchPage(ctx context.Context, req *SearchPageReq) (*SearchPageRsp, error)
+	// AddOrUpdatePage 添加修改页面
+	AddOrUpdatePage(ctx context.Context, req *AddOrUpdatePageReq) (*AddOrUpdateRsp, error)
+	// DeletePage 删除页面
+	DeletePage(ctx context.Context, req *DeletePageReq) (*EmptyRsp, error)
+	// PageDetail 页面详情
+	PageDetail(ctx context.Context, req *PageDetailReq) (*Page, error)
 }
 
 func BlogApiService_SearchArticle_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -261,6 +277,150 @@ func BlogApiService_TagDetail_Handler(svr interface{}, ctx context.Context, f se
 	return rsp, nil
 }
 
+func BlogApiService_SearchFriendLink_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &SearchFriendLinkReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).SearchFriendLink(ctx, reqbody.(*SearchFriendLinkReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_AddOrUpdateFriendLink_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &AddOrUpdateFriendLinkReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).AddOrUpdateFriendLink(ctx, reqbody.(*AddOrUpdateFriendLinkReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_DeleteFriendLink_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &DeleteFriendLinkReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).DeleteFriendLink(ctx, reqbody.(*DeleteFriendLinkReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_FriendLinkDetail_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &FriendLinkDetailReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).FriendLinkDetail(ctx, reqbody.(*FriendLinkDetailReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_SearchPage_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &SearchPageReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).SearchPage(ctx, reqbody.(*SearchPageReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_AddOrUpdatePage_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &AddOrUpdatePageReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).AddOrUpdatePage(ctx, reqbody.(*AddOrUpdatePageReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_DeletePage_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &DeletePageReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).DeletePage(ctx, reqbody.(*DeletePageReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_PageDetail_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &PageDetailReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).PageDetail(ctx, reqbody.(*PageDetailReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 // BlogApiServer_ServiceDesc descriptor for server.RegisterService.
 var BlogApiServer_ServiceDesc = server.ServiceDesc{
 	ServiceName: "go_blog.blog.BlogApi",
@@ -311,8 +471,40 @@ var BlogApiServer_ServiceDesc = server.ServiceDesc{
 			Func: BlogApiService_DeleteTag_Handler,
 		},
 		{
-			Name: "/blog/admin/TagDetail",
+			Name: "/blog/admin/tagDetail",
 			Func: BlogApiService_TagDetail_Handler,
+		},
+		{
+			Name: "/blog/admin/searchFriendLink",
+			Func: BlogApiService_SearchFriendLink_Handler,
+		},
+		{
+			Name: "/blog/admin/addOrUpdateFriendLink",
+			Func: BlogApiService_AddOrUpdateFriendLink_Handler,
+		},
+		{
+			Name: "/blog/admin/deleteFriendLink",
+			Func: BlogApiService_DeleteFriendLink_Handler,
+		},
+		{
+			Name: "/blog/admin/friendLinkDetail",
+			Func: BlogApiService_FriendLinkDetail_Handler,
+		},
+		{
+			Name: "/blog/admin/searchPage",
+			Func: BlogApiService_SearchPage_Handler,
+		},
+		{
+			Name: "/blog/admin/addOrUpdatePage",
+			Func: BlogApiService_AddOrUpdatePage_Handler,
+		},
+		{
+			Name: "/blog/admin/deletePage",
+			Func: BlogApiService_DeletePage_Handler,
+		},
+		{
+			Name: "/blog/admin/pageDetail",
+			Func: BlogApiService_PageDetail_Handler,
 		},
 		{
 			Name: "/go_blog.blog.BlogApi/SearchArticle",
@@ -361,6 +553,38 @@ var BlogApiServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/go_blog.blog.BlogApi/TagDetail",
 			Func: BlogApiService_TagDetail_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/SearchFriendLink",
+			Func: BlogApiService_SearchFriendLink_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/AddOrUpdateFriendLink",
+			Func: BlogApiService_AddOrUpdateFriendLink_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/DeleteFriendLink",
+			Func: BlogApiService_DeleteFriendLink_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/FriendLinkDetail",
+			Func: BlogApiService_FriendLinkDetail_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/SearchPage",
+			Func: BlogApiService_SearchPage_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/AddOrUpdatePage",
+			Func: BlogApiService_AddOrUpdatePage_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/DeletePage",
+			Func: BlogApiService_DeletePage_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/PageDetail",
+			Func: BlogApiService_PageDetail_Handler,
 		},
 	},
 }
@@ -436,6 +660,46 @@ func (s *UnimplementedBlogApi) TagDetail(ctx context.Context, req *TagDetailReq)
 	return nil, errors.New("rpc TagDetail of service BlogApi is not implemented")
 }
 
+// SearchFriendLink 友链表搜索
+func (s *UnimplementedBlogApi) SearchFriendLink(ctx context.Context, req *SearchFriendLinkReq) (*SearchFriendLinkRsp, error) {
+	return nil, errors.New("rpc SearchFriendLink of service BlogApi is not implemented")
+}
+
+// AddOrUpdateFriendLink 添加修改友链表
+func (s *UnimplementedBlogApi) AddOrUpdateFriendLink(ctx context.Context, req *AddOrUpdateFriendLinkReq) (*AddOrUpdateRsp, error) {
+	return nil, errors.New("rpc AddOrUpdateFriendLink of service BlogApi is not implemented")
+}
+
+// DeleteFriendLink 删除友链表
+func (s *UnimplementedBlogApi) DeleteFriendLink(ctx context.Context, req *DeleteFriendLinkReq) (*EmptyRsp, error) {
+	return nil, errors.New("rpc DeleteFriendLink of service BlogApi is not implemented")
+}
+
+// FriendLinkDetail 友链表详情
+func (s *UnimplementedBlogApi) FriendLinkDetail(ctx context.Context, req *FriendLinkDetailReq) (*FriendLink, error) {
+	return nil, errors.New("rpc FriendLinkDetail of service BlogApi is not implemented")
+}
+
+// SearchPage 页面搜索
+func (s *UnimplementedBlogApi) SearchPage(ctx context.Context, req *SearchPageReq) (*SearchPageRsp, error) {
+	return nil, errors.New("rpc SearchPage of service BlogApi is not implemented")
+}
+
+// AddOrUpdatePage 添加修改页面
+func (s *UnimplementedBlogApi) AddOrUpdatePage(ctx context.Context, req *AddOrUpdatePageReq) (*AddOrUpdateRsp, error) {
+	return nil, errors.New("rpc AddOrUpdatePage of service BlogApi is not implemented")
+}
+
+// DeletePage 删除页面
+func (s *UnimplementedBlogApi) DeletePage(ctx context.Context, req *DeletePageReq) (*EmptyRsp, error) {
+	return nil, errors.New("rpc DeletePage of service BlogApi is not implemented")
+}
+
+// PageDetail 页面详情
+func (s *UnimplementedBlogApi) PageDetail(ctx context.Context, req *PageDetailReq) (*Page, error) {
+	return nil, errors.New("rpc PageDetail of service BlogApi is not implemented")
+}
+
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
 
 // END ======================================= Server Service Definition ======================================= END
@@ -468,6 +732,22 @@ type BlogApiClientProxy interface {
 	DeleteTag(ctx context.Context, req *DeleteTagReq, opts ...client.Option) (rsp *EmptyRsp, err error)
 	// TagDetail 文章标签详情
 	TagDetail(ctx context.Context, req *TagDetailReq, opts ...client.Option) (rsp *Tag, err error)
+	// SearchFriendLink 友链表搜索
+	SearchFriendLink(ctx context.Context, req *SearchFriendLinkReq, opts ...client.Option) (rsp *SearchFriendLinkRsp, err error)
+	// AddOrUpdateFriendLink 添加修改友链表
+	AddOrUpdateFriendLink(ctx context.Context, req *AddOrUpdateFriendLinkReq, opts ...client.Option) (rsp *AddOrUpdateRsp, err error)
+	// DeleteFriendLink 删除友链表
+	DeleteFriendLink(ctx context.Context, req *DeleteFriendLinkReq, opts ...client.Option) (rsp *EmptyRsp, err error)
+	// FriendLinkDetail 友链表详情
+	FriendLinkDetail(ctx context.Context, req *FriendLinkDetailReq, opts ...client.Option) (rsp *FriendLink, err error)
+	// SearchPage 页面搜索
+	SearchPage(ctx context.Context, req *SearchPageReq, opts ...client.Option) (rsp *SearchPageRsp, err error)
+	// AddOrUpdatePage 添加修改页面
+	AddOrUpdatePage(ctx context.Context, req *AddOrUpdatePageReq, opts ...client.Option) (rsp *AddOrUpdateRsp, err error)
+	// DeletePage 删除页面
+	DeletePage(ctx context.Context, req *DeletePageReq, opts ...client.Option) (rsp *EmptyRsp, err error)
+	// PageDetail 页面详情
+	PageDetail(ctx context.Context, req *PageDetailReq, opts ...client.Option) (rsp *Page, err error)
 }
 
 type BlogApiClientProxyImpl struct {
@@ -702,7 +982,7 @@ func (c *BlogApiClientProxyImpl) DeleteTag(ctx context.Context, req *DeleteTagRe
 func (c *BlogApiClientProxyImpl) TagDetail(ctx context.Context, req *TagDetailReq, opts ...client.Option) (*Tag, error) {
 	ctx, msg := codec.WithCloneMessage(ctx)
 	defer codec.PutBackMessage(msg)
-	msg.WithClientRPCName("/blog/admin/TagDetail")
+	msg.WithClientRPCName("/blog/admin/tagDetail")
 	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
 	msg.WithCalleeApp("")
 	msg.WithCalleeServer("")
@@ -713,6 +993,166 @@ func (c *BlogApiClientProxyImpl) TagDetail(ctx context.Context, req *TagDetailRe
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &Tag{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) SearchFriendLink(ctx context.Context, req *SearchFriendLinkReq, opts ...client.Option) (*SearchFriendLinkRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/searchFriendLink")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("SearchFriendLink")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &SearchFriendLinkRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) AddOrUpdateFriendLink(ctx context.Context, req *AddOrUpdateFriendLinkReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/addOrUpdateFriendLink")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("AddOrUpdateFriendLink")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &AddOrUpdateRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) DeleteFriendLink(ctx context.Context, req *DeleteFriendLinkReq, opts ...client.Option) (*EmptyRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/deleteFriendLink")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("DeleteFriendLink")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &EmptyRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) FriendLinkDetail(ctx context.Context, req *FriendLinkDetailReq, opts ...client.Option) (*FriendLink, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/friendLinkDetail")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("FriendLinkDetail")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &FriendLink{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) SearchPage(ctx context.Context, req *SearchPageReq, opts ...client.Option) (*SearchPageRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/searchPage")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("SearchPage")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &SearchPageRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) AddOrUpdatePage(ctx context.Context, req *AddOrUpdatePageReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/addOrUpdatePage")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("AddOrUpdatePage")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &AddOrUpdateRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) DeletePage(ctx context.Context, req *DeletePageReq, opts ...client.Option) (*EmptyRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/deletePage")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("DeletePage")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &EmptyRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) PageDetail(ctx context.Context, req *PageDetailReq, opts ...client.Option) (*Page, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/pageDetail")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("PageDetail")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &Page{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}

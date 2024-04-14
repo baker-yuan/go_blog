@@ -111,3 +111,65 @@ type (
 		SearchTag(ctx context.Context, req *pb.SearchTagReq) (entity.Tags, uint32, error)
 	}
 )
+
+// FriendLink 友链表
+type (
+	// IFriendLinkUseCase 业务逻辑
+	IFriendLinkUseCase interface {
+		// SearchFriendLink 查询友链表
+		SearchFriendLink(ctx context.Context, req *pb.SearchFriendLinkReq) ([]*pb.FriendLink, uint32, error)
+		// FriendLinkDetail 友链表详情
+		FriendLinkDetail(ctx context.Context, req *pb.FriendLinkDetailReq) (*pb.FriendLink, error)
+		// AddOrUpdateFriendLink 添加修改友链表
+		AddOrUpdateFriendLink(ctx context.Context, req *pb.AddOrUpdateFriendLinkReq) (uint32, error)
+		// DeleteFriendLink 删除友链表
+		DeleteFriendLink(ctx context.Context, req *pb.DeleteFriendLinkReq) error
+	}
+
+	// IFriendLinkRepo 数据存储操作
+	IFriendLinkRepo interface {
+		// GetFriendLinkByID 根据友链表id集合查询友链表
+		GetFriendLinkByID(ctx context.Context, id uint32) (*entity.FriendLink, error)
+		// GetFriendLinkByIDs 根据友链表id集合查询友链表
+		GetFriendLinkByIDs(ctx context.Context, ids []uint32) (entity.FriendLinks, error)
+		// Save 保存友链表
+		Save(ctx context.Context, friendLink *entity.FriendLink) (uint32, error)
+		// UpdateByID 根据ID修改友链表
+		UpdateByID(ctx context.Context, friendLink *entity.FriendLink) error
+		// DeleteByID 根据ID删除友链表
+		DeleteByID(ctx context.Context, id uint32) error
+		// SearchFriendLink 友链表搜索
+		SearchFriendLink(ctx context.Context, req *pb.SearchFriendLinkReq) (entity.FriendLinks, uint32, error)
+	}
+)
+
+// Page 页面
+type (
+	// IPageUseCase 业务逻辑
+	IPageUseCase interface {
+		// SearchPage 查询页面
+		SearchPage(ctx context.Context, req *pb.SearchPageReq) ([]*pb.Page, uint32, error)
+		// PageDetail 页面详情
+		PageDetail(ctx context.Context, req *pb.PageDetailReq) (*pb.Page, error)
+		// AddOrUpdatePage 添加修改页面
+		AddOrUpdatePage(ctx context.Context, req *pb.AddOrUpdatePageReq) (uint32, error)
+		// DeletePage 删除页面
+		DeletePage(ctx context.Context, req *pb.DeletePageReq) error
+	}
+
+	// IPageRepo 数据存储操作
+	IPageRepo interface {
+		// GetPageByID 根据页面id集合查询页面
+		GetPageByID(ctx context.Context, id uint32) (*entity.Page, error)
+		// GetPageByIDs 根据页面id集合查询页面
+		GetPageByIDs(ctx context.Context, ids []uint32) (entity.Pages, error)
+		// Save 保存页面
+		Save(ctx context.Context, page *entity.Page) (uint32, error)
+		// UpdateByID 根据ID修改页面
+		UpdateByID(ctx context.Context, page *entity.Page) error
+		// DeleteByID 根据ID删除页面
+		DeleteByID(ctx context.Context, id uint32) error
+		// SearchPage 页面搜索
+		SearchPage(ctx context.Context, req *pb.SearchPageReq) (entity.Pages, uint32, error)
+	}
+)

@@ -9,9 +9,11 @@ import (
 
 // BlogServiceImpl 接口实现
 type BlogServiceImpl struct {
-	article  usecase.IArticleUseCase
-	category usecase.ICategoryUseCase
-	tag      usecase.ITagUseCase
+	article    usecase.IArticleUseCase
+	category   usecase.ICategoryUseCase
+	tag        usecase.ITagUseCase
+	friendLink usecase.IFriendLinkUseCase
+	page       usecase.IPageUseCase
 }
 
 // 强制BlogServiceImpl实现pb.BlogApiService
@@ -22,11 +24,15 @@ func NewBlogServiceImpl(
 	articleUseCase usecase.IArticleUseCase,
 	categoryUseCase usecase.ICategoryUseCase,
 	tag usecase.ITagUseCase,
+	friendLink usecase.IFriendLinkUseCase,
+	page usecase.IPageUseCase,
 ) pb.BlogApiService {
 	return &BlogServiceImpl{
-		article:  articleUseCase,
-		category: categoryUseCase,
-		tag:      tag,
+		article:    articleUseCase,
+		category:   categoryUseCase,
+		tag:        tag,
+		friendLink: friendLink,
+		page:       page,
 	}
 }
 
@@ -136,6 +142,80 @@ func (m *BlogServiceImpl) AddOrUpdateTag(ctx context.Context, req *pb.AddOrUpdat
 func (m *BlogServiceImpl) DeleteTag(ctx context.Context, req *pb.DeleteTagReq) (*pb.EmptyRsp, error) {
 	rsp := &pb.EmptyRsp{}
 	if err := m.tag.DeleteTag(ctx, req); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+// SearchFriendLink 查询友链表
+func (m *BlogServiceImpl) SearchFriendLink(ctx context.Context, req *pb.SearchFriendLinkReq) (*pb.SearchFriendLinkRsp, error) {
+	rsp := &pb.SearchFriendLinkRsp{}
+	friendLinks, pageTotal, err := m.friendLink.SearchFriendLink(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Data = friendLinks
+	rsp.Total = pageTotal
+	return rsp, nil
+}
+
+// FriendLinkDetail 友链表详情
+func (m *BlogServiceImpl) FriendLinkDetail(ctx context.Context, req *pb.FriendLinkDetailReq) (*pb.FriendLink, error) {
+	return m.friendLink.FriendLinkDetail(ctx, req)
+}
+
+// AddOrUpdateFriendLink 添加修改友链表
+func (m *BlogServiceImpl) AddOrUpdateFriendLink(ctx context.Context, req *pb.AddOrUpdateFriendLinkReq) (*pb.AddOrUpdateRsp, error) {
+	rsp := &pb.AddOrUpdateRsp{}
+	id, err := m.friendLink.AddOrUpdateFriendLink(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Id = id
+	return rsp, nil
+}
+
+// DeleteFriendLink 删除友链表
+func (m *BlogServiceImpl) DeleteFriendLink(ctx context.Context, req *pb.DeleteFriendLinkReq) (*pb.EmptyRsp, error) {
+	rsp := &pb.EmptyRsp{}
+	if err := m.friendLink.DeleteFriendLink(ctx, req); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+// SearchPage 查询页面
+func (m *BlogServiceImpl) SearchPage(ctx context.Context, req *pb.SearchPageReq) (*pb.SearchPageRsp, error) {
+	rsp := &pb.SearchPageRsp{}
+	pages, pageTotal, err := m.page.SearchPage(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Data = pages
+	rsp.Total = pageTotal
+	return rsp, nil
+}
+
+// PageDetail 页面详情
+func (m *BlogServiceImpl) PageDetail(ctx context.Context, req *pb.PageDetailReq) (*pb.Page, error) {
+	return m.page.PageDetail(ctx, req)
+}
+
+// AddOrUpdatePage 添加修改页面
+func (m *BlogServiceImpl) AddOrUpdatePage(ctx context.Context, req *pb.AddOrUpdatePageReq) (*pb.AddOrUpdateRsp, error) {
+	rsp := &pb.AddOrUpdateRsp{}
+	id, err := m.page.AddOrUpdatePage(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Id = id
+	return rsp, nil
+}
+
+// DeletePage 删除页面
+func (m *BlogServiceImpl) DeletePage(ctx context.Context, req *pb.DeletePageReq) (*pb.EmptyRsp, error) {
+	rsp := &pb.EmptyRsp{}
+	if err := m.page.DeletePage(ctx, req); err != nil {
 		return nil, err
 	}
 	return rsp, nil

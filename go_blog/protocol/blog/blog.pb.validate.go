@@ -1936,6 +1936,625 @@ var _ interface {
 	ErrorName() string
 } = PageValidationError{}
 
+// Validate checks the field values on SearchPageReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *SearchPageReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchPageReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in SearchPageReqMultiError, or
+// nil if none found.
+func (m *SearchPageReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchPageReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Search
+
+	if m.GetPageNum() <= 0 {
+		err := SearchPageReqValidationError{
+			field:  "PageNum",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetPageSize() <= 0 {
+		err := SearchPageReqValidationError{
+			field:  "PageSize",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return SearchPageReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchPageReqMultiError is an error wrapping multiple validation errors
+// returned by SearchPageReq.ValidateAll() if the designated constraints
+// aren't met.
+type SearchPageReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchPageReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchPageReqMultiError) AllErrors() []error { return m }
+
+// SearchPageReqValidationError is the validation error returned by
+// SearchPageReq.Validate if the designated constraints aren't met.
+type SearchPageReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchPageReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchPageReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchPageReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchPageReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchPageReqValidationError) ErrorName() string { return "SearchPageReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SearchPageReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchPageReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchPageReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchPageReqValidationError{}
+
+// Validate checks the field values on SearchPageRsp with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *SearchPageRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchPageRsp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in SearchPageRspMultiError, or
+// nil if none found.
+func (m *SearchPageRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchPageRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Total
+
+	for idx, item := range m.GetData() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, SearchPageRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, SearchPageRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SearchPageRspValidationError{
+					field:  fmt.Sprintf("Data[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return SearchPageRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchPageRspMultiError is an error wrapping multiple validation errors
+// returned by SearchPageRsp.ValidateAll() if the designated constraints
+// aren't met.
+type SearchPageRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchPageRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchPageRspMultiError) AllErrors() []error { return m }
+
+// SearchPageRspValidationError is the validation error returned by
+// SearchPageRsp.Validate if the designated constraints aren't met.
+type SearchPageRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchPageRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchPageRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchPageRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchPageRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchPageRspValidationError) ErrorName() string { return "SearchPageRspValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SearchPageRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchPageRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchPageRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchPageRspValidationError{}
+
+// Validate checks the field values on PageDetailReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *PageDetailReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PageDetailReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in PageDetailReqMultiError, or
+// nil if none found.
+func (m *PageDetailReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PageDetailReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := PageDetailReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return PageDetailReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// PageDetailReqMultiError is an error wrapping multiple validation errors
+// returned by PageDetailReq.ValidateAll() if the designated constraints
+// aren't met.
+type PageDetailReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PageDetailReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PageDetailReqMultiError) AllErrors() []error { return m }
+
+// PageDetailReqValidationError is the validation error returned by
+// PageDetailReq.Validate if the designated constraints aren't met.
+type PageDetailReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PageDetailReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PageDetailReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PageDetailReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PageDetailReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PageDetailReqValidationError) ErrorName() string { return "PageDetailReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e PageDetailReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPageDetailReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PageDetailReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PageDetailReqValidationError{}
+
+// Validate checks the field values on AddOrUpdatePageReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AddOrUpdatePageReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddOrUpdatePageReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddOrUpdatePageReqMultiError, or nil if none found.
+func (m *AddOrUpdatePageReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddOrUpdatePageReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	if utf8.RuneCountInString(m.GetPageName()) < 1 {
+		err := AddOrUpdatePageReqValidationError{
+			field:  "PageName",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetPageLabel()) < 1 {
+		err := AddOrUpdatePageReqValidationError{
+			field:  "PageLabel",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetPageCover()) < 1 {
+		err := AddOrUpdatePageReqValidationError{
+			field:  "PageCover",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return AddOrUpdatePageReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddOrUpdatePageReqMultiError is an error wrapping multiple validation errors
+// returned by AddOrUpdatePageReq.ValidateAll() if the designated constraints
+// aren't met.
+type AddOrUpdatePageReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddOrUpdatePageReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddOrUpdatePageReqMultiError) AllErrors() []error { return m }
+
+// AddOrUpdatePageReqValidationError is the validation error returned by
+// AddOrUpdatePageReq.Validate if the designated constraints aren't met.
+type AddOrUpdatePageReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddOrUpdatePageReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddOrUpdatePageReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddOrUpdatePageReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddOrUpdatePageReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddOrUpdatePageReqValidationError) ErrorName() string {
+	return "AddOrUpdatePageReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddOrUpdatePageReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddOrUpdatePageReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddOrUpdatePageReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddOrUpdatePageReqValidationError{}
+
+// Validate checks the field values on DeletePageReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *DeletePageReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeletePageReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in DeletePageReqMultiError, or
+// nil if none found.
+func (m *DeletePageReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeletePageReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := DeletePageReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DeletePageReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeletePageReqMultiError is an error wrapping multiple validation errors
+// returned by DeletePageReq.ValidateAll() if the designated constraints
+// aren't met.
+type DeletePageReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeletePageReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeletePageReqMultiError) AllErrors() []error { return m }
+
+// DeletePageReqValidationError is the validation error returned by
+// DeletePageReq.Validate if the designated constraints aren't met.
+type DeletePageReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeletePageReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeletePageReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeletePageReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeletePageReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeletePageReqValidationError) ErrorName() string { return "DeletePageReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DeletePageReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeletePageReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeletePageReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeletePageReqValidationError{}
+
 // Validate checks the field values on Moment with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -2182,6 +2801,671 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = FriendLinkValidationError{}
+
+// Validate checks the field values on SearchFriendLinkReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *SearchFriendLinkReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchFriendLinkReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SearchFriendLinkReqMultiError, or nil if none found.
+func (m *SearchFriendLinkReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchFriendLinkReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Search
+
+	if m.GetPageNum() <= 0 {
+		err := SearchFriendLinkReqValidationError{
+			field:  "PageNum",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetPageSize() <= 0 {
+		err := SearchFriendLinkReqValidationError{
+			field:  "PageSize",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return SearchFriendLinkReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchFriendLinkReqMultiError is an error wrapping multiple validation
+// errors returned by SearchFriendLinkReq.ValidateAll() if the designated
+// constraints aren't met.
+type SearchFriendLinkReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchFriendLinkReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchFriendLinkReqMultiError) AllErrors() []error { return m }
+
+// SearchFriendLinkReqValidationError is the validation error returned by
+// SearchFriendLinkReq.Validate if the designated constraints aren't met.
+type SearchFriendLinkReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchFriendLinkReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchFriendLinkReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchFriendLinkReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchFriendLinkReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchFriendLinkReqValidationError) ErrorName() string {
+	return "SearchFriendLinkReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SearchFriendLinkReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchFriendLinkReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchFriendLinkReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchFriendLinkReqValidationError{}
+
+// Validate checks the field values on SearchFriendLinkRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *SearchFriendLinkRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchFriendLinkRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SearchFriendLinkRspMultiError, or nil if none found.
+func (m *SearchFriendLinkRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchFriendLinkRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Total
+
+	for idx, item := range m.GetData() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, SearchFriendLinkRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, SearchFriendLinkRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SearchFriendLinkRspValidationError{
+					field:  fmt.Sprintf("Data[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return SearchFriendLinkRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchFriendLinkRspMultiError is an error wrapping multiple validation
+// errors returned by SearchFriendLinkRsp.ValidateAll() if the designated
+// constraints aren't met.
+type SearchFriendLinkRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchFriendLinkRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchFriendLinkRspMultiError) AllErrors() []error { return m }
+
+// SearchFriendLinkRspValidationError is the validation error returned by
+// SearchFriendLinkRsp.Validate if the designated constraints aren't met.
+type SearchFriendLinkRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchFriendLinkRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchFriendLinkRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchFriendLinkRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchFriendLinkRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchFriendLinkRspValidationError) ErrorName() string {
+	return "SearchFriendLinkRspValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SearchFriendLinkRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchFriendLinkRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchFriendLinkRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchFriendLinkRspValidationError{}
+
+// Validate checks the field values on FriendLinkDetailReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *FriendLinkDetailReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on FriendLinkDetailReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// FriendLinkDetailReqMultiError, or nil if none found.
+func (m *FriendLinkDetailReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *FriendLinkDetailReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := FriendLinkDetailReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return FriendLinkDetailReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// FriendLinkDetailReqMultiError is an error wrapping multiple validation
+// errors returned by FriendLinkDetailReq.ValidateAll() if the designated
+// constraints aren't met.
+type FriendLinkDetailReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m FriendLinkDetailReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m FriendLinkDetailReqMultiError) AllErrors() []error { return m }
+
+// FriendLinkDetailReqValidationError is the validation error returned by
+// FriendLinkDetailReq.Validate if the designated constraints aren't met.
+type FriendLinkDetailReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e FriendLinkDetailReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e FriendLinkDetailReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e FriendLinkDetailReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e FriendLinkDetailReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e FriendLinkDetailReqValidationError) ErrorName() string {
+	return "FriendLinkDetailReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e FriendLinkDetailReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sFriendLinkDetailReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = FriendLinkDetailReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = FriendLinkDetailReqValidationError{}
+
+// Validate checks the field values on AddOrUpdateFriendLinkReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AddOrUpdateFriendLinkReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddOrUpdateFriendLinkReq with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddOrUpdateFriendLinkReqMultiError, or nil if none found.
+func (m *AddOrUpdateFriendLinkReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddOrUpdateFriendLinkReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	if utf8.RuneCountInString(m.GetLinkName()) < 1 {
+		err := AddOrUpdateFriendLinkReqValidationError{
+			field:  "LinkName",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetLinkAvatar()) < 1 {
+		err := AddOrUpdateFriendLinkReqValidationError{
+			field:  "LinkAvatar",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetLinkAddress()) < 1 {
+		err := AddOrUpdateFriendLinkReqValidationError{
+			field:  "LinkAddress",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetLinkIntro()) < 1 {
+		err := AddOrUpdateFriendLinkReqValidationError{
+			field:  "LinkIntro",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if _, ok := _AddOrUpdateFriendLinkReq_Status_InLookup[m.GetStatus()]; !ok {
+		err := AddOrUpdateFriendLinkReqValidationError{
+			field:  "Status",
+			reason: "value must be in list [FL_STATUS_PUBLISHED FL_STATUS_OFFLINE]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetSort() <= 0 {
+		err := AddOrUpdateFriendLinkReqValidationError{
+			field:  "Sort",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return AddOrUpdateFriendLinkReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddOrUpdateFriendLinkReqMultiError is an error wrapping multiple validation
+// errors returned by AddOrUpdateFriendLinkReq.ValidateAll() if the designated
+// constraints aren't met.
+type AddOrUpdateFriendLinkReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddOrUpdateFriendLinkReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddOrUpdateFriendLinkReqMultiError) AllErrors() []error { return m }
+
+// AddOrUpdateFriendLinkReqValidationError is the validation error returned by
+// AddOrUpdateFriendLinkReq.Validate if the designated constraints aren't met.
+type AddOrUpdateFriendLinkReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddOrUpdateFriendLinkReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddOrUpdateFriendLinkReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddOrUpdateFriendLinkReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddOrUpdateFriendLinkReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddOrUpdateFriendLinkReqValidationError) ErrorName() string {
+	return "AddOrUpdateFriendLinkReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddOrUpdateFriendLinkReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddOrUpdateFriendLinkReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddOrUpdateFriendLinkReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddOrUpdateFriendLinkReqValidationError{}
+
+var _AddOrUpdateFriendLinkReq_Status_InLookup = map[FriendLinkStatus]struct{}{
+	1: {},
+	2: {},
+}
+
+// Validate checks the field values on DeleteFriendLinkReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeleteFriendLinkReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteFriendLinkReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeleteFriendLinkReqMultiError, or nil if none found.
+func (m *DeleteFriendLinkReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteFriendLinkReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := DeleteFriendLinkReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DeleteFriendLinkReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeleteFriendLinkReqMultiError is an error wrapping multiple validation
+// errors returned by DeleteFriendLinkReq.ValidateAll() if the designated
+// constraints aren't met.
+type DeleteFriendLinkReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteFriendLinkReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteFriendLinkReqMultiError) AllErrors() []error { return m }
+
+// DeleteFriendLinkReqValidationError is the validation error returned by
+// DeleteFriendLinkReq.Validate if the designated constraints aren't met.
+type DeleteFriendLinkReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteFriendLinkReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteFriendLinkReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteFriendLinkReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteFriendLinkReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteFriendLinkReqValidationError) ErrorName() string {
+	return "DeleteFriendLinkReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteFriendLinkReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteFriendLinkReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteFriendLinkReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteFriendLinkReqValidationError{}
 
 // Validate checks the field values on Config with the rules defined in the
 // proto definition for this message. If any rules are violated, the first

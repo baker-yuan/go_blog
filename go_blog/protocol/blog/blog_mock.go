@@ -65,6 +65,36 @@ func (mr *MockBlogApiServiceMockRecorder) AddOrUpdateCategory(ctx, req interface
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateCategory", reflect.TypeOf((*MockBlogApiService)(nil).AddOrUpdateCategory), ctx, req)
 }
 
+// AddOrUpdateFriendLink mocks base method.
+func (m *MockBlogApiService) AddOrUpdateFriendLink(ctx context.Context, req *AddOrUpdateFriendLinkReq) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddOrUpdateFriendLink", ctx, req)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateFriendLink indicates an expected call of AddOrUpdateFriendLink.
+func (mr *MockBlogApiServiceMockRecorder) AddOrUpdateFriendLink(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateFriendLink", reflect.TypeOf((*MockBlogApiService)(nil).AddOrUpdateFriendLink), ctx, req)
+}
+
+// AddOrUpdatePage mocks base method.
+func (m *MockBlogApiService) AddOrUpdatePage(ctx context.Context, req *AddOrUpdatePageReq) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddOrUpdatePage", ctx, req)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdatePage indicates an expected call of AddOrUpdatePage.
+func (mr *MockBlogApiServiceMockRecorder) AddOrUpdatePage(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdatePage", reflect.TypeOf((*MockBlogApiService)(nil).AddOrUpdatePage), ctx, req)
+}
+
 // AddOrUpdateTag mocks base method.
 func (m *MockBlogApiService) AddOrUpdateTag(ctx context.Context, req *AddOrUpdateTagReq) (*AddOrUpdateRsp, error) {
 	m.ctrl.T.Helper()
@@ -140,6 +170,36 @@ func (mr *MockBlogApiServiceMockRecorder) DeleteCategory(ctx, req interface{}) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCategory", reflect.TypeOf((*MockBlogApiService)(nil).DeleteCategory), ctx, req)
 }
 
+// DeleteFriendLink mocks base method.
+func (m *MockBlogApiService) DeleteFriendLink(ctx context.Context, req *DeleteFriendLinkReq) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteFriendLink", ctx, req)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteFriendLink indicates an expected call of DeleteFriendLink.
+func (mr *MockBlogApiServiceMockRecorder) DeleteFriendLink(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteFriendLink", reflect.TypeOf((*MockBlogApiService)(nil).DeleteFriendLink), ctx, req)
+}
+
+// DeletePage mocks base method.
+func (m *MockBlogApiService) DeletePage(ctx context.Context, req *DeletePageReq) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeletePage", ctx, req)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeletePage indicates an expected call of DeletePage.
+func (mr *MockBlogApiServiceMockRecorder) DeletePage(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePage", reflect.TypeOf((*MockBlogApiService)(nil).DeletePage), ctx, req)
+}
+
 // DeleteTag mocks base method.
 func (m *MockBlogApiService) DeleteTag(ctx context.Context, req *DeleteTagReq) (*EmptyRsp, error) {
 	m.ctrl.T.Helper()
@@ -153,6 +213,36 @@ func (m *MockBlogApiService) DeleteTag(ctx context.Context, req *DeleteTagReq) (
 func (mr *MockBlogApiServiceMockRecorder) DeleteTag(ctx, req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTag", reflect.TypeOf((*MockBlogApiService)(nil).DeleteTag), ctx, req)
+}
+
+// FriendLinkDetail mocks base method.
+func (m *MockBlogApiService) FriendLinkDetail(ctx context.Context, req *FriendLinkDetailReq) (*FriendLink, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FriendLinkDetail", ctx, req)
+	ret0, _ := ret[0].(*FriendLink)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FriendLinkDetail indicates an expected call of FriendLinkDetail.
+func (mr *MockBlogApiServiceMockRecorder) FriendLinkDetail(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FriendLinkDetail", reflect.TypeOf((*MockBlogApiService)(nil).FriendLinkDetail), ctx, req)
+}
+
+// PageDetail mocks base method.
+func (m *MockBlogApiService) PageDetail(ctx context.Context, req *PageDetailReq) (*Page, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "PageDetail", ctx, req)
+	ret0, _ := ret[0].(*Page)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// PageDetail indicates an expected call of PageDetail.
+func (mr *MockBlogApiServiceMockRecorder) PageDetail(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PageDetail", reflect.TypeOf((*MockBlogApiService)(nil).PageDetail), ctx, req)
 }
 
 // SearchArticle mocks base method.
@@ -183,6 +273,36 @@ func (m *MockBlogApiService) SearchCategory(ctx context.Context, req *SearchCate
 func (mr *MockBlogApiServiceMockRecorder) SearchCategory(ctx, req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchCategory", reflect.TypeOf((*MockBlogApiService)(nil).SearchCategory), ctx, req)
+}
+
+// SearchFriendLink mocks base method.
+func (m *MockBlogApiService) SearchFriendLink(ctx context.Context, req *SearchFriendLinkReq) (*SearchFriendLinkRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SearchFriendLink", ctx, req)
+	ret0, _ := ret[0].(*SearchFriendLinkRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchFriendLink indicates an expected call of SearchFriendLink.
+func (mr *MockBlogApiServiceMockRecorder) SearchFriendLink(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchFriendLink", reflect.TypeOf((*MockBlogApiService)(nil).SearchFriendLink), ctx, req)
+}
+
+// SearchPage mocks base method.
+func (m *MockBlogApiService) SearchPage(ctx context.Context, req *SearchPageReq) (*SearchPageRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SearchPage", ctx, req)
+	ret0, _ := ret[0].(*SearchPageRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchPage indicates an expected call of SearchPage.
+func (mr *MockBlogApiServiceMockRecorder) SearchPage(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchPage", reflect.TypeOf((*MockBlogApiService)(nil).SearchPage), ctx, req)
 }
 
 // SearchTag mocks base method.
@@ -276,6 +396,46 @@ func (mr *MockBlogApiClientProxyMockRecorder) AddOrUpdateCategory(ctx, req inter
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateCategory", reflect.TypeOf((*MockBlogApiClientProxy)(nil).AddOrUpdateCategory), varargs...)
+}
+
+// AddOrUpdateFriendLink mocks base method.
+func (m *MockBlogApiClientProxy) AddOrUpdateFriendLink(ctx context.Context, req *AddOrUpdateFriendLinkReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AddOrUpdateFriendLink", varargs...)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateFriendLink indicates an expected call of AddOrUpdateFriendLink.
+func (mr *MockBlogApiClientProxyMockRecorder) AddOrUpdateFriendLink(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateFriendLink", reflect.TypeOf((*MockBlogApiClientProxy)(nil).AddOrUpdateFriendLink), varargs...)
+}
+
+// AddOrUpdatePage mocks base method.
+func (m *MockBlogApiClientProxy) AddOrUpdatePage(ctx context.Context, req *AddOrUpdatePageReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AddOrUpdatePage", varargs...)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdatePage indicates an expected call of AddOrUpdatePage.
+func (mr *MockBlogApiClientProxyMockRecorder) AddOrUpdatePage(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdatePage", reflect.TypeOf((*MockBlogApiClientProxy)(nil).AddOrUpdatePage), varargs...)
 }
 
 // AddOrUpdateTag mocks base method.
@@ -378,6 +538,46 @@ func (mr *MockBlogApiClientProxyMockRecorder) DeleteCategory(ctx, req interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCategory", reflect.TypeOf((*MockBlogApiClientProxy)(nil).DeleteCategory), varargs...)
 }
 
+// DeleteFriendLink mocks base method.
+func (m *MockBlogApiClientProxy) DeleteFriendLink(ctx context.Context, req *DeleteFriendLinkReq, opts ...client.Option) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteFriendLink", varargs...)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteFriendLink indicates an expected call of DeleteFriendLink.
+func (mr *MockBlogApiClientProxyMockRecorder) DeleteFriendLink(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteFriendLink", reflect.TypeOf((*MockBlogApiClientProxy)(nil).DeleteFriendLink), varargs...)
+}
+
+// DeletePage mocks base method.
+func (m *MockBlogApiClientProxy) DeletePage(ctx context.Context, req *DeletePageReq, opts ...client.Option) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeletePage", varargs...)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeletePage indicates an expected call of DeletePage.
+func (mr *MockBlogApiClientProxyMockRecorder) DeletePage(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePage", reflect.TypeOf((*MockBlogApiClientProxy)(nil).DeletePage), varargs...)
+}
+
 // DeleteTag mocks base method.
 func (m *MockBlogApiClientProxy) DeleteTag(ctx context.Context, req *DeleteTagReq, opts ...client.Option) (*EmptyRsp, error) {
 	m.ctrl.T.Helper()
@@ -396,6 +596,46 @@ func (mr *MockBlogApiClientProxyMockRecorder) DeleteTag(ctx, req interface{}, op
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTag", reflect.TypeOf((*MockBlogApiClientProxy)(nil).DeleteTag), varargs...)
+}
+
+// FriendLinkDetail mocks base method.
+func (m *MockBlogApiClientProxy) FriendLinkDetail(ctx context.Context, req *FriendLinkDetailReq, opts ...client.Option) (*FriendLink, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "FriendLinkDetail", varargs...)
+	ret0, _ := ret[0].(*FriendLink)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FriendLinkDetail indicates an expected call of FriendLinkDetail.
+func (mr *MockBlogApiClientProxyMockRecorder) FriendLinkDetail(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FriendLinkDetail", reflect.TypeOf((*MockBlogApiClientProxy)(nil).FriendLinkDetail), varargs...)
+}
+
+// PageDetail mocks base method.
+func (m *MockBlogApiClientProxy) PageDetail(ctx context.Context, req *PageDetailReq, opts ...client.Option) (*Page, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "PageDetail", varargs...)
+	ret0, _ := ret[0].(*Page)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// PageDetail indicates an expected call of PageDetail.
+func (mr *MockBlogApiClientProxyMockRecorder) PageDetail(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PageDetail", reflect.TypeOf((*MockBlogApiClientProxy)(nil).PageDetail), varargs...)
 }
 
 // SearchArticle mocks base method.
@@ -436,6 +676,46 @@ func (mr *MockBlogApiClientProxyMockRecorder) SearchCategory(ctx, req interface{
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchCategory", reflect.TypeOf((*MockBlogApiClientProxy)(nil).SearchCategory), varargs...)
+}
+
+// SearchFriendLink mocks base method.
+func (m *MockBlogApiClientProxy) SearchFriendLink(ctx context.Context, req *SearchFriendLinkReq, opts ...client.Option) (*SearchFriendLinkRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SearchFriendLink", varargs...)
+	ret0, _ := ret[0].(*SearchFriendLinkRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchFriendLink indicates an expected call of SearchFriendLink.
+func (mr *MockBlogApiClientProxyMockRecorder) SearchFriendLink(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchFriendLink", reflect.TypeOf((*MockBlogApiClientProxy)(nil).SearchFriendLink), varargs...)
+}
+
+// SearchPage mocks base method.
+func (m *MockBlogApiClientProxy) SearchPage(ctx context.Context, req *SearchPageReq, opts ...client.Option) (*SearchPageRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SearchPage", varargs...)
+	ret0, _ := ret[0].(*SearchPageRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchPage indicates an expected call of SearchPage.
+func (mr *MockBlogApiClientProxyMockRecorder) SearchPage(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchPage", reflect.TypeOf((*MockBlogApiClientProxy)(nil).SearchPage), varargs...)
 }
 
 // SearchTag mocks base method.
