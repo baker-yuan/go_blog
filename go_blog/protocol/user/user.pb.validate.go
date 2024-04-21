@@ -520,7 +520,7 @@ func (m *SearchUserRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Total
+	// no validation rules for PageTotal
 
 	for idx, item := range m.GetData() {
 		_, _ = idx, item

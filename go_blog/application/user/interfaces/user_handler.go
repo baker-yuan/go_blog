@@ -30,7 +30,7 @@ func (s *Users) SearchUser(ctx context.Context, req *pb.SearchUserReq) (*pb.Sear
 		return nil, err
 	}
 	rsp.Data = users
-	rsp.Total = pageTotal
+	rsp.PageTotal = pageTotal
 	return rsp, nil
 }
 

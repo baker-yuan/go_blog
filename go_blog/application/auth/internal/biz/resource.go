@@ -36,6 +36,16 @@ type Resource struct {
 // Resources 接口集合
 type Resources []*Resource
 
+// GetOperatorUserID 获取操作人ID
+func (r Resources) GetOperatorUserID() []uint32 {
+	res := make([]uint32, 0)
+	for _, item := range r {
+		res = append(res, item.CreateUserID)
+		res = append(res, item.UpdateUserID)
+	}
+	return util.NewSliceUtils[uint32]().SliceUnique(res)
+}
+
 type ResourceRepo interface {
 	// GetResourceByID 根据接口id集合查询接口
 	GetResourceByID(ctx context.Context, id uint32) (*Resource, error)
@@ -76,7 +86,12 @@ func (c *ResourceUseCase) ResourceDetail(ctx context.Context, req *pb.ResourceDe
 	if err != nil {
 		return nil, err
 	}
-	pbResource := ResourceEntityToModel(resource, nil)
+	// 补充操作人信息
+	uidToNameMap, err := c.UidToName(ctx, resource.CreateUserID, resource.UpdateUserID)
+	if err != nil {
+		return nil, err
+	}
+	pbResource := ResourceEntityToModel(resource, uidToNameMap, nil)
 	return pbResource, nil
 }
 
@@ -86,12 +101,17 @@ func (c *ResourceUseCase) SearchResource(ctx context.Context, req *pb.SearchReso
 	if err != nil {
 		return nil, 0, err
 	}
+	// 补充操作人信息
+	uidToNameMap, err := c.UidToName(ctx, resources.GetOperatorUserID()...)
+	if err != nil {
+		return nil, 0, err
+	}
 	// 查询接口关联的目录树 key=根节点 value=根结点往上找的集合
 	treeNodeMap, err := c.GetReversalTreeMap(ctx, pb.TreeNodeBizType_RESOURCE_NODE)
 	if err != nil {
 		return nil, 0, err
 	}
-	data := ResourceEntityListToModel(resources, treeNodeMap)
+	data := ResourceEntityListToModel(resources, uidToNameMap, treeNodeMap)
 	return data, total, nil
 }
 
@@ -184,7 +204,7 @@ func (c *ResourceUseCase) GetEffectiveResource(ctx context.Context,
 	}
 	data := make([]*pb.Resource, 0)
 	for _, resource := range resources {
-		data = append(data, ResourceEntityToModel(resource, nil))
+		data = append(data, ResourceEntityToModel(resource, nil, nil))
 	}
 	return data, nil
 }

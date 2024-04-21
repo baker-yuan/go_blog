@@ -35,6 +35,207 @@ var (
 	_ = sort.Sort
 )
 
+// Validate checks the field values on EmptyRsp with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *EmptyRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on EmptyRsp with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in EmptyRspMultiError, or nil
+// if none found.
+func (m *EmptyRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *EmptyRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return EmptyRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// EmptyRspMultiError is an error wrapping multiple validation errors returned
+// by EmptyRsp.ValidateAll() if the designated constraints aren't met.
+type EmptyRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m EmptyRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m EmptyRspMultiError) AllErrors() []error { return m }
+
+// EmptyRspValidationError is the validation error returned by
+// EmptyRsp.Validate if the designated constraints aren't met.
+type EmptyRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e EmptyRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e EmptyRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e EmptyRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e EmptyRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e EmptyRspValidationError) ErrorName() string { return "EmptyRspValidationError" }
+
+// Error satisfies the builtin error interface
+func (e EmptyRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sEmptyRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = EmptyRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = EmptyRspValidationError{}
+
+// Validate checks the field values on AddOrUpdateRsp with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *AddOrUpdateRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddOrUpdateRsp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in AddOrUpdateRspMultiError,
+// or nil if none found.
+func (m *AddOrUpdateRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddOrUpdateRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	if len(errors) > 0 {
+		return AddOrUpdateRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddOrUpdateRspMultiError is an error wrapping multiple validation errors
+// returned by AddOrUpdateRsp.ValidateAll() if the designated constraints
+// aren't met.
+type AddOrUpdateRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddOrUpdateRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddOrUpdateRspMultiError) AllErrors() []error { return m }
+
+// AddOrUpdateRspValidationError is the validation error returned by
+// AddOrUpdateRsp.Validate if the designated constraints aren't met.
+type AddOrUpdateRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddOrUpdateRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddOrUpdateRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddOrUpdateRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddOrUpdateRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddOrUpdateRspValidationError) ErrorName() string { return "AddOrUpdateRspValidationError" }
+
+// Error satisfies the builtin error interface
+func (e AddOrUpdateRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddOrUpdateRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddOrUpdateRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddOrUpdateRspValidationError{}
+
 // Validate checks the field values on OssUploadRecord with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -80,6 +281,8 @@ func (m *OssUploadRecord) validate(all bool) error {
 	// no validation rules for CreateUser
 
 	// no validation rules for UpdateUser
+
+	// no validation rules for Url
 
 	if len(errors) > 0 {
 		return OssUploadRecordMultiError(errors)
@@ -307,7 +510,7 @@ func (m *SearchOssUploadRecordRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Total
+	// no validation rules for PageTotal
 
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
@@ -422,3 +625,1198 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SearchOssUploadRecordRspValidationError{}
+
+// Validate checks the field values on GetUploadSignReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *GetUploadSignReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetUploadSignReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetUploadSignReqMultiError, or nil if none found.
+func (m *GetUploadSignReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetUploadSignReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetMode()) < 1 {
+		err := GetUploadSignReqValidationError{
+			field:  "Mode",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetFileName()) < 1 {
+		err := GetUploadSignReqValidationError{
+			field:  "FileName",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetContentMd5()) < 1 {
+		err := GetUploadSignReqValidationError{
+			field:  "ContentMd5",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return GetUploadSignReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetUploadSignReqMultiError is an error wrapping multiple validation errors
+// returned by GetUploadSignReq.ValidateAll() if the designated constraints
+// aren't met.
+type GetUploadSignReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetUploadSignReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetUploadSignReqMultiError) AllErrors() []error { return m }
+
+// GetUploadSignReqValidationError is the validation error returned by
+// GetUploadSignReq.Validate if the designated constraints aren't met.
+type GetUploadSignReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUploadSignReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUploadSignReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUploadSignReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUploadSignReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUploadSignReqValidationError) ErrorName() string { return "GetUploadSignReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetUploadSignReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUploadSignReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUploadSignReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUploadSignReqValidationError{}
+
+// Validate checks the field values on GetUploadSignRsp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *GetUploadSignRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetUploadSignRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetUploadSignRspMultiError, or nil if none found.
+func (m *GetUploadSignRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetUploadSignRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for UploadUrl
+
+	// no validation rules for FormData
+
+	// no validation rules for ImageUrl
+
+	// no validation rules for ImagePath
+
+	// no validation rules for OsType
+
+	if len(errors) > 0 {
+		return GetUploadSignRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetUploadSignRspMultiError is an error wrapping multiple validation errors
+// returned by GetUploadSignRsp.ValidateAll() if the designated constraints
+// aren't met.
+type GetUploadSignRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetUploadSignRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetUploadSignRspMultiError) AllErrors() []error { return m }
+
+// GetUploadSignRspValidationError is the validation error returned by
+// GetUploadSignRsp.Validate if the designated constraints aren't met.
+type GetUploadSignRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUploadSignRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUploadSignRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUploadSignRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUploadSignRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUploadSignRspValidationError) ErrorName() string { return "GetUploadSignRspValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetUploadSignRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUploadSignRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUploadSignRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUploadSignRspValidationError{}
+
+// Validate checks the field values on AliOssCallbackReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *AliOssCallbackReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AliOssCallbackReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AliOssCallbackReqMultiError, or nil if none found.
+func (m *AliOssCallbackReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AliOssCallbackReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Filename
+
+	if len(errors) > 0 {
+		return AliOssCallbackReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// AliOssCallbackReqMultiError is an error wrapping multiple validation errors
+// returned by AliOssCallbackReq.ValidateAll() if the designated constraints
+// aren't met.
+type AliOssCallbackReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AliOssCallbackReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AliOssCallbackReqMultiError) AllErrors() []error { return m }
+
+// AliOssCallbackReqValidationError is the validation error returned by
+// AliOssCallbackReq.Validate if the designated constraints aren't met.
+type AliOssCallbackReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AliOssCallbackReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AliOssCallbackReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AliOssCallbackReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AliOssCallbackReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AliOssCallbackReqValidationError) ErrorName() string {
+	return "AliOssCallbackReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AliOssCallbackReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAliOssCallbackReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AliOssCallbackReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AliOssCallbackReqValidationError{}
+
+// Validate checks the field values on AliOssCallbackRsp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *AliOssCallbackRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AliOssCallbackRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AliOssCallbackRspMultiError, or nil if none found.
+func (m *AliOssCallbackRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AliOssCallbackRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return AliOssCallbackRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// AliOssCallbackRspMultiError is an error wrapping multiple validation errors
+// returned by AliOssCallbackRsp.ValidateAll() if the designated constraints
+// aren't met.
+type AliOssCallbackRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AliOssCallbackRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AliOssCallbackRspMultiError) AllErrors() []error { return m }
+
+// AliOssCallbackRspValidationError is the validation error returned by
+// AliOssCallbackRsp.Validate if the designated constraints aren't met.
+type AliOssCallbackRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AliOssCallbackRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AliOssCallbackRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AliOssCallbackRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AliOssCallbackRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AliOssCallbackRspValidationError) ErrorName() string {
+	return "AliOssCallbackRspValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AliOssCallbackRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAliOssCallbackRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AliOssCallbackRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AliOssCallbackRspValidationError{}
+
+// Validate checks the field values on OssModeCfg with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *OssModeCfg) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on OssModeCfg with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in OssModeCfgMultiError, or
+// nil if none found.
+func (m *OssModeCfg) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *OssModeCfg) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for Mode
+
+	// no validation rules for Path
+
+	// no validation rules for Desc
+
+	// no validation rules for CreateUserId
+
+	// no validation rules for UpdateUserId
+
+	// no validation rules for CreateTime
+
+	// no validation rules for UpdateTime
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
+
+	if len(errors) > 0 {
+		return OssModeCfgMultiError(errors)
+	}
+
+	return nil
+}
+
+// OssModeCfgMultiError is an error wrapping multiple validation errors
+// returned by OssModeCfg.ValidateAll() if the designated constraints aren't met.
+type OssModeCfgMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m OssModeCfgMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m OssModeCfgMultiError) AllErrors() []error { return m }
+
+// OssModeCfgValidationError is the validation error returned by
+// OssModeCfg.Validate if the designated constraints aren't met.
+type OssModeCfgValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e OssModeCfgValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e OssModeCfgValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e OssModeCfgValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e OssModeCfgValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e OssModeCfgValidationError) ErrorName() string { return "OssModeCfgValidationError" }
+
+// Error satisfies the builtin error interface
+func (e OssModeCfgValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sOssModeCfg.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = OssModeCfgValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = OssModeCfgValidationError{}
+
+// Validate checks the field values on SearchOssModeCfgReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *SearchOssModeCfgReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchOssModeCfgReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SearchOssModeCfgReqMultiError, or nil if none found.
+func (m *SearchOssModeCfgReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchOssModeCfgReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Search
+
+	if m.GetPageNum() <= 0 {
+		err := SearchOssModeCfgReqValidationError{
+			field:  "PageNum",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetPageSize() <= 0 {
+		err := SearchOssModeCfgReqValidationError{
+			field:  "PageSize",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return SearchOssModeCfgReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchOssModeCfgReqMultiError is an error wrapping multiple validation
+// errors returned by SearchOssModeCfgReq.ValidateAll() if the designated
+// constraints aren't met.
+type SearchOssModeCfgReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchOssModeCfgReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchOssModeCfgReqMultiError) AllErrors() []error { return m }
+
+// SearchOssModeCfgReqValidationError is the validation error returned by
+// SearchOssModeCfgReq.Validate if the designated constraints aren't met.
+type SearchOssModeCfgReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchOssModeCfgReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchOssModeCfgReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchOssModeCfgReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchOssModeCfgReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchOssModeCfgReqValidationError) ErrorName() string {
+	return "SearchOssModeCfgReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SearchOssModeCfgReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchOssModeCfgReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchOssModeCfgReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchOssModeCfgReqValidationError{}
+
+// Validate checks the field values on SearchOssModeCfgRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *SearchOssModeCfgRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchOssModeCfgRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SearchOssModeCfgRspMultiError, or nil if none found.
+func (m *SearchOssModeCfgRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchOssModeCfgRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for PageTotal
+
+	for idx, item := range m.GetData() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, SearchOssModeCfgRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, SearchOssModeCfgRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SearchOssModeCfgRspValidationError{
+					field:  fmt.Sprintf("Data[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return SearchOssModeCfgRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchOssModeCfgRspMultiError is an error wrapping multiple validation
+// errors returned by SearchOssModeCfgRsp.ValidateAll() if the designated
+// constraints aren't met.
+type SearchOssModeCfgRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchOssModeCfgRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchOssModeCfgRspMultiError) AllErrors() []error { return m }
+
+// SearchOssModeCfgRspValidationError is the validation error returned by
+// SearchOssModeCfgRsp.Validate if the designated constraints aren't met.
+type SearchOssModeCfgRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchOssModeCfgRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchOssModeCfgRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchOssModeCfgRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchOssModeCfgRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchOssModeCfgRspValidationError) ErrorName() string {
+	return "SearchOssModeCfgRspValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SearchOssModeCfgRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchOssModeCfgRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchOssModeCfgRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchOssModeCfgRspValidationError{}
+
+// Validate checks the field values on OssModeCfgDetailReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *OssModeCfgDetailReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on OssModeCfgDetailReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// OssModeCfgDetailReqMultiError, or nil if none found.
+func (m *OssModeCfgDetailReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *OssModeCfgDetailReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := OssModeCfgDetailReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return OssModeCfgDetailReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// OssModeCfgDetailReqMultiError is an error wrapping multiple validation
+// errors returned by OssModeCfgDetailReq.ValidateAll() if the designated
+// constraints aren't met.
+type OssModeCfgDetailReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m OssModeCfgDetailReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m OssModeCfgDetailReqMultiError) AllErrors() []error { return m }
+
+// OssModeCfgDetailReqValidationError is the validation error returned by
+// OssModeCfgDetailReq.Validate if the designated constraints aren't met.
+type OssModeCfgDetailReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e OssModeCfgDetailReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e OssModeCfgDetailReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e OssModeCfgDetailReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e OssModeCfgDetailReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e OssModeCfgDetailReqValidationError) ErrorName() string {
+	return "OssModeCfgDetailReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e OssModeCfgDetailReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sOssModeCfgDetailReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = OssModeCfgDetailReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = OssModeCfgDetailReqValidationError{}
+
+// Validate checks the field values on AddOrUpdateOssModeCfgReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AddOrUpdateOssModeCfgReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddOrUpdateOssModeCfgReq with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddOrUpdateOssModeCfgReqMultiError, or nil if none found.
+func (m *AddOrUpdateOssModeCfgReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddOrUpdateOssModeCfgReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	if utf8.RuneCountInString(m.GetMode()) < 1 {
+		err := AddOrUpdateOssModeCfgReqValidationError{
+			field:  "Mode",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetPath()) < 1 {
+		err := AddOrUpdateOssModeCfgReqValidationError{
+			field:  "Path",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetDesc()) < 1 {
+		err := AddOrUpdateOssModeCfgReqValidationError{
+			field:  "Desc",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return AddOrUpdateOssModeCfgReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddOrUpdateOssModeCfgReqMultiError is an error wrapping multiple validation
+// errors returned by AddOrUpdateOssModeCfgReq.ValidateAll() if the designated
+// constraints aren't met.
+type AddOrUpdateOssModeCfgReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddOrUpdateOssModeCfgReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddOrUpdateOssModeCfgReqMultiError) AllErrors() []error { return m }
+
+// AddOrUpdateOssModeCfgReqValidationError is the validation error returned by
+// AddOrUpdateOssModeCfgReq.Validate if the designated constraints aren't met.
+type AddOrUpdateOssModeCfgReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddOrUpdateOssModeCfgReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddOrUpdateOssModeCfgReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddOrUpdateOssModeCfgReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddOrUpdateOssModeCfgReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddOrUpdateOssModeCfgReqValidationError) ErrorName() string {
+	return "AddOrUpdateOssModeCfgReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddOrUpdateOssModeCfgReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddOrUpdateOssModeCfgReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddOrUpdateOssModeCfgReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddOrUpdateOssModeCfgReqValidationError{}
+
+// Validate checks the field values on DeleteOssModeCfgReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeleteOssModeCfgReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteOssModeCfgReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeleteOssModeCfgReqMultiError, or nil if none found.
+func (m *DeleteOssModeCfgReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteOssModeCfgReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := DeleteOssModeCfgReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DeleteOssModeCfgReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeleteOssModeCfgReqMultiError is an error wrapping multiple validation
+// errors returned by DeleteOssModeCfgReq.ValidateAll() if the designated
+// constraints aren't met.
+type DeleteOssModeCfgReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteOssModeCfgReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteOssModeCfgReqMultiError) AllErrors() []error { return m }
+
+// DeleteOssModeCfgReqValidationError is the validation error returned by
+// DeleteOssModeCfgReq.Validate if the designated constraints aren't met.
+type DeleteOssModeCfgReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteOssModeCfgReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteOssModeCfgReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteOssModeCfgReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteOssModeCfgReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteOssModeCfgReqValidationError) ErrorName() string {
+	return "DeleteOssModeCfgReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteOssModeCfgReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteOssModeCfgReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteOssModeCfgReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteOssModeCfgReqValidationError{}

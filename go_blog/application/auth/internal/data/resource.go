@@ -3,6 +3,7 @@ package data
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/baker-yuan/go-blog/go_blog/application/auth/internal/biz"
 	"github.com/baker-yuan/go-blog/go_blog/common/db"
@@ -44,8 +45,8 @@ func (r Resource) TableName() string {
 var (
 	ResourceTbName = "baker_auth_resource"
 	// 基本信息
-	ResourceFieldId       = "id"
-	ResourceFieldParentId = "parent_id"
+	ResourceFieldID       = "id"
+	ResourceFieldParentID = "parent_id"
 	ResourceFieldName     = "name"
 	ResourceFieldDescribe = "describe"
 	//
@@ -61,10 +62,10 @@ var (
 	ResourceFieldService = "service"
 	ResourceFieldMethod  = "method"
 	// 公共字段
-	ResourceFieldCreateUser = "create_user_id"
-	ResourceFieldUpdateUser = "update_user_id"
-	ResourceFieldCreateTime = "create_time"
-	ResourceFieldUpdateTime = "update_time"
+	ResourceFieldCreateUserID = "create_user_id"
+	ResourceFieldUpdateUserID = "update_user_id"
+	ResourceFieldCreateTime   = "create_time"
+	ResourceFieldUpdateTime   = "update_time"
 )
 
 // resourceRepo 接口
@@ -89,7 +90,8 @@ func init() {
 var (
 	// 全字段修改Resource那些字段不修改
 	notUpdateResourceField = []string{
-		"created_at",
+		ResourceFieldCreateTime,
+		ResourceFieldCreateUserID,
 	}
 	updateResourceField []string
 )
@@ -169,6 +171,7 @@ func (r resourceRepo) SearchResource(ctx context.Context, req *pb.SearchResource
 	if err != nil {
 		return nil, 0, err
 	}
+	tx = tx.Order(fmt.Sprintf("%s DESC", ResourceFieldID))
 	tx = tx.Offset(int((req.GetPageNum() - 1) * req.GetPageSize())).
 		Limit(int(req.GetPageSize())).Find(&res).
 		Offset(-1).Limit(-1).Count(&pageTotal)

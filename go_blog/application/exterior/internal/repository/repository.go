@@ -11,6 +11,7 @@ import (
 
 func init() {
 	registerInitField(oss.InitOssUploadRecordField)
+	registerInitField(oss.InitOssModeCfgField)
 }
 
 func Init(db *gorm.DB) error {
@@ -53,6 +54,10 @@ func InitSchema(db *gorm.DB) error {
 			TableName: "OSS文件上传记录表",
 			StructPtr: &oss_model.UploadRecord{},
 		},
+		//{
+		//	TableName: "OSS模块配置",
+		//	StructPtr: &oss_model.ModeCfg{},
+		//},
 	}
 	return autoMigrate(db, schemas)
 }

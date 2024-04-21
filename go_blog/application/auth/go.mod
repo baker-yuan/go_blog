@@ -7,9 +7,11 @@ replace (
 	github.com/baker-yuan/go-blog/go_blog/filters/httptrace => ./../../filters/httptrace
 	github.com/baker-yuan/go-blog/go_blog/protocol/auth => ./../../protocol/auth
 	github.com/baker-yuan/go-blog/go_blog/retcode => ./../../retcode
+	github.com/baker-yuan/go-blog/go_blog/protocol/user => ./../../protocol/user
 )
 
 require (
+    github.com/baker-yuan/go-blog/go_blog/protocol/user v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/go_blog/common v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/go_blog/filters/httptrace v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/go_blog/protocol/auth v0.0.0-incompatible

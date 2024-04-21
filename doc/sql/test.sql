@@ -54,3 +54,13 @@ values (1, 0, '首页', 'HomeFilled', '', '1', '/home/index', '/home/index', fal
        (100, 0, '权限管理', 'Lock', '', '2', '/auth', '', false),
        (101, 100, '菜单权限', 'Menu', '', '2', '/auth/menu', '/auth/menu/index', false),
        (102, 100, '接口权限', 'Menu', '', '2', '/auth/resource', '/auth/resource/index', false);
+
+
+
+
+INSERT INTO oss_mode_cfg (mode, path, `desc`) VALUES ('avatar', 'avatar/', '头像路径');
+INSERT INTO oss_mode_cfg (mode, path, `desc`) VALUES ('article', 'article/', '文章图片路径');
+INSERT INTO oss_mode_cfg (mode, path, `desc`) VALUES ('voice', 'voice/', '音频路径');
+INSERT INTO oss_mode_cfg (mode, path, `desc`) VALUES ('photos', 'photos/', '相册路径');
+INSERT INTO oss_mode_cfg (mode, path, `desc`) VALUES ('config', 'config/', '配置图片路径');
+INSERT INTO oss_mode_cfg (mode, path, `desc`) VALUES ('upload', 'upload/', '手动上传');

@@ -21,6 +21,19 @@ import (
 type OssApiService interface {
 	// SearchOssUploadRecord OSS文件上传记录搜索
 	SearchOssUploadRecord(ctx context.Context, req *SearchOssUploadRecordReq) (*SearchOssUploadRecordRsp, error)
+	// GetUploadSign 获取oss上传签名
+	GetUploadSign(ctx context.Context, req *GetUploadSignReq) (*GetUploadSignRsp, error) // 阿里云OSS服务端签名直传上传回调
+	//   rpc AliOssCallback(AliOssCallbackReq) returns (AliOssCallbackRsp) {
+	//     option(trpc.alias) = "/external/callback/aliOss";
+	//   }
+	// SearchOssModeCfg OSS模块配置搜索
+	SearchOssModeCfg(ctx context.Context, req *SearchOssModeCfgReq) (*SearchOssModeCfgRsp, error)
+	// AddOrUpdateOssModeCfg 添加修改OSS模块配置
+	AddOrUpdateOssModeCfg(ctx context.Context, req *AddOrUpdateOssModeCfgReq) (*AddOrUpdateRsp, error)
+	// DeleteOssModeCfg 删除OSS模块配置
+	DeleteOssModeCfg(ctx context.Context, req *DeleteOssModeCfgReq) (*EmptyRsp, error)
+	// OssModeCfgDetail OSS模块配置详情
+	OssModeCfgDetail(ctx context.Context, req *OssModeCfgDetailReq) (*OssModeCfg, error)
 }
 
 func OssApiService_SearchOssUploadRecord_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -41,18 +54,148 @@ func OssApiService_SearchOssUploadRecord_Handler(svr interface{}, ctx context.Co
 	return rsp, nil
 }
 
+func OssApiService_GetUploadSign_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &GetUploadSignReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(OssApiService).GetUploadSign(ctx, reqbody.(*GetUploadSignReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func OssApiService_SearchOssModeCfg_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &SearchOssModeCfgReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(OssApiService).SearchOssModeCfg(ctx, reqbody.(*SearchOssModeCfgReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func OssApiService_AddOrUpdateOssModeCfg_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &AddOrUpdateOssModeCfgReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(OssApiService).AddOrUpdateOssModeCfg(ctx, reqbody.(*AddOrUpdateOssModeCfgReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func OssApiService_DeleteOssModeCfg_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &DeleteOssModeCfgReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(OssApiService).DeleteOssModeCfg(ctx, reqbody.(*DeleteOssModeCfgReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func OssApiService_OssModeCfgDetail_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &OssModeCfgDetailReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(OssApiService).OssModeCfgDetail(ctx, reqbody.(*OssModeCfgDetailReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 // OssApiServer_ServiceDesc descriptor for server.RegisterService.
 var OssApiServer_ServiceDesc = server.ServiceDesc{
 	ServiceName: "go_blog.exterior.OssApi",
 	HandlerType: ((*OssApiService)(nil)),
 	Methods: []server.Method{
 		{
-			Name: "/auth/admin/searchOssUploadRecord",
+			Name: "/external/admin/searchOssUploadRecord",
 			Func: OssApiService_SearchOssUploadRecord_Handler,
+		},
+		{
+			Name: "/external/admin/getUploadSign",
+			Func: OssApiService_GetUploadSign_Handler,
+		},
+		{
+			Name: "/external/admin/searchOssModeCfg",
+			Func: OssApiService_SearchOssModeCfg_Handler,
+		},
+		{
+			Name: "/external/admin/addOrUpdateOssModeCfg",
+			Func: OssApiService_AddOrUpdateOssModeCfg_Handler,
+		},
+		{
+			Name: "/external/admin/deleteOssModeCfg",
+			Func: OssApiService_DeleteOssModeCfg_Handler,
+		},
+		{
+			Name: "/external/admin/ossModeCfgDetail",
+			Func: OssApiService_OssModeCfgDetail_Handler,
 		},
 		{
 			Name: "/go_blog.exterior.OssApi/SearchOssUploadRecord",
 			Func: OssApiService_SearchOssUploadRecord_Handler,
+		},
+		{
+			Name: "/go_blog.exterior.OssApi/GetUploadSign",
+			Func: OssApiService_GetUploadSign_Handler,
+		},
+		{
+			Name: "/go_blog.exterior.OssApi/SearchOssModeCfg",
+			Func: OssApiService_SearchOssModeCfg_Handler,
+		},
+		{
+			Name: "/go_blog.exterior.OssApi/AddOrUpdateOssModeCfg",
+			Func: OssApiService_AddOrUpdateOssModeCfg_Handler,
+		},
+		{
+			Name: "/go_blog.exterior.OssApi/DeleteOssModeCfg",
+			Func: OssApiService_DeleteOssModeCfg_Handler,
+		},
+		{
+			Name: "/go_blog.exterior.OssApi/OssModeCfgDetail",
+			Func: OssApiService_OssModeCfgDetail_Handler,
 		},
 	},
 }
@@ -73,6 +216,31 @@ func (s *UnimplementedOssApi) SearchOssUploadRecord(ctx context.Context, req *Se
 	return nil, errors.New("rpc SearchOssUploadRecord of service OssApi is not implemented")
 }
 
+// GetUploadSign 获取oss上传签名
+func (s *UnimplementedOssApi) GetUploadSign(ctx context.Context, req *GetUploadSignReq) (*GetUploadSignRsp, error) {
+	return nil, errors.New("rpc GetUploadSign of service OssApi is not implemented")
+}
+
+// SearchOssModeCfg OSS模块配置搜索
+func (s *UnimplementedOssApi) SearchOssModeCfg(ctx context.Context, req *SearchOssModeCfgReq) (*SearchOssModeCfgRsp, error) {
+	return nil, errors.New("rpc SearchOssModeCfg of service OssApi is not implemented")
+}
+
+// AddOrUpdateOssModeCfg 添加修改OSS模块配置
+func (s *UnimplementedOssApi) AddOrUpdateOssModeCfg(ctx context.Context, req *AddOrUpdateOssModeCfgReq) (*AddOrUpdateRsp, error) {
+	return nil, errors.New("rpc AddOrUpdateOssModeCfg of service OssApi is not implemented")
+}
+
+// DeleteOssModeCfg 删除OSS模块配置
+func (s *UnimplementedOssApi) DeleteOssModeCfg(ctx context.Context, req *DeleteOssModeCfgReq) (*EmptyRsp, error) {
+	return nil, errors.New("rpc DeleteOssModeCfg of service OssApi is not implemented")
+}
+
+// OssModeCfgDetail OSS模块配置详情
+func (s *UnimplementedOssApi) OssModeCfgDetail(ctx context.Context, req *OssModeCfgDetailReq) (*OssModeCfg, error) {
+	return nil, errors.New("rpc OssModeCfgDetail of service OssApi is not implemented")
+}
+
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
 
 // END ======================================= Server Service Definition ======================================= END
@@ -83,6 +251,19 @@ func (s *UnimplementedOssApi) SearchOssUploadRecord(ctx context.Context, req *Se
 type OssApiClientProxy interface {
 	// SearchOssUploadRecord OSS文件上传记录搜索
 	SearchOssUploadRecord(ctx context.Context, req *SearchOssUploadRecordReq, opts ...client.Option) (rsp *SearchOssUploadRecordRsp, err error)
+	// GetUploadSign 获取oss上传签名
+	GetUploadSign(ctx context.Context, req *GetUploadSignReq, opts ...client.Option) (rsp *GetUploadSignRsp, err error) // 阿里云OSS服务端签名直传上传回调
+	//   rpc AliOssCallback(AliOssCallbackReq) returns (AliOssCallbackRsp) {
+	//     option(trpc.alias) = "/external/callback/aliOss";
+	//   }
+	// SearchOssModeCfg OSS模块配置搜索
+	SearchOssModeCfg(ctx context.Context, req *SearchOssModeCfgReq, opts ...client.Option) (rsp *SearchOssModeCfgRsp, err error)
+	// AddOrUpdateOssModeCfg 添加修改OSS模块配置
+	AddOrUpdateOssModeCfg(ctx context.Context, req *AddOrUpdateOssModeCfgReq, opts ...client.Option) (rsp *AddOrUpdateRsp, err error)
+	// DeleteOssModeCfg 删除OSS模块配置
+	DeleteOssModeCfg(ctx context.Context, req *DeleteOssModeCfgReq, opts ...client.Option) (rsp *EmptyRsp, err error)
+	// OssModeCfgDetail OSS模块配置详情
+	OssModeCfgDetail(ctx context.Context, req *OssModeCfgDetailReq, opts ...client.Option) (rsp *OssModeCfg, err error)
 }
 
 type OssApiClientProxyImpl struct {
@@ -97,7 +278,7 @@ var NewOssApiClientProxy = func(opts ...client.Option) OssApiClientProxy {
 func (c *OssApiClientProxyImpl) SearchOssUploadRecord(ctx context.Context, req *SearchOssUploadRecordReq, opts ...client.Option) (*SearchOssUploadRecordRsp, error) {
 	ctx, msg := codec.WithCloneMessage(ctx)
 	defer codec.PutBackMessage(msg)
-	msg.WithClientRPCName("/auth/admin/searchOssUploadRecord")
+	msg.WithClientRPCName("/external/admin/searchOssUploadRecord")
 	msg.WithCalleeServiceName(OssApiServer_ServiceDesc.ServiceName)
 	msg.WithCalleeApp("")
 	msg.WithCalleeServer("")
@@ -108,6 +289,106 @@ func (c *OssApiClientProxyImpl) SearchOssUploadRecord(ctx context.Context, req *
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &SearchOssUploadRecordRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *OssApiClientProxyImpl) GetUploadSign(ctx context.Context, req *GetUploadSignReq, opts ...client.Option) (*GetUploadSignRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/external/admin/getUploadSign")
+	msg.WithCalleeServiceName(OssApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("OssApi")
+	msg.WithCalleeMethod("GetUploadSign")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &GetUploadSignRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *OssApiClientProxyImpl) SearchOssModeCfg(ctx context.Context, req *SearchOssModeCfgReq, opts ...client.Option) (*SearchOssModeCfgRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/external/admin/searchOssModeCfg")
+	msg.WithCalleeServiceName(OssApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("OssApi")
+	msg.WithCalleeMethod("SearchOssModeCfg")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &SearchOssModeCfgRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *OssApiClientProxyImpl) AddOrUpdateOssModeCfg(ctx context.Context, req *AddOrUpdateOssModeCfgReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/external/admin/addOrUpdateOssModeCfg")
+	msg.WithCalleeServiceName(OssApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("OssApi")
+	msg.WithCalleeMethod("AddOrUpdateOssModeCfg")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &AddOrUpdateRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *OssApiClientProxyImpl) DeleteOssModeCfg(ctx context.Context, req *DeleteOssModeCfgReq, opts ...client.Option) (*EmptyRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/external/admin/deleteOssModeCfg")
+	msg.WithCalleeServiceName(OssApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("OssApi")
+	msg.WithCalleeMethod("DeleteOssModeCfg")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &EmptyRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *OssApiClientProxyImpl) OssModeCfgDetail(ctx context.Context, req *OssModeCfgDetailReq, opts ...client.Option) (*OssModeCfg, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/external/admin/ossModeCfgDetail")
+	msg.WithCalleeServiceName(OssApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("OssApi")
+	msg.WithCalleeMethod("OssModeCfgDetail")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &OssModeCfg{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}

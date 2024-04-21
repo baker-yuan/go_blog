@@ -35,6 +35,81 @@ func (m *MockOssApiService) EXPECT() *MockOssApiServiceMockRecorder {
 	return m.recorder
 }
 
+// AddOrUpdateOssModeCfg mocks base method.
+func (m *MockOssApiService) AddOrUpdateOssModeCfg(ctx context.Context, req *AddOrUpdateOssModeCfgReq) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddOrUpdateOssModeCfg", ctx, req)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateOssModeCfg indicates an expected call of AddOrUpdateOssModeCfg.
+func (mr *MockOssApiServiceMockRecorder) AddOrUpdateOssModeCfg(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateOssModeCfg", reflect.TypeOf((*MockOssApiService)(nil).AddOrUpdateOssModeCfg), ctx, req)
+}
+
+// DeleteOssModeCfg mocks base method.
+func (m *MockOssApiService) DeleteOssModeCfg(ctx context.Context, req *DeleteOssModeCfgReq) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteOssModeCfg", ctx, req)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteOssModeCfg indicates an expected call of DeleteOssModeCfg.
+func (mr *MockOssApiServiceMockRecorder) DeleteOssModeCfg(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteOssModeCfg", reflect.TypeOf((*MockOssApiService)(nil).DeleteOssModeCfg), ctx, req)
+}
+
+// GetUploadSign mocks base method.
+func (m *MockOssApiService) GetUploadSign(ctx context.Context, req *GetUploadSignReq) (*GetUploadSignRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUploadSign", ctx, req)
+	ret0, _ := ret[0].(*GetUploadSignRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUploadSign indicates an expected call of GetUploadSign.
+func (mr *MockOssApiServiceMockRecorder) GetUploadSign(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUploadSign", reflect.TypeOf((*MockOssApiService)(nil).GetUploadSign), ctx, req)
+}
+
+// OssModeCfgDetail mocks base method.
+func (m *MockOssApiService) OssModeCfgDetail(ctx context.Context, req *OssModeCfgDetailReq) (*OssModeCfg, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "OssModeCfgDetail", ctx, req)
+	ret0, _ := ret[0].(*OssModeCfg)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// OssModeCfgDetail indicates an expected call of OssModeCfgDetail.
+func (mr *MockOssApiServiceMockRecorder) OssModeCfgDetail(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "OssModeCfgDetail", reflect.TypeOf((*MockOssApiService)(nil).OssModeCfgDetail), ctx, req)
+}
+
+// SearchOssModeCfg mocks base method.
+func (m *MockOssApiService) SearchOssModeCfg(ctx context.Context, req *SearchOssModeCfgReq) (*SearchOssModeCfgRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SearchOssModeCfg", ctx, req)
+	ret0, _ := ret[0].(*SearchOssModeCfgRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchOssModeCfg indicates an expected call of SearchOssModeCfg.
+func (mr *MockOssApiServiceMockRecorder) SearchOssModeCfg(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchOssModeCfg", reflect.TypeOf((*MockOssApiService)(nil).SearchOssModeCfg), ctx, req)
+}
+
 // SearchOssUploadRecord mocks base method.
 func (m *MockOssApiService) SearchOssUploadRecord(ctx context.Context, req *SearchOssUploadRecordReq) (*SearchOssUploadRecordRsp, error) {
 	m.ctrl.T.Helper()
@@ -71,6 +146,106 @@ func NewMockOssApiClientProxy(ctrl *gomock.Controller) *MockOssApiClientProxy {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockOssApiClientProxy) EXPECT() *MockOssApiClientProxyMockRecorder {
 	return m.recorder
+}
+
+// AddOrUpdateOssModeCfg mocks base method.
+func (m *MockOssApiClientProxy) AddOrUpdateOssModeCfg(ctx context.Context, req *AddOrUpdateOssModeCfgReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AddOrUpdateOssModeCfg", varargs...)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateOssModeCfg indicates an expected call of AddOrUpdateOssModeCfg.
+func (mr *MockOssApiClientProxyMockRecorder) AddOrUpdateOssModeCfg(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateOssModeCfg", reflect.TypeOf((*MockOssApiClientProxy)(nil).AddOrUpdateOssModeCfg), varargs...)
+}
+
+// DeleteOssModeCfg mocks base method.
+func (m *MockOssApiClientProxy) DeleteOssModeCfg(ctx context.Context, req *DeleteOssModeCfgReq, opts ...client.Option) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteOssModeCfg", varargs...)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteOssModeCfg indicates an expected call of DeleteOssModeCfg.
+func (mr *MockOssApiClientProxyMockRecorder) DeleteOssModeCfg(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteOssModeCfg", reflect.TypeOf((*MockOssApiClientProxy)(nil).DeleteOssModeCfg), varargs...)
+}
+
+// GetUploadSign mocks base method.
+func (m *MockOssApiClientProxy) GetUploadSign(ctx context.Context, req *GetUploadSignReq, opts ...client.Option) (*GetUploadSignRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetUploadSign", varargs...)
+	ret0, _ := ret[0].(*GetUploadSignRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUploadSign indicates an expected call of GetUploadSign.
+func (mr *MockOssApiClientProxyMockRecorder) GetUploadSign(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUploadSign", reflect.TypeOf((*MockOssApiClientProxy)(nil).GetUploadSign), varargs...)
+}
+
+// OssModeCfgDetail mocks base method.
+func (m *MockOssApiClientProxy) OssModeCfgDetail(ctx context.Context, req *OssModeCfgDetailReq, opts ...client.Option) (*OssModeCfg, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "OssModeCfgDetail", varargs...)
+	ret0, _ := ret[0].(*OssModeCfg)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// OssModeCfgDetail indicates an expected call of OssModeCfgDetail.
+func (mr *MockOssApiClientProxyMockRecorder) OssModeCfgDetail(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "OssModeCfgDetail", reflect.TypeOf((*MockOssApiClientProxy)(nil).OssModeCfgDetail), varargs...)
+}
+
+// SearchOssModeCfg mocks base method.
+func (m *MockOssApiClientProxy) SearchOssModeCfg(ctx context.Context, req *SearchOssModeCfgReq, opts ...client.Option) (*SearchOssModeCfgRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SearchOssModeCfg", varargs...)
+	ret0, _ := ret[0].(*SearchOssModeCfgRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchOssModeCfg indicates an expected call of SearchOssModeCfg.
+func (mr *MockOssApiClientProxyMockRecorder) SearchOssModeCfg(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchOssModeCfg", reflect.TypeOf((*MockOssApiClientProxy)(nil).SearchOssModeCfg), varargs...)
 }
 
 // SearchOssUploadRecord mocks base method.

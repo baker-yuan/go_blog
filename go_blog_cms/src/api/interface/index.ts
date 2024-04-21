@@ -405,3 +405,76 @@ export namespace Page {
   // 分页查询页面
   export interface ReqPageListParams extends ReqPage {}
 }
+
+// OSS文件上传记录管理模块
+export namespace OssUploadRecord {
+  // OSS厂商枚举
+  export enum OssType {
+    OssType_UNKNOWN = 0, // 未知
+    OssType_ALI_YUN = 1 // 阿里云
+  }
+  // 上传状态枚举
+  export enum OssStatus {
+    OssStatus_UNPROCESSED = 0, // 未处理
+    OssStatus_GEN_SIGN = 1, // 获取签名
+    OssStatus_SUCCESS = 2, // 上传成功
+    OssStatus_FAILURE = 3 // 上传失败
+  }
+  // OSS文件上传记录模型
+  export interface Model {
+    id: number; // 主键
+    uid: number; // 用户ID
+    patch: string; // 文件路径
+    mode: string; // 模块
+    osType: OssType; // OSS厂商 1-阿里云
+    status: OssStatus; // 状态 0-未处理 1-上传成功 2-上传失败
+    // 公共字段
+    createUserId: number;
+    updateUserId: number;
+    createTime: number;
+    updateTime: number;
+    // 查询补充
+    createUser: string; // 创建人
+    updateUser: string; // 更新人
+  }
+
+  // 分页查询OSS文件上传记录
+  export interface ReqOssUploadRecordListParams extends ReqPage {}
+}
+
+export namespace UploadSign {
+  export interface Req {
+    mode: string; // 模块
+    fileName: string; // 文件名称
+    contentMd5: string; // 文件md5值
+  }
+  export interface Rsp {
+    imageUrl: string; // 图片地址
+    imagePath: string; // 相对路径
+    uploadUrl: string; // 上传地址
+    formData: { [key: string]: string }; // 表单参数
+    osType: OssUploadRecord.OssType; // OSS厂商 1-阿里云
+  }
+}
+
+// 文件路径管理模块
+export namespace OssModeCfg {
+  // 文件路径模型
+  export interface Model {
+    id: number; // 主键
+    mode: string; // 模块
+    path: string; // 路径
+    desc: string; // 描述
+    // 公共字段
+    createUserId: number;
+    updateUserId: number;
+    createTime: number;
+    updateTime: number;
+    // 查询补充
+    createUser: string; // 创建人
+    updateUser: string; // 更新人
+  }
+
+  // 分页查询文件路径
+  export interface ReqOssModeCfgListParams extends ReqPage {}
+}

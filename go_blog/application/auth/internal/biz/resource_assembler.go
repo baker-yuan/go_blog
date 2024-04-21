@@ -7,16 +7,16 @@ import (
 )
 
 // ResourceEntityListToModel entity转pb
-func ResourceEntityListToModel(resourceList []*Resource, treeNodeMap map[uint32][]*pb.TreeNode) []*pb.Resource {
+func ResourceEntityListToModel(resourceList []*Resource, uidToNameMap map[uint32]string, treeNodeMap map[uint32][]*pb.TreeNode) []*pb.Resource {
 	res := make([]*pb.Resource, 0)
 	for _, item := range resourceList {
-		res = append(res, ResourceEntityToModel(item, treeNodeMap))
+		res = append(res, ResourceEntityToModel(item, uidToNameMap, treeNodeMap))
 	}
 	return res
 }
 
 // ResourceEntityToModel entity转pb
-func ResourceEntityToModel(resource *Resource, treeNodeMap map[uint32][]*pb.TreeNode) *pb.Resource {
+func ResourceEntityToModel(resource *Resource, uidToNameMap map[uint32]string, treeNodeMap map[uint32][]*pb.TreeNode) *pb.Resource {
 	modelRes := &pb.Resource{
 		// 基本信息
 		Id:         resource.ID,
@@ -47,6 +47,8 @@ func ResourceEntityToModel(resource *Resource, treeNodeMap map[uint32][]*pb.Tree
 		}
 		modelRes.TreeNodePath = strings.Join(treeNodePath, "/")
 	}
+	modelRes.CreateUser = uidToNameMap[resource.CreateUserID]
+	modelRes.UpdateUser = uidToNameMap[resource.UpdateUserID]
 	return modelRes
 }
 

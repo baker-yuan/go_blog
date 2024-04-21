@@ -10,10 +10,10 @@ import (
 type UploadRecord struct {
 	ID     uint32       `gorm:"primary_key;column:id;type:int unsigned auto_increment;comment:主键"`
 	UID    uint32       `gorm:"column:uid;type:int unsigned;not null;default:0;comment:用户ID"`
-	Patch  string       `gorm:"column:patch;type:varchar(250);not null;default:'';comment:文件路径"`
+	Patch  string       `gorm:"column:patch;type:varchar(250);not null;default:'';comment:图片路径"`
 	Mode   string       `gorm:"column:mode;type:varchar(64);not null;default:'';comment:模块"`
 	OSType pb.OssType   `gorm:"column:os_type;type:tinyint;not null;default:0;comment:OSS厂商 1-阿里云"`
-	Status pb.OssStatus `gorm:"column:status;type:tinyint;not null;default:0;comment:状态 0-未处理 1-上传成功 2-上传失败"`
+	Status pb.OssStatus `gorm:"column:status;type:tinyint;not null;default:0;comment:状态 0-未处理 1-以获取签名 2-上传成功 3-上传失败"`
 	// 公共字段
 	CreateUserID uint32       `gorm:"column:create_user_id;type:int unsigned;not null;default:0;comment:创建人id"`
 	UpdateUserID uint32       `gorm:"column:update_user_id;type:int unsigned;not null;default:0;comment:更新人id"`
@@ -23,21 +23,21 @@ type UploadRecord struct {
 
 // TableName 设置 UploadRecord 结构体对应的数据库表名
 func (UploadRecord) TableName() string {
-	return OssUploadRecordTbName
+	return UploadRecordTbName
 }
 
 var (
-	OssUploadRecordTbName            = "oss_upload_record"
-	OssUploadRecordFieldId           = "id"
-	OssUploadRecordFieldUid          = "uid"
-	OssUploadRecordFieldPatch        = "patch"
-	OssUploadRecordFieldMode         = "mode"
-	OssUploadRecordFieldOsType       = "os_type"
-	OssUploadRecordFieldStatus       = "status"
-	OssUploadRecordFieldCreateTime   = "create_time"
-	OssUploadRecordFieldUpdateTime   = "update_time"
-	OssUploadRecordFieldCreateUserId = "create_user_id"
-	OssUploadRecordFieldUpdateUserId = "update_user_id"
+	UploadRecordTbName            = "oss_upload_record"
+	UploadRecordFieldId           = "id"
+	UploadRecordFieldUid          = "uid"
+	UploadRecordFieldPatch        = "patch"
+	UploadRecordFieldMode         = "mode"
+	UploadRecordFieldOsType       = "os_type"
+	UploadRecordFieldStatus       = "status"
+	UploadRecordFieldCreateTime   = "create_time"
+	UploadRecordFieldUpdateTime   = "update_time"
+	UploadRecordFieldCreateUserID = "create_user_id"
+	UploadRecordFieldUpdateUserID = "update_user_id"
 )
 
 type UploadRecords []*UploadRecord

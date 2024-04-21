@@ -43,7 +43,7 @@ server:
   service:
     - name: trpc.blog.http.ExternalApi
       # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
-      address: 127.0.0.1:3100
+      address: 127.0.0.1:8100
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
@@ -52,9 +52,15 @@ server:
       timeout: 2000
       # 选填，使用哪个注册中心 polarismesh
       registry: polarismesh
+    - name: trpc.blog.http_no_protocol.ExternalApi
+      port: 8080
+      network: tcp
+      protocol: http_no_protocol
+      timeout: 3000
+      registry: polarismesh
     - name: trpc.blog.trpc.ExternalApi
       # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
-      address: 127.0.0.1:3201
+      address: 127.0.0.1:8201
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
@@ -147,3 +153,8 @@ client:
     # mysql
     - name: trpc.mysql.blog.external
       target: dsn://root:123456@tcp(127.0.0.1:3306)/baker_blog_tdp?charset=utf8mb4&parseTime=True
+    # 请求用户服务配置
+    - callee: go_blog.user.UserApi
+      target: polarismesh://trpc.blog.user.UserApiTrpc
+      timeout: 1000
+      disable_servicerouter: false

@@ -13,7 +13,7 @@ func (m *BlogServiceImpl) Search$!{tableInfo.name}(ctx context.Context, req *pb.
 		return nil, err
 	}
 	rsp.Data = $!tool.firstLowerCase($!{tableInfo.name})s
-	rsp.Total = pageTotal
+	rsp.PageTotal = pageTotal
 	return rsp, nil
 }
 

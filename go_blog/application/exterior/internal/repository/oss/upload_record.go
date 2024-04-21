@@ -3,11 +3,12 @@ package oss
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	oss_model "github.com/baker-yuan/go-blog/go_blog/application/exterior/internal/model/oss"
 	"github.com/baker-yuan/go-blog/go_blog/common/db"
 	"github.com/baker-yuan/go-blog/go_blog/common/util"
-	pb "github.com/baker-yuan/go-blog/go_blog/protocol/exterior"
+	oss_pb "github.com/baker-yuan/go-blog/go_blog/protocol/exterior"
 	"gorm.io/gorm"
 )
 
@@ -26,7 +27,9 @@ type (
 		// DeleteByID 根据ID删除OSS文件上传记录
 		DeleteByID(ctx context.Context, id uint32) error
 		// SearchOssUploadRecord OSS文件上传记录搜索
-		SearchOssUploadRecord(ctx context.Context, req *pb.SearchOssUploadRecordReq) (oss_model.UploadRecords, uint32, error)
+		SearchOssUploadRecord(ctx context.Context, req *oss_pb.SearchOssUploadRecordReq) (oss_model.UploadRecords, uint32, error)
+		// GetOssUploadRecordByPatch 根据OSS文件上传path查询OSS文件上传记录
+		GetOssUploadRecordByPatch(ctx context.Context, patch string) (*oss_model.UploadRecord, error)
 	}
 )
 
@@ -48,8 +51,8 @@ var _ IUploadRecordRepo = &UploadRecordRepo{}
 var (
 	// 全字段修改OssUploadRecord那些字段不修改
 	notUpdateOssUploadRecordField = []string{
-		"created_at",
-		"create_time",
+		oss_model.UploadRecordFieldCreateTime,
+		oss_model.UploadRecordFieldCreateUserID,
 	}
 	updateOssUploadRecordField []string
 )
@@ -111,7 +114,7 @@ func (r *UploadRecordRepo) DeleteByID(ctx context.Context, id uint32) error {
 }
 
 // SearchOssUploadRecord OSS文件上传记录搜索
-func (r *UploadRecordRepo) SearchOssUploadRecord(ctx context.Context, req *pb.SearchOssUploadRecordReq) (oss_model.UploadRecords, uint32, error) {
+func (r *UploadRecordRepo) SearchOssUploadRecord(ctx context.Context, req *oss_pb.SearchOssUploadRecordReq) (oss_model.UploadRecords, uint32, error) {
 	var (
 		res       []*oss_model.UploadRecord
 		pageTotal int64
@@ -127,6 +130,7 @@ func (r *UploadRecordRepo) SearchOssUploadRecord(ctx context.Context, req *pb.Se
 	if err != nil {
 		return nil, 0, err
 	}
+	tx = tx.Order(fmt.Sprintf("%s DESC", oss_model.UploadRecordFieldId))
 	tx = tx.Offset(int((req.GetPageNum() - 1) * req.GetPageSize())).
 		Limit(int(req.GetPageSize())).Find(&res).
 		Offset(-1).Limit(-1).Count(&pageTotal)
@@ -134,4 +138,18 @@ func (r *UploadRecordRepo) SearchOssUploadRecord(ctx context.Context, req *pb.Se
 		return nil, 0, err
 	}
 	return res, uint32(pageTotal), nil
+}
+
+// GetOssUploadRecordByPatch 根据OSS文件上传path查询OSS文件上传记录
+func (r *UploadRecordRepo) GetOssUploadRecordByPatch(ctx context.Context, patch string) (*oss_model.UploadRecord, error) {
+	tx := r.GenericDao.GetDB(ctx)
+	tx = tx.Where(oss_model.UploadRecordFieldPatch, patch)
+	res := &oss_model.UploadRecord{}
+	if err := tx.Find(&res).Error; err != nil {
+		return nil, err
+	}
+	if res.ID == 0 {
+		return nil, nil
+	}
+	return res, nil
 }

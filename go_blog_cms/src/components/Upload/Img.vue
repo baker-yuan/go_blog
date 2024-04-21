@@ -35,7 +35,6 @@
         <div class="upload-empty">
           <slot name="empty">
             <el-icon><Plus /></el-icon>
-            <!-- <span>请上传图片</span> -->
           </slot>
         </div>
       </template>

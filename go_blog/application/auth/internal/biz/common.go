@@ -3,7 +3,9 @@ package biz
 import (
 	"context"
 
+	"github.com/baker-yuan/go-blog/go_blog/common/util"
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
+	user_pb "github.com/baker-yuan/go-blog/go_blog/protocol/user"
 )
 
 // CommonUseCase 通用service
@@ -94,4 +96,19 @@ func (c *CommonUseCase) buildTree(nodes []*pb.TreeNode) []*pb.TreeNode {
 		}
 	}
 	return rootNodes
+}
+
+// UidToName 根据用户ID获取用户名称
+func (c *CommonUseCase) UidToName(ctx context.Context, userIDs ...uint32) (map[uint32]string, error) {
+	userIDs = util.NewSliceUtils[uint32]().SliceFilter(userIDs, func(u uint32) bool {
+		return u == 0
+	})
+	proxy := user_pb.NewUserApiClientProxy()
+	rsp, err := proxy.UidToName(ctx, &user_pb.UidToNameReq{
+		UserIds: userIDs,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return rsp.GetUidToNameMap(), nil
 }

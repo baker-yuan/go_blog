@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/envoyproxy/protoc-gen-validate v1.0.4
-	google.golang.org/protobuf v1.33.0
+	google.golang.org/protobuf v1.34.0
 	trpc.group/trpc-go/trpc-go v1.0.2
 	trpc.group/trpc/trpc-protocol/pb/go/trpc v1.0.0
 )

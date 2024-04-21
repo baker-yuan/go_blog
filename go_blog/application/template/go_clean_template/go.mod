@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/baker-yuan/go-blog/go_blog/common v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/go_blog/protocol/template v0.0.0-incompatible
-	google.golang.org/protobuf v1.33.0
+	google.golang.org/protobuf v1.34.0
 	gorm.io/gorm v1.25.7
 	gorm.io/plugin/soft_delete v1.2.1
 	trpc.group/trpc-go/trpc-database/gorm v1.0.0

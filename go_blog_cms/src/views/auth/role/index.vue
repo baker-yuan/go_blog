@@ -92,10 +92,10 @@ const columns = reactive<ColumnProps<Role.Model>[]>([
     label: "是否启用",
     width: 200
   },
-  { prop: "createUser", label: "创建人", width: 120, showOverflowTooltip: false },
-  { prop: "updateUser", label: "更新人", width: 120, showOverflowTooltip: false },
-  { prop: "createTime", label: "创建时间", width: 180, showOverflowTooltip: false },
-  { prop: "updateTime", label: "修改时间", width: 180, showOverflowTooltip: false },
+  { prop: "createUser", label: "创建人", minWidth: 120, showOverflowTooltip: false },
+  { prop: "updateUser", label: "更新人", minWidth: 120, showOverflowTooltip: false },
+  { prop: "createTime", label: "创建时间", minWidth: 180, showOverflowTooltip: false },
+  { prop: "updateTime", label: "修改时间", minWidth: 180, showOverflowTooltip: false },
   { prop: "operation", label: "操作", fixed: "right", width: 350 }
 ]);
 
