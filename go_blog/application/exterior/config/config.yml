@@ -1,2 +1,7 @@
 # oss文件上传
 oss:
+#  access_key_id:
+#  access_key_secret:
+  bucket_name: baker-bucket-test
+  endpoint: oss-cn-beijing.aliyuncs.com
+  callback_url: http://hcs5vt.natappfree.cc/external/callback/aliOss
