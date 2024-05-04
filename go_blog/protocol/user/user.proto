@@ -83,8 +83,12 @@ message SearchUserReq {
 }
 
 message SearchUserRsp {
-  uint32 page_total = 1; // 分页查询
-  repeated User data = 2; // 用户集合
+  repeated User data = 1; // 用户集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 // 用户详情

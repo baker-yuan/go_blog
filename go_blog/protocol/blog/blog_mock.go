@@ -65,6 +65,21 @@ func (mr *MockBlogApiServiceMockRecorder) AddOrUpdateCategory(ctx, req interface
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateCategory", reflect.TypeOf((*MockBlogApiService)(nil).AddOrUpdateCategory), ctx, req)
 }
 
+// AddOrUpdateDynamicConfig mocks base method.
+func (m *MockBlogApiService) AddOrUpdateDynamicConfig(ctx context.Context, req *AddOrUpdateDynamicConfigReq) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddOrUpdateDynamicConfig", ctx, req)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateDynamicConfig indicates an expected call of AddOrUpdateDynamicConfig.
+func (mr *MockBlogApiServiceMockRecorder) AddOrUpdateDynamicConfig(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateDynamicConfig", reflect.TypeOf((*MockBlogApiService)(nil).AddOrUpdateDynamicConfig), ctx, req)
+}
+
 // AddOrUpdateFriendLink mocks base method.
 func (m *MockBlogApiService) AddOrUpdateFriendLink(ctx context.Context, req *AddOrUpdateFriendLinkReq) (*AddOrUpdateRsp, error) {
 	m.ctrl.T.Helper()
@@ -170,6 +185,21 @@ func (mr *MockBlogApiServiceMockRecorder) DeleteCategory(ctx, req interface{}) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCategory", reflect.TypeOf((*MockBlogApiService)(nil).DeleteCategory), ctx, req)
 }
 
+// DeleteDynamicConfig mocks base method.
+func (m *MockBlogApiService) DeleteDynamicConfig(ctx context.Context, req *DeleteDynamicConfigReq) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteDynamicConfig", ctx, req)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteDynamicConfig indicates an expected call of DeleteDynamicConfig.
+func (mr *MockBlogApiServiceMockRecorder) DeleteDynamicConfig(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteDynamicConfig", reflect.TypeOf((*MockBlogApiService)(nil).DeleteDynamicConfig), ctx, req)
+}
+
 // DeleteFriendLink mocks base method.
 func (m *MockBlogApiService) DeleteFriendLink(ctx context.Context, req *DeleteFriendLinkReq) (*EmptyRsp, error) {
 	m.ctrl.T.Helper()
@@ -213,6 +243,21 @@ func (m *MockBlogApiService) DeleteTag(ctx context.Context, req *DeleteTagReq) (
 func (mr *MockBlogApiServiceMockRecorder) DeleteTag(ctx, req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTag", reflect.TypeOf((*MockBlogApiService)(nil).DeleteTag), ctx, req)
+}
+
+// DynamicConfigDetail mocks base method.
+func (m *MockBlogApiService) DynamicConfigDetail(ctx context.Context, req *DynamicConfigDetailReq) (*DynamicConfig, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DynamicConfigDetail", ctx, req)
+	ret0, _ := ret[0].(*DynamicConfig)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DynamicConfigDetail indicates an expected call of DynamicConfigDetail.
+func (mr *MockBlogApiServiceMockRecorder) DynamicConfigDetail(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DynamicConfigDetail", reflect.TypeOf((*MockBlogApiService)(nil).DynamicConfigDetail), ctx, req)
 }
 
 // FriendLinkDetail mocks base method.
@@ -273,6 +318,21 @@ func (m *MockBlogApiService) SearchCategory(ctx context.Context, req *SearchCate
 func (mr *MockBlogApiServiceMockRecorder) SearchCategory(ctx, req interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchCategory", reflect.TypeOf((*MockBlogApiService)(nil).SearchCategory), ctx, req)
+}
+
+// SearchDynamicConfig mocks base method.
+func (m *MockBlogApiService) SearchDynamicConfig(ctx context.Context, req *SearchDynamicConfigReq) (*SearchDynamicConfigRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SearchDynamicConfig", ctx, req)
+	ret0, _ := ret[0].(*SearchDynamicConfigRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchDynamicConfig indicates an expected call of SearchDynamicConfig.
+func (mr *MockBlogApiServiceMockRecorder) SearchDynamicConfig(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchDynamicConfig", reflect.TypeOf((*MockBlogApiService)(nil).SearchDynamicConfig), ctx, req)
 }
 
 // SearchFriendLink mocks base method.
@@ -396,6 +456,26 @@ func (mr *MockBlogApiClientProxyMockRecorder) AddOrUpdateCategory(ctx, req inter
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateCategory", reflect.TypeOf((*MockBlogApiClientProxy)(nil).AddOrUpdateCategory), varargs...)
+}
+
+// AddOrUpdateDynamicConfig mocks base method.
+func (m *MockBlogApiClientProxy) AddOrUpdateDynamicConfig(ctx context.Context, req *AddOrUpdateDynamicConfigReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AddOrUpdateDynamicConfig", varargs...)
+	ret0, _ := ret[0].(*AddOrUpdateRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddOrUpdateDynamicConfig indicates an expected call of AddOrUpdateDynamicConfig.
+func (mr *MockBlogApiClientProxyMockRecorder) AddOrUpdateDynamicConfig(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddOrUpdateDynamicConfig", reflect.TypeOf((*MockBlogApiClientProxy)(nil).AddOrUpdateDynamicConfig), varargs...)
 }
 
 // AddOrUpdateFriendLink mocks base method.
@@ -538,6 +618,26 @@ func (mr *MockBlogApiClientProxyMockRecorder) DeleteCategory(ctx, req interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCategory", reflect.TypeOf((*MockBlogApiClientProxy)(nil).DeleteCategory), varargs...)
 }
 
+// DeleteDynamicConfig mocks base method.
+func (m *MockBlogApiClientProxy) DeleteDynamicConfig(ctx context.Context, req *DeleteDynamicConfigReq, opts ...client.Option) (*EmptyRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteDynamicConfig", varargs...)
+	ret0, _ := ret[0].(*EmptyRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteDynamicConfig indicates an expected call of DeleteDynamicConfig.
+func (mr *MockBlogApiClientProxyMockRecorder) DeleteDynamicConfig(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteDynamicConfig", reflect.TypeOf((*MockBlogApiClientProxy)(nil).DeleteDynamicConfig), varargs...)
+}
+
 // DeleteFriendLink mocks base method.
 func (m *MockBlogApiClientProxy) DeleteFriendLink(ctx context.Context, req *DeleteFriendLinkReq, opts ...client.Option) (*EmptyRsp, error) {
 	m.ctrl.T.Helper()
@@ -596,6 +696,26 @@ func (mr *MockBlogApiClientProxyMockRecorder) DeleteTag(ctx, req interface{}, op
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTag", reflect.TypeOf((*MockBlogApiClientProxy)(nil).DeleteTag), varargs...)
+}
+
+// DynamicConfigDetail mocks base method.
+func (m *MockBlogApiClientProxy) DynamicConfigDetail(ctx context.Context, req *DynamicConfigDetailReq, opts ...client.Option) (*DynamicConfig, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DynamicConfigDetail", varargs...)
+	ret0, _ := ret[0].(*DynamicConfig)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DynamicConfigDetail indicates an expected call of DynamicConfigDetail.
+func (mr *MockBlogApiClientProxyMockRecorder) DynamicConfigDetail(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DynamicConfigDetail", reflect.TypeOf((*MockBlogApiClientProxy)(nil).DynamicConfigDetail), varargs...)
 }
 
 // FriendLinkDetail mocks base method.
@@ -676,6 +796,26 @@ func (mr *MockBlogApiClientProxyMockRecorder) SearchCategory(ctx, req interface{
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchCategory", reflect.TypeOf((*MockBlogApiClientProxy)(nil).SearchCategory), varargs...)
+}
+
+// SearchDynamicConfig mocks base method.
+func (m *MockBlogApiClientProxy) SearchDynamicConfig(ctx context.Context, req *SearchDynamicConfigReq, opts ...client.Option) (*SearchDynamicConfigRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SearchDynamicConfig", varargs...)
+	ret0, _ := ret[0].(*SearchDynamicConfigRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SearchDynamicConfig indicates an expected call of SearchDynamicConfig.
+func (mr *MockBlogApiClientProxyMockRecorder) SearchDynamicConfig(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchDynamicConfig", reflect.TypeOf((*MockBlogApiClientProxy)(nil).SearchDynamicConfig), varargs...)
 }
 
 // SearchFriendLink mocks base method.

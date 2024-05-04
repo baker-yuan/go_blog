@@ -6,22 +6,22 @@ replace (
 	github.com/baker-yuan/go-blog/go_blog/common => ./../../common
 	github.com/baker-yuan/go-blog/go_blog/filters/httptrace => ./../../filters/httptrace
 	github.com/baker-yuan/go-blog/go_blog/protocol/auth => ./../../protocol/auth
-	github.com/baker-yuan/go-blog/go_blog/retcode => ./../../retcode
 	github.com/baker-yuan/go-blog/go_blog/protocol/user => ./../../protocol/user
+	github.com/baker-yuan/go-blog/go_blog/retcode => ./../../retcode
 )
 
 require (
-    github.com/baker-yuan/go-blog/go_blog/protocol/user v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/go_blog/common v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/go_blog/filters/httptrace v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/go_blog/protocol/auth v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/protocol/user v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/go_blog/retcode v0.0.0-incompatible
 	github.com/google/wire v0.5.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	go.uber.org/automaxprocs v1.5.3 // indirect
 	google.golang.org/genproto v0.0.0-20221014213838-99cd37c6964a // indirect
 	google.golang.org/grpc v1.51.0 // indirect
-	google.golang.org/protobuf v1.33.0
+	google.golang.org/protobuf v1.34.0
 	gorm.io/gorm v1.25.7
 	trpc.group/trpc-go/trpc-database/gorm v1.0.0
 	trpc.group/trpc-go/trpc-filter/debuglog v1.0.0

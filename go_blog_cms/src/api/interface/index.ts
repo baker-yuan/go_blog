@@ -4,6 +4,11 @@ export interface Result {
   msg: string;
 }
 
+// 接口状态枚举
+export enum ResultCode {
+  SUCCESS = 0 // 成功
+}
+
 // 请求响应参数（包含data）
 export interface ResultData<T = any> extends Result {
   data: T;
@@ -477,4 +482,27 @@ export namespace OssModeCfg {
 
   // 分页查询文件路径
   export interface ReqOssModeCfgListParams extends ReqPage {}
+}
+
+// 动态配置管理模块
+export namespace DynamicConfig {
+  // 动态配置模型
+  export interface Model {
+    id: number; // 主键
+    bizType: string; // 业务类型
+    bizDesc: string; // 业务描述
+    content: string; // 内容
+    jsonSchema: string; // json内容约束
+    // 公共字段
+    createUserId: number;
+    updateUserId: number;
+    createTime: number;
+    updateTime: number;
+    // 查询补充
+    createUser: string; // 创建人
+    updateUser: string; // 更新人
+  }
+
+  // 分页查询动态配置
+  export interface ReqDynamicConfigListParams extends ReqPage {}
 }

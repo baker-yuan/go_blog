@@ -72,8 +72,12 @@ message SearchMenuReq {
 }
 
 message SearchMenuRsp {
-  uint32 page_total = 1; // 分页查询
   repeated Menu data = 2; // 菜单集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 // 菜单详情
@@ -113,7 +117,10 @@ message GetMenuTreeReq {
 message GetMenuTreeRsp {
   repeated Menu nodes = 1;
 
-  uint32 page_total = 10;
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 
@@ -185,8 +192,12 @@ message SearchResourceReq {
 }
 
 message SearchResourceRsp {
-  uint32 page_total = 1; // 分页查询
-  repeated Resource data = 2; // 接口集合
+  repeated Resource data = 1; // 接口集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 // 接口详情
@@ -256,8 +267,12 @@ message SearchRoleReq {
 }
 
 message SearchRoleRsp {
-  uint32 page_total = 1; // 分页查询
-  repeated Role data = 2; // 角色集合
+  repeated Role data = 1; // 角色集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 // 角色详情
@@ -392,8 +407,12 @@ message SearchTreeNodeReq {
 }
 
 message SearchTreeNodeRsp {
-  uint32 page_total = 1; // 分页查询
-  repeated TreeNode data = 2; // 树形结构表集合
+  repeated TreeNode data = 1; // 树形结构表集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 // 树形结构表详情

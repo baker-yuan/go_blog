@@ -14,7 +14,9 @@ func (s *AuthService) Search$!{tableInfo.name}(ctx context.Context, req *pb.Sear
 		return nil, err
 	}
 	rsp.Data = $!tool.firstLowerCase($!{tableInfo.name})s
-	rsp.Total = pageTotal
+	rsp.PageTotal = pageTotal
+    rsp.PageNum = req.GetPageNum()
+    rsp.PageSize = req.GetPageSize()
 	return rsp, nil
 }
 

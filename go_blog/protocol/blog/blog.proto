@@ -34,6 +34,7 @@ enum ResourceType {
   TB_Tag = 3; // 标签
   TB_FRIEND_LINK = 4; // 友链
   TB_PAGE = 5; // 页面
+  TB_DYNAMIC_CONFIG = 6; // 动态配置
 }
 
 
@@ -117,8 +118,12 @@ message SearchArticleReq {
 }
 
 message SearchArticleRsp {
-  uint32 total = 1; // 分页查询
-  repeated Article data = 2; // 文章集合
+  repeated Article data = 1; // 文章集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 // 文章详情
@@ -185,8 +190,12 @@ message SearchTagReq {
 }
 
 message SearchTagRsp {
-  uint32 total = 1; // 分页查询
   repeated Tag data = 2; // 文章标签集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 // 文章标签详情
@@ -234,8 +243,12 @@ message SearchPageReq {
 }
 
 message SearchPageRsp {
-  uint32 total = 1; // 分页查询
-  repeated Page data = 2; // 页面集合
+  repeated Page data = 1; // 页面集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 // 页面详情
@@ -309,8 +322,12 @@ message SearchFriendLinkReq {
 }
 
 message SearchFriendLinkRsp {
-  uint32 total = 1; // 分页查询
-  repeated FriendLink data = 2; // 友链表集合
+  repeated FriendLink data = 1; // 友链表集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 // 友链表详情
@@ -386,8 +403,12 @@ message SearchCategoryReq {
 }
 
 message SearchCategoryRsp {
-  uint32 total = 1; // 分页查询
-  repeated Category data = 2; // 文章分类集合
+  repeated Category data = 1; // 文章分类集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 // 文章分类详情
@@ -422,9 +443,58 @@ message ArticleTag {
   uint32 update_time = 5; // 更新时间
 }
 
+// 动态配置信息定义
+message DynamicConfig {
+  uint32 id = 1;                // 主键
+  string biz_type = 2;          // 业务类型
+  string biz_desc = 3;          // 业务描述
+  string content = 4;           // 内容
+  string json_schema = 5;       // json内容约束
+  // 公共字段
+  uint32 create_user_id = 1000;     // 创建人id
+  uint32 update_user_id = 1001;     // 更新人id
+  uint32 create_time = 1002;        // 创建时间
+  uint32 update_time = 1003;        // 更新时间
+  // 查询补充字段
+  string create_user = 2000;        // 创建人id
+  string update_user = 2001;        // 更新人id
+}
 
+// 动态配置搜索
+message SearchDynamicConfigReq {
+  string search = 1; // 查询条件 {a:?,b:?}
 
+  uint32 page_num = 100 [(validate.rules).uint32.gt = 0]; // 分页查询
+  uint32 page_size = 101 [(validate.rules).uint32.gt = 0]; // 分页查询
+}
 
+message SearchDynamicConfigRsp {
+  repeated DynamicConfig data = 1; // 动态配置集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
+}
+
+// 动态配置详情
+message DynamicConfigDetailReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
+
+// 添加修改动态配置
+message AddOrUpdateDynamicConfigReq {
+  uint32 id = 1;                // 主键
+  string biz_type = 2;          // 业务类型
+  string biz_desc = 3;          // 业务描述
+  string content = 4;           // 内容
+  string json_schema = 5;       // json内容约束
+}
+
+// 删除动态配置
+message DeleteDynamicConfigReq {
+  uint32 id = 1 [(validate.rules).uint32.gt = 0]; // 编号
+}
 
 
 
@@ -518,5 +588,20 @@ service BlogApi {
   }
 
 
-
+  // 动态配置搜索
+  rpc SearchDynamicConfig(SearchDynamicConfigReq) returns (SearchDynamicConfigRsp) {
+    option(trpc.alias) = "/blog/admin/searchDynamicConfig";
+  }
+  // 添加修改动态配置
+  rpc AddOrUpdateDynamicConfig(AddOrUpdateDynamicConfigReq) returns (AddOrUpdateRsp) {
+    option(trpc.alias) = "/blog/admin/addOrUpdateDynamicConfig";
+  }
+  // 删除动态配置
+  rpc DeleteDynamicConfig(DeleteDynamicConfigReq) returns (EmptyRsp)  {
+    option(trpc.alias) = "/blog/admin/deleteDynamicConfig";
+  }
+  // 动态配置详情
+  rpc DynamicConfigDetail(DynamicConfigDetailReq) returns (DynamicConfig)  {
+    option(trpc.alias) = "/blog/admin/dynamicConfigDetail";
+  }
 }

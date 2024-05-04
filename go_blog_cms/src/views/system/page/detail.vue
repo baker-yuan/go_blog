@@ -9,6 +9,17 @@
       :model="drawerProps.row"
       :hide-required-asterisk="drawerProps.isView"
     >
+      <el-form-item label="页面名" prop="pageName">
+        <el-input v-model="drawerProps.row!.pageName" placeholder="请填写页面名" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="页面标签" prop="pageLabel">
+        <el-input v-model="drawerProps.row!.pageLabel" placeholder="请填写页面标签" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="页面封面" prop="pageCover">
+        <SingleUpload v-model:value="drawerProps.row!.pageCover" mode="article">
+          <template #tip> 上传图片最大为3M </template>
+        </SingleUpload>
+      </el-form-item>
     </el-form>
     <template #footer>
       <el-button @click="drawerVisible = false">取消</el-button>
@@ -21,8 +32,13 @@
 import { ref, reactive } from "vue";
 import { ElMessage, FormInstance } from "element-plus";
 import { Page } from "@/api/interface";
+import SingleUpload from "@/components/Upload/SingleUpload.vue";
 
-const rules = reactive({});
+const rules = reactive({
+  pageName: [{ required: true, message: "请填写页面名" }],
+  pageLabel: [{ required: true, message: "请填写页面标签" }],
+  pageCover: [{ required: true, message: "请填写页面封面" }]
+});
 
 interface DrawerProps {
   title: string; // 标题

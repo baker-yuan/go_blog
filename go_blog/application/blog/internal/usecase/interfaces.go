@@ -173,3 +173,34 @@ type (
 		SearchPage(ctx context.Context, req *pb.SearchPageReq) (entity.Pages, uint32, error)
 	}
 )
+
+// DynamicConfig 动态配置
+type (
+	// IDynamicConfigUseCase 业务逻辑
+	IDynamicConfigUseCase interface {
+		// SearchDynamicConfig 查询动态配置
+		SearchDynamicConfig(ctx context.Context, req *pb.SearchDynamicConfigReq) ([]*pb.DynamicConfig, uint32, error)
+		// DynamicConfigDetail 动态配置详情
+		DynamicConfigDetail(ctx context.Context, req *pb.DynamicConfigDetailReq) (*pb.DynamicConfig, error)
+		// AddOrUpdateDynamicConfig 添加修改动态配置
+		AddOrUpdateDynamicConfig(ctx context.Context, req *pb.AddOrUpdateDynamicConfigReq) (uint32, error)
+		// DeleteDynamicConfig 删除动态配置
+		DeleteDynamicConfig(ctx context.Context, req *pb.DeleteDynamicConfigReq) error
+	}
+
+	// IDynamicConfigRepo 数据存储操作
+	IDynamicConfigRepo interface {
+		// GetDynamicConfigByID 根据动态配置id集合查询动态配置
+		GetDynamicConfigByID(ctx context.Context, id uint32) (*entity.DynamicConfig, error)
+		// GetDynamicConfigByIDs 根据动态配置id集合查询动态配置
+		GetDynamicConfigByIDs(ctx context.Context, ids []uint32) (entity.DynamicConfigs, error)
+		// Save 保存动态配置
+		Save(ctx context.Context, dynamicConfig *entity.DynamicConfig) (uint32, error)
+		// UpdateByID 根据ID修改动态配置
+		UpdateByID(ctx context.Context, dynamicConfig *entity.DynamicConfig) error
+		// DeleteByID 根据ID删除动态配置
+		DeleteByID(ctx context.Context, id uint32) error
+		// SearchDynamicConfig 动态配置搜索
+		SearchDynamicConfig(ctx context.Context, req *pb.SearchDynamicConfigReq) (entity.DynamicConfigs, uint32, error)
+	}
+)

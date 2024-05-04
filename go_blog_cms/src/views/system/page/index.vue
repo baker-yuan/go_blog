@@ -13,7 +13,22 @@
       <template #tableHeader>
         <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')">新增</el-button>
       </template>
-
+      <!-- 页面封面 -->
+      <template #pageCover="scope">
+        <el-image
+          style="width: 80px; height: 80px"
+          :src="scope.row.pageCover"
+          :preview-src-list="[scope.row.pageCover]"
+        ></el-image>
+      </template>
+      <!-- 创建时间 -->
+      <template #createTime="scope">
+        <div>{{ formatTimestamp(scope.row.createTime) }}</div>
+      </template>
+      <!-- 修改时间 -->
+      <template #updateTime="scope">
+        <div>{{ formatTimestamp(scope.row.updateTime) }}</div>
+      </template>
       <!-- 表格操作 -->
       <template #operation="scope">
         <el-button type="primary" link :icon="EditPen" @click="openDrawer('编辑', scope.row)">编辑</el-button>
@@ -32,14 +47,39 @@ import { ref, reactive } from "vue";
 import { useHandleData } from "@/hooks/useHandleData";
 import PageDrawer from "@/views/system/page/detail.vue";
 import { CirclePlus, Delete, EditPen } from "@element-plus/icons-vue";
-import { createPageApi, updatePageApi, deletePageApi, getPagesApi } from "@/api/modules/Page.ts";
+import { createPageApi, updatePageApi, deletePageApi, getPagesApi } from "@/api/modules/page.ts";
+import { formatTimestamp } from "@/utils/time";
 
 // ProTable 实例
 const proTable = ref<ProTableInstance>();
 
 // 表格配置项
 const columns = reactive<ColumnProps<Page.Model>[]>([
-  { type: "selection", fixed: "left", width: 70 },
+  {
+    prop: "pageName",
+    label: "页面名",
+    showOverflowTooltip: false,
+    width: 150,
+    search: { el: "input" }
+  },
+  {
+    prop: "pageLabel",
+    label: "页面标签",
+    showOverflowTooltip: false,
+    width: 150,
+    search: { el: "input" }
+  },
+  {
+    prop: "pageCover",
+    label: "页面封面",
+    showOverflowTooltip: false,
+    width: 150,
+    search: { el: "input" }
+  },
+  { prop: "createUser", label: "创建人", minWidth: 120, showOverflowTooltip: false },
+  { prop: "updateUser", label: "更新人", minWidth: 120, showOverflowTooltip: false },
+  { prop: "createTime", label: "创建时间", minWidth: 180, showOverflowTooltip: false },
+  { prop: "updateTime", label: "修改时间", minWidth: 180, showOverflowTooltip: false },
   { prop: "operation", label: "操作", fixed: "right", width: 170 }
 ]);
 

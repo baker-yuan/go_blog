@@ -9,11 +9,12 @@ import (
 
 // BlogServiceImpl 接口实现
 type BlogServiceImpl struct {
-	article    usecase.IArticleUseCase
-	category   usecase.ICategoryUseCase
-	tag        usecase.ITagUseCase
-	friendLink usecase.IFriendLinkUseCase
-	page       usecase.IPageUseCase
+	article       usecase.IArticleUseCase
+	category      usecase.ICategoryUseCase
+	tag           usecase.ITagUseCase
+	friendLink    usecase.IFriendLinkUseCase
+	page          usecase.IPageUseCase
+	dynamicConfig usecase.IDynamicConfigUseCase
 }
 
 // 强制BlogServiceImpl实现pb.BlogApiService
@@ -26,13 +27,15 @@ func NewBlogServiceImpl(
 	tag usecase.ITagUseCase,
 	friendLink usecase.IFriendLinkUseCase,
 	page usecase.IPageUseCase,
+	dynamicConfig usecase.IDynamicConfigUseCase,
 ) pb.BlogApiService {
 	return &BlogServiceImpl{
-		article:    articleUseCase,
-		category:   categoryUseCase,
-		tag:        tag,
-		friendLink: friendLink,
-		page:       page,
+		article:       articleUseCase,
+		category:      categoryUseCase,
+		tag:           tag,
+		friendLink:    friendLink,
+		page:          page,
+		dynamicConfig: dynamicConfig,
 	}
 }
 
@@ -44,7 +47,9 @@ func (m *BlogServiceImpl) SearchArticle(ctx context.Context, req *pb.SearchArtic
 		return nil, err
 	}
 	rsp.Data = articles
-	rsp.Total = pageTotal
+	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
 	return rsp, nil
 }
 
@@ -81,7 +86,9 @@ func (m *BlogServiceImpl) SearchCategory(ctx context.Context, req *pb.SearchCate
 		return nil, err
 	}
 	rsp.Data = categoryList
-	rsp.Total = pageTotal
+	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
 	return rsp, nil
 }
 
@@ -118,7 +125,9 @@ func (m *BlogServiceImpl) SearchTag(ctx context.Context, req *pb.SearchTagReq) (
 		return nil, err
 	}
 	rsp.Data = tags
-	rsp.Total = pageTotal
+	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
 	return rsp, nil
 }
 
@@ -155,7 +164,9 @@ func (m *BlogServiceImpl) SearchFriendLink(ctx context.Context, req *pb.SearchFr
 		return nil, err
 	}
 	rsp.Data = friendLinks
-	rsp.Total = pageTotal
+	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
 	return rsp, nil
 }
 
@@ -192,7 +203,9 @@ func (m *BlogServiceImpl) SearchPage(ctx context.Context, req *pb.SearchPageReq)
 		return nil, err
 	}
 	rsp.Data = pages
-	rsp.Total = pageTotal
+	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
 	return rsp, nil
 }
 
@@ -216,6 +229,45 @@ func (m *BlogServiceImpl) AddOrUpdatePage(ctx context.Context, req *pb.AddOrUpda
 func (m *BlogServiceImpl) DeletePage(ctx context.Context, req *pb.DeletePageReq) (*pb.EmptyRsp, error) {
 	rsp := &pb.EmptyRsp{}
 	if err := m.page.DeletePage(ctx, req); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+// SearchDynamicConfig 查询动态配置
+func (m *BlogServiceImpl) SearchDynamicConfig(ctx context.Context, req *pb.SearchDynamicConfigReq) (*pb.SearchDynamicConfigRsp, error) {
+	rsp := &pb.SearchDynamicConfigRsp{}
+	dynamicConfigs, pageTotal, err := m.dynamicConfig.SearchDynamicConfig(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Data = dynamicConfigs
+	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
+	return rsp, nil
+}
+
+// DynamicConfigDetail 动态配置详情
+func (m *BlogServiceImpl) DynamicConfigDetail(ctx context.Context, req *pb.DynamicConfigDetailReq) (*pb.DynamicConfig, error) {
+	return m.dynamicConfig.DynamicConfigDetail(ctx, req)
+}
+
+// AddOrUpdateDynamicConfig 添加修改动态配置
+func (m *BlogServiceImpl) AddOrUpdateDynamicConfig(ctx context.Context, req *pb.AddOrUpdateDynamicConfigReq) (*pb.AddOrUpdateRsp, error) {
+	rsp := &pb.AddOrUpdateRsp{}
+	id, err := m.dynamicConfig.AddOrUpdateDynamicConfig(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	rsp.Id = id
+	return rsp, nil
+}
+
+// DeleteDynamicConfig 删除动态配置
+func (m *BlogServiceImpl) DeleteDynamicConfig(ctx context.Context, req *pb.DeleteDynamicConfigReq) (*pb.EmptyRsp, error) {
+	rsp := &pb.EmptyRsp{}
+	if err := m.dynamicConfig.DeleteDynamicConfig(ctx, req); err != nil {
 		return nil, err
 	}
 	return rsp, nil

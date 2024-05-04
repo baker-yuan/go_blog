@@ -48,7 +48,7 @@ const proTable = ref<ProTableInstance>();
 
 // 表格配置项
 const columns = reactive<ColumnProps<Article.Model>[]>([
-  { type: "selection", fixed: "left", width: 70 },
+  // { type: "selection", fixed: "left", width: 70 },
   {
     prop: "id",
     label: "文章ID",

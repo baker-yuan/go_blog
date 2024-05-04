@@ -14,16 +14,16 @@ export const updateResourceApi = (resource: Resource.ResourceModel) => {
 
 // 分页查询接口资源表
 export const getResourcesApi = (params: Resource.ReqResourceListParams) => {
-  if (!params.pageSize) {
-    const error = new Error("stack trace");
-    console.log(error.stack);
-    params.pageSize = 10;
-  }
-  if (!params.pageNum) {
-    const error = new Error("stack trace");
-    console.log(error.stack);
-    params.pageNum = 1;
-  }
+  // if (!params.pageSize) {
+  //   const error = new Error("stack trace");
+  //   console.log(error.stack);
+  //   params.pageSize = 10;
+  // }
+  // if (!params.pageNum) {
+  //   const error = new Error("stack trace");
+  //   console.log(error.stack);
+  //   params.pageNum = 1;
+  // }
   return http.post<ResPage<Resource.ResourceModel>>(AuthSrv + `/admin/searchResource`, params);
 };
 

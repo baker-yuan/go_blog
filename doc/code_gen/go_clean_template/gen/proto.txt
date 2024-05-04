@@ -13,8 +13,12 @@ message Search$!{tableInfo.name}Req {
 }
 
 message Search$!{tableInfo.name}Rsp {
-  uint32 page_total = 1; // 分页查询
-  repeated $!{tableInfo.name} data = 2; // $!{tableInfo.comment}集合
+  repeated $!{tableInfo.name} data = 1; // $!{tableInfo.comment}集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 // $!{tableInfo.comment}详情

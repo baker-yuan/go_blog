@@ -34,6 +34,8 @@ func (s *AuthService) SearchMenu(ctx context.Context, req *pb.SearchMenuReq) (*p
 	}
 	rsp.Data = menus
 	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
 	return rsp, nil
 }
 
@@ -71,6 +73,8 @@ func (s *AuthService) GetMenuTree(ctx context.Context, req *pb.GetMenuTreeReq) (
 	}
 	rsp.Nodes = nodes
 	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
 	return rsp, nil
 }
 
@@ -83,6 +87,8 @@ func (s *AuthService) SearchResource(ctx context.Context, req *pb.SearchResource
 	}
 	rsp.Data = resources
 	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
 	return rsp, nil
 }
 
@@ -132,6 +138,8 @@ func (s *AuthService) SearchRole(ctx context.Context, req *pb.SearchRoleReq) (*p
 	}
 	rsp.Data = roles
 	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
 	return rsp, nil
 }
 
@@ -238,6 +246,8 @@ func (s *AuthService) SearchTreeNode(ctx context.Context, req *pb.SearchTreeNode
 	}
 	rsp.Data = treeNodes
 	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
 	return rsp, nil
 }
 

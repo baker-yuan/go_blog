@@ -4,4 +4,4 @@ oss:
 #  access_key_secret:
   bucket_name: baker-bucket-test
   endpoint: oss-cn-beijing.aliyuncs.com
-  callback_url: http://hcs5vt.natappfree.cc/external/callback/aliOss
+  callback_url: http://kbavgw.natappfree.cc/external/callback/aliOss

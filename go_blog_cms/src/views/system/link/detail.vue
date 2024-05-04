@@ -13,7 +13,7 @@
         <el-input v-model="drawerProps.row!.linkName" placeholder="请填写友链名称" clearable></el-input>
       </el-form-item>
       <el-form-item label="友链头像" prop="linkAvatar">
-        <UploadImg v-model:image-url="drawerProps.row!.linkAvatar">
+        <UploadImg v-model:image-url="drawerProps.row!.linkAvatar" mode="article">
           <template #tip> 上传图片最大为3M </template>
         </UploadImg>
       </el-form-item>

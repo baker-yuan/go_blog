@@ -66,8 +66,12 @@ message SearchOssUploadRecordReq {
 }
 
 message SearchOssUploadRecordRsp {
-  uint32 page_total = 1; // 分页查询
-  repeated OssUploadRecord data = 2; // OSS文件上传记录集合
+  repeated OssUploadRecord data = 1; // OSS文件上传记录集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 // GetUploadSignRsp 上传签名信息
@@ -128,8 +132,12 @@ message SearchOssModeCfgReq {
 }
 
 message SearchOssModeCfgRsp {
-  uint32 page_total = 1; // 分页查询
-  repeated OssModeCfg data = 2; // OSS模块配置集合
+  repeated OssModeCfg data = 1; // OSS模块配置集合
+
+  // 分页数据
+  uint32 page_total = 100; // 分页查询
+  uint32 page_num = 101; // 分页查询
+  uint32 page_size = 102; // 分页查询
 }
 
 // OSS模块配置详情

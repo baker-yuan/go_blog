@@ -59,8 +59,11 @@ export const useTable = (
     try {
       // 先把初始化参数和分页参数放到总参数里面
       Object.assign(state.totalParam, initParam, isPageable ? pageParam.value : {});
+      // 获取表格数据
       let { data } = await api({ ...state.searchInitParam, ...state.totalParam });
+      // 对后台返回的数据进行处理
       dataCallBack && (data = dataCallBack(data));
+      // 赋值
       state.tableData = isPageable ? data.list : data;
       // 解构后台返回的分页数据 (如果有分页更新分页信息)
       if (isPageable) {

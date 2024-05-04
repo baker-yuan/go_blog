@@ -4,16 +4,16 @@ go 1.18
 
 replace (
 	github.com/baker-yuan/go-blog/go_blog/common => ./../../common
-	github.com/baker-yuan/go-blog/go_blog/protocol/user => ./../../protocol/user
 	github.com/baker-yuan/go-blog/go_blog/filters/httptrace => ./../../filters/httptrace
-    github.com/baker-yuan/go-blog/go_blog/retcode => ./../../retcode
+	github.com/baker-yuan/go-blog/go_blog/protocol/user => ./../../protocol/user
+	github.com/baker-yuan/go-blog/go_blog/retcode => ./../../retcode
 )
 
 require (
-	github.com/baker-yuan/go-blog/go_blog/retcode v0.0.0-incompatible
-	github.com/baker-yuan/go-blog/go_blog/filters/httptrace v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/go_blog/common v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/filters/httptrace v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/go_blog/protocol/user v0.0.0-incompatible
+	github.com/baker-yuan/go-blog/go_blog/retcode v0.0.0-incompatible
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-redis/redis/v7 v7.4.1
@@ -128,7 +128,7 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20231120223509-83a465c0220f // indirect
 	google.golang.org/grpc v1.59.0 // indirect
-	google.golang.org/protobuf v1.33.0 // indirect
+	google.golang.org/protobuf v1.34.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/stretchr/testify.v1 v1.2.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect

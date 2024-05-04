@@ -14,16 +14,16 @@ export const updateArticleApi = (article: Article.Model) => {
 
 // 分页查询文章表
 export const getArticlesApi = (params: Article.ReqArticleListParams) => {
-  if (!params.pageSize) {
-    const error = new Error("stack trace");
-    console.log(error.stack);
-    params.pageSize = 10;
-  }
-  if (!params.pageNum) {
-    const error = new Error("stack trace");
-    console.log(error.stack);
-    params.pageNum = 1;
-  }
+  // if (!params.pageSize) {
+  //   const error = new Error("stack trace");
+  //   console.log(error.stack);
+  //   params.pageSize = 10;
+  // }
+  // if (!params.pageNum) {
+  //   const error = new Error("stack trace");
+  //   console.log(error.stack);
+  //   params.pageNum = 1;
+  // }
   return http.post<ResPage<Article.Model>>(BlogSrv + `/admin/searchArticle`, params);
 };
 

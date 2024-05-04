@@ -530,8 +530,6 @@ func (m *SearchArticleRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Total
-
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -565,6 +563,12 @@ func (m *SearchArticleRsp) validate(all bool) error {
 		}
 
 	}
+
+	// no validation rules for PageTotal
+
+	// no validation rules for PageNum
+
+	// no validation rules for PageSize
 
 	if len(errors) > 0 {
 		return SearchArticleRspMultiError(errors)
@@ -1357,8 +1361,6 @@ func (m *SearchTagRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Total
-
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -1392,6 +1394,12 @@ func (m *SearchTagRsp) validate(all bool) error {
 		}
 
 	}
+
+	// no validation rules for PageTotal
+
+	// no validation rules for PageNum
+
+	// no validation rules for PageSize
 
 	if len(errors) > 0 {
 		return SearchTagRspMultiError(errors)
@@ -2082,8 +2090,6 @@ func (m *SearchPageRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Total
-
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -2117,6 +2123,12 @@ func (m *SearchPageRsp) validate(all bool) error {
 		}
 
 	}
+
+	// no validation rules for PageTotal
+
+	// no validation rules for PageNum
+
+	// no validation rules for PageSize
 
 	if len(errors) > 0 {
 		return SearchPageRspMultiError(errors)
@@ -2950,8 +2962,6 @@ func (m *SearchFriendLinkRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Total
-
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -2985,6 +2995,12 @@ func (m *SearchFriendLinkRsp) validate(all bool) error {
 		}
 
 	}
+
+	// no validation rules for PageTotal
+
+	// no validation rules for PageNum
+
+	// no validation rules for PageSize
 
 	if len(errors) > 0 {
 		return SearchFriendLinkRspMultiError(errors)
@@ -3854,8 +3870,6 @@ func (m *SearchCategoryRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Total
-
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -3889,6 +3903,12 @@ func (m *SearchCategoryRsp) validate(all bool) error {
 		}
 
 	}
+
+	// no validation rules for PageTotal
+
+	// no validation rules for PageNum
+
+	// no validation rules for PageSize
 
 	if len(errors) > 0 {
 		return SearchCategoryRspMultiError(errors)
@@ -4448,3 +4468,732 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ArticleTagValidationError{}
+
+// Validate checks the field values on DynamicConfig with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *DynamicConfig) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DynamicConfig with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in DynamicConfigMultiError, or
+// nil if none found.
+func (m *DynamicConfig) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DynamicConfig) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for BizType
+
+	// no validation rules for BizDesc
+
+	// no validation rules for Content
+
+	// no validation rules for JsonSchema
+
+	// no validation rules for CreateUserId
+
+	// no validation rules for UpdateUserId
+
+	// no validation rules for CreateTime
+
+	// no validation rules for UpdateTime
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
+
+	if len(errors) > 0 {
+		return DynamicConfigMultiError(errors)
+	}
+
+	return nil
+}
+
+// DynamicConfigMultiError is an error wrapping multiple validation errors
+// returned by DynamicConfig.ValidateAll() if the designated constraints
+// aren't met.
+type DynamicConfigMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DynamicConfigMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DynamicConfigMultiError) AllErrors() []error { return m }
+
+// DynamicConfigValidationError is the validation error returned by
+// DynamicConfig.Validate if the designated constraints aren't met.
+type DynamicConfigValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DynamicConfigValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DynamicConfigValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DynamicConfigValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DynamicConfigValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DynamicConfigValidationError) ErrorName() string { return "DynamicConfigValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DynamicConfigValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDynamicConfig.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DynamicConfigValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DynamicConfigValidationError{}
+
+// Validate checks the field values on SearchDynamicConfigReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *SearchDynamicConfigReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchDynamicConfigReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SearchDynamicConfigReqMultiError, or nil if none found.
+func (m *SearchDynamicConfigReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchDynamicConfigReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Search
+
+	if m.GetPageNum() <= 0 {
+		err := SearchDynamicConfigReqValidationError{
+			field:  "PageNum",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetPageSize() <= 0 {
+		err := SearchDynamicConfigReqValidationError{
+			field:  "PageSize",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return SearchDynamicConfigReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchDynamicConfigReqMultiError is an error wrapping multiple validation
+// errors returned by SearchDynamicConfigReq.ValidateAll() if the designated
+// constraints aren't met.
+type SearchDynamicConfigReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchDynamicConfigReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchDynamicConfigReqMultiError) AllErrors() []error { return m }
+
+// SearchDynamicConfigReqValidationError is the validation error returned by
+// SearchDynamicConfigReq.Validate if the designated constraints aren't met.
+type SearchDynamicConfigReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchDynamicConfigReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchDynamicConfigReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchDynamicConfigReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchDynamicConfigReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchDynamicConfigReqValidationError) ErrorName() string {
+	return "SearchDynamicConfigReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SearchDynamicConfigReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchDynamicConfigReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchDynamicConfigReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchDynamicConfigReqValidationError{}
+
+// Validate checks the field values on SearchDynamicConfigRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *SearchDynamicConfigRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SearchDynamicConfigRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SearchDynamicConfigRspMultiError, or nil if none found.
+func (m *SearchDynamicConfigRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SearchDynamicConfigRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetData() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, SearchDynamicConfigRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, SearchDynamicConfigRspValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SearchDynamicConfigRspValidationError{
+					field:  fmt.Sprintf("Data[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	// no validation rules for PageTotal
+
+	// no validation rules for PageNum
+
+	// no validation rules for PageSize
+
+	if len(errors) > 0 {
+		return SearchDynamicConfigRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// SearchDynamicConfigRspMultiError is an error wrapping multiple validation
+// errors returned by SearchDynamicConfigRsp.ValidateAll() if the designated
+// constraints aren't met.
+type SearchDynamicConfigRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SearchDynamicConfigRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SearchDynamicConfigRspMultiError) AllErrors() []error { return m }
+
+// SearchDynamicConfigRspValidationError is the validation error returned by
+// SearchDynamicConfigRsp.Validate if the designated constraints aren't met.
+type SearchDynamicConfigRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SearchDynamicConfigRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SearchDynamicConfigRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SearchDynamicConfigRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SearchDynamicConfigRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SearchDynamicConfigRspValidationError) ErrorName() string {
+	return "SearchDynamicConfigRspValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SearchDynamicConfigRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSearchDynamicConfigRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SearchDynamicConfigRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SearchDynamicConfigRspValidationError{}
+
+// Validate checks the field values on DynamicConfigDetailReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DynamicConfigDetailReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DynamicConfigDetailReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DynamicConfigDetailReqMultiError, or nil if none found.
+func (m *DynamicConfigDetailReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DynamicConfigDetailReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := DynamicConfigDetailReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DynamicConfigDetailReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// DynamicConfigDetailReqMultiError is an error wrapping multiple validation
+// errors returned by DynamicConfigDetailReq.ValidateAll() if the designated
+// constraints aren't met.
+type DynamicConfigDetailReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DynamicConfigDetailReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DynamicConfigDetailReqMultiError) AllErrors() []error { return m }
+
+// DynamicConfigDetailReqValidationError is the validation error returned by
+// DynamicConfigDetailReq.Validate if the designated constraints aren't met.
+type DynamicConfigDetailReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DynamicConfigDetailReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DynamicConfigDetailReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DynamicConfigDetailReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DynamicConfigDetailReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DynamicConfigDetailReqValidationError) ErrorName() string {
+	return "DynamicConfigDetailReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DynamicConfigDetailReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDynamicConfigDetailReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DynamicConfigDetailReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DynamicConfigDetailReqValidationError{}
+
+// Validate checks the field values on AddOrUpdateDynamicConfigReq with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AddOrUpdateDynamicConfigReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddOrUpdateDynamicConfigReq with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddOrUpdateDynamicConfigReqMultiError, or nil if none found.
+func (m *AddOrUpdateDynamicConfigReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddOrUpdateDynamicConfigReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for BizType
+
+	// no validation rules for BizDesc
+
+	// no validation rules for Content
+
+	// no validation rules for JsonSchema
+
+	if len(errors) > 0 {
+		return AddOrUpdateDynamicConfigReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddOrUpdateDynamicConfigReqMultiError is an error wrapping multiple
+// validation errors returned by AddOrUpdateDynamicConfigReq.ValidateAll() if
+// the designated constraints aren't met.
+type AddOrUpdateDynamicConfigReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddOrUpdateDynamicConfigReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddOrUpdateDynamicConfigReqMultiError) AllErrors() []error { return m }
+
+// AddOrUpdateDynamicConfigReqValidationError is the validation error returned
+// by AddOrUpdateDynamicConfigReq.Validate if the designated constraints
+// aren't met.
+type AddOrUpdateDynamicConfigReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddOrUpdateDynamicConfigReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddOrUpdateDynamicConfigReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddOrUpdateDynamicConfigReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddOrUpdateDynamicConfigReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddOrUpdateDynamicConfigReqValidationError) ErrorName() string {
+	return "AddOrUpdateDynamicConfigReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddOrUpdateDynamicConfigReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddOrUpdateDynamicConfigReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddOrUpdateDynamicConfigReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddOrUpdateDynamicConfigReqValidationError{}
+
+// Validate checks the field values on DeleteDynamicConfigReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeleteDynamicConfigReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteDynamicConfigReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeleteDynamicConfigReqMultiError, or nil if none found.
+func (m *DeleteDynamicConfigReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteDynamicConfigReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetId() <= 0 {
+		err := DeleteDynamicConfigReqValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DeleteDynamicConfigReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeleteDynamicConfigReqMultiError is an error wrapping multiple validation
+// errors returned by DeleteDynamicConfigReq.ValidateAll() if the designated
+// constraints aren't met.
+type DeleteDynamicConfigReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteDynamicConfigReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteDynamicConfigReqMultiError) AllErrors() []error { return m }
+
+// DeleteDynamicConfigReqValidationError is the validation error returned by
+// DeleteDynamicConfigReq.Validate if the designated constraints aren't met.
+type DeleteDynamicConfigReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteDynamicConfigReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteDynamicConfigReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteDynamicConfigReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteDynamicConfigReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteDynamicConfigReqValidationError) ErrorName() string {
+	return "DeleteDynamicConfigReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteDynamicConfigReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteDynamicConfigReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteDynamicConfigReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteDynamicConfigReqValidationError{}

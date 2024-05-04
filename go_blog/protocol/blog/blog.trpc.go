@@ -59,6 +59,14 @@ type BlogApiService interface {
 	DeletePage(ctx context.Context, req *DeletePageReq) (*EmptyRsp, error)
 	// PageDetail 页面详情
 	PageDetail(ctx context.Context, req *PageDetailReq) (*Page, error)
+	// SearchDynamicConfig 动态配置搜索
+	SearchDynamicConfig(ctx context.Context, req *SearchDynamicConfigReq) (*SearchDynamicConfigRsp, error)
+	// AddOrUpdateDynamicConfig 添加修改动态配置
+	AddOrUpdateDynamicConfig(ctx context.Context, req *AddOrUpdateDynamicConfigReq) (*AddOrUpdateRsp, error)
+	// DeleteDynamicConfig 删除动态配置
+	DeleteDynamicConfig(ctx context.Context, req *DeleteDynamicConfigReq) (*EmptyRsp, error)
+	// DynamicConfigDetail 动态配置详情
+	DynamicConfigDetail(ctx context.Context, req *DynamicConfigDetailReq) (*DynamicConfig, error)
 }
 
 func BlogApiService_SearchArticle_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -421,6 +429,78 @@ func BlogApiService_PageDetail_Handler(svr interface{}, ctx context.Context, f s
 	return rsp, nil
 }
 
+func BlogApiService_SearchDynamicConfig_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &SearchDynamicConfigReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).SearchDynamicConfig(ctx, reqbody.(*SearchDynamicConfigReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_AddOrUpdateDynamicConfig_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &AddOrUpdateDynamicConfigReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).AddOrUpdateDynamicConfig(ctx, reqbody.(*AddOrUpdateDynamicConfigReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_DeleteDynamicConfig_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &DeleteDynamicConfigReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).DeleteDynamicConfig(ctx, reqbody.(*DeleteDynamicConfigReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogApiService_DynamicConfigDetail_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &DynamicConfigDetailReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogApiService).DynamicConfigDetail(ctx, reqbody.(*DynamicConfigDetailReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 // BlogApiServer_ServiceDesc descriptor for server.RegisterService.
 var BlogApiServer_ServiceDesc = server.ServiceDesc{
 	ServiceName: "go_blog.blog.BlogApi",
@@ -507,6 +587,22 @@ var BlogApiServer_ServiceDesc = server.ServiceDesc{
 			Func: BlogApiService_PageDetail_Handler,
 		},
 		{
+			Name: "/blog/admin/searchDynamicConfig",
+			Func: BlogApiService_SearchDynamicConfig_Handler,
+		},
+		{
+			Name: "/blog/admin/addOrUpdateDynamicConfig",
+			Func: BlogApiService_AddOrUpdateDynamicConfig_Handler,
+		},
+		{
+			Name: "/blog/admin/deleteDynamicConfig",
+			Func: BlogApiService_DeleteDynamicConfig_Handler,
+		},
+		{
+			Name: "/blog/admin/dynamicConfigDetail",
+			Func: BlogApiService_DynamicConfigDetail_Handler,
+		},
+		{
 			Name: "/go_blog.blog.BlogApi/SearchArticle",
 			Func: BlogApiService_SearchArticle_Handler,
 		},
@@ -585,6 +681,22 @@ var BlogApiServer_ServiceDesc = server.ServiceDesc{
 		{
 			Name: "/go_blog.blog.BlogApi/PageDetail",
 			Func: BlogApiService_PageDetail_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/SearchDynamicConfig",
+			Func: BlogApiService_SearchDynamicConfig_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/AddOrUpdateDynamicConfig",
+			Func: BlogApiService_AddOrUpdateDynamicConfig_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/DeleteDynamicConfig",
+			Func: BlogApiService_DeleteDynamicConfig_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogApi/DynamicConfigDetail",
+			Func: BlogApiService_DynamicConfigDetail_Handler,
 		},
 	},
 }
@@ -700,6 +812,26 @@ func (s *UnimplementedBlogApi) PageDetail(ctx context.Context, req *PageDetailRe
 	return nil, errors.New("rpc PageDetail of service BlogApi is not implemented")
 }
 
+// SearchDynamicConfig 动态配置搜索
+func (s *UnimplementedBlogApi) SearchDynamicConfig(ctx context.Context, req *SearchDynamicConfigReq) (*SearchDynamicConfigRsp, error) {
+	return nil, errors.New("rpc SearchDynamicConfig of service BlogApi is not implemented")
+}
+
+// AddOrUpdateDynamicConfig 添加修改动态配置
+func (s *UnimplementedBlogApi) AddOrUpdateDynamicConfig(ctx context.Context, req *AddOrUpdateDynamicConfigReq) (*AddOrUpdateRsp, error) {
+	return nil, errors.New("rpc AddOrUpdateDynamicConfig of service BlogApi is not implemented")
+}
+
+// DeleteDynamicConfig 删除动态配置
+func (s *UnimplementedBlogApi) DeleteDynamicConfig(ctx context.Context, req *DeleteDynamicConfigReq) (*EmptyRsp, error) {
+	return nil, errors.New("rpc DeleteDynamicConfig of service BlogApi is not implemented")
+}
+
+// DynamicConfigDetail 动态配置详情
+func (s *UnimplementedBlogApi) DynamicConfigDetail(ctx context.Context, req *DynamicConfigDetailReq) (*DynamicConfig, error) {
+	return nil, errors.New("rpc DynamicConfigDetail of service BlogApi is not implemented")
+}
+
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
 
 // END ======================================= Server Service Definition ======================================= END
@@ -748,6 +880,14 @@ type BlogApiClientProxy interface {
 	DeletePage(ctx context.Context, req *DeletePageReq, opts ...client.Option) (rsp *EmptyRsp, err error)
 	// PageDetail 页面详情
 	PageDetail(ctx context.Context, req *PageDetailReq, opts ...client.Option) (rsp *Page, err error)
+	// SearchDynamicConfig 动态配置搜索
+	SearchDynamicConfig(ctx context.Context, req *SearchDynamicConfigReq, opts ...client.Option) (rsp *SearchDynamicConfigRsp, err error)
+	// AddOrUpdateDynamicConfig 添加修改动态配置
+	AddOrUpdateDynamicConfig(ctx context.Context, req *AddOrUpdateDynamicConfigReq, opts ...client.Option) (rsp *AddOrUpdateRsp, err error)
+	// DeleteDynamicConfig 删除动态配置
+	DeleteDynamicConfig(ctx context.Context, req *DeleteDynamicConfigReq, opts ...client.Option) (rsp *EmptyRsp, err error)
+	// DynamicConfigDetail 动态配置详情
+	DynamicConfigDetail(ctx context.Context, req *DynamicConfigDetailReq, opts ...client.Option) (rsp *DynamicConfig, err error)
 }
 
 type BlogApiClientProxyImpl struct {
@@ -1153,6 +1293,86 @@ func (c *BlogApiClientProxyImpl) PageDetail(ctx context.Context, req *PageDetail
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &Page{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) SearchDynamicConfig(ctx context.Context, req *SearchDynamicConfigReq, opts ...client.Option) (*SearchDynamicConfigRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/searchDynamicConfig")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("SearchDynamicConfig")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &SearchDynamicConfigRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) AddOrUpdateDynamicConfig(ctx context.Context, req *AddOrUpdateDynamicConfigReq, opts ...client.Option) (*AddOrUpdateRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/addOrUpdateDynamicConfig")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("AddOrUpdateDynamicConfig")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &AddOrUpdateRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) DeleteDynamicConfig(ctx context.Context, req *DeleteDynamicConfigReq, opts ...client.Option) (*EmptyRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/deleteDynamicConfig")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("DeleteDynamicConfig")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &EmptyRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogApiClientProxyImpl) DynamicConfigDetail(ctx context.Context, req *DynamicConfigDetailReq, opts ...client.Option) (*DynamicConfig, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/admin/dynamicConfigDetail")
+	msg.WithCalleeServiceName(BlogApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogApi")
+	msg.WithCalleeMethod("DynamicConfigDetail")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &DynamicConfig{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}

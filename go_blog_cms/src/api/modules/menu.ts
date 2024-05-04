@@ -33,16 +33,16 @@ export const deleteMenuApi = (id: number) => {
 
 // 菜单树
 export const getMenuTree = (params: Menu.ReqMenuListParams) => {
-  if (!params.pageSize) {
-    const error = new Error("stack trace");
-    console.log(error.stack);
-    params.pageSize = 10;
-  }
-  if (!params.pageNum) {
-    const error = new Error("stack trace");
-    console.log(error.stack);
-    params.pageNum = 1;
-  }
+  // if (!params.pageSize) {
+  //   const error = new Error("stack trace");
+  //   console.log(error.stack);
+  //   params.pageSize = 10;
+  // }
+  // if (!params.pageNum) {
+  //   const error = new Error("stack trace");
+  //   console.log(error.stack);
+  //   params.pageNum = 1;
+  // }
   return http.post<Menu.Model[]>(AuthSrv + `/admin/getMenuTree`, params);
 };
 

@@ -31,6 +31,8 @@ func (s *Users) SearchUser(ctx context.Context, req *pb.SearchUserReq) (*pb.Sear
 	}
 	rsp.Data = users
 	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
 	return rsp, nil
 }
 

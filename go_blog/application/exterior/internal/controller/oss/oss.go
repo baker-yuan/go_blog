@@ -30,14 +30,16 @@ func NewOssApiService(
 
 // SearchOssUploadRecord OSS文件上传记录搜索
 func (o *SrvImpl) SearchOssUploadRecord(ctx context.Context, req *oss_pb.SearchOssUploadRecordReq) (*oss_pb.SearchOssUploadRecordRsp, error) {
-	res := &oss_pb.SearchOssUploadRecordRsp{}
-	records, total, err := o.oss.SearchOssUploadRecord(ctx, req)
+	rsp := &oss_pb.SearchOssUploadRecordRsp{}
+	records, pageTotal, err := o.oss.SearchOssUploadRecord(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	res.PageTotal = total
-	res.Data = records
-	return res, nil
+	rsp.Data = records
+	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
+	return rsp, nil
 }
 
 // GetUploadSign 获取oss上传签名
@@ -62,6 +64,8 @@ func (o *SrvImpl) SearchOssModeCfg(ctx context.Context, req *oss_pb.SearchOssMod
 	}
 	rsp.Data = modeCfgList
 	rsp.PageTotal = pageTotal
+	rsp.PageNum = req.GetPageNum()
+	rsp.PageSize = req.GetPageSize()
 	return rsp, nil
 }
 

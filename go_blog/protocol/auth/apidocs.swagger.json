@@ -1991,10 +1991,23 @@
       "$ref": "#/definitions/go_blog.auth.Menu"
      }
     },
+    "page_num": {
+     "title": "page_num",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
+    "page_size": {
+     "title": "page_size",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
     "page_total": {
      "title": "page_total",
      "type": "integer",
-     "format": "uint32"
+     "format": "uint32",
+     "description": "分页数据\n分页查询"
     }
    },
    "title": "go_blog.auth.GetMenuTreeRsp",
@@ -2371,11 +2384,23 @@
       "$ref": "#/definitions/go_blog.auth.Menu"
      }
     },
+    "page_num": {
+     "title": "page_num",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
+    "page_size": {
+     "title": "page_size",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
     "page_total": {
      "title": "page_total",
      "type": "integer",
      "format": "uint32",
-     "description": "分页查询"
+     "description": "分页数据\n分页查询"
     }
    },
    "title": "go_blog.auth.SearchMenuRsp",
@@ -2392,11 +2417,23 @@
       "$ref": "#/definitions/go_blog.auth.Resource"
      }
     },
+    "page_num": {
+     "title": "page_num",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
+    "page_size": {
+     "title": "page_size",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
     "page_total": {
      "title": "page_total",
      "type": "integer",
      "format": "uint32",
-     "description": "分页查询"
+     "description": "分页数据\n分页查询"
     }
    },
    "title": "go_blog.auth.SearchResourceRsp",
@@ -2413,11 +2450,23 @@
       "$ref": "#/definitions/go_blog.auth.Role"
      }
     },
+    "page_num": {
+     "title": "page_num",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
+    "page_size": {
+     "title": "page_size",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
     "page_total": {
      "title": "page_total",
      "type": "integer",
      "format": "uint32",
-     "description": "分页查询"
+     "description": "分页数据\n分页查询"
     }
    },
    "title": "go_blog.auth.SearchRoleRsp",
@@ -2434,11 +2483,23 @@
       "$ref": "#/definitions/go_blog.auth.TreeNode"
      }
     },
+    "page_num": {
+     "title": "page_num",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
+    "page_size": {
+     "title": "page_size",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
     "page_total": {
      "title": "page_total",
      "type": "integer",
      "format": "uint32",
-     "description": "分页查询"
+     "description": "分页数据\n分页查询"
     }
    },
    "title": "go_blog.auth.SearchTreeNodeRsp",

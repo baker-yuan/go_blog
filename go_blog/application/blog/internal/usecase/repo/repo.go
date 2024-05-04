@@ -76,6 +76,10 @@ func InitSchema(db *gorm.DB) error {
 		//	TableName: "网站配置",
 		//	StructPtr: &entity.Config{},
 		//},
+		//{
+		//	TableName: "动态配置",
+		//	StructPtr: &entity.DynamicConfig{},
+		//},
 	}
 
 	return autoMigrate(db, schemas)

@@ -520,8 +520,6 @@ func (m *SearchUserRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PageTotal
-
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -555,6 +553,12 @@ func (m *SearchUserRsp) validate(all bool) error {
 		}
 
 	}
+
+	// no validation rules for PageTotal
+
+	// no validation rules for PageNum
+
+	// no validation rules for PageSize
 
 	if len(errors) > 0 {
 		return SearchUserRspMultiError(errors)

@@ -49,13 +49,14 @@
 <script setup lang="ts" name="UploadImg">
 import { ref, computed, inject } from "vue";
 import { generateUUID } from "@/utils";
-import { uploadImg } from "@/api/modules/upload";
 import { ElNotification, formContextKey, formItemContextKey } from "element-plus";
 import type { UploadProps, UploadRequestOptions } from "element-plus";
+import { getUploadSignApi } from "@/api/modules/oss";
+import axios from "axios";
+import SparkMD5 from "spark-md5";
 
 interface UploadFileProps {
   imageUrl: string; // 图片地址 ==> 必传
-  api?: (params: any) => Promise<any>; // 上传图片的 api 方法，一般项目上传都是同一个 api 方法，在组件里直接引入即可 ==> 非必传
   drag?: boolean; // 是否支持拖拽上传 ==> 非必传（默认为 true）
   disabled?: boolean; // 是否禁用上传组件 ==> 非必传（默认为 false）
   fileSize?: number; // 图片大小限制 ==> 非必传（默认为 5M）
@@ -63,6 +64,7 @@ interface UploadFileProps {
   height?: string; // 组件高度 ==> 非必传（默认为 150px）
   width?: string; // 组件宽度 ==> 非必传（默认为 150px）
   borderRadius?: string; // 组件边框圆角 ==> 非必传（默认为 8px）
+  mode?: string; // 模块
 }
 
 // 接受父组件参数
@@ -99,17 +101,64 @@ const emit = defineEmits<{
   "update:imageUrl": [value: string];
 }>();
 const handleHttpUpload = async (options: UploadRequestOptions) => {
-  let formData = new FormData();
-  formData.append("file", options.file);
+  // let formData = new FormData();
+  // formData.append("file", options.file);
+  // try {
+  //   const api = props.api ?? uploadImg;
+  //   const { data } = await api(formData);
+  //   emit("update:imageUrl", data.fileUrl);
+  //   // 调用 el-form 内部的校验方法（可自动校验）
+  //   formItemContext?.prop && formContext?.validateField([formItemContext.prop as string]);
+  // } catch (error) {
+  //   options.onError(error as any);
+  // }
+  console.log(">>>> handleHttpUpload");
+  let file = options.file;
+  // 获取文件md5值
+  const fileMd5 = await getFileMd5(file);
+  // 获取签名
+  const ossSignData = await getUploadSignApi({
+    mode: props.mode,
+    fileName: file.name,
+    contentMd5: fileMd5
+  });
+  // 上传文件
+  const formData = new FormData();
+  Object.entries(ossSignData.data.formData).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+  formData.append("file", file); // 文件本身
   try {
-    const api = props.api ?? uploadImg;
-    const { data } = await api(formData);
-    emit("update:imageUrl", data.fileUrl);
+    const response = await axios.post(ossSignData.data.uploadUrl, formData);
+    console.log("httpRequest response", response);
+
+    emit("update:imageUrl", ossSignData.data.imageUrl);
     // 调用 el-form 内部的校验方法（可自动校验）
     formItemContext?.prop && formContext?.validateField([formItemContext.prop as string]);
+
+    //param.onSuccess(ossSignData.data.imageUrl, file);
+    //options.onSuccess(error as any);
   } catch (error) {
     options.onError(error as any);
   }
+};
+
+// 读取文件并计算MD5值的函数
+const getFileMd5 = file => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    // eslint-disable-next-line
+    reader.onload = function(e) {
+      const data = e.target.result;
+      const md5 = SparkMD5.ArrayBuffer.hash(data);
+      resolve(md5);
+    };
+    // eslint-disable-next-line
+    reader.onerror = function(error) {
+      reject(error);
+    };
+    reader.readAsArrayBuffer(file);
+  });
 };
 
 /**

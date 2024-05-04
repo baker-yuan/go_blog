@@ -544,8 +544,6 @@ func (m *SearchMenuRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PageTotal
-
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -579,6 +577,12 @@ func (m *SearchMenuRsp) validate(all bool) error {
 		}
 
 	}
+
+	// no validation rules for PageTotal
+
+	// no validation rules for PageNum
+
+	// no validation rules for PageSize
 
 	if len(errors) > 0 {
 		return SearchMenuRspMultiError(errors)
@@ -1200,6 +1204,10 @@ func (m *GetMenuTreeRsp) validate(all bool) error {
 
 	// no validation rules for PageTotal
 
+	// no validation rules for PageNum
+
+	// no validation rules for PageSize
+
 	if len(errors) > 0 {
 		return GetMenuTreeRspMultiError(errors)
 	}
@@ -1561,8 +1569,6 @@ func (m *SearchResourceRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PageTotal
-
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -1596,6 +1602,12 @@ func (m *SearchResourceRsp) validate(all bool) error {
 		}
 
 	}
+
+	// no validation rules for PageTotal
+
+	// no validation rules for PageNum
+
+	// no validation rules for PageSize
 
 	if len(errors) > 0 {
 		return SearchResourceRspMultiError(errors)
@@ -2590,8 +2602,6 @@ func (m *SearchRoleRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PageTotal
-
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -2625,6 +2635,12 @@ func (m *SearchRoleRsp) validate(all bool) error {
 		}
 
 	}
+
+	// no validation rules for PageTotal
+
+	// no validation rules for PageNum
+
+	// no validation rules for PageSize
 
 	if len(errors) > 0 {
 		return SearchRoleRspMultiError(errors)
@@ -4415,8 +4431,6 @@ func (m *SearchTreeNodeRsp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PageTotal
-
 	for idx, item := range m.GetData() {
 		_, _ = idx, item
 
@@ -4450,6 +4464,12 @@ func (m *SearchTreeNodeRsp) validate(all bool) error {
 		}
 
 	}
+
+	// no validation rules for PageTotal
+
+	// no validation rules for PageNum
+
+	// no validation rules for PageSize
 
 	if len(errors) > 0 {
 		return SearchTreeNodeRspMultiError(errors)

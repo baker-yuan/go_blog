@@ -258,6 +258,61 @@
     ]
    }
   },
+  "/blog/admin/addOrUpdateDynamicConfig": {
+   "post": {
+    "summary": "添加修改动态配置",
+    "operationId": "AddOrUpdateDynamicConfig",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "biz_desc",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "业务描述"
+     },
+     {
+      "name": "biz_type",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "业务类型"
+     },
+     {
+      "name": "content",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "内容"
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "主键"
+     },
+     {
+      "name": "json_schema",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "json内容约束"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
   "/blog/admin/addOrUpdateFriendLink": {
    "post": {
     "summary": "添加修改友链表",
@@ -511,6 +566,33 @@
     ]
    }
   },
+  "/blog/admin/deleteDynamicConfig": {
+   "post": {
+    "summary": "删除动态配置",
+    "operationId": "DeleteDynamicConfig",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
   "/blog/admin/deleteFriendLink": {
    "post": {
     "summary": "删除友链表",
@@ -574,6 +656,33 @@
       "description": "空响应",
       "schema": {
        "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/blog/admin/dynamicConfigDetail": {
+   "post": {
+    "summary": "动态配置详情",
+    "operationId": "DynamicConfigDetail",
+    "responses": {
+     "200": {
+      "description": "动态配置信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.DynamicConfig"
       }
      }
     },
@@ -697,6 +806,48 @@
       "description": "SearchCategoryRsp",
       "schema": {
        "$ref": "#/definitions/go_blog.blog.SearchCategoryRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/blog/admin/searchDynamicConfig": {
+   "post": {
+    "summary": "动态配置搜索",
+    "operationId": "SearchDynamicConfig",
+    "responses": {
+     "200": {
+      "description": "SearchDynamicConfigRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.SearchDynamicConfigRsp"
       }
      }
     },
@@ -1102,6 +1253,61 @@
     ]
    }
   },
+  "/go_blog.blog.BlogApi/AddOrUpdateDynamicConfig": {
+   "post": {
+    "summary": "添加修改动态配置",
+    "operationId": "AddOrUpdateDynamicConfig2",
+    "responses": {
+     "200": {
+      "description": "添加修改资源返回值",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.AddOrUpdateRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "biz_desc",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "业务描述"
+     },
+     {
+      "name": "biz_type",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "业务类型"
+     },
+     {
+      "name": "content",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "内容"
+     },
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "主键"
+     },
+     {
+      "name": "json_schema",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "json内容约束"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
   "/go_blog.blog.BlogApi/AddOrUpdateFriendLink": {
    "post": {
     "summary": "添加修改友链表",
@@ -1382,6 +1588,33 @@
     ]
    }
   },
+  "/go_blog.blog.BlogApi/DeleteDynamicConfig": {
+   "post": {
+    "summary": "删除动态配置",
+    "operationId": "DeleteDynamicConfig2",
+    "responses": {
+     "200": {
+      "description": "空响应",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
   "/go_blog.blog.BlogApi/DeleteFriendLink": {
    "post": {
     "summary": "删除友链表",
@@ -1445,6 +1678,33 @@
       "description": "空响应",
       "schema": {
        "$ref": "#/definitions/go_blog.blog.EmptyRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "编号"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/DynamicConfigDetail": {
+   "post": {
+    "summary": "动态配置详情",
+    "operationId": "DynamicConfigDetail2",
+    "responses": {
+     "200": {
+      "description": "动态配置信息定义",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.DynamicConfig"
       }
      }
     },
@@ -1568,6 +1828,48 @@
       "description": "SearchCategoryRsp",
       "schema": {
        "$ref": "#/definitions/go_blog.blog.SearchCategoryRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "page_num",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "分页查询"
+     },
+     {
+      "name": "search",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "查询条件 {a:?,b:?}"
+     }
+    ],
+    "tags": [
+     "blogapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogApi/SearchDynamicConfig": {
+   "post": {
+    "summary": "动态配置搜索",
+    "operationId": "SearchDynamicConfig2",
+    "responses": {
+     "200": {
+      "description": "SearchDynamicConfigRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.SearchDynamicConfigRsp"
       }
      }
     },
@@ -2007,6 +2309,73 @@
    "title": "go_blog.blog.Category",
    "description": "Category 文章分类信息定义"
   },
+  "go_blog.blog.DynamicConfig": {
+   "type": "object",
+   "properties": {
+    "biz_desc": {
+     "title": "biz_desc",
+     "type": "string",
+     "description": "业务描述"
+    },
+    "biz_type": {
+     "title": "biz_type",
+     "type": "string",
+     "description": "业务类型"
+    },
+    "content": {
+     "title": "content",
+     "type": "string",
+     "description": "内容"
+    },
+    "create_time": {
+     "title": "create_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "创建时间"
+    },
+    "create_user": {
+     "title": "create_user",
+     "type": "string",
+     "description": "查询补充字段\n创建人id"
+    },
+    "create_user_id": {
+     "title": "create_user_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "公共字段\n创建人id"
+    },
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "主键"
+    },
+    "json_schema": {
+     "title": "json_schema",
+     "type": "string",
+     "description": "json内容约束"
+    },
+    "update_time": {
+     "title": "update_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新时间"
+    },
+    "update_user": {
+     "title": "update_user",
+     "type": "string",
+     "description": "更新人id"
+    },
+    "update_user_id": {
+     "title": "update_user_id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "更新人id"
+    }
+   },
+   "title": "go_blog.blog.DynamicConfig",
+   "description": "动态配置信息定义"
+  },
   "go_blog.blog.EmptyRsp": {
    "type": "object",
    "title": "go_blog.blog.EmptyRsp",
@@ -2174,11 +2543,23 @@
       "$ref": "#/definitions/go_blog.blog.Article"
      }
     },
-    "total": {
-     "title": "total",
+    "page_num": {
+     "title": "page_num",
      "type": "integer",
      "format": "uint32",
      "description": "分页查询"
+    },
+    "page_size": {
+     "title": "page_size",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
+    "page_total": {
+     "title": "page_total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页数据\n分页查询"
     }
    },
    "title": "go_blog.blog.SearchArticleRsp",
@@ -2195,15 +2576,60 @@
       "$ref": "#/definitions/go_blog.blog.Category"
      }
     },
-    "total": {
-     "title": "total",
+    "page_num": {
+     "title": "page_num",
      "type": "integer",
      "format": "uint32",
      "description": "分页查询"
+    },
+    "page_size": {
+     "title": "page_size",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
+    "page_total": {
+     "title": "page_total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页数据\n分页查询"
     }
    },
    "title": "go_blog.blog.SearchCategoryRsp",
    "description": "SearchCategoryRsp"
+  },
+  "go_blog.blog.SearchDynamicConfigRsp": {
+   "type": "object",
+   "properties": {
+    "data": {
+     "title": "data",
+     "type": "array",
+     "description": " 动态配置集合\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.blog.DynamicConfig"
+     }
+    },
+    "page_num": {
+     "title": "page_num",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
+    "page_size": {
+     "title": "page_size",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
+    "page_total": {
+     "title": "page_total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页数据\n分页查询"
+    }
+   },
+   "title": "go_blog.blog.SearchDynamicConfigRsp",
+   "description": "SearchDynamicConfigRsp"
   },
   "go_blog.blog.SearchFriendLinkRsp": {
    "type": "object",
@@ -2216,11 +2642,23 @@
       "$ref": "#/definitions/go_blog.blog.FriendLink"
      }
     },
-    "total": {
-     "title": "total",
+    "page_num": {
+     "title": "page_num",
      "type": "integer",
      "format": "uint32",
      "description": "分页查询"
+    },
+    "page_size": {
+     "title": "page_size",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
+    "page_total": {
+     "title": "page_total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页数据\n分页查询"
     }
    },
    "title": "go_blog.blog.SearchFriendLinkRsp",
@@ -2237,11 +2675,23 @@
       "$ref": "#/definitions/go_blog.blog.Page"
      }
     },
-    "total": {
-     "title": "total",
+    "page_num": {
+     "title": "page_num",
      "type": "integer",
      "format": "uint32",
      "description": "分页查询"
+    },
+    "page_size": {
+     "title": "page_size",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
+    "page_total": {
+     "title": "page_total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页数据\n分页查询"
     }
    },
    "title": "go_blog.blog.SearchPageRsp",
@@ -2258,11 +2708,23 @@
       "$ref": "#/definitions/go_blog.blog.Tag"
      }
     },
-    "total": {
-     "title": "total",
+    "page_num": {
+     "title": "page_num",
      "type": "integer",
      "format": "uint32",
      "description": "分页查询"
+    },
+    "page_size": {
+     "title": "page_size",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页查询"
+    },
+    "page_total": {
+     "title": "page_total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页数据\n分页查询"
     }
    },
    "title": "go_blog.blog.SearchTagRsp",

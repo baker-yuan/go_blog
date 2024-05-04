@@ -23,19 +23,21 @@ func Run(trpcServer *server.Server, cfg *config.Config) {
 	}
 
 	var (
-		articleRepo    = repo.NewArticleRepo(gormDB)
-		categoryRepo   = repo.NewCategoryRepo(gormDB)
-		tagRepo        = repo.NewTagRepo(gormDB)
-		friendLinkRepo = repo.NewFriendLinkRepo(gormDB)
-		pageRepo       = repo.NewPageRepo(gormDB)
+		articleRepo       = repo.NewArticleRepo(gormDB)
+		categoryRepo      = repo.NewCategoryRepo(gormDB)
+		tagRepo           = repo.NewTagRepo(gormDB)
+		friendLinkRepo    = repo.NewFriendLinkRepo(gormDB)
+		pageRepo          = repo.NewPageRepo(gormDB)
+		dynamicConfigRepo = repo.NewDynamicConfigRepo(gormDB)
 	)
 	var (
-		commonUseCase     = usecase.NewCommonUseCase()
-		articleUseCase    = usecase.NewArticleUseCase(commonUseCase, articleRepo)
-		categoryUseCase   = usecase.NewCategoryUseCase(commonUseCase, categoryRepo)
-		tagUseCase        = usecase.NewTagUseCase(commonUseCase, tagRepo)
-		friendLinkUseCase = usecase.NewFriendLinkUseCase(commonUseCase, friendLinkRepo)
-		pageUseCase       = usecase.NewPageUseCase(commonUseCase, pageRepo)
+		commonUseCase        = usecase.NewCommonUseCase()
+		articleUseCase       = usecase.NewArticleUseCase(commonUseCase, articleRepo)
+		categoryUseCase      = usecase.NewCategoryUseCase(commonUseCase, categoryRepo)
+		tagUseCase           = usecase.NewTagUseCase(commonUseCase, tagRepo)
+		friendLinkUseCase    = usecase.NewFriendLinkUseCase(commonUseCase, friendLinkRepo)
+		pageUseCase          = usecase.NewPageUseCase(commonUseCase, pageRepo)
+		dynamicConfigUseCase = usecase.NewDynamicConfigUseCase(commonUseCase, dynamicConfigRepo)
 	)
 	var (
 		blogService = controller.NewBlogServiceImpl(
@@ -44,6 +46,7 @@ func Run(trpcServer *server.Server, cfg *config.Config) {
 			tagUseCase,
 			friendLinkUseCase,
 			pageUseCase,
+			dynamicConfigUseCase,
 		)
 	)
 

@@ -14,16 +14,16 @@ export const updateUserApi = (user: User.UserModel) => {
 
 // 分页查询用户
 export const getUsersApi = (params: User.ReqUserListParams) => {
-  if (!params.pageSize) {
-    const error = new Error("stack trace");
-    console.log(error.stack);
-    params.pageSize = 10;
-  }
-  if (!params.pageNum) {
-    const error = new Error("stack trace");
-    console.log(error.stack);
-    params.pageNum = 1;
-  }
+  // if (!params.pageSize) {
+  //   const error = new Error("stack trace");
+  //   console.log(error.stack);
+  //   params.pageSize = 10;
+  // }
+  // if (!params.pageNum) {
+  //   const error = new Error("stack trace");
+  //   console.log(error.stack);
+  //   params.pageNum = 1;
+  // }
   return http.post<ResPage<User.UserModel>>(UserSrv + `/admin/searchUser`, params);
 };
 

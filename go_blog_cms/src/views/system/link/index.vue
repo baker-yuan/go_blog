@@ -9,6 +9,14 @@
       @darg-sort="sortTable"
       :border="false"
     >
+      <!-- 头像 -->
+      <template #linkAvatar="scope">
+        <el-image
+          style="width: 80px; height: 80px"
+          :src="scope.row.linkAvatar"
+          :preview-src-list="[scope.row.linkAvatar]"
+        ></el-image>
+      </template>
       <!-- 创建时间 -->
       <template #createTime="scope">
         <div>{{ formatTimestamp(scope.row.createTime) }}</div>
@@ -42,6 +50,7 @@ import FriendLinkDrawer from "@/views/system/link/detail.vue";
 import { CirclePlus, Delete, EditPen } from "@element-plus/icons-vue";
 import { createFriendLinkApi, updateFriendLinkApi, deleteFriendLinkApi, getFriendLinksApi } from "@/api/modules/friend_link.ts";
 import { formatTimestamp } from "@/utils/time";
+import { statusOptions } from "@/views/system/link/index";
 
 // ProTable 实例
 const proTable = ref<ProTableInstance>();
@@ -85,7 +94,8 @@ const columns = reactive<ColumnProps<FriendLink.Model>[]>([
     label: "状态",
     showOverflowTooltip: false,
     width: 150,
-    search: { el: "input" }
+    search: { el: "input" },
+    enum: statusOptions
   },
   {
     prop: "sort",

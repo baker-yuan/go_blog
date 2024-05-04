@@ -14,16 +14,16 @@ export const updateCategoryApi = (category: Category.Model) => {
 
 // 分页查询文章分类
 export const getCategorysApi = (params: Category.ReqCategoryListParams) => {
-  if (!params.pageSize) {
-    const error = new Error("stack trace");
-    console.log(error.stack);
-    params.pageSize = 10;
-  }
-  if (!params.pageNum) {
-    const error = new Error("stack trace");
-    console.log(error.stack);
-    params.pageNum = 1;
-  }
+  // if (!params.pageSize) {
+  //   const error = new Error("stack trace");
+  //   console.log(error.stack);
+  //   params.pageSize = 10;
+  // }
+  // if (!params.pageNum) {
+  //   const error = new Error("stack trace");
+  //   console.log(error.stack);
+  //   params.pageNum = 1;
+  // }
   return http.post<ResPage<Category.Model>>(BlogSrv + `/admin/searchCategory`, params);
 };
 
