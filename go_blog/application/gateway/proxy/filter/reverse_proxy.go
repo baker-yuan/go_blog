@@ -27,6 +27,12 @@ func ForwardHandler(bizCtx biz_ctx.IBizContext, cfg *config.Config) {
 	} else {
 		httpForwardHandler(httpCtx, instance, resource)
 	}
+
+	httpCtx.Response().SetHeader("Access-Control-Allow-Origin", "*")
+	httpCtx.Response().SetHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+	//httpCtx.Response().SetHeader("Access-Control-Allow-Headers", "Content-Type, Authorization")
+	httpCtx.Response().SetHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, ticket")
+	httpCtx.Response().SetHeader("Access-Control-Allow-Credentials", "true")
 }
 
 func trpcForwardHandler(httpCtx *http.HttpContext, instance string, resource *auth_pb.Resource) {
@@ -63,13 +69,6 @@ func trpcForwardHandler(httpCtx *http.HttpContext, instance string, resource *au
 
 	// 设置响应
 	ret.SetSucResponse(httpCtx, resource.IsNeedStdRes, rspBody.Data)
-
-	httpCtx.Response().SetHeader("Access-Control-Allow-Origin", "*")
-	httpCtx.Response().SetHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
-	httpCtx.Response().SetHeader("Access-Control-Allow-Headers", "Content-Type, Authorization")
-	httpCtx.Response().SetHeader("Access-Control-Allow-Credentials", "true")
-
-	httpCtx.Response().SetHeader("Content-Type", "application/json")
 }
 
 // httpForwardHandler 请求转发处理
@@ -81,11 +80,6 @@ func httpForwardHandler(httpCtx *http.HttpContext, instance string, resource *au
 	//httpCtx.Proxy().Header().SetHeader("X-Galileo-Trace-Id", "application/json")
 
 	httpCtx.SendTo("http", service.NewInstance(instance), 3*time.Minute)
-
-	httpCtx.Response().SetHeader("Access-Control-Allow-Origin", "*")
-	httpCtx.Response().SetHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
-	httpCtx.Response().SetHeader("Access-Control-Allow-Headers", "Content-Type, Authorization")
-	httpCtx.Response().SetHeader("Access-Control-Allow-Credentials", "true")
 
 	//httpCtx, _ := bizCtx.(*http.HttpContext)
 	//

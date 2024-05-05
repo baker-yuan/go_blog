@@ -107,3 +107,53 @@ func (r *ArticleRepo) SearchArticle(ctx context.Context, req *pb.SearchArticleRe
 	}
 	return res, uint32(pageTotal), nil
 }
+
+// GetNewestArticle 获取最新发布的文章
+func (r *ArticleRepo) GetNewestArticle(ctx context.Context, newBlogLimitNum uint32) (entity.Articles, error) {
+	tx := r.GenericDao.GetDB(ctx)
+	// db中查找 未删除、已发布、可见状态 的博客
+	tx = tx.Where(entity.ArticleFieldStatus, pb.ArticleStatus_ARTICLE_STATUS_PUBLISHED)
+	tx = tx.Where(entity.ArticleFieldVisibility, pb.ArticleVisibility_ARTICLE_VISIBILITY_PUBLIC)
+	tx = tx.Where(entity.ArticleFieldIsDeleted, db.BoolBit(false))
+
+	res := make([]*entity.Article, 0)
+	if err := tx.
+		Select([]string{
+			entity.ArticleFieldID,
+			entity.ArticleFieldTitle,
+			entity.ArticleFieldPassword}).
+		Order(fmt.Sprintf("%s DESC", entity.ArticleFieldID)).
+		Limit(int(newBlogLimitNum)).
+		Find(&res).
+		Error; err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+// GetRecommendArticle 查询随机的公开且推荐文章
+// randomBlogLimitNum 查询数量
+func (r *ArticleRepo) GetRecommendArticle(ctx context.Context, randomBlogLimitNum uint32) (entity.Articles, error) {
+	tx := r.GenericDao.GetDB(ctx)
+	// db中查找 未删除、已发布、可见状态 的博客
+	tx = tx.Where(entity.ArticleFieldStatus, pb.ArticleStatus_ARTICLE_STATUS_PUBLISHED)
+	tx = tx.Where(entity.ArticleFieldVisibility, pb.ArticleVisibility_ARTICLE_VISIBILITY_PUBLIC)
+	tx = tx.Where(entity.ArticleFieldIsDeleted, db.BoolBit(false))
+	tx = tx.Where(entity.ArticleFieldIsRecommend, db.BoolBit(true))
+
+	res := make([]*entity.Article, 0)
+	if err := tx.
+		Select([]string{
+			entity.ArticleFieldID,
+			entity.ArticleFieldTitle,
+			entity.ArticleFieldPassword,
+			entity.ArticleFieldCreateTime,
+			entity.ArticleFieldCoverImage}).
+		Order("rand()").
+		Limit(int(randomBlogLimitNum)).
+		Find(&res).
+		Error; err != nil {
+		return nil, err
+	}
+	return res, nil
+}

@@ -12,9 +12,85 @@
   "application/json"
  ],
  "paths": {
+  "/blog/article/search": {
+   "post": {
+    "summary": "文章搜索",
+    "operationId": "ArticleSearch",
+    "responses": {
+     "200": {
+      "description": "ArticleSearchRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.ArticleSearchRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "category_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "文章分类ID"
+     },
+     {
+      "name": "page",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "页码"
+     },
+     {
+      "name": "size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "页面大小"
+     },
+     {
+      "name": "tag_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "标签ID"
+     },
+     {
+      "name": "ticket",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "ticket"
+     }
+    ],
+    "tags": [
+     "blogportalapi.trpc"
+    ]
+   }
+  },
+  "/blog/config/homeInfo": {
+   "post": {
+    "summary": "查看博客配置信息",
+    "operationId": "BlogHomeInfo",
+    "responses": {
+     "200": {
+      "description": "BlogHomeInfoRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.BlogHomeInfoRsp"
+      }
+     }
+    },
+    "parameters": null,
+    "tags": [
+     "blogportalapi.trpc"
+    ]
+   }
+  },
   "/blog/home": {
    "post": {
-    "summary": "获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客",
+    "summary": "首页接口：获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客",
     "operationId": "Home",
     "responses": {
      "200": {
@@ -39,9 +115,85 @@
     ]
    }
   },
+  "/go_blog.blog.BlogPortalApi/ArticleSearch": {
+   "post": {
+    "summary": "文章搜索",
+    "operationId": "ArticleSearch2",
+    "responses": {
+     "200": {
+      "description": "ArticleSearchRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.ArticleSearchRsp"
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "category_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "文章分类ID"
+     },
+     {
+      "name": "page",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "页码"
+     },
+     {
+      "name": "size",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "页面大小"
+     },
+     {
+      "name": "tag_id",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "uint32",
+      "description": "标签ID"
+     },
+     {
+      "name": "ticket",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "ticket"
+     }
+    ],
+    "tags": [
+     "blogportalapi.trpc"
+    ]
+   }
+  },
+  "/go_blog.blog.BlogPortalApi/BlogHomeInfo": {
+   "post": {
+    "summary": "查看博客配置信息",
+    "operationId": "BlogHomeInfo2",
+    "responses": {
+     "200": {
+      "description": "BlogHomeInfoRsp",
+      "schema": {
+       "$ref": "#/definitions/go_blog.blog.BlogHomeInfoRsp"
+      }
+     }
+    },
+    "parameters": null,
+    "tags": [
+     "blogportalapi.trpc"
+    ]
+   }
+  },
   "/go_blog.blog.BlogPortalApi/Home": {
    "post": {
-    "summary": "获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客",
+    "summary": "首页接口：获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客",
     "operationId": "Home2",
     "responses": {
      "200": {
@@ -68,6 +220,171 @@
   }
  },
  "definitions": {
+  "go_blog.blog.ArticleSearchItem": {
+   "type": "object",
+   "properties": {
+    "category_name": {
+     "title": "category_name",
+     "type": "string",
+     "description": "分类名"
+    },
+    "comment_num": {
+     "title": "comment_num",
+     "type": "integer",
+     "format": "uint32",
+     "description": "评论数"
+    },
+    "create_time": {
+     "title": "create_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "创建时间"
+    },
+    "tag_list": {
+     "title": "tag_list",
+     "type": "array",
+     "description": " 标签列表\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.blog.ArticleSearchItem.Tag"
+     }
+    },
+    "update_time": {
+     "title": "update_time",
+     "type": "integer",
+     "format": "uint32",
+     "description": "修改时间"
+    },
+    "view_num": {
+     "title": "view_num",
+     "type": "integer",
+     "format": "uint32",
+     "description": "游览数"
+    }
+   },
+   "title": "go_blog.blog.ArticleSearchItem",
+   "description": "ArticleSearchItem"
+  },
+  "go_blog.blog.ArticleSearchItem.Tag": {
+   "type": "object",
+   "properties": {
+    "color": {
+     "title": "color",
+     "type": "string",
+     "description": "标签颜色"
+    },
+    "description": {
+     "title": "description",
+     "type": "string",
+     "description": "描述"
+    },
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "uint32",
+     "description": "主键"
+    },
+    "name": {
+     "title": "name",
+     "type": "string",
+     "description": "标签名"
+    }
+   },
+   "title": "go_blog.blog.ArticleSearchItem.Tag",
+   "description": "标签"
+  },
+  "go_blog.blog.ArticleSearchRsp": {
+   "type": "object",
+   "properties": {
+    "rows": {
+     "title": "rows",
+     "type": "array",
+     "description": " 数据\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.blog.ArticleSearchItem"
+     }
+    },
+    "total": {
+     "title": "total",
+     "type": "integer",
+     "format": "uint32",
+     "description": "分页-总数"
+    }
+   },
+   "title": "go_blog.blog.ArticleSearchRsp",
+   "description": "ArticleSearchRsp"
+  },
+  "go_blog.blog.BlogHomeInfoRsp": {
+   "type": "object",
+   "properties": {
+    "article_count": {
+     "title": "article_count",
+     "type": "integer",
+     "format": "int32",
+     "description": "文章数量"
+    },
+    "category_count": {
+     "title": "category_count",
+     "type": "integer",
+     "format": "int32",
+     "description": "分类数量"
+    },
+    "page_list": {
+     "title": "page_list",
+     "type": "array",
+     "description": " 页面列表\n",
+     "items": {
+      "$ref": "#/definitions/go_blog.blog.BlogHomeInfoRsp.Page"
+     }
+    },
+    "tag_count": {
+     "title": "tag_count",
+     "type": "integer",
+     "format": "int32",
+     "description": "标签数量"
+    },
+    "views_count": {
+     "title": "views_count",
+     "type": "integer",
+     "format": "int32",
+     "description": "访问量"
+    },
+    "website_config": {
+     "title": "website_config",
+     "$ref": "#/definitions/go_blog.blog.WebsiteConfig",
+     "description": " 网站配置\n"
+    }
+   },
+   "title": "go_blog.blog.BlogHomeInfoRsp",
+   "description": "BlogHomeInfoRsp"
+  },
+  "go_blog.blog.BlogHomeInfoRsp.Page": {
+   "type": "object",
+   "properties": {
+    "id": {
+     "title": "id",
+     "type": "integer",
+     "format": "int32",
+     "description": "页面id"
+    },
+    "page_cover": {
+     "title": "page_cover",
+     "type": "string",
+     "description": "页面封面"
+    },
+    "page_label": {
+     "title": "page_label",
+     "type": "string",
+     "description": "页面标签"
+    },
+    "page_name": {
+     "title": "page_name",
+     "type": "string",
+     "description": "页面名"
+    }
+   },
+   "title": "go_blog.blog.BlogHomeInfoRsp.Page",
+   "description": "页面列表"
+  },
   "go_blog.blog.HomeRsp": {
    "type": "object",
    "properties": {
@@ -139,7 +456,7 @@
     "id": {
      "title": "id",
      "type": "integer",
-     "format": "int32",
+     "format": "uint32",
      "description": "文章类型主键"
     },
     "name": {
@@ -150,7 +467,7 @@
     "sort": {
      "title": "sort",
      "type": "integer",
-     "format": "int32",
+     "format": "uint32",
      "description": "排序"
     }
    },
@@ -180,7 +497,7 @@
     "id": {
      "title": "id",
      "type": "integer",
-     "format": "int32",
+     "format": "uint32",
      "description": "文章ID"
     },
     "privacy": {
@@ -203,7 +520,7 @@
     "comment_id": {
      "title": "comment_id",
      "type": "integer",
-     "format": "int32",
+     "format": "uint32",
      "description": "评论ID"
     },
     "content": {
@@ -248,7 +565,7 @@
     "id": {
      "title": "id",
      "type": "integer",
-     "format": "int32",
+     "format": "uint32",
      "description": "文章ID"
     },
     "privacy": {
@@ -281,7 +598,7 @@
     "id": {
      "title": "id",
      "type": "integer",
-     "format": "int32",
+     "format": "uint32",
      "description": "主键"
     },
     "name": {
@@ -292,6 +609,139 @@
    },
    "title": "go_blog.blog.HomeRsp.Tag",
    "description": "标签"
+  },
+  "go_blog.blog.WebsiteConfig": {
+   "type": "object",
+   "properties": {
+    "alipay_qr_code": {
+     "title": "alipay_qr_code",
+     "type": "string",
+     "description": "支付宝二维码"
+    },
+    "blog_website": {
+     "title": "blog_website",
+     "type": "string",
+     "description": "博客前台地址"
+    },
+    "comment_flag": {
+     "title": "comment_flag",
+     "type": "boolean",
+     "description": "评论开关"
+    },
+    "gitee": {
+     "title": "gitee",
+     "type": "string",
+     "description": "gitee"
+    },
+    "github": {
+     "title": "github",
+     "type": "string",
+     "description": "github"
+    },
+    "is_chat_room": {
+     "title": "is_chat_room",
+     "type": "boolean",
+     "description": "是否开启聊天室"
+    },
+    "is_email_notice": {
+     "title": "is_email_notice",
+     "type": "boolean",
+     "description": "是否邮箱通知"
+    },
+    "is_music_player": {
+     "title": "is_music_player",
+     "type": "boolean",
+     "description": "是否开启音乐"
+    },
+    "manage_website": {
+     "title": "manage_website",
+     "type": "string",
+     "description": "管理后台地址"
+    },
+    "qq": {
+     "title": "qq",
+     "type": "string",
+     "description": "qq"
+    },
+    "reward_flag": {
+     "title": "reward_flag",
+     "type": "boolean",
+     "description": "是否打赏"
+    },
+    "social_login_list": {
+     "title": "social_login_list",
+     "type": "array",
+     "description": "社交登录列表",
+     "items": {
+      "type": "string"
+     }
+    },
+    "social_url_list": {
+     "title": "social_url_list",
+     "type": "array",
+     "description": "社交信息\n社交url列表",
+     "items": {
+      "type": "string"
+     }
+    },
+    "tourist_avatar": {
+     "title": "tourist_avatar",
+     "type": "string",
+     "description": "其他设置\n游客头像"
+    },
+    "user_avatar": {
+     "title": "user_avatar",
+     "type": "string",
+     "description": "用户头像"
+    },
+    "website_author": {
+     "title": "website_author",
+     "type": "string",
+     "description": "网站作者"
+    },
+    "website_avatar": {
+     "title": "website_avatar",
+     "type": "string",
+     "description": "网站信息\n网站头像"
+    },
+    "website_create_time": {
+     "title": "website_create_time",
+     "type": "string",
+     "description": "网站创建时间"
+    },
+    "website_intro": {
+     "title": "website_intro",
+     "type": "string",
+     "description": "网站介绍"
+    },
+    "website_name": {
+     "title": "website_name",
+     "type": "string",
+     "description": "网站名称"
+    },
+    "website_notice": {
+     "title": "website_notice",
+     "type": "string",
+     "description": "网站公告"
+    },
+    "website_record_no": {
+     "title": "website_record_no",
+     "type": "string",
+     "description": "网站备案号"
+    },
+    "websocket_url": {
+     "title": "websocket_url",
+     "type": "string",
+     "description": "websocket地址"
+    },
+    "wei_xin_qr_code": {
+     "title": "wei_xin_qr_code",
+     "type": "string",
+     "description": "微信二维码"
+    }
+   },
+   "title": "go_blog.blog.WebsiteConfig",
+   "description": "网站配置信息"
   }
  }
 }

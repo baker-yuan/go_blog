@@ -35,6 +35,36 @@ func (m *MockBlogPortalApiService) EXPECT() *MockBlogPortalApiServiceMockRecorde
 	return m.recorder
 }
 
+// ArticleSearch mocks base method.
+func (m *MockBlogPortalApiService) ArticleSearch(ctx context.Context, req *ArticleSearchReq) (*ArticleSearchRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ArticleSearch", ctx, req)
+	ret0, _ := ret[0].(*ArticleSearchRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ArticleSearch indicates an expected call of ArticleSearch.
+func (mr *MockBlogPortalApiServiceMockRecorder) ArticleSearch(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ArticleSearch", reflect.TypeOf((*MockBlogPortalApiService)(nil).ArticleSearch), ctx, req)
+}
+
+// BlogHomeInfo mocks base method.
+func (m *MockBlogPortalApiService) BlogHomeInfo(ctx context.Context, req *BlogHomeInfoReq) (*BlogHomeInfoRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "BlogHomeInfo", ctx, req)
+	ret0, _ := ret[0].(*BlogHomeInfoRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// BlogHomeInfo indicates an expected call of BlogHomeInfo.
+func (mr *MockBlogPortalApiServiceMockRecorder) BlogHomeInfo(ctx, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BlogHomeInfo", reflect.TypeOf((*MockBlogPortalApiService)(nil).BlogHomeInfo), ctx, req)
+}
+
 // Home mocks base method.
 func (m *MockBlogPortalApiService) Home(ctx context.Context, req *HomeReq) (*HomeRsp, error) {
 	m.ctrl.T.Helper()
@@ -71,6 +101,46 @@ func NewMockBlogPortalApiClientProxy(ctrl *gomock.Controller) *MockBlogPortalApi
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockBlogPortalApiClientProxy) EXPECT() *MockBlogPortalApiClientProxyMockRecorder {
 	return m.recorder
+}
+
+// ArticleSearch mocks base method.
+func (m *MockBlogPortalApiClientProxy) ArticleSearch(ctx context.Context, req *ArticleSearchReq, opts ...client.Option) (*ArticleSearchRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ArticleSearch", varargs...)
+	ret0, _ := ret[0].(*ArticleSearchRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ArticleSearch indicates an expected call of ArticleSearch.
+func (mr *MockBlogPortalApiClientProxyMockRecorder) ArticleSearch(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ArticleSearch", reflect.TypeOf((*MockBlogPortalApiClientProxy)(nil).ArticleSearch), varargs...)
+}
+
+// BlogHomeInfo mocks base method.
+func (m *MockBlogPortalApiClientProxy) BlogHomeInfo(ctx context.Context, req *BlogHomeInfoReq, opts ...client.Option) (*BlogHomeInfoRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "BlogHomeInfo", varargs...)
+	ret0, _ := ret[0].(*BlogHomeInfoRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// BlogHomeInfo indicates an expected call of BlogHomeInfo.
+func (mr *MockBlogPortalApiClientProxyMockRecorder) BlogHomeInfo(ctx, req interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BlogHomeInfo", reflect.TypeOf((*MockBlogPortalApiClientProxy)(nil).BlogHomeInfo), varargs...)
 }
 
 // Home mocks base method.

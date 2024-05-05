@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     getBlogInfo() {
-      this.axios.get("/blog/config/homeInfo").then(({ data }) => {
+      this.axios.post("/blog/config/homeInfo", {}).then(({ data }) => {
         this.$store.commit("checkBlogInfo", data.data);
       });
     },

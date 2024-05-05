@@ -5,6 +5,34 @@ import (
 	pb "github.com/baker-yuan/go-blog/go_blog/protocol/blog"
 )
 
+// ArticleEntityToHomeHomeBlogModel entity转pb
+func ArticleEntityToHomeHomeBlogModel(articleList []*entity.Article) []*pb.HomeRsp_HomeBlog {
+	res := make([]*pb.HomeRsp_HomeBlog, 0)
+	for _, article := range articleList {
+		res = append(res, &pb.HomeRsp_HomeBlog{
+			Id:      article.ID,
+			Title:   article.Title,
+			Privacy: len(article.Password) != 0,
+		})
+	}
+	return res
+}
+
+// ArticleEntityToHomeRandomBlogModel entity转pb
+func ArticleEntityToHomeRandomBlogModel(articleList []*entity.Article) []*pb.HomeRsp_RandomBlog {
+	res := make([]*pb.HomeRsp_RandomBlog, 0)
+	for _, article := range articleList {
+		res = append(res, &pb.HomeRsp_RandomBlog{
+			Id:         article.ID,
+			Title:      article.Title,
+			CoverImage: article.CoverImage,
+			CreateTime: uint32(article.CreateTime),
+			Privacy:    len(article.Password) != 0,
+		})
+	}
+	return res
+}
+
 // ArticleEntityToModel entity转pb
 func ArticleEntityToModel(article *entity.Article) *pb.Article {
 	modelRes := &pb.Article{

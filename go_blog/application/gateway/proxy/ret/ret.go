@@ -12,10 +12,12 @@ import (
 )
 
 func SetFilResponse(httpCtx *http.HttpContext, msg string) {
+	httpCtx.Response().SetHeader("Content-Type", "application/json")
 	httpCtx.Response().SetBody(NewErrorResponse(httpCtx.Context(), 500, msg))
 }
 
 func SetSucResponse(httpCtx *http.HttpContext, stdRes auth_pb.NeedStdRes, rspBody []byte) {
+	httpCtx.Response().SetHeader("Content-Type", "application/json")
 	var standardResp Response
 	if stdRes == auth_pb.NeedStdRes_RES_REQUIRED {
 		// 加上code+message

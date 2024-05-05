@@ -47,6 +47,11 @@ type (
 		DeleteByID(ctx context.Context, id uint32) error
 		// SearchArticle 文章搜索
 		SearchArticle(ctx context.Context, req *pb.SearchArticleReq) (entity.Articles, uint32, error)
+
+		// GetNewestArticle 获取最新发布的文章
+		GetNewestArticle(ctx context.Context, newBlogLimitNum uint32) (entity.Articles, error)
+		// GetRecommendArticle 获取推荐的文章
+		GetRecommendArticle(ctx context.Context, randomBlogLimitNum uint32) (entity.Articles, error)
 	}
 )
 
@@ -211,5 +216,9 @@ type (
 	IPortalUseCase interface {
 		// Home 获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客
 		Home(ctx context.Context, userID uint32, req *pb.HomeReq) (*pb.HomeRsp, error)
+		// BlogHomeInfo 查看博客配置信息
+		BlogHomeInfo(ctx context.Context, userID uint32, req *pb.BlogHomeInfoReq) (*pb.BlogHomeInfoRsp, error)
+		// ArticleSearch 文章搜索
+		ArticleSearch(ctx context.Context, userID uint32, req *pb.ArticleSearchReq) ([]*pb.ArticleSearchItem, uint32, error)
 	}
 )

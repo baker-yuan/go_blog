@@ -2,6 +2,10 @@
 https://vuetifyjs.com/
 https://v2.vuetifyjs.com/
 
+```bash
+nvm use v14.15.0
+```
+
 # blog
 
 ## Project setup

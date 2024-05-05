@@ -38,7 +38,7 @@ func Run(trpcServer *server.Server, cfg *config.Config) {
 		friendLinkUseCase    = usecase.NewFriendLinkUseCase(commonUseCase, friendLinkRepo)
 		pageUseCase          = usecase.NewPageUseCase(commonUseCase, pageRepo)
 		dynamicConfigUseCase = usecase.NewDynamicConfigUseCase(commonUseCase, dynamicConfigRepo)
-		portalUseCase        = usecase.NewPortalUseCase(commonUseCase)
+		portalUseCase        = usecase.NewPortalUseCase(cfg, commonUseCase, articleRepo)
 	)
 	var (
 		blogService = controller.NewBlogServiceImpl(

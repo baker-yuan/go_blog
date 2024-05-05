@@ -35,6 +35,150 @@ var (
 	_ = sort.Sort
 )
 
+// Validate checks the field values on WebsiteConfig with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *WebsiteConfig) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on WebsiteConfig with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in WebsiteConfigMultiError, or
+// nil if none found.
+func (m *WebsiteConfig) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *WebsiteConfig) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for WebsiteAvatar
+
+	// no validation rules for WebsiteName
+
+	// no validation rules for WebsiteAuthor
+
+	// no validation rules for WebsiteIntro
+
+	// no validation rules for WebsiteNotice
+
+	// no validation rules for ManageWebsite
+
+	// no validation rules for BlogWebsite
+
+	// no validation rules for WebsiteCreateTime
+
+	// no validation rules for WebsiteRecordNo
+
+	// no validation rules for Qq
+
+	// no validation rules for Github
+
+	// no validation rules for Gitee
+
+	// no validation rules for TouristAvatar
+
+	// no validation rules for UserAvatar
+
+	// no validation rules for IsEmailNotice
+
+	// no validation rules for RewardFlag
+
+	// no validation rules for CommentFlag
+
+	// no validation rules for WeiXinQrCode
+
+	// no validation rules for AlipayQrCode
+
+	// no validation rules for IsChatRoom
+
+	// no validation rules for WebsocketUrl
+
+	// no validation rules for IsMusicPlayer
+
+	if len(errors) > 0 {
+		return WebsiteConfigMultiError(errors)
+	}
+
+	return nil
+}
+
+// WebsiteConfigMultiError is an error wrapping multiple validation errors
+// returned by WebsiteConfig.ValidateAll() if the designated constraints
+// aren't met.
+type WebsiteConfigMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m WebsiteConfigMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m WebsiteConfigMultiError) AllErrors() []error { return m }
+
+// WebsiteConfigValidationError is the validation error returned by
+// WebsiteConfig.Validate if the designated constraints aren't met.
+type WebsiteConfigValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e WebsiteConfigValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e WebsiteConfigValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e WebsiteConfigValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e WebsiteConfigValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e WebsiteConfigValidationError) ErrorName() string { return "WebsiteConfigValidationError" }
+
+// Error satisfies the builtin error interface
+func (e WebsiteConfigValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sWebsiteConfig.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = WebsiteConfigValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = WebsiteConfigValidationError{}
+
 // Validate checks the field values on HomeReq with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -436,6 +580,669 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = HomeRspValidationError{}
+
+// Validate checks the field values on BlogHomeInfoReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *BlogHomeInfoReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on BlogHomeInfoReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// BlogHomeInfoReqMultiError, or nil if none found.
+func (m *BlogHomeInfoReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *BlogHomeInfoReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return BlogHomeInfoReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// BlogHomeInfoReqMultiError is an error wrapping multiple validation errors
+// returned by BlogHomeInfoReq.ValidateAll() if the designated constraints
+// aren't met.
+type BlogHomeInfoReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m BlogHomeInfoReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m BlogHomeInfoReqMultiError) AllErrors() []error { return m }
+
+// BlogHomeInfoReqValidationError is the validation error returned by
+// BlogHomeInfoReq.Validate if the designated constraints aren't met.
+type BlogHomeInfoReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BlogHomeInfoReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BlogHomeInfoReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BlogHomeInfoReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BlogHomeInfoReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BlogHomeInfoReqValidationError) ErrorName() string { return "BlogHomeInfoReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e BlogHomeInfoReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBlogHomeInfoReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BlogHomeInfoReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BlogHomeInfoReqValidationError{}
+
+// Validate checks the field values on BlogHomeInfoRsp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *BlogHomeInfoRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on BlogHomeInfoRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// BlogHomeInfoRspMultiError, or nil if none found.
+func (m *BlogHomeInfoRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *BlogHomeInfoRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ArticleCount
+
+	// no validation rules for CategoryCount
+
+	// no validation rules for TagCount
+
+	// no validation rules for ViewsCount
+
+	if all {
+		switch v := interface{}(m.GetWebsiteConfig()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, BlogHomeInfoRspValidationError{
+					field:  "WebsiteConfig",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, BlogHomeInfoRspValidationError{
+					field:  "WebsiteConfig",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetWebsiteConfig()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return BlogHomeInfoRspValidationError{
+				field:  "WebsiteConfig",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	for idx, item := range m.GetPageList() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, BlogHomeInfoRspValidationError{
+						field:  fmt.Sprintf("PageList[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, BlogHomeInfoRspValidationError{
+						field:  fmt.Sprintf("PageList[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return BlogHomeInfoRspValidationError{
+					field:  fmt.Sprintf("PageList[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return BlogHomeInfoRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// BlogHomeInfoRspMultiError is an error wrapping multiple validation errors
+// returned by BlogHomeInfoRsp.ValidateAll() if the designated constraints
+// aren't met.
+type BlogHomeInfoRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m BlogHomeInfoRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m BlogHomeInfoRspMultiError) AllErrors() []error { return m }
+
+// BlogHomeInfoRspValidationError is the validation error returned by
+// BlogHomeInfoRsp.Validate if the designated constraints aren't met.
+type BlogHomeInfoRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BlogHomeInfoRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BlogHomeInfoRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BlogHomeInfoRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BlogHomeInfoRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BlogHomeInfoRspValidationError) ErrorName() string { return "BlogHomeInfoRspValidationError" }
+
+// Error satisfies the builtin error interface
+func (e BlogHomeInfoRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBlogHomeInfoRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BlogHomeInfoRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BlogHomeInfoRspValidationError{}
+
+// Validate checks the field values on ArticleSearchReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *ArticleSearchReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ArticleSearchReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ArticleSearchReqMultiError, or nil if none found.
+func (m *ArticleSearchReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ArticleSearchReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for CategoryId
+
+	// no validation rules for TagId
+
+	// no validation rules for Page
+
+	// no validation rules for Size
+
+	// no validation rules for Ticket
+
+	if len(errors) > 0 {
+		return ArticleSearchReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// ArticleSearchReqMultiError is an error wrapping multiple validation errors
+// returned by ArticleSearchReq.ValidateAll() if the designated constraints
+// aren't met.
+type ArticleSearchReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ArticleSearchReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ArticleSearchReqMultiError) AllErrors() []error { return m }
+
+// ArticleSearchReqValidationError is the validation error returned by
+// ArticleSearchReq.Validate if the designated constraints aren't met.
+type ArticleSearchReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ArticleSearchReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ArticleSearchReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ArticleSearchReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ArticleSearchReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ArticleSearchReqValidationError) ErrorName() string { return "ArticleSearchReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ArticleSearchReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sArticleSearchReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ArticleSearchReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ArticleSearchReqValidationError{}
+
+// Validate checks the field values on ArticleSearchRsp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *ArticleSearchRsp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ArticleSearchRsp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ArticleSearchRspMultiError, or nil if none found.
+func (m *ArticleSearchRsp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ArticleSearchRsp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetRows() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ArticleSearchRspValidationError{
+						field:  fmt.Sprintf("Rows[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ArticleSearchRspValidationError{
+						field:  fmt.Sprintf("Rows[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ArticleSearchRspValidationError{
+					field:  fmt.Sprintf("Rows[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	// no validation rules for Total
+
+	if len(errors) > 0 {
+		return ArticleSearchRspMultiError(errors)
+	}
+
+	return nil
+}
+
+// ArticleSearchRspMultiError is an error wrapping multiple validation errors
+// returned by ArticleSearchRsp.ValidateAll() if the designated constraints
+// aren't met.
+type ArticleSearchRspMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ArticleSearchRspMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ArticleSearchRspMultiError) AllErrors() []error { return m }
+
+// ArticleSearchRspValidationError is the validation error returned by
+// ArticleSearchRsp.Validate if the designated constraints aren't met.
+type ArticleSearchRspValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ArticleSearchRspValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ArticleSearchRspValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ArticleSearchRspValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ArticleSearchRspValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ArticleSearchRspValidationError) ErrorName() string { return "ArticleSearchRspValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ArticleSearchRspValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sArticleSearchRsp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ArticleSearchRspValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ArticleSearchRspValidationError{}
+
+// Validate checks the field values on ArticleSearchItem with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *ArticleSearchItem) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ArticleSearchItem with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ArticleSearchItemMultiError, or nil if none found.
+func (m *ArticleSearchItem) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ArticleSearchItem) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for CreateTime
+
+	// no validation rules for UpdateTime
+
+	// no validation rules for ViewNum
+
+	// no validation rules for CommentNum
+
+	// no validation rules for CategoryName
+
+	for idx, item := range m.GetTagList() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ArticleSearchItemValidationError{
+						field:  fmt.Sprintf("TagList[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ArticleSearchItemValidationError{
+						field:  fmt.Sprintf("TagList[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ArticleSearchItemValidationError{
+					field:  fmt.Sprintf("TagList[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ArticleSearchItemMultiError(errors)
+	}
+
+	return nil
+}
+
+// ArticleSearchItemMultiError is an error wrapping multiple validation errors
+// returned by ArticleSearchItem.ValidateAll() if the designated constraints
+// aren't met.
+type ArticleSearchItemMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ArticleSearchItemMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ArticleSearchItemMultiError) AllErrors() []error { return m }
+
+// ArticleSearchItemValidationError is the validation error returned by
+// ArticleSearchItem.Validate if the designated constraints aren't met.
+type ArticleSearchItemValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ArticleSearchItemValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ArticleSearchItemValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ArticleSearchItemValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ArticleSearchItemValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ArticleSearchItemValidationError) ErrorName() string {
+	return "ArticleSearchItemValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ArticleSearchItemValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sArticleSearchItem.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ArticleSearchItemValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ArticleSearchItemValidationError{}
 
 // Validate checks the field values on HomeRsp_HomeBlog with the rules defined
 // in the proto definition for this message. If any rules are violated, the
@@ -1089,3 +1896,223 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = HomeRsp_FriendLinkValidationError{}
+
+// Validate checks the field values on BlogHomeInfoRsp_Page with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *BlogHomeInfoRsp_Page) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on BlogHomeInfoRsp_Page with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// BlogHomeInfoRsp_PageMultiError, or nil if none found.
+func (m *BlogHomeInfoRsp_Page) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *BlogHomeInfoRsp_Page) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for PageName
+
+	// no validation rules for PageLabel
+
+	// no validation rules for PageCover
+
+	if len(errors) > 0 {
+		return BlogHomeInfoRsp_PageMultiError(errors)
+	}
+
+	return nil
+}
+
+// BlogHomeInfoRsp_PageMultiError is an error wrapping multiple validation
+// errors returned by BlogHomeInfoRsp_Page.ValidateAll() if the designated
+// constraints aren't met.
+type BlogHomeInfoRsp_PageMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m BlogHomeInfoRsp_PageMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m BlogHomeInfoRsp_PageMultiError) AllErrors() []error { return m }
+
+// BlogHomeInfoRsp_PageValidationError is the validation error returned by
+// BlogHomeInfoRsp_Page.Validate if the designated constraints aren't met.
+type BlogHomeInfoRsp_PageValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BlogHomeInfoRsp_PageValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BlogHomeInfoRsp_PageValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BlogHomeInfoRsp_PageValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BlogHomeInfoRsp_PageValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BlogHomeInfoRsp_PageValidationError) ErrorName() string {
+	return "BlogHomeInfoRsp_PageValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BlogHomeInfoRsp_PageValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBlogHomeInfoRsp_Page.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BlogHomeInfoRsp_PageValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BlogHomeInfoRsp_PageValidationError{}
+
+// Validate checks the field values on ArticleSearchItem_Tag with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ArticleSearchItem_Tag) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ArticleSearchItem_Tag with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ArticleSearchItem_TagMultiError, or nil if none found.
+func (m *ArticleSearchItem_Tag) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ArticleSearchItem_Tag) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for Name
+
+	// no validation rules for Description
+
+	// no validation rules for Color
+
+	if len(errors) > 0 {
+		return ArticleSearchItem_TagMultiError(errors)
+	}
+
+	return nil
+}
+
+// ArticleSearchItem_TagMultiError is an error wrapping multiple validation
+// errors returned by ArticleSearchItem_Tag.ValidateAll() if the designated
+// constraints aren't met.
+type ArticleSearchItem_TagMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ArticleSearchItem_TagMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ArticleSearchItem_TagMultiError) AllErrors() []error { return m }
+
+// ArticleSearchItem_TagValidationError is the validation error returned by
+// ArticleSearchItem_Tag.Validate if the designated constraints aren't met.
+type ArticleSearchItem_TagValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ArticleSearchItem_TagValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ArticleSearchItem_TagValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ArticleSearchItem_TagValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ArticleSearchItem_TagValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ArticleSearchItem_TagValidationError) ErrorName() string {
+	return "ArticleSearchItem_TagValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ArticleSearchItem_TagValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sArticleSearchItem_Tag.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ArticleSearchItem_TagValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ArticleSearchItem_TagValidationError{}

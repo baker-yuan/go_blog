@@ -8,6 +8,7 @@ require (
 	github.com/baker-yuan/go-blog/go_blog/protocol/blog v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/go_blog/protocol/user v0.0.0-incompatible
 	github.com/baker-yuan/go-blog/go_blog/retcode v0.0.0-incompatible
+	github.com/ilyakaznacheev/cleanenv v1.5.0
 	gorm.io/gorm v1.25.9
 	trpc.group/trpc-go/trpc-database/gorm v1.0.0
 	trpc.group/trpc-go/trpc-filter/debuglog v1.0.0
@@ -56,6 +57,7 @@ require (
 	github.com/jackc/pgx/v4 v4.16.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.16.7 // indirect
 	github.com/lestrrat-go/strftime v1.0.6 // indirect
@@ -99,6 +101,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/mysql v1.3.4 // indirect
 	gorm.io/driver/postgres v1.3.7 // indirect
+	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 // indirect
 	trpc.group/trpc-go/tnet v1.0.0 // indirect
 	trpc.group/trpc-go/trpc-selector-dsn v1.0.0 // indirect
 	trpc.group/trpc/trpc-protocol/pb/go/trpc v1.0.0 // indirect

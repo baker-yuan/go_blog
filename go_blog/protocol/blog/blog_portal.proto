@@ -9,6 +9,40 @@ import "trpc/proto/trpc_options.proto";
 import "trpc/swagger/swagger.proto";
 import "blog/base.proto";
 
+// 网站配置信息
+message WebsiteConfig {
+  // 网站信息
+  string website_avatar = 1; // 网站头像
+  string website_name = 2; // 网站名称
+  string website_author = 3; // 网站作者
+  string website_intro = 4; // 网站介绍
+  string website_notice = 5; // 网站公告
+  string manage_website = 6; // 管理后台地址
+  string blog_website = 7; // 博客前台地址
+  string website_create_time = 8; // 网站创建时间
+  string website_record_no = 9; // 网站备案号
+  repeated string social_login_list = 10; // 社交登录列表
+
+  // 社交信息
+  repeated string social_url_list = 100; // 社交url列表
+  string qq = 101; // qq
+  string github = 102; // github
+  string gitee = 103; // gitee
+
+  // 其他设置
+  string tourist_avatar = 200; // 游客头像
+  string user_avatar = 201; // 用户头像
+  bool is_email_notice = 202; // 是否邮箱通知
+  bool reward_flag = 203; // 是否打赏
+  bool comment_flag = 204; // 评论开关
+  string wei_xin_qr_code = 205; // 微信二维码
+  string alipay_qr_code = 206; // 支付宝二维码
+  bool is_chat_room = 207; // 是否开启聊天室
+  string websocket_url = 208; // websocket地址
+  bool is_music_player = 209; // 是否开启音乐
+}
+
+
 // 博客首页
 message HomeReq {
   uint32 timestamp = 1; // 时间戳
@@ -17,14 +51,14 @@ message HomeReq {
 message HomeRsp {
   // 最新博客
   message HomeBlog {
-    int32 id = 1; // 文章ID
+    uint32 id = 1; // 文章ID
     string title = 2; // 标题
     bool privacy = 3; // 文章是否有密码
   }
 
   // 推荐博客
   message RandomBlog {
-    int32 id = 1; // 文章ID
+    uint32 id = 1; // 文章ID
     string title = 2; // 标题
     string cover_image = 3; // 文章封面图片
     uint32 create_time = 4; // 创建时间
@@ -33,7 +67,7 @@ message HomeRsp {
 
   // 最新评论
   message NewestComment {
-    int32 comment_id = 1; // 评论ID
+    uint32 comment_id = 1; // 评论ID
     string content = 2; // 评论内容
     string module_code = 3; // 模块标识
     int32 object_id = 4; // 信息ID
@@ -41,7 +75,7 @@ message HomeRsp {
   }
   // 标签
   message Tag {
-    int32 id = 1; // 主键
+    uint32 id = 1; // 主键
     string name = 2; // 标签名
     string description = 3; // 描述
     string color = 4; // 标签颜色
@@ -49,10 +83,10 @@ message HomeRsp {
 
   // 分类
   message Category {
-    int32 id = 1; // 文章类型主键
+    uint32 id = 1; // 文章类型主键
     string name = 2; // 文章类型名
     string description = 3; // 类型介绍
-    int32 sort = 4; // 排序
+    uint32 sort = 4; // 排序
     bool available = 5; // 是否可用 (0-不可用, 1-可用)
   }
 
@@ -70,9 +104,73 @@ message HomeRsp {
   repeated FriendLink friend_link_list = 6; // 友情链接
 }
 
+// 查看博客配置信息
+message BlogHomeInfoReq {
+
+}
+
+message BlogHomeInfoRsp {
+  // 页面列表
+  message Page {
+    int32 id = 1; // 页面id
+    string page_name = 2; // 页面名
+    string page_label = 3; // 页面标签
+    string page_cover = 4; // 页面封面
+  }
+
+  int32 article_count = 1; // 文章数量
+  int32 category_count = 2; // 分类数量
+  int32 tag_count = 3; // 标签数量
+  int32 views_count = 4; // 访问量
+  WebsiteConfig website_config = 5; // 网站配置
+  repeated Page page_list = 6; // 页面列表
+}
+
+// 文章搜索
+message ArticleSearchReq {
+  uint32 category_id = 1; // 文章分类ID
+  uint32 tag_id = 2; // 标签ID
+  uint32 page = 3; // 页码
+  uint32 size = 4; // 页面大小
+  string ticket = 5; // ticket
+}
+
+message ArticleSearchRsp {
+  repeated ArticleSearchItem rows = 1; // 数据
+  uint32 total = 2; // 分页-总数
+}
+
+message ArticleSearchItem {
+  // 标签
+  message Tag {
+    uint32 id = 1; // 主键
+    string name = 2; // 标签名
+    string description = 3; // 描述
+    string color = 4; // 标签颜色
+  }
+
+  uint32 create_time = 100; // 创建时间
+  uint32 update_time = 101; // 修改时间
+  uint32 view_num = 200; // 游览数
+  uint32 comment_num = 201; // 评论数
+  string category_name = 300; // 分类名
+  repeated Tag tag_list = 400; // 标签列表
+}
+
 service BlogPortalApi {
-  // 获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客
+  // 首页接口：获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客
   rpc Home (HomeReq) returns (HomeRsp) {
     option(trpc.alias) = "/blog/home";
   }
+
+  // 查看博客配置信息
+  rpc BlogHomeInfo (BlogHomeInfoReq) returns (BlogHomeInfoRsp) {
+    option(trpc.alias) = "/blog/config/homeInfo";
+  }
+
+  // 文章搜索
+  rpc ArticleSearch (ArticleSearchReq) returns (ArticleSearchRsp) {
+    option(trpc.alias) = "/blog/article/search";
+  }
+
 }

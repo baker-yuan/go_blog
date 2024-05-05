@@ -19,8 +19,12 @@ import (
 
 // BlogPortalApiService defines service.
 type BlogPortalApiService interface {
-	// Home 获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客
+	// Home 首页接口：获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客
 	Home(ctx context.Context, req *HomeReq) (*HomeRsp, error)
+	// BlogHomeInfo 查看博客配置信息
+	BlogHomeInfo(ctx context.Context, req *BlogHomeInfoReq) (*BlogHomeInfoRsp, error)
+	// ArticleSearch 文章搜索
+	ArticleSearch(ctx context.Context, req *ArticleSearchReq) (*ArticleSearchRsp, error)
 }
 
 func BlogPortalApiService_Home_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
@@ -41,6 +45,42 @@ func BlogPortalApiService_Home_Handler(svr interface{}, ctx context.Context, f s
 	return rsp, nil
 }
 
+func BlogPortalApiService_BlogHomeInfo_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &BlogHomeInfoReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogPortalApiService).BlogHomeInfo(ctx, reqbody.(*BlogHomeInfoReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func BlogPortalApiService_ArticleSearch_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &ArticleSearchReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(BlogPortalApiService).ArticleSearch(ctx, reqbody.(*ArticleSearchReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 // BlogPortalApiServer_ServiceDesc descriptor for server.RegisterService.
 var BlogPortalApiServer_ServiceDesc = server.ServiceDesc{
 	ServiceName: "go_blog.blog.BlogPortalApi",
@@ -51,8 +91,24 @@ var BlogPortalApiServer_ServiceDesc = server.ServiceDesc{
 			Func: BlogPortalApiService_Home_Handler,
 		},
 		{
+			Name: "/blog/config/homeInfo",
+			Func: BlogPortalApiService_BlogHomeInfo_Handler,
+		},
+		{
+			Name: "/blog/article/search",
+			Func: BlogPortalApiService_ArticleSearch_Handler,
+		},
+		{
 			Name: "/go_blog.blog.BlogPortalApi/Home",
 			Func: BlogPortalApiService_Home_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogPortalApi/BlogHomeInfo",
+			Func: BlogPortalApiService_BlogHomeInfo_Handler,
+		},
+		{
+			Name: "/go_blog.blog.BlogPortalApi/ArticleSearch",
+			Func: BlogPortalApiService_ArticleSearch_Handler,
 		},
 	},
 }
@@ -68,9 +124,19 @@ func RegisterBlogPortalApiService(s server.Service, svr BlogPortalApiService) {
 
 type UnimplementedBlogPortalApi struct{}
 
-// Home 获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客
+// Home 首页接口：获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客
 func (s *UnimplementedBlogPortalApi) Home(ctx context.Context, req *HomeReq) (*HomeRsp, error) {
 	return nil, errors.New("rpc Home of service BlogPortalApi is not implemented")
+}
+
+// BlogHomeInfo 查看博客配置信息
+func (s *UnimplementedBlogPortalApi) BlogHomeInfo(ctx context.Context, req *BlogHomeInfoReq) (*BlogHomeInfoRsp, error) {
+	return nil, errors.New("rpc BlogHomeInfo of service BlogPortalApi is not implemented")
+}
+
+// ArticleSearch 文章搜索
+func (s *UnimplementedBlogPortalApi) ArticleSearch(ctx context.Context, req *ArticleSearchReq) (*ArticleSearchRsp, error) {
+	return nil, errors.New("rpc ArticleSearch of service BlogPortalApi is not implemented")
 }
 
 // END --------------------------------- Default Unimplemented Server Service --------------------------------- END
@@ -81,8 +147,12 @@ func (s *UnimplementedBlogPortalApi) Home(ctx context.Context, req *HomeReq) (*H
 
 // BlogPortalApiClientProxy defines service client proxy
 type BlogPortalApiClientProxy interface {
-	// Home 获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客
+	// Home 首页接口：获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客
 	Home(ctx context.Context, req *HomeReq, opts ...client.Option) (rsp *HomeRsp, err error)
+	// BlogHomeInfo 查看博客配置信息
+	BlogHomeInfo(ctx context.Context, req *BlogHomeInfoReq, opts ...client.Option) (rsp *BlogHomeInfoRsp, err error)
+	// ArticleSearch 文章搜索
+	ArticleSearch(ctx context.Context, req *ArticleSearchReq, opts ...client.Option) (rsp *ArticleSearchRsp, err error)
 }
 
 type BlogPortalApiClientProxyImpl struct {
@@ -108,6 +178,46 @@ func (c *BlogPortalApiClientProxyImpl) Home(ctx context.Context, req *HomeReq, o
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &HomeRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogPortalApiClientProxyImpl) BlogHomeInfo(ctx context.Context, req *BlogHomeInfoReq, opts ...client.Option) (*BlogHomeInfoRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/config/homeInfo")
+	msg.WithCalleeServiceName(BlogPortalApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogPortalApi")
+	msg.WithCalleeMethod("BlogHomeInfo")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &BlogHomeInfoRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *BlogPortalApiClientProxyImpl) ArticleSearch(ctx context.Context, req *ArticleSearchReq, opts ...client.Option) (*ArticleSearchRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/blog/article/search")
+	msg.WithCalleeServiceName(BlogPortalApiServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("BlogPortalApi")
+	msg.WithCalleeMethod("ArticleSearch")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &ArticleSearchRsp{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}

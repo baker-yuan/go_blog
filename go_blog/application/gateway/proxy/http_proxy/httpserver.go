@@ -20,6 +20,11 @@ func HttpServerRun(ctx context.Context, cfg *config.Config) {
 		Handler: func(ctx *fasthttp.RequestCtx) {
 			// OPTIONS请求直接返回
 			if string(ctx.Method()) == fasthttp.MethodOptions {
+				ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
+				ctx.Response.Header.Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+				//ctx.Response.Header.Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+				ctx.Response.Header.Set("Access-Control-Allow-Headers", "Content-Type, Authorization, ticket")
+				ctx.Response.Header.Set("Access-Control-Allow-Credentials", "true")
 				ctx.SetStatusCode(fasthttp.StatusNoContent)
 				return
 			}
