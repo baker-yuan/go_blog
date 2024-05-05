@@ -38,6 +38,7 @@ func Run(trpcServer *server.Server, cfg *config.Config) {
 		friendLinkUseCase    = usecase.NewFriendLinkUseCase(commonUseCase, friendLinkRepo)
 		pageUseCase          = usecase.NewPageUseCase(commonUseCase, pageRepo)
 		dynamicConfigUseCase = usecase.NewDynamicConfigUseCase(commonUseCase, dynamicConfigRepo)
+		portalUseCase        = usecase.NewPortalUseCase(commonUseCase)
 	)
 	var (
 		blogService = controller.NewBlogServiceImpl(
@@ -47,11 +48,13 @@ func Run(trpcServer *server.Server, cfg *config.Config) {
 			friendLinkUseCase,
 			pageUseCase,
 			dynamicConfigUseCase,
+			portalUseCase,
 		)
 	)
 
 	// 注册服务
 	pb.RegisterBlogApiService(trpcServer, blogService)
+	pb.RegisterBlogPortalApiService(trpcServer, blogService)
 
 	// 初始化
 	if err := repo.Init(gormDB); err != nil {

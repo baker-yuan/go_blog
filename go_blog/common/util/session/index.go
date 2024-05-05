@@ -5,7 +5,6 @@ import (
 	"strconv"
 
 	"trpc.group/trpc-go/trpc-go"
-	thttp "trpc.group/trpc-go/trpc-go/http"
 )
 
 // SessionUtils 会话
@@ -16,10 +15,15 @@ func (c SessionUtils) GetLoginUserID(ctx context.Context) (uint32, error) {
 	// https://github.com/trpc-group/trpc-go/blob/main/http/README.zh_CN.md
 	//metaData := trpc.Message(ctx).ServerMetaData()
 	//codec.Message(ctx).ServerMetaData()
-	head := thttp.Head(ctx)
-	reqHead := head.Request.Header
-	userIDStr := reqHead["X-User-Id"]
-	userID, _ := strconv.Atoi(userIDStr[0])
+	//head := thttp.Head(ctx)
+	//reqHead := head.Request.Header
+	//userIDStr := reqHead["X-User-Id"]
+	//userID, _ := strconv.Atoi(userIDStr[0])
+	//return uint32(userID), nil
+
+	metaData := trpc.Message(ctx).ServerMetaData()
+	userIDStr := metaData["X-User-ID"]
+	userID, _ := strconv.Atoi(string(userIDStr))
 	return uint32(userID), nil
 }
 

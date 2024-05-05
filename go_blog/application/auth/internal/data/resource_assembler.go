@@ -20,6 +20,8 @@ func ResourcePOToEntity(dbResource *Resource) *biz.Resource {
 		TreeNodeID: dbResource.TreeNodeID,
 		Name:       dbResource.Name,
 		Describe:   dbResource.Describe,
+		// 个性化
+		IsNeedStdRes: dbResource.IsNeedStdRes,
 		//
 		Status: dbResource.Status,
 		// 路径定位
@@ -29,8 +31,9 @@ func ResourcePOToEntity(dbResource *Resource) *biz.Resource {
 		IsNeedLogin:      dbResource.IsNeedLogin,
 		IsNeedPermission: dbResource.IsNeedPermission,
 		// 下游服务信息
-		Service: dbResource.Service,
-		Method:  dbResource.Method,
+		Service:  dbResource.Service,
+		Method:   dbResource.Method,
+		Protocol: dbResource.Protocol,
 		// 公共字段
 		CreateUserID: dbResource.CreateUserID,
 		UpdateUserID: dbResource.UpdateUserID,
@@ -47,6 +50,8 @@ func ResourceEntityToPO(resource *biz.Resource) *Resource {
 		TreeNodeID: resource.TreeNodeID,
 		Name:       resource.Name,
 		Describe:   resource.Describe,
+		// 个性化
+		IsNeedStdRes: resource.IsNeedStdRes,
 		//
 		Status: resource.Status,
 		// 路径定位
@@ -56,8 +61,9 @@ func ResourceEntityToPO(resource *biz.Resource) *Resource {
 		IsNeedLogin:      resource.IsNeedLogin,
 		IsNeedPermission: resource.IsNeedPermission,
 		// 下游服务信息
-		Service: resource.Service,
-		Method:  resource.Method,
+		Service:  resource.Service,
+		Method:   resource.Method,
+		Protocol: resource.Protocol,
 		// 公共字段
 		CreateUserID: resource.CreateUserID,
 		UpdateUserID: resource.UpdateUserID,

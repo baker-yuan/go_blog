@@ -43,3 +43,15 @@ export const httpMethodOption = [
     label: "DELETE"
   }
 ];
+
+// 接口协议 0-http 1-trpc
+export const protocolOption = [
+  {
+    value: Resource.MethodProtocol.HTTP,
+    label: "http"
+  },
+  {
+    value: Resource.MethodProtocol.TRPC,
+    label: "trpc"
+  }
+];

@@ -50,6 +50,8 @@ type IBizContext interface {
 	Value(key interface{}) interface{} // 从原始context中返回键对应的值
 	WithValue(key, val interface{})    // 往原始context添加键值对
 
+	SetContext(context.Context)
+
 	Scheme() string // 协议 http、https、grpc、dubbo
 
 	RequestId() string     // 请求id唯一，每次请求随机生成

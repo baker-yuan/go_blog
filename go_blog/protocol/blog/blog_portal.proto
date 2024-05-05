@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package go_blog.blog;
+
+option  go_package ="github.com/baker-yuan/go-blog/go_blog/protocol/blog";
+
+import "validate/validate.proto";
+import "trpc/proto/trpc_options.proto";
+import "trpc/swagger/swagger.proto";
+import "blog/base.proto";
+
+// 博客首页
+message HomeReq {
+  uint32 timestamp = 1; // 时间戳
+}
+
+message HomeRsp {
+  // 最新博客
+  message HomeBlog {
+    int32 id = 1; // 文章ID
+    string title = 2; // 标题
+    bool privacy = 3; // 文章是否有密码
+  }
+
+  // 推荐博客
+  message RandomBlog {
+    int32 id = 1; // 文章ID
+    string title = 2; // 标题
+    string cover_image = 3; // 文章封面图片
+    uint32 create_time = 4; // 创建时间
+    bool privacy = 5; // 文章是否有密码
+  }
+
+  // 最新评论
+  message NewestComment {
+    int32 comment_id = 1; // 评论ID
+    string content = 2; // 评论内容
+    string module_code = 3; // 模块标识
+    int32 object_id = 4; // 信息ID
+    string title = 5; // 标题 (评论内容的描述信息，文章对应的是文章的标题)
+  }
+  // 标签
+  message Tag {
+    int32 id = 1; // 主键
+    string name = 2; // 标签名
+    string description = 3; // 描述
+    string color = 4; // 标签颜色
+  }
+
+  // 分类
+  message Category {
+    int32 id = 1; // 文章类型主键
+    string name = 2; // 文章类型名
+    string description = 3; // 类型介绍
+    int32 sort = 4; // 排序
+    bool available = 5; // 是否可用 (0-不可用, 1-可用)
+  }
+
+  // 友情链接
+  message FriendLink {
+    string desc = 1; // 描述
+    string link = 2; // 跳转链接
+  }
+
+  repeated HomeBlog new_blog_list = 1; // 最新博客
+  repeated RandomBlog random_blog_list = 2; // 推荐博客
+  repeated NewestComment newest_comment_list = 3; // 最新评论
+  repeated Tag tag_list = 4; // 所有标签
+  repeated Category category_list = 5; // 所有分类
+  repeated FriendLink friend_link_list = 6; // 友情链接
+}
+
+service BlogPortalApi {
+  // 获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客
+  rpc Home (HomeReq) returns (HomeRsp) {
+    option(trpc.alias) = "/blog/home";
+  }
+}

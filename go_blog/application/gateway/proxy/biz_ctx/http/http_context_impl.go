@@ -92,6 +92,10 @@ func (ctx *HttpContext) Context() context.Context {
 	return ctx.ctx
 }
 
+func (ctx *HttpContext) SetContext(c context.Context) {
+	ctx.ctx = c
+}
+
 func (ctx *HttpContext) Value(key interface{}) interface{} {
 	return ctx.Context().Value(key)
 }

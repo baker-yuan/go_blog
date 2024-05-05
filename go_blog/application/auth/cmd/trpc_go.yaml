@@ -43,20 +43,31 @@ server:
     # http服务获取traceID
     - httpTrace
   service:
-    - name: trpc.blog.auth.AuthApiHttp
+#    - name: trpc.blog.auth.AuthApiHttp
+#      # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
+#      address: 127.0.0.1:9204
+#      # 选填，网络类型，为空时，使用 server.network
+#      network: tcp
+#      # 选填，协议类型，为空时，使用 server.protocol
+#      protocol: http
+#      # 选填，service 处理请求的超时时间 单位 毫秒
+#      timeout: 2000
+#      # 选填，使用哪个注册中心 polarismesh
+#      registry: polarismesh
+    - name: trpc.blog.admin.AuthApi
       # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
-      address: 127.0.0.1:9204
+      address: 127.0.0.1:9400
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
-      protocol: http
+      protocol: trpc
       # 选填，service 处理请求的超时时间 单位 毫秒
-      timeout: 2000
+      timeout:
       # 选填，使用哪个注册中心 polarismesh
       registry: polarismesh
-    - name: trpc.blog.auth.AuthApiTrpc
+    - name: trpc.blog.portal.AuthApi
       # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
-      address: 127.0.0.1:9400
+      address: 127.0.0.1:9401
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
@@ -110,12 +121,12 @@ plugins:
       protocol: grpc
       # 需要进行注册的各服务信息
       service:
-        - name: trpc.blog.auth.AuthApiHttp
+        - name: trpc.blog.admin.AuthApi
           # 该服务需要注册的命名空间
           namespace: Production
           # 前往北极星控制台进行申请或查看
           token: xxx
-        - name: trpc.blog.auth.AuthApiTrpc
+        - name: trpc.blog.portal.AuthApi
           namespace: Production
           token: xxx
   # 针对 trpc 框架服务发现的配置
@@ -152,6 +163,6 @@ client:
       target: dsn://root:123456@tcp(127.0.0.1:3306)/go_blog_test?charset=utf8mb4&parseTime=True
     # 请求用户服务配置
     - callee: go_blog.user.UserApi
-      target: polarismesh://trpc.blog.user.UserApiTrpc
+      target: polarismesh://trpc.blog.admin.UserApi
       timeout: 1000
       disable_servicerouter: false

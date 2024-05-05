@@ -193,6 +193,18 @@
       ]
      },
      {
+      "name": "is_need_std_res",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "个性化\n是否标准化输出 * 0 - RES_NOT_REQUIRED - 不需要否标准化输出\n * 1 - RES_REQUIRED - 需要否标准化输出\n",
+      "enum": [
+       0,
+       1
+      ]
+     },
+     {
       "name": "method",
       "in": "query",
       "required": false,
@@ -205,6 +217,18 @@
       "required": false,
       "type": "string",
       "description": "接口名称"
+     },
+     {
+      "name": "protocol",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "协议 * 0 - Http - http\n * 1 - Trpc - 腾讯trpc框架\n",
+      "enum": [
+       0,
+       1
+      ]
      },
      {
       "name": "service",
@@ -1133,6 +1157,18 @@
       ]
      },
      {
+      "name": "is_need_std_res",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "个性化\n是否标准化输出 * 0 - RES_NOT_REQUIRED - 不需要否标准化输出\n * 1 - RES_REQUIRED - 需要否标准化输出\n",
+      "enum": [
+       0,
+       1
+      ]
+     },
+     {
       "name": "method",
       "in": "query",
       "required": false,
@@ -1145,6 +1181,18 @@
       "required": false,
       "type": "string",
       "description": "接口名称"
+     },
+     {
+      "name": "protocol",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "协议 * 0 - Http - http\n * 1 - Trpc - 腾讯trpc框架\n",
+      "enum": [
+       0,
+       1
+      ]
      },
      {
       "name": "service",
@@ -2243,6 +2291,16 @@
       1
      ]
     },
+    "is_need_std_res": {
+     "title": "is_need_std_res",
+     "type": "integer",
+     "format": "int32",
+     "description": "个性化\n是否标准化输出 * 0 - RES_NOT_REQUIRED - 不需要否标准化输出\n * 1 - RES_REQUIRED - 需要否标准化输出\n",
+     "enum": [
+      0,
+      1
+     ]
+    },
     "method": {
      "title": "method",
      "type": "string",
@@ -2253,6 +2311,16 @@
      "type": "string",
      "description": "接口名称"
     },
+    "protocol": {
+     "title": "protocol",
+     "type": "integer",
+     "format": "int32",
+     "description": "协议 * 0 - Http - http\n * 1 - Trpc - 腾讯trpc框架\n",
+     "enum": [
+      0,
+      1
+     ]
+    },
     "service": {
      "title": "service",
      "type": "string",
@@ -2262,7 +2330,7 @@
      "title": "status",
      "type": "integer",
      "format": "int32",
-     "description": "接口状态 0-未发布 1-已发布 2-以下线 * 0 - UNPUBLISHED - 未发布\n * 1 - PUBLISHED - 已发布\n * 2 - OFFLINE - 以下线\n",
+     "description": "状态\n接口状态 0-未发布 1-已发布 2-以下线 * 0 - UNPUBLISHED - 未发布\n * 1 - PUBLISHED - 已发布\n * 2 - OFFLINE - 以下线\n",
      "enum": [
       0,
       1,
@@ -2518,6 +2586,11 @@
       1
      ]
     },
+    "biz_type_desc": {
+     "title": "biz_type_desc",
+     "type": "string",
+     "description": "业务类型"
+    },
     "children": {
      "title": "children",
      "type": "array",
@@ -2531,6 +2604,11 @@
      "type": "integer",
      "format": "uint32",
      "description": "创建时间"
+    },
+    "create_user": {
+     "title": "create_user",
+     "type": "string",
+     "description": "查询补充\n创建人"
     },
     "create_user_id": {
      "title": "create_user_id",
@@ -2555,11 +2633,21 @@
      "format": "uint32",
      "description": "父节点ID"
     },
+    "tree_node_path": {
+     "title": "tree_node_path",
+     "type": "string",
+     "description": "树节点路径"
+    },
     "update_time": {
      "title": "update_time",
      "type": "integer",
      "format": "uint32",
      "description": "更新时间"
+    },
+    "update_user": {
+     "title": "update_user",
+     "type": "string",
+     "description": "更新人"
     },
     "update_user_id": {
      "title": "update_user_id",

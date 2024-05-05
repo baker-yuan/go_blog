@@ -24,6 +24,12 @@
           @change="handleTreeNodeIdChange"
         ></el-cascader>
       </el-form-item>
+      <el-form-item label="标输输出" prop="isNeedStdRes">
+        <el-radio-group v-model="drawerProps.row!.isNeedStdRes">
+          <el-radio :label="Resource.NeedStdRes.RES_REQUIRED">是</el-radio>
+          <el-radio :label="Resource.NeedStdRes.RES_NOT_REQUIRED">否</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="接口URL" prop="url">
         <el-input v-model="drawerProps.row!.url" placeholder="请填写接口URL" clearable></el-input>
       </el-form-item>
@@ -58,6 +64,11 @@
       <el-form-item label="API接口" prop="method">
         <el-input v-model="drawerProps.row!.method" placeholder="请填写API接口" clearable></el-input>
       </el-form-item>
+      <el-form-item label="接口协议" prop="protocol">
+        <el-select v-model="drawerProps.row!.protocol" placeholder="请选择接口协议">
+          <el-option v-for="item in protocolOption" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        </el-select>
+      </el-form-item>
     </el-form>
     <template #footer>
       <el-button @click="drawerVisible = false">取消</el-button>
@@ -70,7 +81,7 @@
 import { ref, reactive } from "vue";
 import { ElMessage, FormInstance } from "element-plus";
 import { Resource } from "@/api/interface";
-import { httpMethodOption } from "@/views/auth/resource/index";
+import { httpMethodOption, protocolOption } from "@/views/auth/resource/index";
 import { getResourceTree } from "@/api/modules/tree_node";
 const rules = reactive({
   name: [{ required: true, message: "请填写接口名称" }]
@@ -93,14 +104,14 @@ const drawerProps = ref<DrawerProps>({
   row: {}
 });
 
-// 数节点下拉框
+// 树节点下拉框
 const treeNodeOptions = reactive([]);
 
 // 接收父组件传过来的参数
 const acceptParams = (params: DrawerProps) => {
   drawerProps.value = params;
   drawerVisible.value = true;
-
+  selectedValue.value = params.row.treeNodeId;
   // 加载树节点
   getResourceTree().then(value => {
     // 清空现有的数组内容

@@ -19,6 +19,8 @@ type Resource struct {
 	TreeNodeID uint32 `gorm:"column:tree_node_id;type:int unsigned;not null;default:0;comment:树木节点ID"`
 	Name       string `gorm:"column:name;type:varchar(150);not null;default:'';comment:接口名称"`
 	Describe   string `gorm:"column:describe;type:varchar(255);not null;default:'';comment:接口描述"`
+	// 个性化
+	IsNeedStdRes pb.NeedStdRes `gorm:"column:is_need_std_res;type:tinyint unsigned;not null;default:1;comment:是否标准化输出响应 0-否 1-是"`
 	//
 	Status pb.ResourceStatus `gorm:"column:status;type:tinyint unsigned;not null;default:0;comment:接口状态 0-未发布 1-已发布 2-以下线"`
 	// 路径定位
@@ -28,8 +30,9 @@ type Resource struct {
 	IsNeedLogin      pb.NeedLogin      `gorm:"column:is_need_login;type:tinyint;not null;default:1;comment:是否需要登录校验 0-不需要 1-需要"`
 	IsNeedPermission pb.NeedPermission `gorm:"column:is_need_permission;type:tinyint;not null;default:1;comment:是否需要权限校验 0-不需要 1-需要"`
 	// 下游服务信息
-	Service string `gorm:"column:service;type:varchar(30);not null;default:'';comment:API服务名"`
-	Method  string `gorm:"column:method;type:varchar(255);not null;default:'';comment:API接口名"`
+	Service  string            `gorm:"column:service;type:varchar(30);not null;default:'';comment:API服务名"`
+	Method   string            `gorm:"column:method;type:varchar(255);not null;default:'';comment:API接口名"`
+	Protocol pb.MethodProtocol `gorm:"column:protocol;type:int unsigned;not null;default:1;comment:接口协议 0-http 1-trpc"`
 	// 公共字段
 	CreateUserID uint32       `gorm:"column:create_user_id;type:int unsigned;not null;default:0;comment:创建人id"`
 	UpdateUserID uint32       `gorm:"column:update_user_id;type:int unsigned;not null;default:0;comment:更新人id"`

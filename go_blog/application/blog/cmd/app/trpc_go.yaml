@@ -41,20 +41,31 @@ server:
     # 数据校验
     - validation
   service:
-    - name: trpc.blog.http.BlogApi
+#    - name: trpc.blog.http.BlogApi
+#      # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
+#      address: 127.0.0.1:8101
+#      # 选填，网络类型，为空时，使用 server.network
+#      network: tcp
+#      # 选填，协议类型，为空时，使用 server.protocol
+#      protocol: http
+#      # 选填，service 处理请求的超时时间 单位 毫秒
+#      timeout: 2000
+#      # 选填，使用哪个注册中心 polarismesh
+#      registry: polarismesh
+    - name: trpc.blog.admin.BlogApi
       # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
-      address: 127.0.0.1:8101
+      address: 127.0.0.1:8202
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
-      protocol: http
+      protocol: trpc
       # 选填，service 处理请求的超时时间 单位 毫秒
       timeout: 2000
       # 选填，使用哪个注册中心 polarismesh
       registry: polarismesh
-    - name: trpc.blog.trpc.BlogApi
+    - name: trpc.blog.portal.BlogApi
       # 选填，service 监听的地址，为空时使用 ip:port，非空时，忽略 ip:port
-      address: 127.0.0.1:8202
+      address: 127.0.0.1:8203
       # 选填，网络类型，为空时，使用 server.network
       network: tcp
       # 选填，协议类型，为空时，使用 server.protocol
@@ -107,12 +118,12 @@ plugins:
       protocol: grpc
       # 需要进行注册的各服务信息
       service:
-        - name: trpc.blog.http.BlogApi
+        - name: trpc.blog.admin.BlogApi
           # 该服务需要注册的命名空间
           namespace: Production
           # 前往北极星控制台进行申请或查看
           token: xxx
-        - name: trpc.blog.trpc.BlogApi
+        - name: trpc.blog.portal.BlogApi
           namespace: Production
           token: xxx
   # 针对 trpc 框架服务发现的配置
@@ -149,6 +160,6 @@ client:
       target: dsn://root:123456@tcp(127.0.0.1:3306)/baker_blog_blog?charset=utf8mb4&parseTime=True
     # 请求用户服务配置
     - callee: go_blog.user.UserApi
-      target: polarismesh://trpc.blog.user.UserApiTrpc
+      target: polarismesh://trpc.blog.admin.UserApi
       timeout: 1000
       disable_servicerouter: false

@@ -1,0 +1,32 @@
+syntax = "proto3";
+package go_blog.blog;
+option  go_package ="github.com/baker-yuan/go-blog/go_blog/protocol/blog";
+
+// validate参考
+// https://github.com/bufbuild/protoc-gen-validate/blob/v1.0.2/README.md
+
+// trpc参考
+// https://github.com/trpc-group/trpc-cmdline/blob/483259c22a2fd1e477c7ebc4b5b1572a5a47010c/docs/examples/example-1/README.zh_CN.md
+// https://github.com/trpc-group/trpc-cmdline/blob/483259c22a2fd1e477c7ebc4b5b1572a5a47010c/docs/examples/example-2/README.zh_CN.md
+
+// 空响应
+message EmptyRsp {
+
+}
+
+
+// 添加修改资源返回值
+message AddOrUpdateRsp {
+  uint32 id = 1; // 资源id
+}
+
+// 资源类型
+enum ResourceType {
+  RT_UNKNOWN = 0; // 未知
+  TB_ARTICLE = 1; // 文章
+  TB_CATEGORY = 2; // 文章
+  TB_Tag = 3; // 标签
+  TB_FRIEND_LINK = 4; // 友链
+  TB_PAGE = 5; // 页面
+  TB_DYNAMIC_CONFIG = 6; // 动态配置
+}

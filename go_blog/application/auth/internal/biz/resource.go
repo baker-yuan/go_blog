@@ -15,6 +15,8 @@ type Resource struct {
 	TreeNodeID uint32
 	Name       string
 	Describe   string
+	// 个性化
+	IsNeedStdRes pb.NeedStdRes
 	//
 	Status pb.ResourceStatus
 	// 路径定位
@@ -24,8 +26,9 @@ type Resource struct {
 	IsNeedLogin      pb.NeedLogin
 	IsNeedPermission pb.NeedPermission
 	// 下游服务信息
-	Service string
-	Method  string
+	Service  string
+	Method   string
+	Protocol pb.MethodProtocol
 	// 公共字段
 	CreateUserID uint32
 	UpdateUserID uint32

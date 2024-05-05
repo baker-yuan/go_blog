@@ -46,7 +46,16 @@
           >
           </el-switch>
         </template>
-
+        <!-- 标准输出 -->
+        <template #isNeedStdRes="scope">
+          <el-switch
+            @change="handleIsNeedStdResChange(scope.row)"
+            :active-value="Resource.NeedStdRes.RES_REQUIRED"
+            :inactive-value="Resource.NeedStdRes.RES_NOT_REQUIRED"
+            v-model="scope.row.isNeedStdRes"
+          >
+          </el-switch>
+        </template>
         <!-- 创建时间 -->
         <template #createTime="scope">
           <div>{{ formatTimestamp(scope.row.createTime) }}</div>
@@ -77,7 +86,7 @@ import { useHandleData } from "@/hooks/useHandleData";
 import { CirclePlus, Delete, EditPen } from "@element-plus/icons-vue";
 import { createResourceApi, updateResourceApi, deleteResourceApi, getResourcesApi } from "@/api/modules/resource.ts";
 import ProTable from "@/components/ProTable/index.vue";
-import { statusOption, httpMethodOption } from "@/views/auth/resource/index";
+import { statusOption, httpMethodOption, protocolOption } from "@/views/auth/resource/index";
 import { formatTimestamp } from "@/utils/time";
 
 // TreeFilter选中的节点
@@ -104,17 +113,18 @@ const columns = reactive<ColumnProps<Resource.ResourceModel>[]>([
     search: { el: "input" }
   },
   {
+    prop: "describe",
+    label: "接口描述",
+    showOverflowTooltip: false,
+    width: 150
+  },
+  {
     prop: "treeNodePath",
     label: "路径",
     align: "left", // 设置列内容左对齐
     headerAlign: "left", // 设置列标题左对齐
-    width: 300
-  },
-  {
-    prop: "status",
-    label: "是否生效",
-    width: 120,
-    enum: statusOption
+    width: 200,
+    showOverflowTooltip: false
   },
   {
     prop: "url",
@@ -125,13 +135,26 @@ const columns = reactive<ColumnProps<Resource.ResourceModel>[]>([
     showOverflowTooltip: false
   },
   {
+    prop: "status",
+    label: "是否生效",
+    width: 90,
+    enum: statusOption
+  },
+  { prop: "isNeedLogin", label: "登录校验", width: 90 },
+  { prop: "isNeedPermission", label: "权限校验", width: 90 },
+  { prop: "isNeedStdRes", label: "标准输出", width: 90 },
+  {
     prop: "httpMethod",
     label: "请求方式",
     width: 100,
     enum: httpMethodOption
   },
-  { prop: "isNeedLogin", label: "登录校验", width: 120 },
-  { prop: "isNeedPermission", label: "权限校验", width: 120 },
+  {
+    prop: "protocol",
+    label: "接口协议",
+    width: 200,
+    enum: protocolOption
+  },
   {
     prop: "service",
     label: "API服务名",
@@ -143,12 +166,6 @@ const columns = reactive<ColumnProps<Resource.ResourceModel>[]>([
     label: "API接口名",
     width: 250,
     showOverflowTooltip: false
-  },
-  {
-    prop: "describe",
-    label: "接口描述",
-    showOverflowTooltip: false,
-    width: 150
   },
   { prop: "createUser", label: "创建人", minWidth: 120, showOverflowTooltip: false },
   { prop: "updateUser", label: "更新人", minWidth: 120, showOverflowTooltip: false },
@@ -196,6 +213,15 @@ const deleteBakerAuthResource = async (row: Resource.ResourceModel) => {
 
 // 接口状态改变
 const handleStatusChange = (row: Resource.ResourceModel) => {
+  if (row.id == 0 || row.id == undefined) {
+    return;
+  }
+  let newParams = JSON.parse(JSON.stringify(row));
+  updateResourceApi(newParams);
+};
+
+// 标准输出改变
+const handleIsNeedStdResChange = (row: Resource.ResourceModel) => {
   if (row.id == 0 || row.id == undefined) {
     return;
   }

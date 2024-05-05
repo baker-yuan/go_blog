@@ -4,6 +4,7 @@ import (
 	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/biz_ctx"
 	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/biz_ctx/http"
 	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/config"
+	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/ret"
 	"github.com/baker-yuan/go-blog/go_blog/application/blog/gateway/proxy/util"
 	auth_pb "github.com/baker-yuan/go-blog/go_blog/protocol/auth"
 )
@@ -25,10 +26,26 @@ func LoginCheck(next HandlerFunc) HandlerFunc {
 		accessToken := httpCtx.Request().Header().GetHeader("X-Access-Token")
 		token, err := util.JwtUtil.ValidateAndExtractUserInfo(accessToken)
 		if err != nil {
+			ret.SetFilResponse(httpCtx, err.Error())
 			return
 		}
 		httpCtx.Proxy().Header().SetHeader("X-Access-Token", accessToken)
 		httpCtx.Proxy().Header().SetHeader("X-User-ID", token.UserID)
+
+		//_, msg := codec.WithCloneMessage(httpCtx.Context())
+		//metaData := msg.ServerMetaData()
+		//metaData["X-Access-Token"] = []byte(accessToken)
+		//metaData["X-User-ID"] = []byte(token.UserID)
+
+		//trpc.Message(bizCtx.Context()).WithClientMetaData(map[string][]byte{
+		//	"X-User-ID": []byte(token.UserID),
+		//})
+		//
+		//ctx, msg := codec.WithCloneMessage(httpCtx.Context())
+		//msg.WithClientMetaData(map[string][]byte{
+		//	"X-User-ID": []byte(token.UserID),
+		//})
+		//bizCtx.SetContext(ctx)
 
 		next(bizCtx, cfg)
 	}

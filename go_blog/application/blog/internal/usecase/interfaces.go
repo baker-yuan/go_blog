@@ -204,3 +204,12 @@ type (
 		SearchDynamicConfig(ctx context.Context, req *pb.SearchDynamicConfigReq) (entity.DynamicConfigs, uint32, error)
 	}
 )
+
+// Portal 客户端接口
+type (
+	// IPortalUseCase 业务逻辑
+	IPortalUseCase interface {
+		// Home 获取站点配置信息、最新推荐博客、分类列表、标签云、随机博客
+		Home(ctx context.Context, userID uint32, req *pb.HomeReq) (*pb.HomeRsp, error)
+	}
+)

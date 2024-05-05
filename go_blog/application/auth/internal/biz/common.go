@@ -53,7 +53,7 @@ func (c *CommonUseCase) GetReversalTreeMap(ctx context.Context, bizType pb.TreeN
 	}
 	res := make([]*pb.TreeNode, 0)
 	for _, treeNode := range treeNodes {
-		res = append(res, TreeNodeEntityToModel(treeNode))
+		res = append(res, TreeNodeEntityToModel(treeNode, nil, nil))
 	}
 	return c.buildLeafToRootMaps(c.buildTree(res)), nil
 }

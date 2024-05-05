@@ -24,6 +24,16 @@ type TreeNode struct {
 
 type TreeNodes []*TreeNode
 
+// GetOperatorUserID 获取操作人ID
+func (l TreeNodes) GetOperatorUserID() []uint32 {
+	res := make([]uint32, 0)
+	for _, item := range l {
+		res = append(res, item.CreateUserID)
+		res = append(res, item.UpdateUserID)
+	}
+	return util.NewSliceUtils[uint32]().SliceUnique(res)
+}
+
 // TreeNodeRepo 树形结构表repo
 type TreeNodeRepo interface {
 	// GetTreeNodeByID 根据树形结构表id集合查询树形结构
@@ -66,7 +76,14 @@ func (c *TreeNodeUseCase) TreeNodeDetail(ctx context.Context, req *pb.TreeNodeDe
 	if err != nil {
 		return nil, err
 	}
-	pbTreeNode := TreeNodeEntityToModel(treeNode)
+
+	// 补充操作人信息
+	uidToNameMap, err := c.UidToName(ctx, treeNode.CreateUserID, treeNode.UpdateUserID)
+	if err != nil {
+		return nil, err
+	}
+
+	pbTreeNode := TreeNodeEntityToModel(treeNode, uidToNameMap, nil)
 	return pbTreeNode, nil
 }
 
@@ -76,11 +93,18 @@ func (c *TreeNodeUseCase) SearchTreeNode(ctx context.Context, req *pb.SearchTree
 	if err != nil {
 		return nil, 0, err
 	}
-	data := make([]*pb.TreeNode, 0)
-	for _, treeNode := range treeNodes {
-		data = append(data, TreeNodeEntityToModel(treeNode))
+	// 补充操作人信息
+	uidToNameMap, err := c.UidToName(ctx, treeNodes.GetOperatorUserID()...)
+	if err != nil {
+		return nil, 0, err
 	}
-	return data, total, nil
+
+	// 补充路径 key=根节点 value=根结点往上找的集合
+	treeNodeMap, err := c.GetReversalTreeMap(ctx, pb.TreeNodeBizType_RESOURCE_NODE)
+	if err != nil {
+		return nil, 0, err
+	}
+	return TreeNodeEntityListToModel(treeNodes, uidToNameMap, treeNodeMap), total, nil
 }
 
 // AddOrUpdateTreeNode 添加修改树形结构表
@@ -169,7 +193,7 @@ func (c *TreeNodeUseCase) GetTreeByBizType(ctx context.Context, req *pb.GetTreeB
 	}
 	res := make([]*pb.TreeNode, 0)
 	for _, treeNode := range treeNodes {
-		res = append(res, TreeNodeEntityToModel(treeNode))
+		res = append(res, TreeNodeEntityToModel(treeNode, nil, nil))
 	}
 	return c.buildTree(res), nil
 }

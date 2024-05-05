@@ -96,12 +96,25 @@ export namespace Login {
 
 // 树形结构
 export namespace TreeNode {
+  // 业务类型
+  export enum BizType {
+    BIZ_TYPE_RESOURCE = 1 // 接口
+  }
   export interface Model {
     id: string;
     name: string;
     parentId: string;
-    bizType: string;
+    bizType: BizType;
+    // 公共字段
+    createUserId: string; // 创建人id
+    updateUserId: string; // 更新人id
+    createTime: number; // 插入时间
+    updateTime: number; // 修改时间
+    // 查询补充
+    createUser: string; // 创建人
+    updateUser: string; // 更新人
     children?: Model[];
+    treeNodePath: string; // 目录树路径
   }
 }
 
@@ -112,6 +125,12 @@ export namespace Resource {
     UNPUBLISHED = 0, // 未发布
     PUBLISHED = 1, // 已发布
     OFFLINE = 2 // 以下线
+  }
+
+  // 是否标准化输出响应 0-否 1-是
+  export enum NeedStdRes {
+    RES_NOT_REQUIRED = 0, // 不需要否标准化输出
+    RES_REQUIRED = 1 // 需要否标准化输出
   }
 
   // 定义是否需要登录校验的枚举
@@ -136,6 +155,12 @@ export namespace Resource {
     DELETE = 5
   }
 
+  // 接口协议 0-http 1-trpc
+  export enum MethodProtocol {
+    HTTP = 0,
+    TRPC = 1
+  }
+
   // 接口资源模型
   export interface ResourceModel {
     // 基本信息
@@ -143,6 +168,8 @@ export namespace Resource {
     treeNodeId: number; // 树节点ID
     name: string; // 接口名称
     describe: string; // 接口描述
+    // 个性化
+    isNeedStdRes: NeedStdRes; // 是否标准化输出响应 0-否 1-是
     //
     status: ResourceStatus; // 接口状态
     // 路径定位
@@ -154,6 +181,7 @@ export namespace Resource {
     // 下游服务信息
     service: string; // API服务名
     method: string; // API接口名
+    protocol: MethodProtocol; // 接口协议 0-http 1-trpc
     // 公共字段
     createUserId: string; // 创建人id
     updateUserId: string; // 更新人id

@@ -132,6 +132,12 @@ enum ResourceStatus {
   OFFLINE = 2;         // 以下线
 }
 
+// 是否标准化输出响应 0-否 1-是
+enum NeedStdRes {
+  RES_NOT_REQUIRED = 0; // 不需要否标准化输出
+  RES_REQUIRED = 1;     // 需要否标准化输出
+}
+
 // 定义是否需要登录校验的枚举
 enum NeedLogin {
   LOGIN_NOT_REQUIRED = 0; // 不需要登录校验
@@ -154,6 +160,12 @@ enum HttpMethod {
   DELETE = 5;
 }
 
+// 接口协议
+enum MethodProtocol {
+  Http = 0; // http
+  Trpc = 1; // 腾讯trpc框架
+}
+
 // 接口信息定义
 message Resource {
   // 基本信息
@@ -161,26 +173,29 @@ message Resource {
   uint32 tree_node_id = 2;        // 树节点ID
   string name = 3;                // 接口名称
   string describe = 4;            // 接口描述
-  //
-  ResourceStatus status = 6;              // 接口状态 0-未发布 1-已发布 2-以下线
+  // 个性化
+  NeedStdRes is_need_std_res = 100;        // 是否标准化输出
+  // 状态
+  ResourceStatus status = 200;              // 接口状态 0-未发布 1-已发布 2-以下线
   // 路径定位
-  string url = 7;                 // 接口URL
-  HttpMethod http_method = 8;  // 请求方式 1-get 2-post 3-put 4-patch 5-delete
+  string url = 300;                 // 接口URL
+  HttpMethod http_method = 301;  // 请求方式 1-get 2-post 3-put 4-patch 5-delete
   // 权限校验
-  NeedLogin is_need_login = 9;         // 是否需要登录校验
-  NeedPermission is_need_permission = 10;   // 是否需要权限校验
+  NeedLogin is_need_login = 400;         // 是否需要登录校验
+  NeedPermission is_need_permission = 401;   // 是否需要权限校验
   // 下游服务信息
-  string service = 11;            // API服务名
-  string method = 12;             // API接口名
+  string service = 500;            // API服务名
+  string method = 501;             // API接口名
+  MethodProtocol protocol = 502;         // 协议
   // 公共字段
-  uint32 create_user_id = 13;        // 创建人id
-  uint32 update_user_id = 14;        // 更新人id
-  uint32 create_time = 15;        // 创建时间
-  uint32 update_time = 16;        // 更新时间
+  uint32 create_user_id = 600;        // 创建人id
+  uint32 update_user_id = 601;        // 更新人id
+  uint32 create_time = 602;        // 创建时间
+  uint32 update_time = 603;        // 更新时间
   // 查询补充
-  string create_user = 100;        // 创建人
-  string update_user = 101;        // 更新人
-  string tree_node_path = 102;     // 树节点路径
+  string create_user = 10000;        // 创建人
+  string update_user = 10001;        // 更新人
+  string tree_node_path = 10002;     // 树节点路径
 }
 
 // 接口搜索
@@ -212,17 +227,20 @@ message AddOrUpdateResourceReq {
   uint32 tree_node_id = 2; // 树节点ID
   string name = 3 [(validate.rules).string.min_len = 1]; // 接口名称
   string describe = 4; // 接口描述
+  // 个性化
+  NeedStdRes is_need_std_res = 100;        // 是否标准化输出
   //
-  ResourceStatus status = 6 [(validate.rules).enum = {in: [0,1,2]}]; // 接口状态 0-未发布 1-已发布 2-以下线
+  ResourceStatus status = 200 [(validate.rules).enum = {in: [0,1,2]}]; // 接口状态 0-未发布 1-已发布 2-以下线
   // 路径定位
-  string url = 7 [(validate.rules).string.min_len = 1]; // 接口URL
-  HttpMethod http_method = 8 [(validate.rules).enum = {in: [1,2,3,4,5]}]; // 请求方式
+  string url = 300 [(validate.rules).string.min_len = 1]; // 接口URL
+  HttpMethod http_method = 301 [(validate.rules).enum = {in: [1,2,3,4,5]}]; // 请求方式
   // 权限校验
-  NeedLogin is_need_login = 9; // 是否需要登录校验
-  NeedPermission is_need_permission = 10; // 是否需要权限校验
+  NeedLogin is_need_login = 400; // 是否需要登录校验
+  NeedPermission is_need_permission = 401; // 是否需要权限校验
   // 下游服务信息
-  string service = 11 [(validate.rules).string.min_len = 1]; // API服务名
-  string method = 12; // API接口名
+  string service = 500 [(validate.rules).string.min_len = 1]; // API服务名
+  string method = 501; // API接口名
+  MethodProtocol protocol = 502;         // 协议
 }
 
 // 删除接口
@@ -385,13 +403,20 @@ message TreeNode {
   string name = 2; // 节点名称
   uint32 parent_id = 3; // 父节点ID
   TreeNodeBizType biz_type = 4; // 业务类型
-  repeated TreeNode children = 5; // 子节点列表
+
 
   // 公共字段
-  uint32 create_user_id = 100;     // 创建人id
-  uint32 update_user_id = 101;     // 更新人id
-  uint32 create_time = 102;        // 创建时间
-  uint32 update_time = 103;        // 更新时间
+  uint32 create_user_id = 6;      // 创建人id
+  uint32 update_user_id = 7;      // 更新人id
+  uint32 create_time = 8;         // 创建时间
+  uint32 update_time = 9;         // 更新时间
+  // 查询补充
+  string create_user = 100;        // 创建人
+  string update_user = 101;        // 更新人
+
+  repeated TreeNode children = 200; // 子节点列表
+  string biz_type_desc = 201; // 业务类型
+  string tree_node_path = 202;     // 树节点路径
 }
 
 
@@ -435,7 +460,7 @@ message DeleteTreeNodeReq {
 
 // 获取指定业务类型的树形结构
 message GetTreeByBizTypeReq {
-  TreeNodeBizType biz_type = 1 [(validate.rules).enum = {in: [1]}]; // 业务类型
+  TreeNodeBizType biz_type = 1; // 业务类型
 }
 
 message GetTreeByBizTypeRsp {

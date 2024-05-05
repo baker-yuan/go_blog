@@ -1316,6 +1316,8 @@ func (m *Resource) validate(all bool) error {
 
 	// no validation rules for Describe
 
+	// no validation rules for IsNeedStdRes
+
 	// no validation rules for Status
 
 	// no validation rules for Url
@@ -1329,6 +1331,8 @@ func (m *Resource) validate(all bool) error {
 	// no validation rules for Service
 
 	// no validation rules for Method
+
+	// no validation rules for Protocol
 
 	// no validation rules for CreateUserId
 
@@ -1841,6 +1845,8 @@ func (m *AddOrUpdateResourceReq) validate(all bool) error {
 
 	// no validation rules for Describe
 
+	// no validation rules for IsNeedStdRes
+
 	if _, ok := _AddOrUpdateResourceReq_Status_InLookup[m.GetStatus()]; !ok {
 		err := AddOrUpdateResourceReqValidationError{
 			field:  "Status",
@@ -1890,6 +1896,8 @@ func (m *AddOrUpdateResourceReq) validate(all bool) error {
 	}
 
 	// no validation rules for Method
+
+	// no validation rules for Protocol
 
 	if len(errors) > 0 {
 		return AddOrUpdateResourceReqMultiError(errors)
@@ -4164,6 +4172,18 @@ func (m *TreeNode) validate(all bool) error {
 
 	// no validation rules for BizType
 
+	// no validation rules for CreateUserId
+
+	// no validation rules for UpdateUserId
+
+	// no validation rules for CreateTime
+
+	// no validation rules for UpdateTime
+
+	// no validation rules for CreateUser
+
+	// no validation rules for UpdateUser
+
 	for idx, item := range m.GetChildren() {
 		_, _ = idx, item
 
@@ -4198,13 +4218,9 @@ func (m *TreeNode) validate(all bool) error {
 
 	}
 
-	// no validation rules for CreateUserId
+	// no validation rules for BizTypeDesc
 
-	// no validation rules for UpdateUserId
-
-	// no validation rules for CreateTime
-
-	// no validation rules for UpdateTime
+	// no validation rules for TreeNodePath
 
 	if len(errors) > 0 {
 		return TreeNodeMultiError(errors)
@@ -4931,16 +4947,7 @@ func (m *GetTreeByBizTypeReq) validate(all bool) error {
 
 	var errors []error
 
-	if _, ok := _GetTreeByBizTypeReq_BizType_InLookup[m.GetBizType()]; !ok {
-		err := GetTreeByBizTypeReqValidationError{
-			field:  "BizType",
-			reason: "value must be in list [RESOURCE_NODE]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for BizType
 
 	if len(errors) > 0 {
 		return GetTreeByBizTypeReqMultiError(errors)
@@ -5021,10 +5028,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetTreeByBizTypeReqValidationError{}
-
-var _GetTreeByBizTypeReq_BizType_InLookup = map[TreeNodeBizType]struct{}{
-	1: {},
-}
 
 // Validate checks the field values on GetTreeByBizTypeRsp with the rules
 // defined in the proto definition for this message. If any rules are

@@ -6,14 +6,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/baker-yuan/go-blog/go_blog/common/util"
 	"github.com/baker-yuan/go-blog/go_blog/filters/httptrace"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	"trpc.group/trpc-go/trpc-go"
 	"trpc.group/trpc-go/trpc-go/codec"
-	"trpc.group/trpc-go/trpc-go/errs"
-	thttp "trpc.group/trpc-go/trpc-go/http"
 	"trpc.group/trpc-go/trpc-go/log"
 )
 
@@ -115,45 +112,44 @@ func FillResponse(ctx context.Context, r *http.Request, standardResp Response) [
 
 // InitServerCodec 1、自定义错误处理 2、统一返回值
 func InitServerCodec(skipRspHandlerMethods []string) {
-
-	skipRspHandlerMethodMap := util.NewFieldExtractor[string, string]().
-		GroupByField(skipRspHandlerMethods, func(s string) string {
-			return s
-		})
-
-	// 自定义错误处理函数
-	thttp.DefaultServerCodec.ErrHandler = func(w http.ResponseWriter, r *http.Request, e *errs.Error) {
-		ctx := r.Context()
-		log.WarnContextf(ctx, "#errHandler catch error: %+v", e)
-		_, _ = w.Write(NewErrorResponse(ctx, r, uint32(e.Code), e.Msg))
-	}
-
-	// 自定义返回数据处理函数
-	thttp.DefaultServerCodec.RspHandler = func(w http.ResponseWriter, r *http.Request, rspbody []byte) error {
-		ctx := r.Context()
-		if len(rspbody) == 0 {
-			log.DebugContextf(ctx, "#rspHandler skip rspbody is empty url: %s", r.RequestURI)
-			return nil
-		}
-
-		// 指定接口不进行处理
-		if _, exist := skipRspHandlerMethodMap[r.URL.Path]; exist {
-			log.DebugContextf(ctx, "#rspHandler hit skipRspHandlerMethods url: %s", r.RequestURI)
-			_, err := w.Write(rspbody)
-			return err
-		}
-
-		// 检查响应是否已经是标准格式，返回的内容如果是非结构体（结构体数组、map），需要自己定义code+message+data
-		var standardResp Response
-		if err := json.Unmarshal(rspbody, &standardResp); err == nil &&
-			(standardResp.Code != nil && standardResp.Message != nil && standardResp.Data != nil) {
-			log.DebugContextf(r.Context(), "#rspHandler skip already standard response url: %s", r.RequestURI)
-			_, err := w.Write(FillResponse(ctx, r, standardResp))
-			return err
-		}
-
-		// 统一加上code+message
-		_, err := w.Write(NewSuccessResponse(ctx, r, rspbody))
-		return err
-	}
+	//skipRspHandlerMethodMap := util.NewFieldExtractor[string, string]().
+	//	GroupByField(skipRspHandlerMethods, func(s string) string {
+	//		return s
+	//	})
+	//
+	//// 自定义错误处理函数
+	//thttp.DefaultServerCodec.ErrHandler = func(w http.ResponseWriter, r *http.Request, e *errs.Error) {
+	//	ctx := r.Context()
+	//	log.WarnContextf(ctx, "#errHandler catch error: %+v", e)
+	//	_, _ = w.Write(NewErrorResponse(ctx, r, uint32(e.Code), e.Msg))
+	//}
+	//
+	//// 自定义返回数据处理函数
+	//thttp.DefaultServerCodec.RspHandler = func(w http.ResponseWriter, r *http.Request, rspbody []byte) error {
+	//	ctx := r.Context()
+	//	if len(rspbody) == 0 {
+	//		log.DebugContextf(ctx, "#rspHandler skip rspbody is empty url: %s", r.RequestURI)
+	//		return nil
+	//	}
+	//
+	//	// 指定接口不进行处理
+	//	if _, exist := skipRspHandlerMethodMap[r.URL.Path]; exist {
+	//		log.DebugContextf(ctx, "#rspHandler hit skipRspHandlerMethods url: %s", r.RequestURI)
+	//		_, err := w.Write(rspbody)
+	//		return err
+	//	}
+	//
+	//	// 检查响应是否已经是标准格式，返回的内容如果是非结构体（结构体数组、map），需要自己定义code+message+data
+	//	var standardResp Response
+	//	if err := json.Unmarshal(rspbody, &standardResp); err == nil &&
+	//		(standardResp.Code != nil && standardResp.Message != nil && standardResp.Data != nil) {
+	//		log.DebugContextf(r.Context(), "#rspHandler skip already standard response url: %s", r.RequestURI)
+	//		_, err := w.Write(FillResponse(ctx, r, standardResp))
+	//		return err
+	//	}
+	//
+	//	// 统一加上code+message
+	//	_, err := w.Write(NewSuccessResponse(ctx, r, rspbody))
+	//	return err
+	//}
 }

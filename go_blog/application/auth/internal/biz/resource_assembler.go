@@ -19,10 +19,11 @@ func ResourceEntityListToModel(resourceList []*Resource, uidToNameMap map[uint32
 func ResourceEntityToModel(resource *Resource, uidToNameMap map[uint32]string, treeNodeMap map[uint32][]*pb.TreeNode) *pb.Resource {
 	modelRes := &pb.Resource{
 		// 基本信息
-		Id:         resource.ID,
-		TreeNodeId: resource.TreeNodeID,
-		Name:       resource.Name,
-		Describe:   resource.Describe,
+		Id:           resource.ID,
+		TreeNodeId:   resource.TreeNodeID,
+		Name:         resource.Name,
+		Describe:     resource.Describe,
+		IsNeedStdRes: resource.IsNeedStdRes,
 		//
 		Status: resource.Status,
 		// 路径定位
@@ -32,8 +33,9 @@ func ResourceEntityToModel(resource *Resource, uidToNameMap map[uint32]string, t
 		IsNeedLogin:      resource.IsNeedLogin,
 		IsNeedPermission: resource.IsNeedPermission,
 		// 下游服务信息
-		Service: resource.Service,
-		Method:  resource.Method,
+		Service:  resource.Service,
+		Method:   resource.Method,
+		Protocol: resource.Protocol,
 		// 公共字段
 		CreateUserId: resource.CreateUserID,
 		UpdateUserId: resource.UpdateUserID,
@@ -60,6 +62,8 @@ func AddOrUpdateResourceReqToEntity(pbResource *pb.AddOrUpdateResourceReq) *Reso
 		TreeNodeID: pbResource.TreeNodeId,
 		Name:       pbResource.Name,
 		Describe:   pbResource.Describe,
+		// 个性化
+		IsNeedStdRes: pbResource.IsNeedStdRes,
 		//
 		Status: pbResource.Status,
 		// 路径定位
@@ -69,8 +73,9 @@ func AddOrUpdateResourceReqToEntity(pbResource *pb.AddOrUpdateResourceReq) *Reso
 		IsNeedLogin:      pbResource.IsNeedLogin,
 		IsNeedPermission: pbResource.IsNeedPermission,
 		// 下游服务信息
-		Service: pbResource.Service,
-		Method:  pbResource.Method,
+		Service:  pbResource.Service,
+		Method:   pbResource.Method,
+		Protocol: pbResource.Protocol,
 	}
 	return entityRes
 }
